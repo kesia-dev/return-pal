@@ -6,9 +6,9 @@ function Contact() {
   return (
     <div className="h-screen w-screen bg-paleBule pl-10 pt-24">
       <div className="flex max-w-lg flex-col">
-        <h2 className="relative·text-subtitle">
+        <h2 className="relative text-subtitle">
           <span className="mr-2 font-thin text-black">CONTACT</span>
-          <span className="bg-gradient-to-r·from-gradientL to-primary bg-clip-text font-bold text-transparent">
+          <span className="bg-gradient-to-r from-gradientL to-primary bg-clip-text font-bold text-transparent">
             US
           </span>
         </h2>

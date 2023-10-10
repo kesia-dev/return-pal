@@ -11,7 +11,7 @@ import { Input } from '@components/ui/input'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
-import { Button } from '../ui/button'
+import { Button } from '@components/ui/button'
 
 const contactFormSchema = z.object({
   firstName: z
@@ -127,7 +127,7 @@ function ContactForm() {
             </FormItem>
           )}
         /> */}
-        <Button className="w-full·bg-primary·hover:bg-gradientL" type="submit">
+        <Button className="w-full" type="submit">
           Submit
         </Button>
       </form>
