@@ -1,5 +1,8 @@
 import { Toaster } from '@/components/ui/toaster'
-import { Prompt, Nunito } from 'next/font/google'
+import {
+  // Prompt,
+  Nunito,
+} from 'next/font/google'
 import { type ReactElement, type ReactNode } from 'react'
 import { type NextPage } from 'next'
 import { type AppProps } from 'next/app'
@@ -11,10 +14,10 @@ import Head from 'next/head'
 import Header from '@/components/Header/Header'
 import '@/styles/globals.css'
 
-const prompt = Prompt({
-  weight: ['400', '500', '700', '900'],
-  subsets: ['latin'],
-})
+// const prompt = Prompt({
+//   weight: ['400', '500', '700', '900'],
+//   subsets: ['latin'],
+// })
 
 const nunito = Nunito({
   weight: ['400', '500', '700', '900'],

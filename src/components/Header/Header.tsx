@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 function Header() {
   return (
-    <div className="font text bg-secondary fixed left-0 top-0 flex h-16 w-full flex-row items-center justify-between px-4 text-brand shadow-md">
+    <div className="fixed·left-0·top-0·flex·h-16·w-full·flex-row·items-center·justify-between·bg-secondary">
       <div className="flex-3">
         <h1 className="text-subtitle font-bold">Reture-Pal</h1>
       </div>

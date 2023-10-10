@@ -42,7 +42,7 @@ const contactFormSchema = z.object({
 })
 
 function ContactForm() {
-  const onSubmit = async (values: z.infer<typeof contactFormSchema>) => {
+  const onSubmit = (values: z.infer<typeof contactFormSchema>) => {
     console.log(values)
   }
 
@@ -127,7 +127,7 @@ function ContactForm() {
             </FormItem>
           )}
         /> */}
-        <Button className="hover:bg-gradientL w-full bg-primary" type="submit">
+        <Button className="w-full·bg-primary·hover:bg-gradientL" type="submit">
           Submit
         </Button>
       </form>

@@ -1,3 +1,3 @@
-import GoogleLoginButton from '@/components/GoogleLoginButton/GoogleLoginButton';
+import GoogleLoginButton from '@/components/GoogleLoginButton/GoogleLoginButton'
 
-export default GoogleLoginButton;
+export default GoogleLoginButton
