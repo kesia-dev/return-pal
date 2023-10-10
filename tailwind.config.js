@@ -16,13 +16,7 @@ module.exports = {
       },
     },
     extend: {
-     colors: {
-        'primary': '#008BE7',
-        'brand': '#052A42'
-        'grey': '#6F767B',
-        'paleBule': '#E1F6FF',
-        'gradientL': '#40C4E8',
-      },
+      colors: {
         primary: '#008BE7',
         brand: '#052A42',
         grey: '#6F767B',
