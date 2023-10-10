@@ -14,10 +14,6 @@ import Head from 'next/head'
 import Header from '@/components/Header/Header'
 import '@/styles/globals.css'
 
-// const prompt = Prompt({
-//   weight: ['400', '500', '700', '900'],
-//   subsets: ['latin'],
-// })
 
 const nunito = Nunito({
   weight: ['400', '500', '700', '900'],
