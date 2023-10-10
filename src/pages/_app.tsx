@@ -1,5 +1,11 @@
 import { Toaster } from '@/components/ui/toaster'
+<<<<<<< HEAD
 import { Nunito } from 'next/font/google'
+=======
+import {
+  Nunito,
+} from 'next/font/google'
+>>>>>>> ad1291b42b6e21262083404c0dadf437d49d7d19
 import { type ReactElement, type ReactNode } from 'react'
 import { type NextPage } from 'next'
 import { type AppProps } from 'next/app'
@@ -11,6 +17,10 @@ import Head from 'next/head'
 import Header from '@/components/Header/Header'
 import '@/styles/globals.css'
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> ad1291b42b6e21262083404c0dadf437d49d7d19
 const nunito = Nunito({
   weight: ['400', '500', '700', '900'],
   subsets: ['latin'],
