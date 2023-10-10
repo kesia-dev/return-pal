@@ -17,13 +17,13 @@ export default function Header() {
               </Link>
               <Link
                 href="/"
-                className="font-bold text-secondary drop-shadow-lg"
+                className="text-secondary font-bold drop-shadow-lg"
               >
                 Pricing
               </Link>
               <Link
                 href="/"
-                className="font-bold text-secondary drop-shadow-lg"
+                className="text-secondary font-bold drop-shadow-lg"
               >
                 How it Works
               </Link>
