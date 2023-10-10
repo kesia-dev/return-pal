@@ -61,17 +61,19 @@ function ContactForm() {
       <form
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
         onSubmit={form.handleSubmit(onSubmit)}
-        className="max-w-md space-y-6"
+        className="max-w-lg space-y-6"
       >
-        <div className="flex justify-between">
+        <div className="flex flex-col space-y-6 md:flex-row md:justify-between md:space-y-0">
           <FormField
             control={form.control}
             name="firstName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-black">Name</FormLabel>
+                <FormLabel className="text-black">First Name</FormLabel>
                 <FormControl>
                   <Input
+                    minLength={1}
+                    className="mr-10"
                     placeholder="Please Enter Your First Name."
                     {...field}
                   />
@@ -88,6 +90,8 @@ function ContactForm() {
                 <FormLabel className="text-black">Last Name</FormLabel>
                 <FormControl>
                   <Input
+                    minLength={1}
+                    className="mr-10"
                     placeholder="Please Enter Your Last Name."
                     {...field}
                   />
