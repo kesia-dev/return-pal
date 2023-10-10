@@ -20,7 +20,7 @@ module.exports = {
         primary: '#008BE7',
         brand: '#052A42',
         secondary: '#FFFFFF',
-        grey: '6F767B',
+        grey: '#6F767B',
         paleBule: '#E1F6FF',
         gradientL: '#40C4E8',
       },
