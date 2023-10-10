@@ -21,6 +21,8 @@ module.exports = {
         brand: '#052A42',
         secondary: '#FFFFFF',
         grey: '6F767B',
+        paleBule: '#E1F6FF',
+        gradientL: '#40C4E8',
       },
       fontSize: {
         heading: ['75px', '113px'],
