@@ -1,6 +1,5 @@
 import { Toaster } from '@/components/ui/toaster'
 import {
-  // Prompt,
   Nunito,
 } from 'next/font/google'
 import { type ReactElement, type ReactNode } from 'react'
