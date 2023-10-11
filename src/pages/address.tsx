@@ -1,37 +1,46 @@
 import React from 'react'
-// import ContactForm from '@/components/ContactForm/ContactForm'
-import Image from 'next/image'
 import { getLayout } from '@/layouts/DefaultLayout'
 import { Button } from '@/components/ui/button'
+import { useState, useEffect } from 'react'
 
 function Address() {
+  const [customer, setCustomer] = useState({});
+  const [step, setStep] = useState(1);
+  const mockCustomer: { name: string, address: string[] } = {
+    name: "Bob",
+    address: ["123 Main St", "123 Pine St"]
+  }
+  useEffect(() => {
+    setCustomer(mockCustomer);
+  }, [])
+  const addressMapper = (addressArray: string[]) => {
+    return addressArray.map((x) => {
+      return (<div><input type="radio" value={x} /> <label> {customer.name} {x} </label></div>)
+    })
+  }
+
   return (
     // <div className="bg-paleBlue h-screen w-screen pl-10 pt-24">
     <>
-    <Button className="next text-white"  >next </Button>
-      {/* <div className="flex max-w-lg flex-col">
-        <h2 className="relative text-subtitle">
-          <span className="mr-2 font-thin text-black">CONTACT</span>
-          <span className="bg-gradient-to-r from-gradientL to-primary bg-clip-text font-bold text-transparent">
-            US
-          </span>
-        </h2>
+      <div>
+        <form>
 
-        <Image
-          className=" mt-4 self-center"
-          src="/images/robot.png"
-          alt="Contact Us"
-          width={160}
-          height={160}
-        />
+          {customer.address && addressMapper(customer.address)}
+        </form>
+        {/* <form>
+          <input type="radio" id="html" value="HTML" />
+          <label >HTML</label> <br></br>
+          <input type="radio" id="css" value="CSS" />
+          <label> css </label> <br></br>
+          <input type="radio" id="javascript" value="JavaScript" />
+          <label>JavaScript</label>
+        </form> */}
       </div>
-      <Image
-        className="mt-8"
-        src="/images/navbar-logo-transparent.png"
-        alt="Contact Us"
-        width={160}
-        height={0}
-      /> */}
+      <span className="flex justify-between" >
+        <Button >← back </Button>
+        <Button className="next text-white"  > next → </Button>
+      </span>
+
     </>
     // </div>
   )
