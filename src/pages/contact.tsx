@@ -1,5 +1,5 @@
 import React from 'react'
-import ContactForm from '@/components/ContactForm/ContactForm'
+import ContactForm from '@/components/ContactForm'
 import Image from 'next/image'
 
 function Contact() {
