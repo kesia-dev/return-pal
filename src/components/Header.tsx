@@ -8,12 +8,22 @@ export default function Header() {
     <header>
       <div className="sticky top-0 z-50 flex w-screen border-b border-white bg-white px-9 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]">
         <div className="flex h-20 w-full items-center justify-between space-x-3">
-          <Image src={'/navbar-logo.png'} alt="logo" width={200} height={200} />
+          <Link href="/">
+            <Image
+              src={'/navbar-logo.png'}
+              alt="logo"
+              width={200}
+              height={200}
+            />
+          </Link>
 
           <div className="flex gap-x-3">
             <div className="flex items-center justify-center gap-x-12">
-              <Link href="/" className="font-bold text-primary drop-shadow-lg">
-                About Us
+              <Link
+                href="/"
+                className="text-secondary font-bold drop-shadow-lg"
+              >
+                How it Works
               </Link>
               <Link
                 href="/"
@@ -21,11 +31,14 @@ export default function Header() {
               >
                 Pricing
               </Link>
+              <Link href="/" className="font-bold text-primary drop-shadow-lg">
+                About Us
+              </Link>
               <Link
-                href="/"
+                href="/contact"
                 className="text-secondary font-bold drop-shadow-lg"
               >
-                How it Works
+                Contact Us
               </Link>
             </div>
           </div>
