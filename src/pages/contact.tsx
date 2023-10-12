@@ -5,9 +5,8 @@ import { getLayout } from '@/layouts/DefaultLayout'
 
 function Contact() {
   return (
-    // <div className="bg-paleBlue h-screen w-screen pl-10 pt-24">
     <>
-      <div className=" flex max-w-lg flex-col pl-10 pt-14">
+      <div className="mx-auto flex max-w-lg flex-col pl-10 pt-14 md:mx-0">
         <h2 className="relative text-subtitle">
           <span className="mr-2 font-thin text-black">CONTACT</span>
           <span className="bg-gradient-to-r from-gradientL to-primary bg-clip-text font-bold text-transparent">
@@ -32,7 +31,6 @@ function Contact() {
         height={0}
       />
     </>
-    // </div>
   )
 }
 Contact.getLayout = getLayout
