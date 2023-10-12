@@ -111,20 +111,31 @@ function Address() {
         Which pickup method do you prefer?
       </div>
       <form id="selectPickupMethod" className="mt-5">
-        <div className="flex flex-row justify-around mx-1/5">
+        <div className="flex flex-row justify-around mx-1/5 ">
+          <div className="justify-center border-4 border-brand rounded-full py-2 px-4">
+            <div className="flex justify-center font-bold">
+              Direct Handoff </div>
+            <div className="flex justify-center "> Hand the package directly to our specialist at your door </div>
+            <div className="flex justify-center" >
+              <input type="radio" key="handoff" value="handoff" name="pickupMethod" />
+            </div>
+          </div>
+          <div className="justify-center border-4 border-brand rounded-full py-2 px-4">
+            <div className="flex justify-center font-bold ">
+              Leave on Doorstep </div>
+            <div className="flex justify-center"> Place items outside your door ahead of your pick up window </div>
+            <div className="flex justify-center">
 
-            <div>
-              123
+              <input type="radio" key="doorstep" value="doorstep" name="pickupMethod" />
             </div>
-            <div>
-              456
-            </div>
+          </div>
         </div>
       </form>
+      
 
       <span className="flex justify-between" >
         <Button className="bg-transparent hover:bg-transparent text-primary font-bold" onClick={() => setStep(1)}>← Back </Button>
-        <Button className="next text-white font-bold" onClick={console.log("step3")} > Next → </Button>
+        <Button className="next text-white font-bold" onClick={() => console.log("step3")} > Next → </Button>
       </span>
 
     </>
