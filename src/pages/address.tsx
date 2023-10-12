@@ -53,11 +53,18 @@ function Address() {
   return (
     // <div className="bg-paleBlue h-screen w-screen pl-10 pt-24">
     <>
-      <div>
-        {/* <form>
-          {customer.address && addressMapper(customer.address)}
-        </form> */}
-        <form>
+    <div className="text-largeText text-brand">
+      Pickup Details
+    </div>
+    <div className="text-brand">
+      Select or add your pickup address
+    </div>
+    <div className="font-bold text-brand text-smallText mt-5">
+      Your Addresses:
+    </div>
+      <div className="w-3/4 border-black border-t-2">
+
+        <form className="mt-5">
           {addressArrayMapper(mockAddresses)}
         </form>
       </div>
