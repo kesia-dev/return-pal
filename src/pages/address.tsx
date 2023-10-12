@@ -35,17 +35,19 @@ function Address() {
   }
   const handleAddressSelection = () => {
     const form = document.getElementById("selectAddressForm");
-    const radioInputs = form.querySelectorAll('input[type="radio"]');
-    let selectedValue;
+    if (form) {
+      const radioInputs = form.querySelectorAll('input[type="radio"]');
+      let selectedValue;
 
-    radioInputs.forEach(function (input) {
-      if (input.checked) {
-        selectedValue = input.value;
-      }
-    });
-    console.log(selectedValue);
+      radioInputs.forEach(function (input) {
+        if (input.checked) {
+          selectedValue = input.value;
+        }
+      });
+      console.log(selectedValue);
 
-    setStep(2);
+      setStep(2);
+    }
   }
   // const addressMapper = (addressArray: string[]) => {
   //   return addressArray.map((address) => {
@@ -70,40 +72,59 @@ function Address() {
       <div className="text-largeText text-brand">
         Pickup Details
       </div>
-      <div className="text-brand">
-        Select or add your pickup address
-      </div>
-      <div className="font-bold text-brand text-smallText mt-5">
-        Your Addresses:
-      </div>
-      <div className="w-3/4 border-black border-t-2">
+      {step === 1 && (<div>
+        <div className="text-brand">
+          Select or add your pickup address
+        </div>
+        <div className="font-bold text-brand text-smallText mt-5">
+          Your Addresses:
+        </div>
+        <div className="w-3/4 border-black border-t-2">
 
-        <form id="selectAddressForm" className="mt-5">
-          {addressArrayMapper(mockAddresses)}
-        </form>
+          <form id="selectAddressForm" className="mt-5">
+            {addressArrayMapper(mockAddresses)}
+          </form>
+        </div>
+        <Button className="bg-transparent hover:bg-transparent text-primary font-bold" onClick={toggleAddressForm}>+ Add a new address </Button>
+        {addAddress && (<form className="flex flex-column justify-around w-1/3" onSubmit={(e) => addNewAddress(e)}>
+          <div className="flex flex-row">
+            <div>
+              <label>Name</label> <label>Address</label>
+            </div>
+            <div>
+              <input type="text" name="name" />
+              <input type="text" name="address" />
+            </div>
+          </div>
+          <div className="flex justify-around">
+            <button className="text-primary" type="submit">Add new address</button>
+          </div>
+        </form>)}
+        <span className="flex justify-between" >
+          <Button className="bg-transparent hover:bg-transparent text-primary font-bold">← Back </Button>
+          <Button className="next text-white font-bold" onClick={handleAddressSelection} > Next → </Button>
+        </span>
+      </div>)}
+
+
+      <div className="text-brand">
+        Which pickup method do you prefer?
       </div>
-      <Button className="bg-transparent hover:bg-transparent text-primary font-bold" onClick={toggleAddressForm}>+ Add a new address </Button>
-      {addAddress && (<form className="flex flex-column justify-around w-1/3" onSubmit={(e) => addNewAddress(e)}>
-        <div className="flex flex-row">
-          <div>
-            <label>Name</label> <label>Address</label>
-          </div>
-          <div>
-            <input type="text" name="name" />
-            <input type="text" name="address" />
-          </div>
+      <form id="selectPickupMethod" className="mt-5">
+        <div className="flex flex-row justify-around mx-1/5">
+
+            <div>
+              123
+            </div>
+            <div>
+              456
+            </div>
         </div>
-        <div className="flex justify-around">
-          <button className="text-primary" type="submit">Add new address</button>
-        </div>
-      </form>)}
-      {/* <div className="text-brand">
-      Select or add your pickup address
-    </div>
-       */}
+      </form>
+
       <span className="flex justify-between" >
-        <Button className="bg-transparent hover:bg-transparent text-primary font-bold">← Back </Button>
-        <Button className="next text-white font-bold" onClick={handleAddressSelection} > Next → </Button>
+        <Button className="bg-transparent hover:bg-transparent text-primary font-bold" onClick={() => setStep(1)}>← Back </Button>
+        <Button className="next text-white font-bold" onClick={console.log("step3")} > Next → </Button>
       </span>
 
     </>
