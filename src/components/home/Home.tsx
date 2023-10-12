@@ -21,7 +21,7 @@ const HomeSectionTitle = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn('text-4xl font-bold', className)} {...props} />
+  <div ref={ref} className={cn('text-5xl font-bold', className)} {...props} />
 ))
 HomeSectionTitle.displayName = 'HomeSectionTitle'
 
@@ -31,7 +31,7 @@ const HomeSectionTitleHighlight = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <span
     ref={ref}
-    className={cn('text-4xl font-bold text-primary', className)}
+    className={cn('text-5xl font-bold text-primary', className)}
     {...props}
   />
 ))
