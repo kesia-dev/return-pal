@@ -7,10 +7,39 @@ function Address() {
   const [addresses, setAddresses] = useState({});
   const [step, setStep] = useState(1);
   const [addAddress, setAddAddress] = useState(false);
-  const mockCustomer: { name: string, address: string[] } = {
-    name: "Bob",
-    address: ["123 Main St", "123 Pine St"]
-  }
+  const [selectedMethod, setSelectedMethod] = useState('');
+
+  // Event handler for when a radio input is selected
+  const handleRadioChange = (event: any) => {
+    // console.log(event.target.value);
+    // const parentNode = event.target.parentNode;
+    // console.log(parentNode);
+    setSelectedMethod(event.target.value);
+    const form = document.getElementById("selectPickupMethod");
+    if (form) {
+      const radioInputs = form.querySelectorAll('input[type="radio"]');
+      let selectedValue;
+
+      radioInputs.forEach(function (input) {
+        const parentDiv = input.parentNode?.parentNode
+        console.log(parentDiv)
+        if (parentDiv) {
+          if (input.checked) {
+            parentDiv?.classList.remove("border-brand");
+            parentDiv?.classList.add("border-primary");
+            parentDiv?.classList.remove("opacity-50")
+          } else {
+            parentDiv?.classList.add("border-brand");
+            parentDiv?.classList.remove("border-primary");
+            parentDiv?.classList.add("opacity-50")
+          }
+        }
+      });
+
+      setStep(2);
+    }
+    
+  };
   const mockAddresses: { name: string, address: string, default: boolean }[] = [
     {
       name: "Bob",
@@ -117,7 +146,8 @@ function Address() {
               Direct Handoff </div>
             <div className="flex justify-center "> Hand the package directly to our specialist at your door </div>
             <div className="flex justify-center" >
-              <input type="radio" key="handoff" value="handoff" name="pickupMethod" />
+              <input type="radio" key="handoff" value="handoff" name="pickupMethod" checked={selectedMethod === 'handoff'}
+              onChange={handleRadioChange}/>
             </div>
           </div>
           <div className="justify-center border-4 border-brand rounded-full py-2 px-4">
@@ -126,7 +156,8 @@ function Address() {
             <div className="flex justify-center"> Place items outside your door ahead of your pick up window </div>
             <div className="flex justify-center">
 
-              <input type="radio" key="doorstep" value="doorstep" name="pickupMethod" />
+              <input type="radio" key="doorstep" value="doorstep" name="pickupMethod" checked={selectedMethod === 'doorstep'}
+              onChange={handleRadioChange} />
             </div>
           </div>
         </div>
