@@ -28,7 +28,7 @@ function Address() {
   const addressArrayMapper = (addressArray: { name: string, address: string, default: boolean }[]) => {
     return addressArray.map((address) => {
       return (<div className=""><input type="radio" value={address.address} /> <label className="font-bold"> 
-       {address.name} </label> <label> {address.address} </label> <label className="text-blue-600"> 
+       {address.name} </label> <label> {address.address} </label> <label className="text-primary font-bold"> 
         {address.default && (
       "Default address"
       )}
@@ -48,9 +48,10 @@ function Address() {
           {addressArrayMapper(mockAddresses)}
         </form>
       </div>
+      <Button className="bg-transparent hover:bg-transparent text-primary font-bold">+ Add a new address </Button>
       <span className="flex justify-between" >
-        <Button >← back </Button>
-        <Button className="next text-white"  > next → </Button>
+        <Button className="bg-transparent hover:bg-transparent text-primary font-bold">← Back </Button>
+        <Button className="next text-white font-bold"  > Next → </Button>
       </span>
 
     </>
