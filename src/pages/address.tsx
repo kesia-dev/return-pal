@@ -25,9 +25,9 @@ function Address() {
   //     return (<div><input type="radio" value={address} /> <label> {customer.name} {address} </label></div>)
   //   })
   // }
-  const addressArrayMapper = (addressArray: object[]) => {
+  const addressArrayMapper = (addressArray: { name: string, address: string, default: boolean }[]) => {
     return addressArray.map((address) => {
-      return (<div className=""><input type="radio" value={address} /> <label className="font-bold"> 
+      return (<div className=""><input type="radio" value={address.address} /> <label className="font-bold"> 
        {address.name} </label> <label> {address.address} </label> <label className="text-blue-600"> 
         {address.default && (
       "Default address"
