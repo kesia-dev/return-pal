@@ -1,3 +1,9 @@
+import {
+  HomeSection,
+  HomeSectionDescription,
+  HomeSectionTitle,
+  HomeSectionTitleHighlight,
+} from '@/components/home/Home'
 import { getLayout } from '@/layouts/DefaultLayout'
 import Image from 'next/image'
 
@@ -5,57 +11,143 @@ export default function Home() {
   return (
     <div className="container mx-auto flex max-w-5xl pb-16 pt-20">
       <div className="mx-auto w-full space-y-16 px-4 sm:px-3">
-        <div className="space-y-14 text-center">
-          <p className="text-4xl">
-            How <a className="font-bold text-primary">ReturnPal</a> Began
-          </p>
-          <p>
+        <HomeSection>
+          <HomeSectionTitle>
+            How <HomeSectionTitleHighlight>ReturnPal</HomeSectionTitleHighlight>{' '}
+            Began
+          </HomeSectionTitle>
+          <HomeSectionDescription>
             ReturnPal was born out of a simple realization: the traditional
             process of returning online purchases is far too complicated. Two
             brothers after waiting in line at the post office, decided there had
             to be a better way. Thus, ReturnPal was created to streamline
             returns for both consumers and businesses, while also making a
             positive impact on the community.
-          </p>
-        </div>
+          </HomeSectionDescription>
+        </HomeSection>
 
-        <div
-          // style={{
-          //   margin: '24px calc(-50vw + 50%)', // Y - X
-          // }}
-          className="max-w-screen m-[calc(-50vw+50%)] mt-56 w-screen space-y-14 bg-brand py-6 text-center"
-        >
-          <div className="container mx-auto max-w-5xl">
-            <p className="text-4xl">
-              <a className="text-white">Our</a>{' '}
-              <a className="font-bold text-primary">Founders</a>
-            </p>
-            <div className="flex justify-between">
-              <div>
-                <Image
-                  className="border-8 border-primary"
-                  src={'/images/returnpals-hasan.png'}
-                  alt="Hasan-Ali"
-                  width={300}
-                  height={300}
-                />
-                <p className="font-bold text-white">Mohammed Al-Salem</p>
-                <p className="text-white">Co-Founder of ReturnPal</p>
-              </div>
+        {/* <div className="relative h-40 w-40 overflow-hidden rounded-full">
+          <img
+            src="https://www.w3schools.com/howto/img_avatar2.png"
+            alt="Avatar"
+            className="h-full w-full object-cover"
+          />
+          <div className="absolute inset-x-0 bottom-0 w-full bg-blue-400 py-2.5 text-center text-xs leading-4 text-white">
+            this is a text
+          </div>
+        </div> */}
 
-              <div>
-                <Image
-                  className="rounded-full border-8 border-primary"
-                  src={'/images/returnpals-hasan.png'}
-                  alt="Hasan-Ali"
-                  width={300}
-                  height={300}
+        <div className="m-[calc(-50vw+50%)]">
+          <div className="relative">
+            {/* <Image
+              className="max-h-[560px] w-full resize-none  object-cover"
+              src={'/svg/Full.svg'}
+              width={1920}
+              height={1080}
+              alt="TOP"
+            /> */}
+            <svg
+              className="h-[45rem] w-full fill-brand"
+              version="1.1"
+              preserveAspectRatio="none"
+              id="Layer_1"
+              x="0px"
+              y="0px"
+              viewBox="0 0 1920 1080"
+            >
+              <style type="text/css">
+                .st0{'fill-rule:evenodd;clip-rule:evenodd;fill:#052A42;'}
+                .st1{'fill:none;stroke:#000000;'}
+                .st2{'fill:#052A42;'}
+              </style>
+              <path
+                className="st0"
+                d="M0,0l80,17c80,18,240,52,400,70c160,17,320,17,480,0c160-18,320-52,480-52s320,34,400,52l80,17v207h-80
+	c-80,0-240,0-400,0s-320,0-480,0s-320,0-480,0s-320,0-400,0H0V0z"
+              />
+              <g>
+                <path
+                  className="st0"
+                  d="M1919.4,1064l-80-17c-80-18-240.1-52-400.1-70c-160-17-320.1-17-480.1,0c-160,18-320.1,52-480.1,52
+		S159,995,79,977l-80-17V753h80c80,0,240.1,0,400.1,0s320.1,0,480.1,0s320.1,0,480.1,0s320.1,0,400.1,0h80V1064z"
                 />
-                <p className="font-bold text-white">Mohammed Al-Salem</p>
-                <p className="text-white">Co-Founder of ReturnPal</p>
+                <path
+                  className="st1"
+                  d="M1920,1063.5l-80-17c-80-18-240.1-52-400.1-70c-160-17-320.1-17-480.1,0c-160,18-320.1,52-480.1,52
+		s-320.1-34-400.1-52l-80-17v-207h80c80,0,240.1,0,400.1,0s320.1,0,480.1,0s320.1,0,480.1,0s320.1,0,400.1,0h80V1063.5z"
+                />
+              </g>
+              <path className="st2" d="M0,309h1920v464H0V309z" />
+              <g id="Layer_2"></g>
+            </svg>
+
+            <div className="absolute top-32 w-full py-2.5 text-center text-xs leading-4 text-white">
+              <div className="container mx-auto max-w-5xl space-y-20">
+                <p className="text-4xl">
+                  <a className="text-white">Our</a>{' '}
+                  <a className="font-bold text-primary">Founders</a>
+                </p>
+                <div className="flex justify-between px-12">
+                  <div>
+                    <Image
+                      className="border-8 border-primary"
+                      src={'/images/returnpals-hasan.png'}
+                      alt="Hasan-Ali"
+                      width={300}
+                      height={300}
+                    />
+                    <p className="font-bold text-white">Mohammed Al-Salem</p>
+                    <p className="text-white">Co-Founder of ReturnPal</p>
+                  </div>
+
+                  <div>
+                    <Image
+                      className="rounded-full border-8 border-primary"
+                      src={'/images/returnpals-hasan.png'}
+                      alt="Hasan-Ali"
+                      width={300}
+                      height={300}
+                    />
+                    <p className="font-bold text-white">Mohammed Al-Salem</p>
+                    <p className="text-white">Co-Founder of ReturnPal</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+          {/* <div className="absolute space-y-14 bg-brand py-6 text-center">
+            <div className="container mx-auto max-w-5xl">
+              <p className="text-4xl">
+                <a className="text-white">Our</a>{' '}
+                <a className="font-bold text-primary">Founders</a>
+              </p>
+              <div className="flex justify-between">
+                <div>
+                  <Image
+                    className="border-8 border-primary"
+                    src={'/images/returnpals-hasan.png'}
+                    alt="Hasan-Ali"
+                    width={300}
+                    height={300}
+                  />
+                  <p className="font-bold text-white">Mohammed Al-Salem</p>
+                  <p className="text-white">Co-Founder of ReturnPal</p>
+                </div>
+
+                <div>
+                  <Image
+                    className="rounded-full border-8 border-primary"
+                    src={'/images/returnpals-hasan.png'}
+                    alt="Hasan-Ali"
+                    width={300}
+                    height={300}
+                  />
+                  <p className="font-bold text-white">Mohammed Al-Salem</p>
+                  <p className="text-white">Co-Founder of ReturnPal</p>
+                </div>
+              </div>
+            </div>
+      </div> */}
         </div>
 
         {/* <div className="grow space-y-14 bg-brand py-6 text-center">
@@ -90,18 +182,36 @@ export default function Home() {
           </div>
         </div> */}
 
-        <div className="space-y-14 text-center">
-          <p className="text-4xl">
-            Our <a className="font-bold text-primary">Mission</a>
-          </p>
-          <p>
+        <HomeSection>
+          <HomeSectionTitle>
+            Our <HomeSectionTitleHighlight>Mission</HomeSectionTitleHighlight>
+          </HomeSectionTitle>
+          <HomeSectionDescription>
             Our goal is to revolutionize the returns process for online shoppers
             by offering a hassle-free and convenient solution. We aim to
             alleviate the stress of the return process by managing the entire
             repackaging and delivery process on your behalf, allowing you to sit
             back and relax.
-          </p>
-        </div>
+          </HomeSectionDescription>
+        </HomeSection>
+
+        {/* <HomeSection>
+          <HomeSectionTitle>
+            Why Choose <HomeSectionTitleHighlight>Us</HomeSectionTitleHighlight>
+            ?
+          </HomeSectionTitle>
+          <HomeSectionDescription>
+            You can help us create Social Impact together
+          </HomeSectionDescription>
+          <HomeSectionDescription>
+            We value sustainability and community empowerment. Through our
+            Corporate Social Responsibility (CSR) initiatives, we collaborate
+            with businesses to repurpose and donate goods, directly benefiting
+            underserved communities. If your organization is looking to fulfill
+            its CSR goals, we invite you to reach out to us. Let&rsquo;s join
+            hands and create a positive change together.
+          </HomeSectionDescription>
+        </HomeSection> */}
 
         <div
           // style={{
@@ -110,21 +220,21 @@ export default function Home() {
           className="max-w-screen m-[calc(-50vw+50%)] mt-56 w-screen space-y-14 bg-brand py-6 text-center"
         >
           <div className="container mx-auto max-w-5xl text-white">
-            <p className="text-4xl">
-              Why Choose <a className="font-bold text-primary">Us</a>?
-            </p>
-            <p className="font-bold">
-              <a className="font-bold text-primary">You</a> can help us create
-              <a className="font-bold text-primary">Social Impact</a> together
-            </p>
-            <p className="font-bold">
-              We value sustainability and community empowerment. Through our
-              Corporate Social Responsibility (CSR) initiatives, we collaborate
-              with businesses to repurpose and donate goods, directly benefiting
-              underserved communities. If your organization is looking to
-              fulfill its CSR goals, we invite you to reach out to us.
-              Let&rsquo;s join hands and create a positive change together.
-            </p>
+            <HomeSection>
+              <HomeSectionTitle>
+                Why Choose{' '}
+                <HomeSectionTitleHighlight>Us</HomeSectionTitleHighlight>?
+              </HomeSectionTitle>
+              <HomeSectionDescription className="text-white">
+                We value sustainability and community empowerment. Through our
+                Corporate Social Responsibility (CSR) initiatives, we
+                collaborate with businesses to repurpose and donate goods,
+                directly benefiting underserved communities. If your
+                organization is looking to fulfill its CSR goals, we invite you
+                to reach out to us. Let&rsquo;s join hands and create a positive
+                change together.
+              </HomeSectionDescription>
+            </HomeSection>
             <div className="flex items-end justify-between">
               <svg
                 width="134"
@@ -219,14 +329,28 @@ export default function Home() {
         </div>
 
         <div className="flex flex-col items-center justify-center space-y-14 text-center">
-          <p className="text-4xl">
-            Our <a className="font-bold text-primary">Operation</a>
-          </p>
-          <p>
-            We are all over the greater Toronto area, operating a local facility
-            designed to ensure that the repackaging of items can accommodate
-            same-day return needs.
-          </p>
+          {/* <div className="flex flex-col items-center justify-center space-y-14">
+            <p className="text-4xl">
+              Our <a className="font-bold text-primary">Operation</a>
+            </p>
+            <p className="w-3/5 shrink text-center">
+              We are all over the greater Toronto area, operating a local
+              facility designed to ensure that the repackaging of items can
+              accommodate same-day return needs.
+            </p>
+          </div> */}
+          <HomeSection>
+            <HomeSectionTitle>
+              Our{' '}
+              <HomeSectionTitleHighlight>Operation</HomeSectionTitleHighlight>
+            </HomeSectionTitle>
+            <HomeSectionDescription>
+              We are all over the greater Toronto area, operating a local
+              facility designed to ensure that the repackaging of items can
+              accommodate same-day return needs.
+            </HomeSectionDescription>
+          </HomeSection>
+
           <svg
             width="340"
             height="334"
