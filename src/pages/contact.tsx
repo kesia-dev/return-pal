@@ -25,7 +25,7 @@ function Contact() {
       </div>
       <Image
         className="my-4 pl-10"
-        src="/images/navbar-logo-transparent.png"
+        src="/images/returnpal-short-logo.png"
         alt="Contact Us"
         width={160}
         height={0}
