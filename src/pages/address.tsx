@@ -2,6 +2,7 @@ import React from 'react'
 import { getLayout } from '@/layouts/DefaultLayout'
 import { Button } from '@/components/ui/button'
 import { useState, useEffect } from 'react'
+import { input } from 'zod';
 
 function Address() {
   const [addresses, setAddresses] = useState({});
@@ -15,13 +16,13 @@ function Address() {
     // const parentNode = event.target.parentNode;
     // console.log(parentNode);
     setSelectedMethod(event.target.value);
-    const form = document.getElementById("selectPickupMethod");
+    const form = document.getElementById("selectPickupMethod") as HTMLElement;
     if (form) {
       const radioInputs = form.querySelectorAll('input[type="radio"]');
       let selectedValue;
 
-      radioInputs.forEach(function (input) {
-        const parentDiv = input.parentNode?.parentNode
+      radioInputs.forEach(function (input: any) {
+        const parentDiv: HTMLElement = input.parentNode?.parentNode;
         console.log(parentDiv)
         if (parentDiv) {
           if (input.checked) {
@@ -63,12 +64,12 @@ function Address() {
     setAddAddress(!addAddress);
   }
   const handleAddressSelection = () => {
-    const form = document.getElementById("selectAddressForm");
+    const form = document.getElementById("selectAddressForm") ; 
     if (form) {
       const radioInputs = form.querySelectorAll('input[type="radio"]');
       let selectedValue;
 
-      radioInputs.forEach(function (input) {
+      radioInputs.forEach(function (input: any) {
         if (input.checked) {
           selectedValue = input.value;
         }
