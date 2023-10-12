@@ -4,9 +4,9 @@ import { Button } from '@/components/ui/button'
 import { useState, useEffect } from 'react'
 
 function Address() {
-  const [customer, setCustomer] = useState({});
+  const [addresses, setAddresses] = useState({});
   const [step, setStep] = useState(1);
-  let addAddress: boolean = false;
+  const [addAddress, setAddAddress] = useState(false);
   const mockCustomer: { name: string, address: string[] } = {
     name: "Bob",
     address: ["123 Main St", "123 Pine St"]
@@ -23,8 +23,16 @@ function Address() {
     }
   ]
   useEffect(() => {
-    setCustomer(mockCustomer);
+    setAddresses(mockAddresses);
   }, [])
+  const addNewAddress = (event:any) => {
+    event.preventDefault();
+    console.log(event.target[0].value);
+    console.log(event.target[1].value);
+  }
+  const toggleAddressForm = () => {
+    setAddAddress(!addAddress);
+  }
   // const addressMapper = (addressArray: string[]) => {
   //   return addressArray.map((address) => {
   //     return (<div><input type="radio" value={address} /> <label> {customer.name} {address} </label></div>)
@@ -32,7 +40,7 @@ function Address() {
   // }
   const addressArrayMapper = (addressArray: { name: string, address: string, default: boolean }[]) => {
     return addressArray.map((address) => {
-      return (<div className=""><input type="radio" value={address.address} /> <label className="font-bold">
+      return (<div className=""><input type="radio" key={addressArray.indexOf(address)} value={address.address} /> <label className="font-bold">
         {address.name} </label> <label> {address.address} </label> <label className="text-primary font-bold">
           {address.default && (
             "Default address"
@@ -53,8 +61,8 @@ function Address() {
           {addressArrayMapper(mockAddresses)}
         </form>
       </div>
-      <Button className="bg-transparent hover:bg-transparent text-primary font-bold">+ Add a new address </Button>
-      <form className="flex flex-column justify-around w-1/3" onSubmit={(e) => console.log(e)}>
+      <Button className="bg-transparent hover:bg-transparent text-primary font-bold" onClick={toggleAddressForm}>+ Add a new address </Button>
+      { addAddress && (<form className="flex flex-column justify-around w-1/3" onSubmit={(e) => addNewAddress(e)}>
         <div className="flex flex-row">
           <div>
             <label>Name</label> <label>Address</label>
@@ -67,7 +75,8 @@ function Address() {
         <div className="flex justify-around">
           <button className="text-primary" type="submit">Add new address</button>
         </div>
-      </form>
+      </form>)}
+      
       <span className="flex justify-between" >
         <Button className="bg-transparent hover:bg-transparent text-primary font-bold">← Back </Button>
         <Button className="next text-white font-bold"  > Next → </Button>
