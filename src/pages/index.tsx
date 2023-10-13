@@ -127,7 +127,8 @@ export default function AboutUs() {
         <div className="m-[calc(-50vw+50%)]">
           <div className="relative">
             <svg
-              className="h-[45rem] w-screen fill-brand"
+              //className="h-[45rem] w-screen fill-brand"
+              className="h-[45rem] w-screen fill-brand md:h-[45rem]"
               version="1.1"
               preserveAspectRatio="none"
               id="Layer_1"
@@ -152,24 +153,24 @@ export default function AboutUs() {
               <rect y="203" className="st1" width="1920" height="603" />
             </svg>
 
-            <div className="absolute top-32 w-full py-2.5 text-center leading-4 text-white">
-              <div className="container mx-auto space-y-11">
+            <div className="absolute top-28 w-full py-2.5 text-center leading-4 text-white">
+              <div className="container mx-auto space-y-8">
                 <HomeSection className="space-y-5 text-white">
                   <HomeSectionTitle>
                     Why Choose{' '}
                     <HomeSectionTitleHighlight>Us</HomeSectionTitleHighlight>?
                   </HomeSectionTitle>
                   <HomeSectionDescription className="text-white">
-                    <HomeSectionTitleHighlight className="text-xs lg:text-xs">
+                    <HomeSectionTitleHighlight className="text-xl lg:text-xl">
                       You
                     </HomeSectionTitleHighlight>{' '}
                     can help us create{' '}
-                    <HomeSectionTitleHighlight>
+                    <HomeSectionTitleHighlight className="text-xl lg:text-xl">
                       Social Impact
                     </HomeSectionTitleHighlight>{' '}
                     together
                   </HomeSectionDescription>
-                  <HomeSectionDescription className="w-2/4 leading-6 text-white">
+                  <HomeSectionDescription className="leading-6 text-white md:w-4/6">
                     We value sustainability and community empowerment. Through
                     our Corporate Social Responsibility (CSR) initiatives, we
                     collaborate with businesses to repurpose and donate goods,
@@ -179,7 +180,7 @@ export default function AboutUs() {
                     positive change together.
                   </HomeSectionDescription>
                 </HomeSection>
-                <div className="flex items-end justify-evenly">
+                <div className="hidden items-end justify-evenly sm:flex">
                   <svg
                     className="h-36 w-36 shrink"
                     width="134"
