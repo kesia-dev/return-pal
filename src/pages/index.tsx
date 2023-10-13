@@ -127,8 +127,7 @@ export default function AboutUs() {
         <div className="m-[calc(-50vw+50%)]">
           <div className="relative">
             <svg
-              //className="h-[45rem] w-screen fill-brand"
-              className="h-[30rem] w-screen fill-brand sm:h-[45rem]"
+              className="h-[45rem] w-screen fill-brand sm:h-[45rem]"
               version="1.1"
               preserveAspectRatio="none"
               id="Layer_1"
