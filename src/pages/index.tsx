@@ -64,17 +64,17 @@ export default function AboutUs() {
             </svg>
 
             <div className="absolute top-28 w-full py-2.5 text-center text-xs leading-4 text-white">
-              <div className="container mx-auto max-w-5xl space-y-10 md:space-y-20">
-                <p className="text-4xl">
+              <div className="container mx-auto max-w-5xl space-y-10 md:space-y-14">
+                <p className="text-4xl lg:text-5xl">
                   <a className="text-white">Our</a>{' '}
                   <a className="font-bold text-primary">Founders</a>
                 </p>
                 {/* <div className="flex justify-between space-x-10 sm:space-x-32 md:px-12"> */}
                 {/* <div className="grid place-items-center gap-2 md:flex md:grid-cols-2"> */}
-                <div className="grid max-w-5xl place-items-center gap-2 md:flex md:grid-cols-2 md:justify-between md:px-9">
+                <div className="grid max-w-5xl place-items-center gap-7 md:flex md:grid-cols-2 md:justify-between md:px-9">
                   <div className="space-y-4">
                     <Image
-                      className="h-56 w-56 rounded-full border-8 border-primary md:h-72 md:w-72"
+                      className="h-52 w-52 rounded-full border-8 border-primary md:h-72 md:w-72"
                       src={'/images/Hasan-cropped_founder.jpg'}
                       alt="CEO of ReturnPal Hasan-Ali Abidi"
                       width={300}
@@ -90,7 +90,7 @@ export default function AboutUs() {
 
                   <div className="space-y-4">
                     <Image
-                      className="h-56 w-56 rounded-full border-8 border-primary md:h-72 md:w-72"
+                      className="h-52 w-52 rounded-full border-8 border-primary md:h-72 md:w-72"
                       src={'/images/Mohammed-cropped_founder.jpg'}
                       alt="Co-Founder of ReturnPal Mohammed Al-Salem"
                       width={300}
