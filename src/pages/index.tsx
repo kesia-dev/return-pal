@@ -16,7 +16,7 @@ export default function AboutUs() {
             How <HomeSectionTitleHighlight>ReturnPal</HomeSectionTitleHighlight>{' '}
             Began
           </HomeSectionTitle>
-          <HomeSectionDescription>
+          <HomeSectionDescription className="w-4/6">
             ReturnPal was born out of a simple realization: the traditional
             process of returning online purchases is far too complicated. Two
             brothers after waiting in line at the post office, decided there had
@@ -69,37 +69,39 @@ export default function AboutUs() {
                   <a className="text-white">Our</a>{' '}
                   <a className="font-bold text-primary">Founders</a>
                 </p>
-                <div className="flex justify-between px-12">
-                  <div>
-                    <Image
-                      className="border-8 border-primary"
-                      src={'/images/returnpals-hasan.png'}
-                      alt="Hasan-Ali"
-                      width={300}
-                      height={300}
-                    />
-                    <p className="text-lg font-bold text-white">
-                      Mohammed Al-Salem
-                    </p>
-                    <p className="text-lg text-white">
-                      Co-Founder of ReturnPal
-                    </p>
-                  </div>
-
-                  <div>
+                <div className="flex justify-between space-x-10 sm:space-x-32 md:px-12">
+                  <div className="space-y-4">
                     <Image
                       className="rounded-full border-8 border-primary"
-                      src={'/images/returnpals-hasan.png'}
-                      alt="Hasan-Ali"
+                      src={'/images/Hasan-cropped_founder.jpg'}
+                      alt="CEO of ReturnPal Hasan-Ali Abidi"
                       width={300}
                       height={300}
                     />
-                    <p className="text-lg font-bold text-white">
-                      Mohammed Al-Salem
-                    </p>
-                    <p className="text-lg text-white">
-                      Co-Founder of ReturnPal
-                    </p>
+                    <div>
+                      <p className="text-lg font-bold text-white">
+                        Hasan-Ali Abidi
+                      </p>
+                      <p className="text-lg text-white">CEO of ReturnPal</p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <Image
+                      className="rounded-full border-8 border-primary"
+                      src={'/images/Mohammed-cropped_founder.jpg'}
+                      alt="Co-Founder of ReturnPal Mohammed Al-Salem"
+                      width={300}
+                      height={300}
+                    />
+                    <div>
+                      <p className="text-lg font-bold text-white">
+                        Mohammed Al-Salem
+                      </p>
+                      <p className="text-lg text-white">
+                        Co-Founder of ReturnPal
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -111,7 +113,7 @@ export default function AboutUs() {
           <HomeSectionTitle>
             Our <HomeSectionTitleHighlight>Mission</HomeSectionTitleHighlight>
           </HomeSectionTitle>
-          <HomeSectionDescription>
+          <HomeSectionDescription className="w-4/6">
             Our goal is to revolutionize the returns process for online shoppers
             by offering a hassle-free and convenient solution. We aim to
             alleviate the stress of the return process by managing the entire
@@ -149,12 +151,22 @@ export default function AboutUs() {
             </svg>
 
             <div className="absolute top-32 w-full py-2.5 text-center leading-4 text-white">
-              <div className="container mx-auto space-y-20">
-                <HomeSection>
+              <div className="container mx-auto space-y-11">
+                <HomeSection className="space-y-5 text-white">
                   <HomeSectionTitle>
                     Why Choose{' '}
                     <HomeSectionTitleHighlight>Us</HomeSectionTitleHighlight>?
                   </HomeSectionTitle>
+                  <HomeSectionDescription className="text-white">
+                    <HomeSectionTitleHighlight className="text-xs lg:text-xs">
+                      You
+                    </HomeSectionTitleHighlight>{' '}
+                    can help us create{' '}
+                    <HomeSectionTitleHighlight>
+                      Social Impact
+                    </HomeSectionTitleHighlight>{' '}
+                    together
+                  </HomeSectionDescription>
                   <HomeSectionDescription className="w-2/4 leading-6 text-white">
                     We value sustainability and community empowerment. Through
                     our Corporate Social Responsibility (CSR) initiatives, we
@@ -167,6 +179,7 @@ export default function AboutUs() {
                 </HomeSection>
                 <div className="flex items-end justify-evenly">
                   <svg
+                    className="h-36 w-36"
                     width="134"
                     height="182"
                     viewBox="0 0 134 182"
@@ -179,6 +192,7 @@ export default function AboutUs() {
                     />
                   </svg>
                   <svg
+                    className="h-36 w-36"
                     width="170"
                     height="149"
                     viewBox="0 0 170 149"
@@ -223,6 +237,7 @@ export default function AboutUs() {
                     />
                   </svg>
                   <svg
+                    className="h-36 w-36"
                     width="168"
                     height="182"
                     viewBox="0 0 168 182"
