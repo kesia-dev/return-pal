@@ -4,10 +4,10 @@ import { getLayout } from '@/layouts/DefaultLayout'
 function Home() {
   return (
     <>
-      <div className="flex">
-        <div>desc</div>
+      <section className="mx-20 my-16 flex">
+        <article>desc</article>
         <div>img container</div>
-      </div>
+      </section>
     </>
   )
 }
