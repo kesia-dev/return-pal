@@ -47,7 +47,10 @@ const HomeSectionDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn('shrink text-center font-semibold text-brand', className)} //  md:w-4/5
+    className={cn(
+      'shrink text-center text-base font-semibold text-brand sm:text-lg',
+      className
+    )} //  md:w-4/5
     {...props}
   />
 ))
