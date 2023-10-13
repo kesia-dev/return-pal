@@ -10,13 +10,13 @@ import Image from 'next/image'
 export default function AboutUs() {
   return (
     <div className="container mx-auto flex max-w-5xl pb-16 pt-20">
-      <div className="mx-auto w-full space-y-16 px-4 sm:px-3">
+      <div className="w-full space-y-16">
         <HomeSection>
-          <HomeSectionTitle>
+          <HomeSectionTitle className="text-center">
             How <HomeSectionTitleHighlight>ReturnPal</HomeSectionTitleHighlight>{' '}
             Began
           </HomeSectionTitle>
-          <HomeSectionDescription className="w-4/6">
+          <HomeSectionDescription className="md:w-4/6">
             ReturnPal was born out of a simple realization: the traditional
             process of returning online purchases is far too complicated. Two
             brothers after waiting in line at the post office, decided there had
@@ -29,7 +29,7 @@ export default function AboutUs() {
         <div className="m-[calc(-50vw+50%)]">
           <div className="relative">
             <svg
-              className="h-[45rem] w-full fill-brand"
+              className="h-[60rem] w-screen fill-brand md:h-[45rem]" // TODO: w-fit for mobile?
               version="1.1"
               preserveAspectRatio="none"
               id="Layer_1"
@@ -63,16 +63,18 @@ export default function AboutUs() {
               <g id="Layer_2"></g>
             </svg>
 
-            <div className="absolute top-32 w-full py-2.5 text-center text-xs leading-4 text-white">
-              <div className="container mx-auto max-w-5xl space-y-10">
+            <div className="absolute top-28 w-full py-2.5 text-center text-xs leading-4 text-white">
+              <div className="container mx-auto max-w-5xl space-y-10 md:space-y-20">
                 <p className="text-4xl">
                   <a className="text-white">Our</a>{' '}
                   <a className="font-bold text-primary">Founders</a>
                 </p>
-                <div className="flex justify-between space-x-10 sm:space-x-32 md:px-12">
+                {/* <div className="flex justify-between space-x-10 sm:space-x-32 md:px-12"> */}
+                {/* <div className="grid place-items-center gap-2 md:flex md:grid-cols-2"> */}
+                <div className="grid max-w-5xl place-items-center gap-2 md:flex md:grid-cols-2 md:justify-between md:px-9">
                   <div className="space-y-4">
                     <Image
-                      className="rounded-full border-8 border-primary"
+                      className="h-56 w-56 rounded-full border-8 border-primary md:h-72 md:w-72"
                       src={'/images/Hasan-cropped_founder.jpg'}
                       alt="CEO of ReturnPal Hasan-Ali Abidi"
                       width={300}
@@ -88,7 +90,7 @@ export default function AboutUs() {
 
                   <div className="space-y-4">
                     <Image
-                      className="rounded-full border-8 border-primary"
+                      className="h-56 w-56 rounded-full border-8 border-primary md:h-72 md:w-72"
                       src={'/images/Mohammed-cropped_founder.jpg'}
                       alt="Co-Founder of ReturnPal Mohammed Al-Salem"
                       width={300}
@@ -113,7 +115,7 @@ export default function AboutUs() {
           <HomeSectionTitle>
             Our <HomeSectionTitleHighlight>Mission</HomeSectionTitleHighlight>
           </HomeSectionTitle>
-          <HomeSectionDescription className="w-4/6">
+          <HomeSectionDescription className="md:w-4/6">
             Our goal is to revolutionize the returns process for online shoppers
             by offering a hassle-free and convenient solution. We aim to
             alleviate the stress of the return process by managing the entire
@@ -179,7 +181,7 @@ export default function AboutUs() {
                 </HomeSection>
                 <div className="flex items-end justify-evenly">
                   <svg
-                    className="h-36 w-36"
+                    className="h-36 w-36 shrink"
                     width="134"
                     height="182"
                     viewBox="0 0 134 182"
@@ -281,7 +283,7 @@ export default function AboutUs() {
               Our{' '}
               <HomeSectionTitleHighlight>Operation</HomeSectionTitleHighlight>
             </HomeSectionTitle>
-            <HomeSectionDescription>
+            <HomeSectionDescription className="md:w-4/6">
               We are all over the greater Toronto area, operating a local
               facility designed to ensure that the repackaging of items can
               accommodate same-day return needs.
@@ -289,6 +291,7 @@ export default function AboutUs() {
           </HomeSection>
 
           <svg
+            className="h-56 w-56 flex-shrink fill-current"
             width="340"
             height="334"
             viewBox="0 0 340 334"
