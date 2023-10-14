@@ -8,10 +8,11 @@ import {
 } from '@/components/home/Home'
 import { getLayout } from '@/layouts/DefaultLayout'
 import { Button } from '@/components/ui/button'
+import HomePageSVG from '@/components/SvgComponents/HomePageSVG'
 
 function Home() {
   return (
-    <div className="container mx-auto flex max-w-6xl pb-16 pt-12 md:pt-20">
+    <div className="container mx-auto flex max-w-6xl flex-col pb-16 pt-12 md:pt-20">
       <section className="mx-auto flex w-full gap-8 space-y-8 px-4 sm:px-3">
         <HomeSection className="flex-1">
           <HomeSectionTitle className="font-medium">
@@ -36,7 +37,11 @@ function Home() {
           />
         </div>
       </section>
-      <section></section>
+      <section className="m-[calc(-50vw+50%)]">
+        <div className="relative">
+          <HomePageSVG />
+        </div>
+      </section>
     </div>
   )
 }
