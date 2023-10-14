@@ -5,20 +5,13 @@ const HomePageSVG: React.FC = () => {
     <svg
       className="h-[60rem] w-screen fill-brand md:h-[45rem]"
       version="1.1"
-      // id="Layer_1"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      // x="0px"
-      // y="0px"
-      // width="1920px"
-      // height="1080px"
-      // viewBox="0 0 1920 1080"
-      // version="1.1"
       preserveAspectRatio="none"
       id="Layer_1"
       x="0px"
       y="0px"
-      viewBox="0 -100 1920 1080"
+      viewBox="0 0 1920 1080"
     >
       <style type="text/css">
         .st0{'fill:#052A42;'}
