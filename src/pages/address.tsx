@@ -14,9 +14,6 @@ function Address() {
   const [selectedMethod, setSelectedMethod] = useState('');
 
   const handleRadioChange = (event: any) => {
-    // console.log(event.target.value);
-    // const parentNode = event.target.parentNode;
-    // console.log(parentNode);
     setSelectedMethod(event.target.value);
     const form = document.getElementById("selectPickupMethod") as HTMLElement;
     if (form) {
@@ -25,7 +22,6 @@ function Address() {
 
       radioInputs.forEach(function (input: any) {
         const parentDiv: HTMLElement = input.parentNode?.parentNode;
-        console.log(parentDiv)
         if (parentDiv) {
           if (input.checked) {
             parentDiv?.classList.remove("border-brand");
@@ -180,10 +176,10 @@ function Address() {
       {step === 2 && (<div><div className="text-brand">
         Which pickup method do you prefer?
       </div>
-        <form id="selectPickupMethod" className="mt-5">
-          <div className="flex flex-row justify-around mx-1/5 ">
-            <div className="justify-center border-4 border-brand rounded-full py-2 px-4">
-              <div className="flex justify-center font-bold">
+        <form id="selectPickupMethod" className="mt-5 flex justify-center">
+          <div className="flex flex-row justify-center mx-1/5 w-3/4">
+            <div className="justify-center border-4 border-brand rounded-[12px] mx-4  py-2 px-4 max-w-[40%]">
+              <div className="flex justify-center text-smallText font-bold ">
                 Direct Handoff </div>
               <div className="flex justify-center "> Hand the package directly to our specialist at your door </div>
               <div className="flex justify-center" >
@@ -191,8 +187,9 @@ function Address() {
                   onChange={handleRadioChange} />
               </div>
             </div>
-            <div className="justify-center border-4 border-brand rounded-full py-2 px-4">
-              <div className="flex justify-center font-bold ">
+            
+            <div className="justify-center border-4 border-brand rounded-[12px] mx-4 py-2 px-4 max-w-[40%]">
+              <div className="flex justify-center text-smallText font-bold ">
                 Leave on Doorstep </div>
               <div className="flex justify-center"> Place items outside your door ahead of your pick up window </div>
               <div className="flex justify-center">
