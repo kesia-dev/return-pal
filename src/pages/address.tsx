@@ -43,13 +43,13 @@ function Address() {
   };
   const mockAddresses: { name: string, address: string, default: boolean }[] = [
     {
-      name: "Bob",
-      address: "123 Main St",
-      default: false
+      name: "Bob Gunderson",
+      address: "6500 Boulevard de Rome, Brossard, QC, J4Y 0B6, Canada",
+      default: true
     },
     {
       name: "Marky Mark",
-      address: "123 King St", default: true
+      address: "123 King St", default: false
     }
   ]
   useEffect(() => {
@@ -89,7 +89,7 @@ function Address() {
   // }
   const addressArrayMapper = (addressArray: { name: string, address: string, default: boolean }[]) => {
     return addressArray.map((address) => {
-      return (<div className="w-full h-10 flex my-5 fontSize-large items-center"><Input type="radio" key={addressArray.indexOf(address)} value={address.address} name="address" className="w-10 mx-5"/> <label className="font-bold mx-2">
+      return (<div className="w-full h-10 flex my-5 fontSize-large items-center"><Input type="radio" key={addressArray.indexOf(address)} value={address.address} name="address" className="h-6 w-8 mx-5"/> <label className="font-bold mx-2">
         {address.name} </label> <label> {address.address} </label> <label className="text-primary font-bold mx-2">
           {address.default && (
             "Default address"
@@ -138,7 +138,7 @@ function Address() {
             <button className="text-primary" type="submit">Add new address</button>
           </div>
         </form>)}
-        <span className="flex justify-between" >
+        <span className="flex justify-between mt-5" >
           <Button className="bg-transparent hover:bg-transparent text-primary font-bold">← Back </Button>
           <Button className="next text-white font-bold" onClick={handleAddressSelection} > Next → </Button>
         </span>
@@ -172,7 +172,7 @@ function Address() {
         </form>
 
 
-        <span className="flex justify-between" >
+        <span className="flex justify-between mt-5" >
           <Button className="bg-transparent hover:bg-transparent text-primary font-bold" onClick={() => setStep(1)}>← Back </Button>
           <Button className="next text-white font-bold" onClick={() => setStep(3)} > Next → </Button>
         </span></div>)}
