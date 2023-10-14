@@ -22,16 +22,21 @@ function Home() {
             We handle returns of purchases from all online retailers. No need
             for printing labels, packaging, or visits to the post office.
           </HomeSectionDescription>
-          <Button className="self-start">Schedule a Pickup Now</Button>
+          <Button className="  self-stretch md:self-start">
+            Schedule a Pickup Now
+          </Button>
         </HomeSection>
-        <Image
-          className="hidden flex-1 self-center md:block"
-          src="/images/np_delivery_man.png"
-          alt="Return Pal"
-          width={516}
-          height={381}
-        />
+        <div className="hidden aspect-[1.35/1] flex-1 md:block">
+          <Image
+            className="h-full w-full object-cover"
+            src="/images/np_delivery_man.png"
+            alt="Return Pal"
+            width={500}
+            height={500}
+          />
+        </div>
       </section>
+      <section></section>
     </div>
   )
 }
