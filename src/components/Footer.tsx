@@ -1,5 +1,7 @@
 import Link from 'next/link'
-import { FaInstagram, FaLinkedin, FaTwitter, FaYoutube } from 'react-icons/fa'
+import { FaInstagram, FaLinkedin, FaFacebook, FaYoutube } from 'react-icons/fa'
+
+import { RiTwitterXFill, RiTiktokFill } from 'react-icons/ri'
 
 export default function Footer() {
   return (
@@ -29,7 +31,7 @@ export default function Footer() {
             href="/"
             className="flex content-center items-center justify-center"
           >
-            <FaTwitter size={45} className="text-primary" />
+            <RiTwitterXFill size={45} className="text-primary" />
           </Link>
         </li>
 
@@ -39,6 +41,24 @@ export default function Footer() {
             className="flex content-center items-center justify-center"
           >
             <FaLinkedin size={45} className="text-primary" />
+          </Link>
+        </li>
+
+        <li>
+          <Link
+            href="/"
+            className="flex content-center items-center justify-center"
+          >
+            <RiTiktokFill size={45} className="text-primary" />
+          </Link>
+        </li>
+
+        <li>
+          <Link
+            href="/"
+            className="flex content-center items-center justify-center"
+          >
+            <FaFacebook size={45} className="text-primary" />
           </Link>
         </li>
       </ul>
