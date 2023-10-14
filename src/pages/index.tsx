@@ -13,7 +13,7 @@ import DemoCards from '@/components/DemoCards/DemoCards'
 
 function Home() {
   return (
-    <div className="container mx-auto flex max-w-6xl pb-16 pt-12 md:pt-20">
+    <div className="container mx-auto flex max-w-5xl pb-16 pt-12 md:pt-20 xl:max-w-7xl">
       <div className="w-full space-y-8 px-4 sm:px-3">
         <section className="flex gap-8">
           <HomeSection className="flex-1">
