@@ -3,6 +3,8 @@ import { getLayout } from '@/layouts/DefaultLayout'
 import { Button } from '@/components/ui/button'
 import { useState, useEffect } from 'react'
 import { input } from 'zod';
+import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
 
 function Address() {
   const [addresses, setAddresses] = useState({});
@@ -10,7 +12,6 @@ function Address() {
   const [addAddress, setAddAddress] = useState(false);
   const [selectedMethod, setSelectedMethod] = useState('');
 
-  // Event handler for when a radio input is selected
   const handleRadioChange = (event: any) => {
     // console.log(event.target.value);
     // const parentNode = event.target.parentNode;
@@ -36,10 +37,9 @@ function Address() {
           }
         }
       });
-
       setStep(2);
     }
-    
+
   };
   const mockAddresses: { name: string, address: string, default: boolean }[] = [
     {
@@ -64,7 +64,7 @@ function Address() {
     setAddAddress(!addAddress);
   }
   const handleAddressSelection = () => {
-    const form = document.getElementById("selectAddressForm") ; 
+    const form = document.getElementById("selectAddressForm");
     if (form) {
       const radioInputs = form.querySelectorAll('input[type="radio"]');
       let selectedValue;
@@ -76,7 +76,10 @@ function Address() {
       });
       console.log(selectedValue);
 
-      setStep(2);
+      if (selectedValue) {
+        setStep(2);
+      }
+
     }
   }
   // const addressMapper = (addressArray: string[]) => {
@@ -109,8 +112,8 @@ function Address() {
         <div className="font-bold text-brand text-smallText mt-5">
           Your Addresses:
         </div>
-        <div className="w-3/4 border-black border-t-2">
-
+        <Separator className="w-3/4 border-black border-t-2" />
+        <div>
           <form id="selectAddressForm" className="mt-5">
             {addressArrayMapper(mockAddresses)}
           </form>
@@ -118,12 +121,17 @@ function Address() {
         <Button className="bg-transparent hover:bg-transparent text-primary font-bold" onClick={toggleAddressForm}>+ Add a new address </Button>
         {addAddress && (<form className="flex flex-column justify-around w-1/3" onSubmit={(e) => addNewAddress(e)}>
           <div className="flex flex-row">
-            <div>
-              <label>Name</label> <label>Address</label>
+            <div className="mr-5">
+              <div className="mt-3">
+                <label >Name</label>
+              </div>
+              <div className="mt-8">
+                <label>Address</label>
+              </div>
             </div>
             <div>
-              <input type="text" name="name" />
-              <input type="text" name="address" />
+              <Input type="text" name="name" />
+              <Input type="text" name="address" className="mt-5" />
             </div>
           </div>
           <div className="flex justify-around">
@@ -136,39 +144,38 @@ function Address() {
         </span>
       </div>)}
 
-
-      <div className="text-brand">
+      {step === 2 && (<div><div className="text-brand">
         Which pickup method do you prefer?
       </div>
-      <form id="selectPickupMethod" className="mt-5">
-        <div className="flex flex-row justify-around mx-1/5 ">
-          <div className="justify-center border-4 border-brand rounded-full py-2 px-4">
-            <div className="flex justify-center font-bold">
-              Direct Handoff </div>
-            <div className="flex justify-center "> Hand the package directly to our specialist at your door </div>
-            <div className="flex justify-center" >
-              <input type="radio" key="handoff" value="handoff" name="pickupMethod" checked={selectedMethod === 'handoff'}
-              onChange={handleRadioChange}/>
+        <form id="selectPickupMethod" className="mt-5">
+          <div className="flex flex-row justify-around mx-1/5 ">
+            <div className="justify-center border-4 border-brand rounded-full py-2 px-4">
+              <div className="flex justify-center font-bold">
+                Direct Handoff </div>
+              <div className="flex justify-center "> Hand the package directly to our specialist at your door </div>
+              <div className="flex justify-center" >
+                <input type="radio" key="handoff" value="handoff" name="pickupMethod" checked={selectedMethod === 'handoff'}
+                  onChange={handleRadioChange} />
+              </div>
+            </div>
+            <div className="justify-center border-4 border-brand rounded-full py-2 px-4">
+              <div className="flex justify-center font-bold ">
+                Leave on Doorstep </div>
+              <div className="flex justify-center"> Place items outside your door ahead of your pick up window </div>
+              <div className="flex justify-center">
+
+                <input type="radio" key="doorstep" value="doorstep" name="pickupMethod" checked={selectedMethod === 'doorstep'}
+                  onChange={handleRadioChange} />
+              </div>
             </div>
           </div>
-          <div className="justify-center border-4 border-brand rounded-full py-2 px-4">
-            <div className="flex justify-center font-bold ">
-              Leave on Doorstep </div>
-            <div className="flex justify-center"> Place items outside your door ahead of your pick up window </div>
-            <div className="flex justify-center">
+        </form>
 
-              <input type="radio" key="doorstep" value="doorstep" name="pickupMethod" checked={selectedMethod === 'doorstep'}
-              onChange={handleRadioChange} />
-            </div>
-          </div>
-        </div>
-      </form>
-      
 
-      <span className="flex justify-between" >
-        <Button className="bg-transparent hover:bg-transparent text-primary font-bold" onClick={() => setStep(1)}>← Back </Button>
-        <Button className="next text-white font-bold" onClick={() => console.log("step3")} > Next → </Button>
-      </span>
+        <span className="flex justify-between" >
+          <Button className="bg-transparent hover:bg-transparent text-primary font-bold" onClick={() => setStep(1)}>← Back </Button>
+          <Button className="next text-white font-bold" onClick={() => setStep(3)} > Next → </Button>
+        </span></div>)}
 
     </>
     // </div>
