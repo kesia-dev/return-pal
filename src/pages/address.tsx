@@ -2,9 +2,10 @@ import React from 'react'
 import { getLayout } from '@/layouts/DefaultLayout'
 import { Button } from '@/components/ui/button'
 import { useState, useEffect } from 'react'
-import { input } from 'zod';
+import { z } from 'zod';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
+import { Label } from '@/components/ui/label';
 
 function Address() {
   const [addresses, setAddresses] = useState({});
@@ -52,13 +53,38 @@ function Address() {
       address: "123 King St", default: false
     }
   ]
+  const addressSchema = z.object({
+    address: z.string().min(3).max(50),
+    city: z.string().min(3).max(50),
+    province: z.string().min(2).max(2),
+  })
+  const validateFormData = (inputs: unknown) => {
+    const isValidData = addressSchema.parse(inputs);
+    return isValidData;
+  };
+  const addressValidator = async (addressObj: object) => {
+    try {
+      const valid = validateFormData(addressObj);
+      if(!valid) {
+        return;
+      }
+      console.log(valid);
+      console.log("adding new address to profile!");
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
     setAddresses(mockAddresses);
   }, [])
   const addNewAddress = (event: any) => {
     event.preventDefault();
-    console.log(event.target[0].value);
-    console.log(event.target[1].value);
+    const addressToAdd: object = {
+      address: event.target[1].value,
+      city: event.target[2].value,
+      province: event.target[3].value,
+    } 
+    addressValidator(addressToAdd);
   }
   const toggleAddressForm = () => {
     setAddAddress(!addAddress);
@@ -82,11 +108,6 @@ function Address() {
 
     }
   }
-  // const addressMapper = (addressArray: string[]) => {
-  //   return addressArray.map((address) => {
-  //     return (<div><input type="radio" value={address} /> <label> {customer.name} {address} </label></div>)
-  //   })
-  // }
   const addressArrayMapper = (addressArray: { name: string, address: string, default: boolean }[]) => {
     return addressArray.map((address) => {
       return (<div className="w-full h-10 flex my-5 fontSize-large items-center"><Input type="radio" key={addressArray.indexOf(address)} value={address.address} name="address" className="h-6 w-8 mx-5"/> <label className="font-bold mx-2">
@@ -119,27 +140,39 @@ function Address() {
           </form>
         </div>
         <Button className="bg-transparent hover:bg-transparent text-primary font-bold" onClick={toggleAddressForm}>+ Add a new address </Button>
-        {addAddress && (<form className="flex flex-column justify-around w-1/3" onSubmit={(e) => addNewAddress(e)}>
-          <div className="flex flex-row">
-            <div className="mr-5">
-              <div className="mt-3">
-                <label >Name</label>
+        {addAddress && (<form className="flex flex-column justify-around w-3/4" onSubmit={(e) => addNewAddress(e)}>
+          <div className="flex flex-column">
+            <div className="items-center flex flex-row ">
+            <div className="mr-5 items-center">
+              <div className="my-2 flex items-center" >
+                <Label className="w-1/4">Name:</Label>
+                <Input type="text" name="name" className="my-2  w-3/4" />
               </div>
-              <div className="mt-8">
-                <label>Address</label>
+              <div className="my-2 flex items-center">
+                <Label className="w-1/4">Address: </Label>
+                <Input type="text" name="address" className="my-2  w-3/4" />
+              </div>
+              <div className="my-2 flex items-center">
+                <Label className="w-1/4">City: </Label>
+                <Input type="text" name="address" className="my-2 w-3/4" />
+              </div>
+              <div className="my-2 flex items-center">
+                <Label className="w-1/4">Province: (two letters) </Label>
+                <Input type="text" name="address" className="my-2  w-3/4" />
               </div>
             </div>
             <div>
-              <Input type="text" name="name" />
-              <Input type="text" name="address" className="mt-5" />
+              
+              
+            </div>
             </div>
           </div>
-          <div className="flex justify-around">
-            <button className="text-primary" type="submit">Add new address</button>
+          <div className="flex justify-around items-center">
+            <button className="text-primary h-1/4" type="submit">Add new address</button>
           </div>
         </form>)}
         <span className="flex justify-between mt-5" >
-          <Button className="bg-transparent hover:bg-transparent text-primary font-bold">← Back </Button>
+          <Button className="bg-transparent hover:bg-transparent text-primary font-bold ">← Back </Button>
           <Button className="next text-white font-bold" onClick={handleAddressSelection} > Next → </Button>
         </span>
       </div>)}
