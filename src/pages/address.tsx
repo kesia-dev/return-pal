@@ -89,8 +89,8 @@ function Address() {
   // }
   const addressArrayMapper = (addressArray: { name: string, address: string, default: boolean }[]) => {
     return addressArray.map((address) => {
-      return (<div className=""><input type="radio" key={addressArray.indexOf(address)} value={address.address} name="address" /> <label className="font-bold">
-        {address.name} </label> <label> {address.address} </label> <label className="text-primary font-bold">
+      return (<div className="w-full h-10 flex my-5 fontSize-large items-center"><Input type="radio" key={addressArray.indexOf(address)} value={address.address} name="address" className="w-10 mx-5"/> <label className="font-bold mx-2">
+        {address.name} </label> <label> {address.address} </label> <label className="text-primary font-bold mx-2">
           {address.default && (
             "Default address"
           )}
@@ -154,7 +154,7 @@ function Address() {
                 Direct Handoff </div>
               <div className="flex justify-center "> Hand the package directly to our specialist at your door </div>
               <div className="flex justify-center" >
-                <input type="radio" key="handoff" value="handoff" name="pickupMethod" checked={selectedMethod === 'handoff'}
+                <Input type="radio" key="handoff" value="handoff" name="pickupMethod" checked={selectedMethod === 'handoff'}
                   onChange={handleRadioChange} />
               </div>
             </div>
@@ -164,7 +164,7 @@ function Address() {
               <div className="flex justify-center"> Place items outside your door ahead of your pick up window </div>
               <div className="flex justify-center">
 
-                <input type="radio" key="doorstep" value="doorstep" name="pickupMethod" checked={selectedMethod === 'doorstep'}
+                <Input type="radio" key="doorstep" value="doorstep" name="pickupMethod" checked={selectedMethod === 'doorstep'}
                   onChange={handleRadioChange} />
               </div>
             </div>
