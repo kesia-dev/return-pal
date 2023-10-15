@@ -7,19 +7,38 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
-import {
-  Combine,
-  Calculator,
-  Users2,
-  Unplug,
-  Truck,
-  MenuSquare,
-} from 'lucide-react'
 import MobileMenuFooter from './MobileMenuFooter'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars } from '@fortawesome/free-solid-svg-icons'
+import {
+  type IconDefinition,
+  faBars,
+  faCircleInfo,
+  faCalculator,
+  faUsers,
+  faPlug,
+  faTruck,
+} from '@fortawesome/free-solid-svg-icons'
+import { type PropsWithChildren } from 'react'
 
-function MobileMenu() {
+type MobileViewType = PropsWithChildren & {
+  href: string
+  icon: IconDefinition
+}
+
+function MobileLink({ href, icon, children }: MobileViewType) {
+  return (
+    <SheetClose asChild>
+      <Link href={href} className="text-secondary hover:text-primary">
+        <p className="flex gap-x-2">
+          <FontAwesomeIcon icon={icon} width={'17'} />
+          {children}
+        </p>
+      </Link>
+    </SheetClose>
+  )
+}
+
+export default function MobileMenu() {
   return (
     <nav className="flex w-full justify-end px-2 md:hidden">
       <Sheet>
@@ -39,54 +58,27 @@ function MobileMenu() {
             />
           </SheetTitle>
           <p className="flex w-[70%] gap-x-2 border-b border-b-grey pb-2">
-            <MenuSquare className="w-5" />
+            <FontAwesomeIcon icon={faBars} width={'17'} />
             Menu
           </p>
-          <SheetClose asChild>
-            <Link href="/" className="text-secondary hover:text-primary">
-              <p className="flex gap-x-2">
-                <Combine className="w-5" />
-                How it Works
-              </p>
-            </Link>
-          </SheetClose>
-          <SheetClose asChild>
-            <Link href="/" className="text-secondary  hover:text-primary">
-              <p className="flex gap-x-2">
-                <Calculator className="w-5" />
-                Pricing
-              </p>
-            </Link>
-          </SheetClose>
-          <SheetClose asChild>
-            <Link href="/about" className="text-secondary hover:text-primary">
-              <p className="flex gap-x-2">
-                <Users2 className="w-5" />
-                About Us
-              </p>
-            </Link>
-          </SheetClose>
-          <SheetClose asChild>
-            <Link href="/sign-in" className="text-secondary hover:text-primary">
-              <p className="flex gap-x-2">
-                <Unplug className="w-5" />
-                Sign In
-              </p>
-            </Link>
-          </SheetClose>
-          <SheetClose asChild>
-            <Link href="/" className="text-secondary hover:text-primary">
-              <p className="flex gap-x-2">
-                <Truck className="w-5" />
-                Schedule Pickup
-              </p>
-            </Link>
-          </SheetClose>
+          <MobileLink href="/" icon={faCircleInfo}>
+            How it Works
+          </MobileLink>
+          <MobileLink href="/" icon={faCalculator}>
+            Pricing
+          </MobileLink>
+          <MobileLink href="/" icon={faUsers}>
+            About Us
+          </MobileLink>
+          <MobileLink href="/" icon={faPlug}>
+            Sign In
+          </MobileLink>
+          <MobileLink href="/" icon={faTruck}>
+            Schedule Pickup
+          </MobileLink>
           <MobileMenuFooter />
         </SheetContent>
       </Sheet>
     </nav>
   )
 }
-
-export default MobileMenu
