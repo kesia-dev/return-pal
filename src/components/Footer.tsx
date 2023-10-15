@@ -18,7 +18,7 @@ type FooterButtonLinkProps = {
 function FooterButtonLink({ href, icon }: FooterButtonLinkProps) {
   return (
     <li>
-      <Link href={href}>
+      <Link href={href} target="_blank">
         <FontAwesomeIcon icon={icon} width={'35'} className="text-primary" />
       </Link>
     </li>
