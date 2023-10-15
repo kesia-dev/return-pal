@@ -13,10 +13,10 @@ import {
   type IconDefinition,
   faBars,
   faCircleInfo,
-  faCalculator,
   faUsers,
-  faPlug,
   faTruck,
+  faRightToBracket,
+  faTags,
 } from '@fortawesome/free-solid-svg-icons'
 import { type PropsWithChildren } from 'react'
 
@@ -64,13 +64,13 @@ export default function MobileMenu() {
           <MobileLink href="/" icon={faCircleInfo}>
             How it Works
           </MobileLink>
-          <MobileLink href="/" icon={faCalculator}>
+          <MobileLink href="/" icon={faTags}>
             Pricing
           </MobileLink>
           <MobileLink href="/" icon={faUsers}>
             About Us
           </MobileLink>
-          <MobileLink href="/" icon={faPlug}>
+          <MobileLink href="/" icon={faRightToBracket}>
             Sign In
           </MobileLink>
           <MobileLink href="/" icon={faTruck}>
