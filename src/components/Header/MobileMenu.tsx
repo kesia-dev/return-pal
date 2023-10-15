@@ -16,26 +16,15 @@ import {
   MenuSquare,
 } from 'lucide-react'
 import MobileMenuFooter from './MobileMenuFooter'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars } from '@fortawesome/free-solid-svg-icons'
 
 function MobileMenu() {
   return (
-    <nav className="w-full px-2 pt-2 md:hidden">
+    <nav className="flex w-full justify-end px-2 md:hidden">
       <Sheet>
         <SheetTrigger>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2.5}
-            stroke="currentColor"
-            className="h-10 w-10"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-            />
-          </svg>
+          <FontAwesomeIcon icon={faBars} width={'20'} />
         </SheetTrigger>
         <SheetContent
           side="left"
