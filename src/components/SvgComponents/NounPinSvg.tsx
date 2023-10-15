@@ -3,7 +3,7 @@ import React from 'react'
 function NounPinSvg() {
   return (
     <svg
-      className="h-6 w-6 self-center"
+      className="h-16 w-16 self-center"
       width="100"
       height="100"
       viewBox="0 0 100 100"
