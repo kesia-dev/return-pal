@@ -19,7 +19,7 @@ function FooterButtonLink({ href, icon }: FooterButtonLinkProps) {
   return (
     <li>
       <Link href={href}>
-        <FontAwesomeIcon icon={icon} width={'50'} className="text-primary" />
+        <FontAwesomeIcon icon={icon} width={'35'} className="text-primary" />
       </Link>
     </li>
   )
