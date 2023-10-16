@@ -7,7 +7,6 @@ import NounBarcodeSvg from '@/components/SvgComponents/NounBarcodeSvg'
 import TimerSvg from '@/components/SvgComponents/TimerSvg'
 import NounPinSvg from '@/components/SvgComponents/NounPinSvg'
 import { AiFillCheckCircle } from 'react-icons/ai'
-import type { IconType } from 'react-icons'
 
 const cardData = [
   {
@@ -62,8 +61,8 @@ function DemoCards() {
   return (
     <div className="absolute top-64 w-full space-y-12 py-2.5 text-center leading-4 text-white md:top-56">
       <section className="px-20">
-        <div className=" mx-auto flex max-w-7xl justify-between gap-6">
-          <title className="mb-4 block max-w-5xl text-left text-largeText lg:text-5xl">
+        <div className="mx-auto mt-20 flex max-w-7xl justify-between gap-6 md:mt-10 lg:mt-8">
+          <title className="mb-4 block max-w-5xl text-left text-mediumText md:text-largeText lg:text-5xl xl:text-subtitle">
             How It Works
           </title>
         </div>
@@ -81,7 +80,7 @@ function DemoCards() {
       </section>
       <section className="px-20">
         <div className=" mx-auto flex max-w-7xl justify-between gap-6">
-          <title className=" mb-4 block max-w-5xl text-left text-largeText lg:text-5xl">
+          <title className="mb-4 block max-w-5xl text-left text-mediumText md:text-largeText lg:text-5xl xl:text-subtitle">
             Your Benifits
           </title>
         </div>
