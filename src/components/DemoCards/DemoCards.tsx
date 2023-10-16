@@ -11,12 +11,14 @@ import type { IconType } from 'react-icons'
 
 const cardData = [
   {
+    id: 1,
     step: 1,
     icon: CalendarSvg,
     title: 'Schedule A Return',
     description: 'Step-by-step guide to entering pickup details',
   },
   {
+    id: 2,
     step: 2,
     icon: PackageDeliverySvg,
     title: 'Select Pickup Method',
@@ -25,6 +27,7 @@ const cardData = [
   },
 
   {
+    id: 3,
     step: 3,
     icon: VanSvg,
     title: "We're On Our ",
@@ -34,11 +37,13 @@ const cardData = [
 
 const cardData2 = [
   {
+    id: 4,
     step: AiFillCheckCircle,
     icon: NounBarcodeSvg,
     description: 'Let us handle the repackaging and label printing for you',
   },
   {
+    id: 5,
     step: AiFillCheckCircle,
     icon: TimerSvg,
     description:
@@ -46,6 +51,7 @@ const cardData2 = [
   },
 
   {
+    id: 6,
     step: AiFillCheckCircle,
     icon: NounPinSvg,
     description: 'Convenient pickup service from wherever you are',
@@ -79,10 +85,15 @@ function DemoCards() {
             Your Benifits
           </title>
         </div>
-        <div className=" mx-auto flex max-w-7xl flex-col items-center justify-between gap-8 md:flex-row md:justify-between">
-          <CardItem />
-          <CardItem />
-          <CardItem />
+        <div className=" mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 md:flex-row md:justify-between">
+          {cardData2.map((data) => (
+            <CardItem
+              step={data.step}
+              key={data.id}
+              icon={data.icon()}
+              description={data.description}
+            />
+          ))}
         </div>
       </section>
     </div>

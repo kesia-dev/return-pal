@@ -3,7 +3,7 @@ import React from 'react'
 function TimerSvg() {
   return (
     <svg
-      className="h-20 w-20 self-center"
+      className="h-8 w-8 self-center lg:h-16 lg:w-16 xl:h-20 xl:w-20"
       width="100"
       height="100"
       viewBox="0 0 100 100"

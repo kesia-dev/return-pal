@@ -3,7 +3,7 @@ import React from 'react'
 function CalendarSvg() {
   return (
     <svg
-      className="h-20 w-20 self-center"
+      className="h-8 w-8 self-center lg:h-16 lg:w-16 xl:h-20 xl:w-20"
       viewBox="0 0 100 100"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
