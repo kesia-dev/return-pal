@@ -1,8 +1,8 @@
 import {
   HomeSection,
-  HomeSectionDescription,
-  HomeSectionTitle,
-  HomeSectionTitleHighlight,
+  SectionDescription,
+  SectionHeader,
+  SectionHeaderHighlight,
 } from '@/components/home/Home'
 import { getLayout } from '@/layouts/DefaultLayout'
 import Image from 'next/image'
@@ -22,18 +22,17 @@ export default function AboutUs() {
     <div className="container mx-auto flex max-w-5xl pb-16 pt-20">
       <div className="w-full space-y-16">
         <HomeSection>
-          <HomeSectionTitle className="text-center">
-            How <HomeSectionTitleHighlight>ReturnPal</HomeSectionTitleHighlight>{' '}
-            Began
-          </HomeSectionTitle>
-          <HomeSectionDescription className="md:w-4/6">
+          <SectionHeader className="text-center">
+            How <SectionHeaderHighlight>ReturnPal</SectionHeaderHighlight> Began
+          </SectionHeader>
+          <SectionDescription className="md:w-4/6">
             ReturnPal was born out of a simple realization: the traditional
             process of returning online purchases is far too complicated. Two
             brothers after waiting in line at the post office, decided there had
             to be a better way. Thus, ReturnPal was created to streamline
             returns for both consumers and businesses, while also making a
             positive impact on the community.
-          </HomeSectionDescription>
+          </SectionDescription>
         </HomeSection>
 
         <div className="m-[calc(-50vw+50%)]">
@@ -41,17 +40,15 @@ export default function AboutUs() {
             <OurFoundersBackground className="h-[60rem] w-screen fill-current stroke-brand text-brand md:h-[45rem]" />
 
             <div className="absolute top-28 w-full py-2.5 text-center text-xs leading-4 text-white">
-              <div className="container mx-auto max-w-5xl space-y-10 md:space-y-14">
-                <p className="text-4xl lg:text-5xl">
-                  <a className="text-white">Our</a>{' '}
-                  <a className="font-bold text-primary">Founders</a>
-                </p>
-                {/* <div className="flex justify-between space-x-10 sm:space-x-32 md:px-12"> */}
-                {/* <div className="grid place-items-center gap-2 md:flex md:grid-cols-2"> */}
+              {/* <div className="container mx-auto max-w-5xl space-y-10 md:space-y-14"> */}
+              <HomeSection>
+                <SectionHeader className="text-center">
+                  Our <SectionHeaderHighlight>Founders</SectionHeaderHighlight>
+                </SectionHeader>
                 <div className="grid max-w-5xl place-items-center gap-7 md:flex md:grid-cols-2 md:justify-between md:px-9">
-                  <div className="h-52 w-52 space-y-4 md:h-72 md:w-72">
+                  <div className="space-y-4">
                     <Image
-                      className="rounded-full border-8 border-primary"
+                      className="h-52 w-52 rounded-full border-8 border-primary"
                       src={hasan}
                       priority
                       alt="Co-Founder of ReturnPal Mohammed Al-Salem"
@@ -66,9 +63,9 @@ export default function AboutUs() {
                     </div>
                   </div>
 
-                  <div className="h-52 w-52 space-y-4 md:h-72 md:w-72">
+                  <div className="space-y-4">
                     <Image
-                      className="rounded-full border-8 border-primary"
+                      className="h-52 w-52 rounded-full border-8 border-primary"
                       src={mohammed}
                       priority
                       alt="Co-Founder of ReturnPal Mohammed Al-Salem"
@@ -83,22 +80,23 @@ export default function AboutUs() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </HomeSection>
+              {/* </div> */}
             </div>
           </div>
         </div>
 
         <HomeSection>
-          <HomeSectionTitle>
-            Our <HomeSectionTitleHighlight>Mission</HomeSectionTitleHighlight>
-          </HomeSectionTitle>
-          <HomeSectionDescription className="md:w-4/6">
+          <SectionHeader>
+            Our <SectionHeaderHighlight>Mission</SectionHeaderHighlight>
+          </SectionHeader>
+          <SectionDescription className="md:w-4/6">
             Our goal is to revolutionize the returns process for online shoppers
             by offering a hassle-free and convenient solution. We aim to
             alleviate the stress of the return process by managing the entire
             repackaging and delivery process on your behalf, allowing you to sit
             back and relax.
-          </HomeSectionDescription>
+          </SectionDescription>
         </HomeSection>
 
         <div className="m-[calc(-50vw+50%)]">
@@ -108,21 +106,19 @@ export default function AboutUs() {
             <div className="absolute top-28 w-full py-2.5 text-center leading-4 text-white">
               <div className="container mx-auto space-y-8">
                 <HomeSection className="space-y-5 text-white">
-                  <HomeSectionTitle>
+                  <SectionHeader>
                     Why Choose{' '}
-                    <HomeSectionTitleHighlight>Us</HomeSectionTitleHighlight>?
-                  </HomeSectionTitle>
-                  <HomeSectionDescription className="text-white">
-                    <HomeSectionTitleHighlight className="text-xl lg:text-xl">
-                      You
-                    </HomeSectionTitleHighlight>{' '}
-                    can help us create{' '}
-                    <HomeSectionTitleHighlight className="text-xl lg:text-xl">
+                    <SectionHeaderHighlight>Us</SectionHeaderHighlight>?
+                  </SectionHeader>
+                  <SectionDescription className="text-white">
+                    <SectionHeaderHighlight>You</SectionHeaderHighlight> can
+                    help us create{' '}
+                    <SectionHeaderHighlight>
                       Social Impact
-                    </HomeSectionTitleHighlight>{' '}
+                    </SectionHeaderHighlight>{' '}
                     together
-                  </HomeSectionDescription>
-                  <HomeSectionDescription className="leading-6 text-white md:w-4/6">
+                  </SectionDescription>
+                  <SectionDescription className="text-white md:w-4/6">
                     We value sustainability and community empowerment. Through
                     our Corporate Social Responsibility (CSR) initiatives, we
                     collaborate with businesses to repurpose and donate goods,
@@ -130,7 +126,7 @@ export default function AboutUs() {
                     organization is looking to fulfill its CSR goals, we invite
                     you to reach out to us. Let&rsquo;s join hands and create a
                     positive change together.
-                  </HomeSectionDescription>
+                  </SectionDescription>
                 </HomeSection>
                 <div className="hidden items-end justify-evenly sm:flex">
                   <Earth />
@@ -142,21 +138,17 @@ export default function AboutUs() {
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-center space-y-14 text-center">
-          <HomeSection>
-            <HomeSectionTitle>
-              Our{' '}
-              <HomeSectionTitleHighlight>Operation</HomeSectionTitleHighlight>
-            </HomeSectionTitle>
-            <HomeSectionDescription className="md:w-4/6">
-              We are all over the greater Toronto area, operating a local
-              facility designed to ensure that the repackaging of items can
-              accommodate same-day return needs.
-            </HomeSectionDescription>
-          </HomeSection>
-
+        <HomeSection>
+          <SectionHeader>
+            Our <SectionHeaderHighlight>Operation</SectionHeaderHighlight>
+          </SectionHeader>
+          <SectionDescription className="md:w-4/6">
+            We are all over the greater Toronto area, operating a local facility
+            designed to ensure that the repackaging of items can accommodate
+            same-day return needs.
+          </SectionDescription>
           <Toronto className="h-56 w-56" />
-        </div>
+        </HomeSection>
       </div>
     </div>
   )
