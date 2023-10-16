@@ -6,38 +6,39 @@ import { z } from 'zod';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { Label } from '@/components/ui/label';
+import Router from 'next/router';
 
 function Address() {
   const [addresses, setAddresses] = useState({});
   const [step, setStep] = useState(1);
   const [addAddress, setAddAddress] = useState(false);
-  const [selectedMethod, setSelectedMethod] = useState('');
+  // const [selectedMethod, setSelectedMethod] = useState('');
 
-  const handleRadioChange = (event: any) => {
-    setSelectedMethod(event.target.value);
-    const form = document.getElementById("selectPickupMethod") as HTMLElement;
-    if (form) {
-      const radioInputs = form.querySelectorAll('input[type="radio"]');
-      let selectedValue;
+  // const handleRadioChange = (event: any) => {
+  //   setSelectedMethod(event.target.value);
+  //   const form = document.getElementById("selectPickupMethod") as HTMLElement;
+  //   if (form) {
+  //     const radioInputs = form.querySelectorAll('input[type="radio"]');
+  //     let selectedValue;
 
-      radioInputs.forEach(function (input: any) {
-        const parentDiv: HTMLElement = input.parentNode?.parentNode;
-        if (parentDiv) {
-          if (input.checked) {
-            parentDiv?.classList.remove("border-brand");
-            parentDiv?.classList.add("border-primary");
-            parentDiv?.classList.remove("opacity-50")
-          } else {
-            parentDiv?.classList.add("border-brand");
-            parentDiv?.classList.remove("border-primary");
-            parentDiv?.classList.add("opacity-50")
-          }
-        }
-      });
-      setStep(2);
-    }
+  //     radioInputs.forEach(function (input: any) {
+  //       const parentDiv: HTMLElement = input.parentNode?.parentNode;
+  //       if (parentDiv) {
+  //         if (input.checked) {
+  //           parentDiv?.classList.remove("border-brand");
+  //           parentDiv?.classList.add("border-primary");
+  //           parentDiv?.classList.remove("opacity-50")
+  //         } else {
+  //           parentDiv?.classList.add("border-brand");
+  //           parentDiv?.classList.remove("border-primary");
+  //           parentDiv?.classList.add("opacity-50")
+  //         }
+  //       }
+  //     });
+  //     setStep(2);
+  //   }
 
-  };
+  // };
   const mockAddresses: { name: string, address: string, default: boolean }[] = [
     {
       name: "Bob Gunderson",
@@ -99,9 +100,8 @@ function Address() {
       console.log(selectedValue);
 
       if (selectedValue) {
-        setStep(2);
+        Router.push("/pickup")
       }
-
     }
   }
   const addressArrayMapper = (addressArray: { name: string, address: string, default: boolean }[]) => {
@@ -117,7 +117,6 @@ function Address() {
   }
 
   return (
-    // <div className="bg-paleBlue h-screen w-screen pl-10 pt-24">
     <>
       <div className="text-largeText text-brand">
         Pickup Details
@@ -173,7 +172,7 @@ function Address() {
         </span>
       </div>)}
 
-      {step === 2 && (<div><div className="text-brand">
+      {/* {step === 2 && (<div><div className="text-brand">
         Which pickup method do you prefer?
       </div>
         <form id="selectPickupMethod" className="mt-5 flex justify-center">
@@ -205,12 +204,12 @@ function Address() {
         <span className="flex justify-between mt-5" >
           <Button className="bg-transparent hover:bg-transparent text-primary font-bold" onClick={() => setStep(1)}>← Back </Button>
           <Button className="next text-white font-bold" onClick={() => setStep(3)} > Next → </Button>
-        </span></div>)}
+        </span></div>)} */}
 
     </>
     // </div>
   )
 }
-Address.getLayout = getLayout
+Address.getLayout = getLayout;
 
-export default Address
+export default Address;
