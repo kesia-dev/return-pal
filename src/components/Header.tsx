@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import MobileMenu from './Header/MobileMenu'
-import DesktopHeader from './Header/DesktopHeader'
-import { HeaderSub, HeaderRoot } from './Header/Header'
+import { HeaderRoot, HeaderSub } from '@components/Headers/Header'
+import MobileMenu from '@components/Headers/MobileHeader'
+import DesktopHeader from '@components/Headers/DesktopHeader'
 
 export default function Header() {
   return (

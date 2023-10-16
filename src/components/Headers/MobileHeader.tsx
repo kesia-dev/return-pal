@@ -7,7 +7,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
-import MobileMenuFooter from './MobileMenuFooter'
+import MobileHeaderFooter from './MobileHeaderFooter'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   type IconDefinition,
@@ -79,7 +79,7 @@ export default function MobileMenu() {
           <MobileLink href="/" icon={faTruck}>
             Schedule Pickup
           </MobileLink>
-          <MobileMenuFooter />
+          <MobileHeaderFooter />
         </SheetContent>
       </Sheet>
     </HeaderContent>
