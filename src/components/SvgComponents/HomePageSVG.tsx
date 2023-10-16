@@ -3,11 +3,11 @@ import React from 'react'
 const HomePageSVG: React.FC = () => {
   return (
     <svg
-      className="h-[230rem] w-screen md:h-[120rem] lg:h-[140rem]"
+      className="h-[160rem] w-screen md:h-[85rem] lg:h-[95rem] xl:h-[100rem]"
       preserveAspectRatio="none"
       width="1920"
       height="1974"
-      viewBox="0 0 1920 1974"
+      viewBox="0 0 1920 1400"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
