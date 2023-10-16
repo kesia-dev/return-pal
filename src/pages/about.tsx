@@ -1,14 +1,18 @@
 import {
   HomeSection,
+  HomeSectionImage,
+  HomeSectionImageRoot,
+  HomeSectionImageTitle,
+  HomeSectionImageTitleDescription,
+  HomeSectionImageTitleHeader,
   SectionDescription,
   SectionHeader,
   SectionHeaderHighlight,
 } from '@/components/home/Home'
 import { getLayout } from '@/layouts/DefaultLayout'
-import Image from 'next/image'
 
-import hasan from '@images/Hasan-cropped_founder.jpg'
-import mohammed from '@images/Mohammed-cropped_founder.jpg'
+import hasanFounderImage from '@images/Hasan-cropped_founder.jpg'
+import mohammedFounderImage from '@images/Mohammed-cropped_founder.jpg'
 
 import Earth from '@/components/svg/Earth'
 import People from '@/components/svg/People'
@@ -40,48 +44,46 @@ export default function AboutUs() {
             <OurFoundersBackground className="h-[60rem] w-screen fill-current stroke-brand text-brand md:h-[45rem]" />
 
             <div className="absolute top-28 w-full py-2.5 text-center text-xs leading-4 text-white">
-              {/* <div className="container mx-auto max-w-5xl space-y-10 md:space-y-14"> */}
-              <HomeSection>
+              <HomeSection className="container mx-auto max-w-5xl space-y-10 md:space-y-14">
                 <SectionHeader className="text-center">
                   Our <SectionHeaderHighlight>Founders</SectionHeaderHighlight>
                 </SectionHeader>
-                <div className="grid max-w-5xl place-items-center gap-7 md:flex md:grid-cols-2 md:justify-between md:px-9">
-                  <div className="space-y-4">
-                    <Image
-                      className="h-52 w-52 rounded-full border-8 border-primary"
-                      src={hasan}
+                <div className="grid w-full place-items-center gap-7 md:flex md:grid-cols-2 md:justify-between md:px-9">
+                  <HomeSectionImageRoot>
+                    <HomeSectionImage
+                      className="h-52 w-52 md:h-64 md:w-64"
+                      src={hasanFounderImage}
                       priority
-                      alt="Co-Founder of ReturnPal Mohammed Al-Salem"
+                      alt="CEO of Returnpal of ReturnPal Hasan-Ali Abidi"
                     />
-                    <div>
-                      <p className="text-lg font-bold text-white">
-                        Mohammed Al-Salem
-                      </p>
-                      <p className="text-lg text-white">
-                        Co-Founder of ReturnPal
-                      </p>
-                    </div>
-                  </div>
+                    <HomeSectionImageTitle>
+                      <HomeSectionImageTitleHeader>
+                        Hasan-Ali Abidi
+                      </HomeSectionImageTitleHeader>
+                      <HomeSectionImageTitleDescription>
+                        CEO of Returnpal
+                      </HomeSectionImageTitleDescription>
+                    </HomeSectionImageTitle>
+                  </HomeSectionImageRoot>
 
-                  <div className="space-y-4">
-                    <Image
-                      className="h-52 w-52 rounded-full border-8 border-primary"
-                      src={mohammed}
+                  <HomeSectionImageRoot>
+                    <HomeSectionImage
+                      className="h-52 w-52 md:h-64 md:w-64"
+                      src={mohammedFounderImage}
                       priority
                       alt="Co-Founder of ReturnPal Mohammed Al-Salem"
                     />
-                    <div>
-                      <p className="text-lg font-bold text-white">
+                    <HomeSectionImageTitle>
+                      <HomeSectionImageTitleHeader>
                         Mohammed Al-Salem
-                      </p>
-                      <p className="text-lg text-white">
+                      </HomeSectionImageTitleHeader>
+                      <HomeSectionImageTitleDescription>
                         Co-Founder of ReturnPal
-                      </p>
-                    </div>
-                  </div>
+                      </HomeSectionImageTitleDescription>
+                    </HomeSectionImageTitle>
+                  </HomeSectionImageRoot>
                 </div>
               </HomeSection>
-              {/* </div> */}
             </div>
           </div>
         </div>

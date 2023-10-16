@@ -8,7 +8,6 @@ import {
 } from 'next/dist/shared/lib/get-img-props'
 import Image from 'next/image'
 import React from 'react'
-import { type ForwardRefRenderFunction } from 'react'
 
 const HomeSection = React.forwardRef<
   HTMLDivElement,
@@ -70,22 +69,21 @@ const HomeSectionImageRoot = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn('h-52 w-52 space-y-4', className)} //md:h-72 md:w-72
+    className={cn('space-y-4', className)} //md:h-72 md:w-72
     {...props}
   />
 ))
 HomeSectionImageRoot.displayName = 'HomeSectionImageRoot'
 
-const HomeSectionImage: ForwardRefRenderFunction<
-  HTMLImageElement,
-  NextImageProps
-> = ({ className, ...props }, ref) => (
-  // eslint-disable-next-line jsx-a11y/alt-text
-  <Image
-    className={cn('rounded-full border-8 border-primary', className)}
-    ref={ref}
-    {...props}
-  />
+const HomeSectionImage = React.forwardRef<HTMLImageElement, NextImageProps>(
+  ({ className, ...props }, ref) => (
+    // eslint-disable-next-line jsx-a11y/alt-text
+    <Image
+      className={cn('rounded-full border-8 border-primary', className)}
+      ref={ref}
+      {...props}
+    />
+  )
 )
 HomeSectionImage.displayName = 'HomeSectionImage'
 
@@ -97,6 +95,29 @@ const HomeSectionImageContent = React.forwardRef<
 ))
 HomeSectionImageContent.displayName = 'HomeSectionImageContent'
 
+const HomeSectionImageTitle = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ ...props }, ref) => <div ref={ref} {...props} />)
+HomeSectionImageTitle.displayName = 'HomeSectionImageTitle'
+
+const HomeSectionImageTitleHeader = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...props }, ref) => (
+  <p ref={ref} className={cn('text-lg font-bold', className)} {...props} />
+))
+HomeSectionImageTitleHeader.displayName = 'HomeSectionImageTitleHeader'
+
+const HomeSectionImageTitleDescription = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...props }, ref) => (
+  <p ref={ref} className={cn('text-base', className)} {...props} />
+))
+HomeSectionImageTitleDescription.displayName =
+  'HomeSectionImageTitleDescription'
+
 export {
   HomeSection,
   SectionHeader,
@@ -104,6 +125,10 @@ export {
   SectionDescription,
   HomeSectionImageRoot,
   HomeSectionImage,
+  HomeSectionImageContent,
+  HomeSectionImageTitle,
+  HomeSectionImageTitleHeader,
+  HomeSectionImageTitleDescription,
 }
 
 type NextImageProps = Omit<
