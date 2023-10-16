@@ -10,12 +10,12 @@ import Image from 'next/image'
 import hasan from '@images/Hasan-cropped_founder.jpg'
 import mohammed from '@images/Mohammed-cropped_founder.jpg'
 
-import chooseUsBackground from '@svg/why_choose_us_background.svg'
-import foundersBackground from '@svg/our_founders_background.svg'
 import Earth from '@/components/svg/Earth'
 import People from '@/components/svg/People'
 import Hands from '@/components/svg/Hands'
 import Toronto from '@/components/svg/Toronto'
+import OurFoundersBackground from '@/components/svg/OurFoundersBackground'
+import WhyChooseUsBackground from '@/components/svg/WhyChooseUsBackground'
 
 export default function AboutUs() {
   return (
@@ -38,13 +38,7 @@ export default function AboutUs() {
 
         <div className="m-[calc(-50vw+50%)]">
           <div className="relative">
-            <Image
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-              src={foundersBackground}
-              priority
-              className="h-[60rem] w-screen fill-current stroke-brand text-brand md:h-[45rem]"
-              alt="Background for founders"
-            />
+            <OurFoundersBackground className="h-[60rem] w-screen fill-current stroke-brand text-brand md:h-[45rem]" />
 
             <div className="absolute top-28 w-full py-2.5 text-center text-xs leading-4 text-white">
               <div className="container mx-auto max-w-5xl space-y-10 md:space-y-14">
@@ -59,6 +53,7 @@ export default function AboutUs() {
                     <Image
                       className="rounded-full border-8 border-primary"
                       src={hasan}
+                      priority
                       alt="Co-Founder of ReturnPal Mohammed Al-Salem"
                     />
                     <div>
@@ -75,6 +70,7 @@ export default function AboutUs() {
                     <Image
                       className="rounded-full border-8 border-primary"
                       src={mohammed}
+                      priority
                       alt="Co-Founder of ReturnPal Mohammed Al-Salem"
                     />
                     <div>
@@ -107,13 +103,7 @@ export default function AboutUs() {
 
         <div className="m-[calc(-50vw+50%)]">
           <div className="relative">
-            <Image
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-              src={chooseUsBackground}
-              priority
-              className="h-[45rem] w-screen fill-brand"
-              alt="Picture of unity"
-            />
+            <WhyChooseUsBackground className="h-[45rem] w-screen fill-brand" />
 
             <div className="absolute top-28 w-full py-2.5 text-center leading-4 text-white">
               <div className="container mx-auto space-y-8">
