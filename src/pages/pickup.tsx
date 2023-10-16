@@ -40,11 +40,14 @@ function Pickup() {
         Which pickup method do you prefer?
       </div>
       <form id="selectPickupMethod" className="mt-5 flex justify-center">
-        <div className="flex flex-row justify-center mx-1/5 w-3/4">
+        <div className="flex flex-row justify-center mx-1/5 w-3/4 min-h-[75%]" >
           <div className="justify-center border-4 border-brand rounded-[12px] mx-4  py-2 px-4 max-w-[40%]">
+            <div className="flex justify-center">
+              <img className="text-primary h-40" src="/images/handoff.svg" />
+            </div>
             <div className="flex justify-center text-smallText font-bold ">
               Direct Handoff </div>
-            <div className="flex justify-center "> Hand the package directly to our specialist at your door </div>
+            <div className="flex justify-center min-h-[40%] sm:min-h-0"> Hand the package directly to our specialist at your door </div>
             <div className="flex justify-center" >
               <Input type="radio" key="handoff" value="handoff" name="pickupMethod" checked={selectedMethod === 'handoff'}
                 onChange={handleRadioChange} />
@@ -52,9 +55,12 @@ function Pickup() {
           </div>
 
           <div className="justify-center border-4 border-brand rounded-[12px] mx-4 py-2 px-4 max-w-[40%]">
+            <div className="flex justify-center">
+              <img className="text-primary h-40" src="/images/pickup.svg" />
+            </div>
             <div className="flex justify-center text-smallText font-bold ">
               Leave on Doorstep </div>
-            <div className="flex justify-center"> Place items outside your door ahead of your pick up window </div>
+            <div className="flex justify-center min-h-[40%] sm:min-h-0"> Place items outside your door ahead of your pick up window </div>
             <div className="flex justify-center">
 
               <Input type="radio" key="doorstep" value="doorstep" name="pickupMethod" checked={selectedMethod === 'doorstep'}

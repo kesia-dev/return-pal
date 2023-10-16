@@ -117,8 +117,8 @@ function Address() {
   }
   const addressArrayMapper = (addressArray: { name: string, address: string, default: boolean }[]) => {
     return addressArray.map((address) => {
-      return (<div className="w-full h-10 flex my-7 fontSize-large items-center "><Input type="radio" key={addressArray.indexOf(address)} value={address.address} name="address" className="h-6 w-8 mx-2 w-[10%]"/> <Label className="font-bold mx-2 w-[10%] break-all">
-        {address.name} </Label> <Label className="w-[50%] my-2 py-2 break-all max-w-max"> {address.address} </Label> <Label className="text-primary font-bold mx-2 w-[10%]">
+      return (<div className="w-full h-10 flex my-7 fontSize-large items-center "><Input type="radio" key={addressArray.indexOf(address)} value={address.address} name="address" className="h-6 w-8 mx-2 w-[10%]"/> <Label className="font-bold mx-2  w-[20%] sm:w-[10%] break-word ">
+        {address.name} </Label> <Label className="w-[35%] sm:w-[50%] my-2 py-2 break-word max-w-max "> {address.address} </Label> <Label className="text-primary font-bold mx-2 w-[10%]">
           {address.default && (
             "Default address"
           )}
