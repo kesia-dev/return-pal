@@ -7,11 +7,13 @@ import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { Label } from '@/components/ui/label';
 import Router from 'next/router';
+import { useToast } from '@/components/ui/use-toast';
 
 function Address() {
   const [addresses, setAddresses] = useState({});
   const [step, setStep] = useState(1);
   const [addAddress, setAddAddress] = useState(false);
+  const { toast } = useToast()
   // const [selectedMethod, setSelectedMethod] = useState('');
 
   // const handleRadioChange = (event: any) => {
@@ -101,6 +103,11 @@ function Address() {
 
       if (selectedValue) {
         Router.push("/pickup")
+      } else {
+        toast({
+          variant: "destructive",
+          description: "Please select an address before proceeding.",
+        })
       }
     }
   }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { getLayout } from '@/layouts/DefaultLayout'
 import { Button } from '@/components/ui/button'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Input } from '@/components/ui/input';
 import Router from 'next/router';
 
@@ -63,7 +63,6 @@ function Pickup() {
           </div>
         </div>
       </form>
-
 
       <span className="flex justify-between mt-5" >
         <Button className="bg-transparent hover:bg-transparent text-primary font-bold" onClick={() => Router.push("/address")}>← Back </Button>
