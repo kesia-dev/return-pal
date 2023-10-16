@@ -12,14 +12,14 @@ function PartnerBanner() {
         height={100}
       />
       <Image
-        className="px-8 py-10 lg:px-16"
+        className="px-8 py-12 lg:px-16"
         src="/images/walmart.png"
         alt="walmart"
         width={320}
         height={150}
       />
       <Image
-        className="py-6"
+        className="w-32 py-8"
         src="/images/homedepot.png"
         alt="homedepot"
         width={100}

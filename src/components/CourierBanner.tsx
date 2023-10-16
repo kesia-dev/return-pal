@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 function CourierBanner() {
   return (
-    <section className="my-20 flex h-32 w-full gap-12 overflow-x-scroll bg-white xl:h-36 xl:justify-around xl:gap-6 xl:overflow-auto">
+    <section className="mt-20 flex h-32 w-full gap-12 overflow-x-scroll bg-white xl:h-36 xl:justify-around xl:gap-6 xl:overflow-auto">
       <Image
         src="/images/fedex.png"
         className="p-10"

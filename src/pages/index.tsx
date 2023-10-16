@@ -12,6 +12,7 @@ import HomePageSVG from '@/components/SvgComponents/HomePageSVG'
 import DemoCards from '@/components/DemoCards/DemoCards'
 import CourierBanner from '@/components/CourierBanner'
 import PartnerBanner from '@/components/PartnerBanner'
+import Link from 'next/link'
 
 function Home() {
   return (
@@ -43,7 +44,7 @@ function Home() {
               />
             </div>
           </section>
-          <section className="m-[calc(-50vw+50%)]">
+          <section className="m-[calc(-50vw+50%)] transition-all duration-200">
             <div className="relative">
               <HomePageSVG />
               <DemoCards />
@@ -91,6 +92,36 @@ function Home() {
         </div>
       </div>
       <CourierBanner />
+      <section className=" flex h-[75rem] w-full flex-col items-center justify-around space-y-10 bg-brand">
+        <h3 className="mb-10 text-center text-largeText text-white md:text-subtitle xl:text-7xl">
+          FAQs
+        </h3>
+        <section className=" flex h-12 flex-col justify-center space-y-10 text-center">
+          <div className="w-full max-w-xs self-center rounded-xl border-4 border-primary py-8 text-sm text-white transition-all duration-200 hover:cursor-pointer hover:bg-gradientL sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-4xl xl:text-subtitle">
+            <article className="font-bold">
+              Do I need to package my returns?{' '}
+            </article>
+          </div>
+          <div className=" w-full max-w-xs self-center rounded-xl border-4 border-primary py-8 text-sm text-white transition-all duration-200 hover:cursor-pointer hover:bg-gradientL sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-4xl xl:text-subtitle">
+            <article className="font-bold">Can I return on weekends? </article>
+          </div>
+          <div className="w-full max-w-xs self-center rounded-xl border-4 border-primary py-8 text-sm text-white transition-all duration-200 hover:cursor-pointer hover:bg-gradientL sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-4xl xl:text-subtitle">
+            <article className="font-bold">
+              How long does shipping take?{' '}
+            </article>
+          </div>
+          <div className="w-full max-w-xs self-center rounded-xl border-4 border-primary px-8 py-8 text-sm text-white transition-all duration-200 hover:cursor-pointer hover:bg-gradientL sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-4xl xl:text-subtitle">
+            <article className="font-bold">
+              What if I’m returning multiple items to the same place?{' '}
+            </article>
+          </div>
+        </section>
+        <Link href="/contact" className="mt-16">
+          <Button className="h-16 w-80 self-center lg:text-mediumText xl:text-subtitle">
+            Contact Us
+          </Button>
+        </Link>
+      </section>
     </>
   )
 }
