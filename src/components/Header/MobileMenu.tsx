@@ -19,6 +19,8 @@ import {
   faTags,
 } from '@fortawesome/free-solid-svg-icons'
 import { type PropsWithChildren } from 'react'
+import { HeaderContent } from './Header'
+import { Separator } from '../ui/separator'
 
 type MobileViewType = PropsWithChildren & {
   href: string
@@ -40,7 +42,7 @@ function MobileLink({ href, icon, children }: MobileViewType) {
 
 export default function MobileMenu() {
   return (
-    <nav className="flex w-full justify-end px-2 md:hidden">
+    <HeaderContent className="justify-end md:hidden">
       <Sheet>
         <SheetTrigger>
           <FontAwesomeIcon icon={faBars} width={'20'} />
@@ -57,10 +59,11 @@ export default function MobileMenu() {
               height={200}
             />
           </SheetTitle>
-          <p className="flex w-[70%] gap-x-2 border-b border-b-grey pb-2">
+          <p className="flex gap-x-2">
             <FontAwesomeIcon icon={faBars} width={'17'} />
             Menu
           </p>
+          <Separator className="bg-gray-900" />
           <MobileLink href="/" icon={faCircleInfo}>
             How it Works
           </MobileLink>
@@ -79,6 +82,6 @@ export default function MobileMenu() {
           <MobileMenuFooter />
         </SheetContent>
       </Sheet>
-    </nav>
+    </HeaderContent>
   )
 }
