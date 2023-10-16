@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils'
 import { type IconType } from './types'
 
-export default function People({ className, ...rest }: IconType) {
+export default function Toronto({ className, ...rest }: IconType) {
   return (
     <svg
       viewBox="0 0 340 334"
