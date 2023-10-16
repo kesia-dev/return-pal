@@ -10,13 +10,12 @@ import Image from 'next/image'
 import hasan from '@images/Hasan-cropped_founder.jpg'
 import mohammed from '@images/Mohammed-cropped_founder.jpg'
 
-import torontoIcon from '@svg/toronto.svg'
-import earthIcon from '@svg/earth.svg'
-import handsIcon from '@svg/hands.svg'
-import peopleIcon from '@svg/people.svg'
-
 import chooseUsBackground from '@svg/why_choose_us_background.svg'
 import foundersBackground from '@svg/our_founders_background.svg'
+import Earth from '@/components/svg/Earth'
+import People from '@/components/svg/People'
+import Hands from '@/components/svg/Hands'
+import Toronto from '@/components/svg/Toronto'
 
 export default function AboutUs() {
   return (
@@ -43,7 +42,7 @@ export default function AboutUs() {
               // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
               src={foundersBackground}
               priority
-              className="h-[60rem] w-screen fill-brand md:h-[45rem]"
+              className="h-[60rem] w-screen fill-current stroke-brand text-brand md:h-[45rem]"
               alt="Background for founders"
             />
 
@@ -144,26 +143,9 @@ export default function AboutUs() {
                   </HomeSectionDescription>
                 </HomeSection>
                 <div className="hidden items-end justify-evenly sm:flex">
-                  <Image
-                    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                    src={earthIcon}
-                    className="h-36 w-36 shrink"
-                    alt="Picture of a cleaner earth"
-                  />
-
-                  <Image
-                    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                    src={peopleIcon}
-                    className="h-36 w-36 shrink"
-                    alt="Picture of unity"
-                  />
-
-                  <Image
-                    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                    src={handsIcon}
-                    className="h-36 w-36 shrink"
-                    alt="Picture of helping hands"
-                  />
+                  <Earth />
+                  <People />
+                  <Hands />
                 </div>
               </div>
             </div>
@@ -183,12 +165,7 @@ export default function AboutUs() {
             </HomeSectionDescription>
           </HomeSection>
 
-          <Image
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            src={torontoIcon}
-            className="h-56 w-56 flex-shrink"
-            alt="Image of Toronto"
-          />
+          <Toronto className="h-56 w-56" />
         </div>
       </div>
     </div>
