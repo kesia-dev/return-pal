@@ -46,7 +46,7 @@ export default function ChoosePlan() {
 
   return (
     <div className="flex min-h-screen w-screen justify-center bg-paleBlue p-10">
-      <RadioGroup className="flex w-full flex-wrap justify-around gap-4">
+      <RadioGroup className="flex w-full flex-wrap justify-center gap-8">
         {planData.map(plan => {
           const status = !selectedPlanName
             ? 'normal'
