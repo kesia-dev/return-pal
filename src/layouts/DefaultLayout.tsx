@@ -13,7 +13,7 @@ export default function DefaultLayout({ children }: PropsWithChildren) {
     <>
       <div className="flex h-screen overflow-hidden">
         <div
-          className={`bg-paleBlue relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden ${nunito.className}`}
+          className={`relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden bg-paleBlue ${nunito.className}`}
         >
           <Header />
           <main className=" mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8">

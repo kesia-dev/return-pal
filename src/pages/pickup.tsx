@@ -1,48 +1,56 @@
 import React from 'react'
 import { getLayout } from '@/layouts/DefaultLayout'
 import { Button } from '@/components/ui/button'
-import { useState } from 'react'
-import { Input } from '@/components/ui/input';
-import Router from 'next/router';
+import { useState, useEffect } from 'react'
+import { Input } from '@/components/ui/input'
+import Router from 'next/router'
+import { Label } from '@/components/ui/label'
 
 function Pickup() {
-  const [selectedMethod, setSelectedMethod] = useState('');
-  const handleRadioChange = (event: any) => {
-    setSelectedMethod(event.target.value);
-    const form = document.getElementById("selectPickupMethod") as HTMLElement;
+  const [selectedMethod, setSelectedMethod] = useState('')
+  const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue: string = event.target.value
+    setSelectedMethod(newValue)
+    const form = document.getElementById('selectPickupMethod')!
     if (form) {
-      const radioInputs = form.querySelectorAll('input[type="radio"]');
-      let selectedValue;
+      const radioInputs = form.querySelectorAll('input[type="radio"]')
 
-      radioInputs.forEach(function (input: any) {
-        const parentDiv: HTMLElement = input.parentNode?.parentNode;
+      radioInputs.forEach(function (input: HTMLInputElement) {
+        const parentDiv: HTMLElement = input.parentNode
+          ?.parentNode as HTMLElement
         if (parentDiv) {
           if (input.checked) {
-            parentDiv?.classList.remove("border-brand");
-            parentDiv?.classList.add("border-primary");
-            parentDiv?.classList.remove("opacity-50")
+            parentDiv?.classList.remove('border-brand')
+            parentDiv?.classList.add('border-primary')
+            parentDiv?.classList.remove('opacity-50')
+            parentDiv?.classList.add('selected')
           } else {
-            parentDiv?.classList.add("border-brand");
-            parentDiv?.classList.remove("border-primary");
-            parentDiv?.classList.add("opacity-50")
+            parentDiv?.classList.add('border-brand')
+            parentDiv?.classList.remove('border-primary')
+            parentDiv?.classList.add('opacity-50')
+            parentDiv?.classList.remove('selected')
           }
         }
-      });
+      })
     }
+  }
 
-  };
+  useEffect(() => {
+    const selected = document.getElementsByClassName('selected')
+    console.log(selected[0])
+  }, [selectedMethod])
 
   return (
     <div>
-      <div className="text-largeText text-brand">
-        Pickup Details
-      </div><div className="text-brand">
-        Which pickup method do you prefer?
-      </div>
+      <div className="text-largeText text-brand">Pickup Details</div>
+      <div className="text-brand">Which pickup method do you prefer?</div>
       <form id="selectPickupMethod" className="mt-5 flex justify-center">
-        <div className="flex flex-row justify-center mx-1/5 w-3/4" >
-          <div className="flex flex-col justify-between border-4 border-brand rounded-[12px] mx-4  py-2 px-4 max-w-[40%]">
-            <div className="flex justify-center h-1/6 md:h-1/5">
+        <div className="mx-1/5 flex w-3/4 flex-row justify-center">
+          <div className="mx-4 flex max-w-[40%] flex-col justify-between rounded-[12px] border-4  border-brand px-4 py-2">
+            <Label
+              htmlFor="handoff"
+              className="flex h-1/6 justify-center md:h-1/5"
+            >
               <svg
                 version="1.1"
                 id="Layer_1"
@@ -53,7 +61,8 @@ function Pickup() {
                 viewBox="0 0 79.1 83"
                 className="fill-primary"
               >
-                <path d="M0,73.1c0,0.8,0.7,1.5,1.5,1.5h23.7l2.3,1.7l7.9,5.8c0.8,0.6,1.8,0.9,2.7,0.9c1.4,0,2.8-0.6,3.7-1.8
+                <path
+                  d="M0,73.1c0,0.8,0.7,1.5,1.5,1.5h23.7l2.3,1.7l7.9,5.8c0.8,0.6,1.8,0.9,2.7,0.9c1.4,0,2.8-0.6,3.7-1.8
 	c0.3-0.4,0.6-0.9,0.7-1.5c0.6,0.3,1.3,0.5,2,0.5c0.2,0,0.5,0,0.7-0.1c1.2-0.2,2.3-0.8,3-1.8c0.3-0.4,0.6-0.9,0.7-1.5
 	c0.7,0.3,1.4,0.5,2.1,0.5c1.4,0,2.8-0.6,3.7-1.8c0.2-0.3,0.4-0.7,0.5-1h22.4c0.8,0,1.5-0.7,1.5-1.5V16.3c0,0,0-0.1,0-0.1
 	c0,0,0-0.1,0-0.1c0-0.1,0-0.2-0.1-0.3c0,0,0,0,0,0c-0.1-0.1-0.1-0.2-0.2-0.3c0,0,0,0,0,0L67.2,0.6C66.9,0.2,66.4,0,66,0H45.4H33.7
@@ -72,42 +81,92 @@ function Pickup() {
 	v12.8c0,0.5,0.3,1,0.8,1.3c0.5,0.3,1.1,0.2,1.5,0l7.6-4.7l7.6,4.7c0.2,0.2,0.5,0.2,0.8,0.2c0.2,0,0.5-0.1,0.7-0.2
 	c0.5-0.3,0.8-0.8,0.8-1.3V17.8h26.7V71.6z M32.7,17.8h13.8v10.1l-6.1-3.8c-0.2-0.2-0.5-0.2-0.8-0.2S39,24,38.7,24.1l-6.1,3.8
 	C32.7,27.9,32.7,17.8,32.7,17.8z M74.5,14.8H49.2L47.2,3h18.1L74.5,14.8z M44.1,3l2,11.8H32.9L35,3H44.1z M13.8,3h18.1l-2,11.8H4.6
-	L13.8,3z"/>
+	L13.8,3z"
+                />
               </svg>
-            </div>
-            <div className="flex justify-center text-sm md:text-smallText font-bold h-1/6 sm: h-[10%]">
-              Direct Handoff </div>
-            <div className="flex justify-center sm:min-h-0 h-1/2 text-center text-sm lg:text-base"> Hand the package directly to our specialist at your door </div>
-            <div className="flex justify-center" >
-              <Input type="radio" key="handoff" value="handoff" name="pickupMethod" checked={selectedMethod === 'handoff'}
-                onChange={handleRadioChange} />
+            </Label>
+            <Label
+              htmlFor="handoff"
+              className="sm: flex h-1/6 h-[10%] justify-center text-sm font-bold md:text-smallText"
+            >
+              Direct Handoff{' '}
+            </Label>
+            <Label
+              htmlFor="handoff"
+              className="flex h-1/2 justify-center text-center text-sm sm:min-h-0 lg:text-base"
+            >
+              {' '}
+              Hand the package directly to our specialist at your door{' '}
+            </Label>
+            <div className="flex justify-center">
+              <Input
+                type="radio"
+                id="handoff"
+                value="handoff"
+                name="pickupMethod"
+                checked={selectedMethod === 'handoff'}
+                onChange={handleRadioChange}
+              />
             </div>
           </div>
 
-          <div className="flex flex-col justify-between  border-4 border-brand rounded-[12px] mx-4 py-2 px-4 max-w-[40%]">
-            <div className="flex justify-center  h-1/6 md:h-1/5">
-              <img className="text-primary" src="/images/pickup.svg" />
-            </div>
-            <div className="flex justify-center text-sm md:text-smallText font-bold h-1/6 sm: h-[10%]">
-              Leave on Doorstep </div>
-            <div className="flex justify-center sm:min-h-0 h-1/2 text-center text-sm lg:text-base"> Place items outside your door ahead of your pick up window </div>
+          <div className="mx-4 flex max-w-[40%]  flex-col justify-between rounded-[12px] border-4 border-brand px-4 py-2">
+            <Label
+              htmlFor="doorstep"
+              className="flex h-1/6  justify-center md:h-1/5"
+            >
+              <img
+                className="text-primary"
+                src="/images/pickup.svg"
+                alt="Pickup At Door"
+              />
+            </Label>
+            <Label
+              htmlFor="doorstep"
+              className="sm: flex h-1/6 h-[10%] justify-center text-sm font-bold md:text-smallText"
+            >
+              Leave on Doorstep{' '}
+            </Label>
+            <Label
+              htmlFor="doorstep"
+              className="flex h-1/2 justify-center text-center text-sm sm:min-h-0 lg:text-base"
+            >
+              {' '}
+              Place items outside your door ahead of your pick up window{' '}
+            </Label>
             <div className="flex justify-center">
-
-              <Input type="radio" key="doorstep" value="doorstep" name="pickupMethod" checked={selectedMethod === 'doorstep'}
-                onChange={handleRadioChange} />
+              <Input
+                type="radio"
+                id="doorstep"
+                value="doorstep"
+                name="pickupMethod"
+                checked={selectedMethod === 'doorstep'}
+                onChange={handleRadioChange}
+              />
             </div>
           </div>
         </div>
       </form>
 
-      <span className="flex justify-between mt-5" >
-        <Button className="bg-transparent hover:bg-transparent text-primary font-bold" onClick={() => Router.push("/address")}>← Back </Button>
-        <Button className="next text-white font-bold" onClick={() => console.log(3)} > Next → </Button>
-      </span></div>
-
+      <span className="mt-5 flex justify-between">
+        <Button
+          className="bg-transparent font-bold text-primary hover:bg-transparent"
+          onClick={() => void Router.push('/address')}
+        >
+          ← Back{' '}
+        </Button>
+        <Button
+          className="next font-bold text-white"
+          onClick={() => console.log(3)}
+        >
+          {' '}
+          Next →{' '}
+        </Button>
+      </span>
+    </div>
   )
 }
 
-Pickup.getLayout = getLayout;
+Pickup.getLayout = getLayout
 
-export default Pickup;
+export default Pickup
