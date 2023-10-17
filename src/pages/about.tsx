@@ -5,6 +5,9 @@ import {
   HomeSectionImageTitle,
   HomeSectionImageTitleDescription,
   HomeSectionImageTitleHeader,
+  SectionBackground,
+  SectionBackgroundAbsolute,
+  SectionBackgroundContent,
   SectionDescription,
   SectionHeader,
   SectionHeaderHighlight,
@@ -39,12 +42,13 @@ export default function AboutUs() {
           </SectionDescription>
         </HomeSection>
 
-        <div className="m-[calc(-50vw+50%)]">
-          <div className="relative">
-            <OurFoundersBackground className="h-[60rem] w-screen fill-current stroke-brand text-brand md:h-[45rem]" />
+        <SectionBackground>
+          <SectionBackgroundContent>
+            <OurFoundersBackground className="h-[60rem] w-screen fill-brand md:h-[45rem]" />
 
-            <div className="absolute top-28 w-full py-2.5 text-center text-xs leading-4 text-white">
-              <HomeSection className="container mx-auto max-w-5xl space-y-10 md:space-y-14">
+            {/* <div className="absolute top-28 w-full py-2.5 text-center text-xs leading-4 text-white"> */}
+            <SectionBackgroundAbsolute>
+              <HomeSection className="mx-auto max-w-5xl text-white md:space-y-14">
                 <SectionHeader className="text-center">
                   Our <SectionHeaderHighlight>Founders</SectionHeaderHighlight>
                 </SectionHeader>
@@ -84,9 +88,9 @@ export default function AboutUs() {
                   </HomeSectionImageRoot>
                 </div>
               </HomeSection>
-            </div>
-          </div>
-        </div>
+            </SectionBackgroundAbsolute>
+          </SectionBackgroundContent>
+        </SectionBackground>
 
         <HomeSection>
           <SectionHeader>
@@ -101,44 +105,41 @@ export default function AboutUs() {
           </SectionDescription>
         </HomeSection>
 
-        <div className="m-[calc(-50vw+50%)]">
-          <div className="relative">
+        <SectionBackground>
+          <SectionBackgroundContent>
             <WhyChooseUsBackground className="h-[45rem] w-screen fill-brand" />
 
-            <div className="absolute top-28 w-full py-2.5 text-center leading-4 text-white">
-              <div className="container mx-auto space-y-8">
-                <HomeSection className="space-y-5 text-white">
-                  <SectionHeader>
-                    Why Choose{' '}
-                    <SectionHeaderHighlight>Us</SectionHeaderHighlight>?
-                  </SectionHeader>
-                  <SectionDescription className="text-white">
-                    <SectionHeaderHighlight>You</SectionHeaderHighlight> can
-                    help us create{' '}
-                    <SectionHeaderHighlight>
-                      Social Impact
-                    </SectionHeaderHighlight>{' '}
-                    together
-                  </SectionDescription>
-                  <SectionDescription className="text-white md:w-4/6">
-                    We value sustainability and community empowerment. Through
-                    our Corporate Social Responsibility (CSR) initiatives, we
-                    collaborate with businesses to repurpose and donate goods,
-                    directly benefiting underserved communities. If your
-                    organization is looking to fulfill its CSR goals, we invite
-                    you to reach out to us. Let&rsquo;s join hands and create a
-                    positive change together.
-                  </SectionDescription>
-                </HomeSection>
-                <div className="hidden items-end justify-evenly sm:flex">
+            <SectionBackgroundAbsolute>
+              <HomeSection className="container mx-auto max-w-5xl space-y-6 text-white">
+                <SectionHeader>
+                  Why Choose <SectionHeaderHighlight>Us</SectionHeaderHighlight>
+                  ?
+                </SectionHeader>
+                <SectionDescription className="text-white">
+                  <SectionHeaderHighlight>You</SectionHeaderHighlight> can help
+                  us create{' '}
+                  <SectionHeaderHighlight>Social Impact</SectionHeaderHighlight>{' '}
+                  together
+                </SectionDescription>
+
+                <SectionDescription className="text-white md:w-4/6">
+                  We value sustainability and community empowerment. Through our
+                  Corporate Social Responsibility (CSR) initiatives, we
+                  collaborate with businesses to repurpose and donate goods,
+                  directly benefiting underserved communities. If your
+                  organization is looking to fulfill its CSR goals, we invite
+                  you to reach out to us. Let&rsquo;s join hands and create a
+                  positive change together.
+                </SectionDescription>
+                <div className="hidden w-full items-end justify-evenly sm:flex">
                   <Earth />
                   <People />
                   <Hands />
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
+              </HomeSection>
+            </SectionBackgroundAbsolute>
+          </SectionBackgroundContent>
+        </SectionBackground>
 
         <HomeSection>
           <SectionHeader>
