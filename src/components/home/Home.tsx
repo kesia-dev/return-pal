@@ -16,7 +16,7 @@ const HomeSection = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      'flex flex-col items-center justify-center space-y-10',
+      'flex flex-col items-center justify-center space-y-10 text-brand',
       className
     )}
     {...props}
@@ -62,6 +62,41 @@ const SectionDescription = React.forwardRef<
   />
 ))
 SectionDescription.displayName = 'SectionDescription'
+
+const SectionBackground = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(
+      'm-[calc(-50vw+50%)]', //  md:w-4/5
+      className
+    )} //  md:w-4/5
+    {...props}
+  />
+))
+SectionBackground.displayName = 'SectionBackground'
+
+const SectionBackgroundContent = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div ref={ref} className={cn('relative', className)} {...props} />
+))
+SectionBackgroundContent.displayName = 'SectionBackgroundContent'
+
+const SectionBackgroundAbsolute = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn('absolute top-28 w-full', className)}
+    {...props}
+  />
+))
+SectionBackgroundAbsolute.displayName = 'SectionBackgroundAbsolute'
 
 const HomeSectionImageRoot = React.forwardRef<
   HTMLDivElement,
@@ -123,6 +158,9 @@ export {
   SectionHeader,
   SectionHeaderHighlight,
   SectionDescription,
+  SectionBackground,
+  SectionBackgroundContent,
+  SectionBackgroundAbsolute,
   HomeSectionImageRoot,
   HomeSectionImage,
   HomeSectionImageContent,
