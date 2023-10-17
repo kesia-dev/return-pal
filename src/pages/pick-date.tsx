@@ -25,7 +25,7 @@ function PickDateCard() {
 
 function SelectedPickDateCard() {
   return (
-    <Card className="h-52 w-40 border-8 border-primary bg-white text-brand">
+    <Card className="h-52 w-40 scale-110 border-8 border-primary bg-white text-brand shadow-2xl">
       <CardContent className="flex flex-col items-center space-y-4 pt-6">
         <p className="text-2xl font-semibold">Sep</p>
         <p className="text-5xl font-bold">22</p>
@@ -48,8 +48,8 @@ export default function PickDate() {
         </HeaderSub>
       </HeaderRoot>
 
-      <div className="container bg-paleBlue p-16">
-        <HomeSection className="items-start">
+      <div className="container space-y-20 bg-paleBlue p-16">
+        <HomeSection className="items-start space-y-1">
           <SectionHeader className="flex w-full justify-between">
             <div>
               Choose a pickup{' '}
@@ -61,8 +61,8 @@ export default function PickDate() {
             </div>
           </SectionHeader>
           <SectionDescription>
-            We’ll text you the morning of your pickup with an estimated time
-            arrival.
+            We&apos;ll text you the morning of your pickup with an estimated
+            time arrival.
           </SectionDescription>
         </HomeSection>
 
@@ -74,21 +74,6 @@ export default function PickDate() {
           <PickDateCard />
           <PickDateCard />
           <PickDateCard />
-          {/* <Card className="w-40 border-brand bg-white text-brand">
-            <CardContent className="flex flex-col items-center space-y-4 pt-6">
-              <p className="text-2xl font-semibold">Sep</p>
-              <p className="text-5xl font-bold">22</p>
-              <p className="text-2xl font-semibold">Fri</p>
-            </CardContent>
-          </Card>
-
-          <Card className="w-40 border-brand bg-white text-brand">
-            <CardContent className="flex flex-col items-center space-y-4 pt-6">
-              <p className="text-2xl font-semibold">Sep</p>
-              <p className="text-5xl font-bold">22</p>
-              <p className="text-2xl font-semibold">Fri</p>
-            </CardContent>
-          </Card> */}
         </div>
       </div>
     </>
