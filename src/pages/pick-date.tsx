@@ -7,7 +7,11 @@ import {
   SectionHeaderHighlight,
 } from '@/components/home/Home'
 import { Card, CardContent } from '@/components/ui/card'
-import { faClose } from '@fortawesome/free-solid-svg-icons'
+import {
+  faArrowRight,
+  faChevronRight,
+  faClose,
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 
@@ -74,6 +78,15 @@ export default function PickDate() {
           <PickDateCard />
           <PickDateCard />
           <PickDateCard />
+          <div className="flex flex-col items-center justify-center space-y-4 text-center font-semibold text-brand">
+            <FontAwesomeIcon
+              size="2x"
+              width={'30'}
+              height={'40'}
+              icon={faChevronRight}
+            />
+            <p>Next Week</p>
+          </div>
         </div>
       </div>
     </>
