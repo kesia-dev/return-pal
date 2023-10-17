@@ -46,7 +46,6 @@ export default function AboutUs() {
           <SectionBackgroundContent>
             <OurFoundersBackground className="h-[60rem] w-screen fill-brand md:h-[45rem]" />
 
-            {/* <div className="absolute top-28 w-full py-2.5 text-center text-xs leading-4 text-white"> */}
             <SectionBackgroundAbsolute>
               <HomeSection className="mx-auto max-w-5xl text-white md:space-y-14">
                 <SectionHeader className="text-center">
