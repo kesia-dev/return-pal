@@ -7,11 +7,7 @@ import {
   SectionHeaderHighlight,
 } from '@/components/home/Home'
 import { Card, CardContent } from '@/components/ui/card'
-import {
-  faArrowRight,
-  faChevronRight,
-  faClose,
-} from '@fortawesome/free-solid-svg-icons'
+import { faChevronRight, faClose } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 
@@ -53,14 +49,14 @@ export default function PickDate() {
       </HeaderRoot>
 
       <div className="container space-y-20 bg-paleBlue p-16">
-        <HomeSection className="items-start space-y-1">
-          <SectionHeader className="flex w-full justify-between">
+        <HomeSection className="items-start space-y-3">
+          <SectionHeader className="flex w-full justify-between font-semibold">
             <div>
               Choose a pickup{' '}
               <SectionHeaderHighlight>date</SectionHeaderHighlight>
             </div>
             <div className="flex flex-col items-center justify-center text-base text-primary">
-              <FontAwesomeIcon icon={faClose} size="2xl" />
+              <FontAwesomeIcon icon={faClose} width={'35'} height={'35'} />
               <p>Cancel</p>
             </div>
           </SectionHeader>
