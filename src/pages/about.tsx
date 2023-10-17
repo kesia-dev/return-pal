@@ -47,7 +47,7 @@ export default function AboutUs() {
             <OurFoundersBackground className="h-[60rem] w-screen fill-brand md:h-[45rem]" />
 
             <SectionBackgroundAbsolute>
-              <HomeSection className="mx-auto max-w-5xl text-white md:space-y-14">
+              <HomeSection className="container mx-auto max-w-5xl space-y-6 text-white">
                 <SectionHeader className="text-center">
                   Our <SectionHeaderHighlight>Founders</SectionHeaderHighlight>
                 </SectionHeader>
@@ -59,7 +59,7 @@ export default function AboutUs() {
                       priority
                       alt="CEO of Returnpal of ReturnPal Hasan-Ali Abidi"
                     />
-                    <HomeSectionImageTitle>
+                    <HomeSectionImageTitle className="text-center">
                       <HomeSectionImageTitleHeader>
                         Hasan-Ali Abidi
                       </HomeSectionImageTitleHeader>
@@ -76,7 +76,7 @@ export default function AboutUs() {
                       priority
                       alt="Co-Founder of ReturnPal Mohammed Al-Salem"
                     />
-                    <HomeSectionImageTitle>
+                    <HomeSectionImageTitle className="text-center">
                       <HomeSectionImageTitleHeader>
                         Mohammed Al-Salem
                       </HomeSectionImageTitleHeader>
