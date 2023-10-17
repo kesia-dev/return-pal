@@ -13,7 +13,8 @@ export default function MobileMenuFooter() {
       <Link href="/" target="_blank">
         <FontAwesomeIcon
           icon={faInstagram}
-          width={'25'}
+          width={'30'}
+          height={'30'}
           className="text-primary"
         />
       </Link>
@@ -23,21 +24,24 @@ export default function MobileMenuFooter() {
       >
         <FontAwesomeIcon
           icon={faLinkedin}
-          width={'25'}
+          width={'30'}
+          height={'30'}
           className="text-primary"
         />
       </Link>
       <Link href="/" target="_blank">
         <FontAwesomeIcon
           icon={faXTwitter}
-          width={'25'}
+          width={'30'}
+          height={'30'}
           className="text-primary"
         />
       </Link>
       <Link href="/" target="_blank">
         <FontAwesomeIcon
           icon={faYoutube}
-          width={'25'}
+          width={'30'}
+          height={'30'}
           className="text-primary"
         />
       </Link>
