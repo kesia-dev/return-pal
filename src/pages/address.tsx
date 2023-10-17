@@ -117,9 +117,12 @@ function Address() {
       const radioInputs = form.querySelectorAll('input[type="radio"]')
       let selectedValue: string | undefined
 
-      radioInputs.forEach((input: HTMLInputElement) => {
-        if (input.checked) {
-          selectedValue = input.value
+      radioInputs.forEach((element: Element) => {
+        if (element instanceof HTMLInputElement) {
+          const input = element
+          if (input.checked) {
+            selectedValue = input.value
+          }
         }
       })
       console.log(selectedValue)
@@ -175,7 +178,7 @@ function Address() {
   }
 
   return (
-    <>
+    <div className="mx-5 my-5">
       <div className="text-largeText text-brand">Pickup Details</div>
       <div>
         <div className="text-brand">Select or add your pickup address</div>
@@ -279,8 +282,7 @@ function Address() {
           <Button className="bg-transparent hover:bg-transparent text-primary font-bold" onClick={() => setStep(1)}>← Back </Button>
           <Button className="next text-white font-bold" onClick={() => setStep(3)} > Next → </Button>
         </span></div>)} */}
-    </>
-    // </div>
+    </div>
   )
 }
 Address.getLayout = getLayout

@@ -15,20 +15,24 @@ function Pickup() {
     if (form) {
       const radioInputs = form.querySelectorAll('input[type="radio"]')
 
-      radioInputs.forEach(function (input: HTMLInputElement) {
-        const parentDiv: HTMLElement = input.parentNode
-          ?.parentNode as HTMLElement
+      const inputArray: HTMLInputElement[] = Array.from(radioInputs).filter(
+        (element): element is HTMLInputElement =>
+          element instanceof HTMLInputElement
+      )
+      inputArray.forEach((input) => {
+        const parentDiv: HTMLElement | null = input.parentNode
+          ?.parentNode as HTMLElement | null
         if (parentDiv) {
           if (input.checked) {
-            parentDiv?.classList.remove('border-brand')
-            parentDiv?.classList.add('border-primary')
-            parentDiv?.classList.remove('opacity-50')
-            parentDiv?.classList.add('selected')
+            parentDiv.classList.remove('border-brand')
+            parentDiv.classList.add('border-primary')
+            parentDiv.classList.remove('opacity-50')
+            parentDiv.classList.add('selected')
           } else {
-            parentDiv?.classList.add('border-brand')
-            parentDiv?.classList.remove('border-primary')
-            parentDiv?.classList.add('opacity-50')
-            parentDiv?.classList.remove('selected')
+            parentDiv.classList.add('border-brand')
+            parentDiv.classList.remove('border-primary')
+            parentDiv.classList.add('opacity-50')
+            parentDiv.classList.remove('selected')
           }
         }
       })
@@ -41,7 +45,7 @@ function Pickup() {
   }, [selectedMethod])
 
   return (
-    <div>
+    <div className="mx-5 my-5">
       <div className="text-largeText text-brand">Pickup Details</div>
       <div className="text-brand">Which pickup method do you prefer?</div>
       <form id="selectPickupMethod" className="mt-5 flex justify-center">
@@ -87,7 +91,7 @@ function Pickup() {
             </Label>
             <Label
               htmlFor="handoff"
-              className="sm: flex h-1/6 h-[10%] justify-center text-sm font-bold md:text-smallText"
+              className="sm: flex h-1/6 h-[10%] justify-center text-center text-sm font-bold md:text-smallText"
             >
               Direct Handoff{' '}
             </Label>
@@ -123,7 +127,7 @@ function Pickup() {
             </Label>
             <Label
               htmlFor="doorstep"
-              className="sm: flex h-1/6 h-[10%] justify-center text-sm font-bold md:text-smallText"
+              className="sm: flex h-1/6 h-[10%] justify-center text-center text-sm font-bold md:text-smallText"
             >
               Leave on Doorstep{' '}
             </Label>
