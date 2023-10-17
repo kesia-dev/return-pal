@@ -13,7 +13,7 @@ import Link from 'next/link'
 
 function PickDateCard() {
   return (
-    <Card className="w-40 border-brand bg-paleBlue text-brand">
+    <Card className="w-40 border-brand bg-paleBlue text-brand hover:cursor-pointer">
       <CardContent className="flex flex-col items-center space-y-4 pt-6">
         <p className="text-2xl font-semibold">Sep</p>
         <p className="text-5xl font-bold">22</p>
