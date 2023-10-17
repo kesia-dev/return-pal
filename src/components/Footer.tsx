@@ -29,7 +29,7 @@ export default function Footer() {
   return (
     <div className="w-full space-y-5 bg-brand p-5">
       <p className="text-center text-lg text-white">Check Us Out</p>
-      <ul className="flew-row xxs:px-16 xs:px-36 grid grid-cols-3 place-content-center place-items-center content-center items-center justify-center gap-2 gap-x-6 sm:flex">
+      <ul className="flew-row grid grid-cols-3 place-content-center place-items-center content-center items-center justify-center gap-2 gap-x-6 xs:flex">
         <FooterButtonLink icon={faInstagram} href="/" />
         <FooterButtonLink icon={faYoutube} href="/" />
         <FooterButtonLink icon={faXTwitter} href="/" />
