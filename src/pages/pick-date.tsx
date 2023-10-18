@@ -17,6 +17,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
 import { type PropsWithChildren } from 'react'
+import * as ToggleGroup from '@radix-ui/react-toggle-group'
 
 type PickCardType = PropsWithChildren & {
   dayNum: number
@@ -24,17 +25,11 @@ type PickCardType = PropsWithChildren & {
   selected?: boolean
 }
 
-function PickDateCard({
-  dayNum,
-  day,
-  selected = false,
-  ...props
-}: PickCardType) {
+function PickDateCard({ dayNum, day, ...props }: PickCardType) {
   return (
     <Card
       className={cn(
-        'w-[9.5rem] border-brand bg-paleBlue text-brand hover:cursor-pointer',
-        selected && 'scale-110 border-8 border-primary bg-white shadow-2xl'
+        'w-[9.5rem] border-brand bg-paleBlue text-brand hover:cursor-pointer data-[state=on]:scale-110 data-[state=on]:border-8 data-[state=on]:border-primary data-[state=on]:bg-white data-[state=on]:shadow-2xl'
       )}
       {...props}
     >
@@ -208,15 +203,41 @@ export default function PickDate() {
               />
               <p className="text-xl">Last Week</p>
             </div>
-            <div className="grid w-full grid-cols-1 place-content-center place-items-center content-center items-center justify-center gap-x-7 gap-y-5 xs:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7">
-              <PickDateCard dayNum={22} day="Fri" />
-              <PickDateCard dayNum={23} day="Sat" />
-              <PickDateCard dayNum={24} day="Sun" />
-              <PickDateCard dayNum={25} day="Mon" selected />
-              <PickDateCard dayNum={26} day="Tue" />
-              <PickDateCard dayNum={27} day="Wed" />
-              <PickDateCard dayNum={28} day="Thu" />
-            </div>
+            <ToggleGroup.Root
+              type="single"
+              className="grid w-full grid-cols-1 place-content-center place-items-center content-center items-center justify-center gap-x-7 gap-y-5 xs:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7"
+              onValueChange={(s) => {
+                console.log('New value: ', s)
+              }}
+            >
+              <ToggleGroup.Item value="fri-22" asChild>
+                <PickDateCard dayNum={22} day="Fri" />
+              </ToggleGroup.Item>
+
+              <ToggleGroup.Item value="sat-23" asChild>
+                <PickDateCard dayNum={23} day="Sat" />
+              </ToggleGroup.Item>
+
+              <ToggleGroup.Item value="sun-24" asChild>
+                <PickDateCard dayNum={24} day="Sun" />
+              </ToggleGroup.Item>
+
+              <ToggleGroup.Item value="mon-25" asChild>
+                <PickDateCard dayNum={25} day="Mon" />
+              </ToggleGroup.Item>
+
+              <ToggleGroup.Item value="tue-26" asChild>
+                <PickDateCard dayNum={26} day="Tue" />
+              </ToggleGroup.Item>
+
+              <ToggleGroup.Item value="wed-27" asChild>
+                <PickDateCard dayNum={27} day="Wed" />
+              </ToggleGroup.Item>
+
+              <ToggleGroup.Item value="thu-28" asChild>
+                <PickDateCard dayNum={28} day="Thu" />
+              </ToggleGroup.Item>
+            </ToggleGroup.Root>
             <div className="hidden w-fit flex-col items-center justify-center space-y-4 text-center font-semibold text-brand hover:cursor-pointer hover:text-primary xl:flex">
               <FontAwesomeIcon
                 size="2x"
