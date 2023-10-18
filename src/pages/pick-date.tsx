@@ -194,16 +194,16 @@ export default function PickDate() {
           </div>
 
           <div className="flex">
-            <div className="hidden flex-col items-center justify-center space-y-4 text-center font-semibold text-brand hover:cursor-pointer hover:text-primary xl:flex">
+            <div className="hidden w-fit flex-col items-center justify-center space-y-4 text-center font-semibold text-brand hover:cursor-pointer hover:text-primary xl:flex">
               <FontAwesomeIcon
                 size="2x"
-                width={'50'}
-                height={'60'}
+                width={'30'}
+                height={'45'}
                 icon={faChevronLeft}
               />
-              <p className="text-2xl">Last Week</p>
+              <p className="text-xl">Last Week</p>
             </div>
-            <div className="grid grid-cols-1 place-content-center place-items-center content-center items-center justify-center gap-x-7 gap-y-5 xs:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7">
+            <div className="grid w-full grid-cols-1 place-content-center place-items-center content-center items-center justify-center gap-x-7 gap-y-5 xs:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7">
               <PickDateCard dayNum={22} day="Fri" />
               <PickDateCard dayNum={23} day="Sat" />
               <PickDateCard dayNum={24} day="Sun" />
@@ -212,26 +212,16 @@ export default function PickDate() {
               <PickDateCard dayNum={27} day="Wed" />
               <PickDateCard dayNum={28} day="Thu" />
             </div>
-            <div className="hidden flex-col items-center justify-center space-y-4 text-center font-semibold text-brand hover:cursor-pointer hover:text-primary xl:flex">
+            <div className="hidden w-fit flex-col items-center justify-center space-y-4 text-center font-semibold text-brand hover:cursor-pointer hover:text-primary xl:flex">
               <FontAwesomeIcon
                 size="2x"
-                width={'50'}
-                height={'60'}
+                width={'30'}
+                height={'45'}
                 icon={faChevronRight}
               />
-              <p className="text-2xl">Next Week</p>
+              <p className="text-xl">Last Week</p>
             </div>
           </div>
-
-          {/* <div className="flex flex-col items-center justify-center space-y-4 text-center font-semibold text-brand">
-            <FontAwesomeIcon
-              size="2x"
-              width={'30'}
-              height={'40'}
-              icon={faChevronRight}
-            />
-            <p>Next Week</p>
-          </div> */}
         </div>
       </div>
     </>
