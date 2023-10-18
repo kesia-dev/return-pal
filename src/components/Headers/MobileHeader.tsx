@@ -21,13 +21,14 @@ import {
 import { type PropsWithChildren } from 'react'
 import { HeaderContent } from './Header'
 import { Separator } from '../ui/separator'
+import SigninModal from '../SigninModal'
 
 type MobileViewType = PropsWithChildren & {
   href: string
   icon: IconDefinition
 }
 
-function MobileLink({ href, icon, children }: MobileViewType) {
+export function MobileLink({ href, icon, children }: MobileViewType) {
   return (
     <SheetClose asChild>
       <Link href={href} className="text-secondary hover:text-primary">
@@ -73,9 +74,10 @@ export default function MobileMenu() {
           <MobileLink href="/" icon={faUsers}>
             About Us
           </MobileLink>
-          <MobileLink href="/sign-in" icon={faRightToBracket}>
+          {/* <MobileLink href="/sign-in" icon={faRightToBracket}>
             Sign In
-          </MobileLink>
+          </MobileLink> */}
+          <SigninModal headerType="mobile" />
           <MobileLink href="/" icon={faTruck}>
             Schedule Pickup
           </MobileLink>
