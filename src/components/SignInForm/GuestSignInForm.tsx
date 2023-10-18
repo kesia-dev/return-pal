@@ -36,7 +36,7 @@ function GuestSignInForm() {
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col items-center justify-start space-y-8"
       >
-        <div className="mt-14 pb-20 sm:mt-14 sm:pb-20">
+        <div className="mt-10 pb-20 sm:mt-14 sm:pb-20">
           <FormField
             control={form.control}
             name="email"
@@ -44,7 +44,7 @@ function GuestSignInForm() {
               <FormItem>
                 <FormControl>
                   <Input
-                    className="h-12 w-[200px] rounded-xl border-4 border-primary text-lg placeholder:text-grey sm:h-14 sm:w-[275px]"
+                    className="h-10 w-[200px] rounded-xl border-4 border-primary text-lg placeholder:text-grey sm:h-14 sm:w-[275px]"
                     type="email"
                     placeholder="Email"
                     {...field}
