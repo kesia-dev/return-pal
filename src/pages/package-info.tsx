@@ -12,11 +12,34 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
+import { DragEvent } from 'react'
 
 export default function PackageInfo() {
   const handleUpload = () => {
     console.log('uploading!')
   }
+  function dragEnterHandler(event: DragEvent<HTMLDivElement>): void {
+    event.preventDefault()
+    event.stopPropagation()
+    console.log('dragging')
+  }
+
+  function dragOverHandler(event: DragEvent<HTMLDivElement>): void {
+    event.preventDefault()
+    event.stopPropagation()
+    console.log('dragging')
+  }
+
+  function dropHandler(event: DragEvent<HTMLDivElement>): void {
+    event.preventDefault()
+    event.stopPropagation()
+    console.log('dropping')
+    const dt = event.dataTransfer
+    const files = dt.files
+
+    console.log(files)
+  }
+
   return (
     <div className="mx-5 my-10 flex flex-col flex-wrap justify-around lg:mx-10">
       <div className="my-5 text-mediumText font-bold text-brand">
@@ -149,6 +172,17 @@ export default function PackageInfo() {
                 <div className="flex flex-col px-5">
                   <div className="font-bold text-brand">
                     Upload Return Label
+                  </div>
+                  <div
+                    id="drop_zone"
+                    className="align-center min-h-20 flex h-20 flex-col justify-center rounded-lg border-2 bg-blue-200 text-center"
+                    onDragEnter={(event) => dragEnterHandler(event)}
+                    onDragOver={(event) => dragOverHandler(event)}
+                    onDrop={(event) => dropHandler(event)}
+                  >
+                    <p>
+                      Drag label here or <i>browse files</i>.
+                    </p>
                   </div>
                   <div className="font-bold text-brand">
                     <Label htmlFor="description" className="text-right">
