@@ -159,10 +159,15 @@ export default function PickDate() {
               Choose a pickup{' '}
               <SectionHeaderHighlight>date</SectionHeaderHighlight>
             </div>
-            <div className="flex flex-col items-center justify-center text-base text-primary hover:cursor-pointer hover:text-brand">
+            {/* TODO: This may need to change later depending on what we decide to
+            do to exit the return process. Confirmation prompt? */}
+            <Link
+              href="/"
+              className="flex flex-col items-center justify-center text-base text-primary hover:cursor-pointer hover:text-brand"
+            >
               <FontAwesomeIcon icon={faClose} width={'35'} height={'35'} />
               <p>Cancel</p>
-            </div>
+            </Link>
           </SectionHeader>
           <SectionDescription>
             We&apos;ll text you the morning of your pickup with an estimated
