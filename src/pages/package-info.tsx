@@ -1,6 +1,22 @@
 import { getLayout } from '@/layouts/DefaultLayout'
+import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Separator } from '@/components/ui/separator'
 
 export default function PackageInfo() {
+  const handleUpload = () => {
+    console.log('uploading!')
+  }
   return (
     <div className="mx-5 my-10 flex flex-col flex-wrap justify-around lg:mx-10">
       <div className="my-5 text-mediumText font-bold text-brand">
@@ -13,7 +29,7 @@ export default function PackageInfo() {
       <div className="flex flex-row justify-between">
         <div className="w-2/5 min-w-fit rounded-lg border-4 border-primary bg-white">
           <div className="">
-            <div className="flex flex-row bg-paleBlue text-primary lg:px-5 ">
+            <div className="flex flex-row bg-paleBlue font-bold text-primary lg:px-5 ">
               <div className="min-w-1/4 w-1/4 overflow-hidden text-clip break-words text-center">
                 Attachment
               </div>
@@ -24,12 +40,13 @@ export default function PackageInfo() {
                 Description
               </div>
             </div>
-            <div className="flex flex-row lg:px-5">
+            <Separator className="h-0.5 bg-primary" />
+            <div className="flex flex-row py-4 lg:px-5">
               <div className="min-w-1/4 w-1/4 overflow-hidden text-clip break-words text-center">
-                filename
+                label.png
               </div>
-              <div className="min-w-1/4 w-1/4 overflow-hidden text-clip break-words text-center">
-                label type
+              <div className="min-w-1/4 w-1/4 overflow-hidden text-clip break-words rounded-full  bg-green-200 text-center">
+                Digital
               </div>
               <div className="min-w-1/4 w-1/4 overflow-hidden text-clip break-words text-center">
                 description
@@ -58,21 +75,6 @@ export default function PackageInfo() {
 			L265.13,75.602L231.035,41.507z"
                         />
                       </g>
-                      <g></g>
-                      <g></g>
-                      <g></g>
-                      <g></g>
-                      <g></g>
-                      <g></g>
-                      <g></g>
-                      <g></g>
-                      <g></g>
-                      <g></g>
-                      <g></g>
-                      <g></g>
-                      <g></g>
-                      <g></g>
-                      <g></g>
                     </g>
                   </svg>
                 </div>
@@ -91,16 +93,79 @@ export default function PackageInfo() {
                 </div>
               </div>
             </div>
+            <Separator className="mx-[5%] h-0.5 w-[90%]" />
           </div>
         </div>
         <div className="flex w-3/5 flex-col justify-between px-5 text-center md:flex-row">
           <div className="w-[30%] min-w-fit rounded-md border-4 border-brand font-bold text-brand lg:text-2xl">
-            Physical Label
-            <div className="text-largeText text-primary  lg:text-6xl">+</div>
+            <Dialog>
+              <DialogTrigger>
+                Physical Label
+                <div className="text-largeText text-primary  lg:text-6xl">
+                  +
+                </div>
+              </DialogTrigger>
+              <DialogContent className="bg-paleBlue">
+                <DialogHeader>
+                  <DialogTitle className="text-center font-bold text-brand">
+                    Add Physical Label
+                  </DialogTitle>
+                </DialogHeader>
+                <div className="flex flex-col px-5">
+                  <div className="font-bold text-brand">
+                    Upload Return Label
+                  </div>
+                  <div className="font-bold text-brand">
+                    <Label htmlFor="description" className="text-right">
+                      Description
+                    </Label>
+                    <Input
+                      id="description"
+                      defaultValue='Label the item(s) inside: e.g. "laptop covers/"'
+                      className="col-span-3"
+                    />
+                  </div>
+                </div>
+                <DialogFooter>
+                  <Button className="w-full px-5"> Add Package</Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           </div>
           <div className="w-[30%] min-w-fit rounded-md border-4 border-brand font-bold text-brand lg:text-2xl">
-            Digital Label
-            <div className="text-largeText text-primary  lg:text-6xl">+</div>
+            <Dialog>
+              <DialogTrigger>
+                Digital Label
+                <div className="text-largeText text-primary  lg:text-6xl">
+                  +
+                </div>
+              </DialogTrigger>
+              <DialogContent className="bg-paleBlue">
+                <DialogHeader>
+                  <DialogTitle className="text-center font-bold text-brand">
+                    Add Digital Label
+                  </DialogTitle>
+                </DialogHeader>
+                <div className="flex flex-col px-5">
+                  <div className="font-bold text-brand">
+                    Upload Return Label
+                  </div>
+                  <div className="font-bold text-brand">
+                    <Label htmlFor="description" className="text-right">
+                      Description
+                    </Label>
+                    <Input
+                      id="description"
+                      defaultValue='Label the item(s) inside: e.g. "laptop covers/"'
+                      className="col-span-3"
+                    />
+                  </div>
+                </div>
+                <DialogFooter>
+                  <Button className="w-full px-5"> Add Package</Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           </div>
           <div className="w-[30%] min-w-fit rounded-md border-4 border-brand font-bold text-brand lg:text-2xl">
             Amazon QR Code
