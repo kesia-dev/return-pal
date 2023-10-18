@@ -58,7 +58,7 @@ export default function PickDate() {
             </div>
           </Link>
 
-          <ol className="items-center justify-center sm:flex">
+          {/* <ol className="items-center justify-center sm:flex">
             <li className="relative mb-6 sm:mb-0">
               <div className="flex items-center">
                 <div className="z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary">
@@ -110,7 +110,7 @@ export default function PickDate() {
                 <p className="text-sm font-normal text-white">Pickup Date</p>
               </div>
             </li>
-          </ol>
+          </ol> */}
 
           {/* <div className="w-full px-4">
             <div className="mx-auto w-full max-w-md">
