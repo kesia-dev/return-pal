@@ -7,7 +7,7 @@ import {
   SectionHeaderHighlight,
 } from '@/components/home/Home'
 import { Card, CardContent } from '@/components/ui/card'
-import { getLayout } from '@/layouts/ReturnProcessLayout'
+import { cn } from '@/lib/utils'
 import {
   faCheck,
   faChevronLeft,
@@ -16,28 +16,28 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
+import { type PropsWithChildren } from 'react'
 
-function PickDateCard({ dayNum, day }: { dayNum: number; day: string }) {
-  return (
-    <Card className="w-[9.5rem] border-brand bg-paleBlue text-brand hover:cursor-pointer">
-      <CardContent className="flex flex-col items-center space-y-4 pt-6">
-        <p className="text-2xl font-semibold">Sep</p>
-        <p className="text-5xl font-bold">{dayNum}</p>
-        <p className="text-2xl font-semibold">{day}</p>
-      </CardContent>
-    </Card>
-  )
-}
-
-function SelectedPickDateCard({
-  dayNum,
-  day,
-}: {
+type PickCardType = PropsWithChildren & {
   dayNum: number
   day: string
-}) {
+  selected?: boolean
+}
+
+function PickDateCard({
+  dayNum,
+  day,
+  selected = false,
+  ...props
+}: PickCardType) {
   return (
-    <Card className="w-[9.5rem] scale-110 border-8 border-primary bg-white text-brand shadow-2xl">
+    <Card
+      className={cn(
+        'w-[9.5rem] border-brand bg-paleBlue text-brand hover:cursor-pointer',
+        selected && 'scale-110 border-8 border-primary bg-white shadow-2xl'
+      )}
+      {...props}
+    >
       <CardContent className="flex flex-col items-center space-y-4 pt-6">
         <p className="text-2xl font-semibold">Sep</p>
         <p className="text-5xl font-bold">{dayNum}</p>
@@ -207,7 +207,7 @@ export default function PickDate() {
               <PickDateCard dayNum={22} day="Fri" />
               <PickDateCard dayNum={23} day="Sat" />
               <PickDateCard dayNum={24} day="Sun" />
-              <SelectedPickDateCard dayNum={25} day="Mon" />
+              <PickDateCard dayNum={25} day="Mon" selected />
               <PickDateCard dayNum={26} day="Tue" />
               <PickDateCard dayNum={27} day="Wed" />
               <PickDateCard dayNum={28} day="Thu" />
