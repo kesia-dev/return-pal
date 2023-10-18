@@ -12,25 +12,22 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
-import { DragEvent } from 'react'
+import { type ChangeEvent, type DragEvent } from 'react'
 
 export default function PackageInfo() {
-  const handleUpload = () => {
-    console.log('uploading!')
-  }
-  function dragEnterHandler(event: DragEvent<HTMLDivElement>): void {
+  const dragEnterHandler = (event: DragEvent<HTMLDivElement>): void => {
     event.preventDefault()
     event.stopPropagation()
     console.log('dragging')
   }
 
-  function dragOverHandler(event: DragEvent<HTMLDivElement>): void {
+  const dragOverHandler = (event: DragEvent<HTMLDivElement>): void => {
     event.preventDefault()
     event.stopPropagation()
     console.log('dragging')
   }
 
-  function dropHandler(event: DragEvent<HTMLDivElement>): void {
+  const dropHandler = (event: DragEvent<HTMLDivElement>): void => {
     event.preventDefault()
     event.stopPropagation()
     console.log('dropping')
@@ -38,6 +35,19 @@ export default function PackageInfo() {
     const files = dt.files
 
     console.log(files)
+  }
+
+  const uploadToClient = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files?.[0]) {
+      console.log(123)
+      console.log(event.target.files[0])
+      console.log(event.target.files[0].name)
+    }
+    // const table = document.getElementById('labels')
+    // console.log(table)
+    // if (table) {
+    //   table.innerHTML += `money`
+    // }
   }
 
   return (
@@ -51,7 +61,7 @@ export default function PackageInfo() {
       </div>
       <div className="flex flex-row justify-between">
         <div className="w-2/5 min-w-fit rounded-lg border-4 border-primary bg-white">
-          <div className="">
+          <div id="labels" className="">
             <div className="flex flex-row bg-paleBlue font-bold text-primary lg:px-5 ">
               <div className="min-w-1/4 w-1/4 overflow-hidden text-clip break-words text-center">
                 Attachment
@@ -180,8 +190,21 @@ export default function PackageInfo() {
                     onDragOver={(event) => dragOverHandler(event)}
                     onDrop={(event) => dropHandler(event)}
                   >
-                    <p>
-                      Drag label here or <i>browse files</i>.
+                    <p className=" text-gray-500">
+                      Drag label here or
+                      <Input
+                        type="file"
+                        id="files"
+                        className="hidden"
+                        onChange={(e) => uploadToClient(e)}
+                      />
+                      <Label
+                        className="text-mediumText text-primary"
+                        htmlFor="files"
+                      >
+                        {' '}
+                        browse files
+                      </Label>
                     </p>
                   </div>
                   <div className="font-bold text-brand">
