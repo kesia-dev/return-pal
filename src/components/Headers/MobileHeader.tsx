@@ -15,7 +15,6 @@ import {
   faCircleInfo,
   faUsers,
   faTruck,
-  faRightToBracket,
   faTags,
 } from '@fortawesome/free-solid-svg-icons'
 import { type PropsWithChildren } from 'react'
@@ -74,9 +73,7 @@ export default function MobileMenu() {
           <MobileLink href="/" icon={faUsers}>
             About Us
           </MobileLink>
-          {/* <MobileLink href="/sign-in" icon={faRightToBracket}>
-            Sign In
-          </MobileLink> */}
+
           <SigninModal headerType="mobile" />
           <MobileLink href="/" icon={faTruck}>
             Schedule Pickup
