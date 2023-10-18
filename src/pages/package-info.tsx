@@ -1,6 +1,6 @@
 import { getLayout } from '@/layouts/DefaultLayout'
 
-export default function PickupInfo() {
+export default function PackageInfo() {
   return (
     <div className="flex flex-col flex-wrap justify-around">
       <div className="mx-5 flex flex-row justify-between">
@@ -30,4 +30,4 @@ export default function PickupInfo() {
   )
 }
 
-PickupInfo.getLayout = getLayout
+PackageInfo.getLayout = getLayout
