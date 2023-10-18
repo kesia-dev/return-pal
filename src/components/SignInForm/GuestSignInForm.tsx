@@ -12,6 +12,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { Button } from '@components/ui/button'
 import Link from 'next/link'
+import NextArrow from '../SvgComponents/NextArrow'
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -60,20 +61,7 @@ function GuestSignInForm() {
           className="h-10 w-[150px] rounded-3xl text-lg sm:h-12 sm:w-[150px]"
         >
           Next&nbsp;&nbsp;
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="h-3 w-3"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-            />
-          </svg>
+          <NextArrow />
         </Button>
         <p className="my-8 font-semibold text-grey">
           Don&apos;t have an account yet?
