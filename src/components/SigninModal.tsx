@@ -2,10 +2,10 @@ import Image from 'next/image'
 import SignInForm from '@/components/SignInForm/SignInForm'
 import GuestSignInForm from '@/components/SignInForm/GuestSignInForm'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
 import { faRightToBracket } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome
 function SigninModal({
   headerType = 'desktop',
 }: {
