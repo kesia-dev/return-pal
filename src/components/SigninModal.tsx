@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
 import { faRightToBracket } from '@fortawesome/free-solid-svg-icons'
+
 function SigninModal({
   headerType = 'desktop',
 }: {
