@@ -29,7 +29,7 @@ function PickDateCard({ dayNum, day, ...props }: PickCardType) {
   return (
     <Card
       className={cn(
-        'w-[9.5rem] border-brand bg-paleBlue text-brand hover:cursor-pointer data-[state=on]:scale-110 data-[state=on]:border-8 data-[state=on]:border-primary data-[state=on]:bg-white data-[state=on]:shadow-2xl'
+        'w-[9.5rem] select-none border-brand bg-paleBlue text-brand hover:cursor-pointer data-[state=on]:scale-110 data-[state=on]:border-8 data-[state=on]:border-primary data-[state=on]:bg-white data-[state=on]:shadow-2xl'
       )}
       {...props}
     >
