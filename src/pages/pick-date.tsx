@@ -172,7 +172,7 @@ export default function PickDate() {
 
         <div className="flex-row justify-center gap-x-4 space-y-11">
           {/* <div className="flex  items-center justify-center space-y-4 text-center font-semibold text-brand"> */}
-          <div className="flex justify-center gap-x-11">
+          <div className="flex justify-center gap-x-11 xl:hidden">
             <div className="flex flex-col items-center justify-center space-y-4 text-center font-semibold text-brand hover:cursor-pointer hover:text-primary">
               <FontAwesomeIcon
                 size="2x"
@@ -193,14 +193,34 @@ export default function PickDate() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 place-content-center place-items-center content-center items-center justify-center gap-x-7 gap-y-5 xs:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7">
-            <PickDateCard dayNum={22} day="Fri" />
-            <PickDateCard dayNum={23} day="Sat" />
-            <PickDateCard dayNum={24} day="Sun" />
-            <SelectedPickDateCard dayNum={25} day="Mon" />
-            <PickDateCard dayNum={26} day="Tue" />
-            <PickDateCard dayNum={27} day="Wed" />
-            <PickDateCard dayNum={28} day="Thu" />
+          <div className="flex">
+            <div className="hidden flex-col items-center justify-center space-y-4 text-center font-semibold text-brand hover:cursor-pointer hover:text-primary xl:flex">
+              <FontAwesomeIcon
+                size="2x"
+                width={'50'}
+                height={'60'}
+                icon={faChevronLeft}
+              />
+              <p className="text-2xl">Last Week</p>
+            </div>
+            <div className="grid grid-cols-1 place-content-center place-items-center content-center items-center justify-center gap-x-7 gap-y-5 xs:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7">
+              <PickDateCard dayNum={22} day="Fri" />
+              <PickDateCard dayNum={23} day="Sat" />
+              <PickDateCard dayNum={24} day="Sun" />
+              <SelectedPickDateCard dayNum={25} day="Mon" />
+              <PickDateCard dayNum={26} day="Tue" />
+              <PickDateCard dayNum={27} day="Wed" />
+              <PickDateCard dayNum={28} day="Thu" />
+            </div>
+            <div className="hidden flex-col items-center justify-center space-y-4 text-center font-semibold text-brand hover:cursor-pointer hover:text-primary xl:flex">
+              <FontAwesomeIcon
+                size="2x"
+                width={'50'}
+                height={'60'}
+                icon={faChevronRight}
+              />
+              <p className="text-2xl">Next Week</p>
+            </div>
           </div>
 
           {/* <div className="flex flex-col items-center justify-center space-y-4 text-center font-semibold text-brand">
