@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { faRightToBracket } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
+
 function SigninModal({
   headerType = 'desktop',
 }: {
