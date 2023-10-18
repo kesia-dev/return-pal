@@ -13,12 +13,13 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
-import { type PropsWithChildren } from 'react'
+import React from 'react'
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
 import { getLayout } from '@/layouts/ReturnProcessLayout'
 import Head from 'next/head'
 
-type PickCardType = PropsWithChildren & {
+// TODO: Change type to just accept a full date instead of having 2 props for day number and actual name date
+type PickCardType = React.HTMLAttributes<HTMLDivElement> & {
   dayNum: number
   day: string
   selected?: boolean
@@ -26,24 +27,28 @@ type PickCardType = PropsWithChildren & {
 
 // TODO: Selecting a card moves all the other cards down, make sure only the selected card grows and the other ones don't move
 
-// TODO: Convert PickDateCard into a forwardRef component
-// https://www.radix-ui.com/primitives/docs/guides/composition#your-component-must-forward-ref
-function PickDateCard({ dayNum, day, ...props }: PickCardType) {
-  return (
-    <Card
-      className={cn(
-        'w-[9.5rem] select-none border-brand bg-paleBlue text-brand hover:cursor-pointer data-[state=on]:scale-110 data-[state=on]:border-8 data-[state=on]:border-primary data-[state=on]:bg-white data-[state=on]:shadow-2xl'
-      )}
-      {...props}
-    >
-      <CardContent className="flex flex-col items-center space-y-4 pt-6">
-        <p className="text-2xl font-semibold">Sep</p>
-        <p className="text-5xl font-bold">{dayNum}</p>
-        <p className="text-2xl font-semibold">{day}</p>
-      </CardContent>
-    </Card>
-  )
-}
+const PickDateCard = React.forwardRef<HTMLDivElement, PickCardType>(
+  // eslint-disable-next-line react/prop-types
+  ({ day, dayNum, className, ...props }, ref) => {
+    return (
+      <Card
+        className={cn(
+          'w-[9.5rem] select-none border-brand bg-paleBlue text-brand hover:cursor-pointer data-[state=on]:scale-110 data-[state=on]:border-8 data-[state=on]:border-primary data-[state=on]:bg-white data-[state=on]:shadow-2xl',
+          className
+        )}
+        ref={ref}
+        {...props}
+      >
+        <CardContent className="flex flex-col items-center space-y-4 pt-6">
+          <p className="text-2xl font-semibold">Sep</p>
+          <p className="text-5xl font-bold">{dayNum}</p>
+          <p className="text-2xl font-semibold">{day}</p>
+        </CardContent>
+      </Card>
+    )
+  }
+)
+PickDateCard.displayName = 'PickDateCard'
 
 export default function PickDate() {
   return (
