@@ -14,12 +14,21 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
 import { useState, type ChangeEvent, type DragEvent, useEffect } from 'react'
+import { FileUploader } from 'react-drag-drop-files'
 
 export default function PackageInfo() {
   const [label, setLabel] = useState<File | null>(null)
   const [arrayOfLabels, setArrayOfLabels] = useState<labelFile[]>([])
-
   const [labelDescription, setLabelDescription] = useState<string | null>(null)
+
+  // experimenting with a few things below
+  const [file, setFile] = useState<File | null>(null)
+  const fileTypes = ['JPG', 'PNG', 'PDF']
+  const handleChange = (loadedFile: File) => {
+    setFile(loadedFile)
+    console.log(file)
+    console.log(loadedFile)
+  }
 
   type labelFile = { name: string; type: string; description: string | null }
 
@@ -27,30 +36,30 @@ export default function PackageInfo() {
     setLabelDescription(event.target.value)
   }
 
-  const dragEnterHandler = (event: DragEvent<HTMLDivElement>): void => {
-    event.preventDefault()
-    event.stopPropagation()
-    console.log('dragging')
-  }
+  // const dragEnterHandler = (event: DragEvent<HTMLDivElement>): void => {
+  //   event.preventDefault()
+  //   event.stopPropagation()
+  //   console.log('dragging')
+  // }
 
-  const dragOverHandler = (event: DragEvent<HTMLDivElement>): void => {
-    event.preventDefault()
-    event.stopPropagation()
-    console.log('dragging')
-  }
+  // const dragOverHandler = (event: DragEvent<HTMLDivElement>): void => {
+  //   event.preventDefault()
+  //   event.stopPropagation()
+  //   console.log('dragging')
+  // }
 
-  const dropHandler = (event: DragEvent<HTMLDivElement>): void => {
-    event.preventDefault()
-    event.stopPropagation()
-    console.log('dropping')
-    const dt = event.dataTransfer
-    const files = dt.files
+  // const dropHandler = (event: DragEvent<HTMLDivElement>): void => {
+  //   event.preventDefault()
+  //   event.stopPropagation()
+  //   console.log('dropping')
+  //   const dt = event.dataTransfer
+  //   const files = dt.files
 
-    console.log(files)
-    if (files[0]) {
-      setLabel(files[0])
-    }
-  }
+  //   console.log(files)
+  //   if (files[0]) {
+  //     setLabel(files[0])
+  //   }
+  // }
 
   const uploadToClient = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files?.[0]) {
@@ -284,7 +293,7 @@ export default function PackageInfo() {
                   <div className="font-bold text-brand">
                     Upload Return Label
                   </div>
-                  <div
+                  {/* <div
                     id="drop_zone"
                     className="align-center min-h-20 flex h-20 flex-col justify-center rounded-lg border-2 bg-blue-200 text-center"
                     onDragEnter={(event) => dragEnterHandler(event)}
@@ -307,6 +316,31 @@ export default function PackageInfo() {
                         browse files
                       </Label>
                     </p>
+                  </div> */}
+                  <div className="align-center min-h-20 flex h-20 flex-col justify-center rounded-lg border-2 bg-blue-200 text-center">
+                    <FileUploader
+                      handleChange={handleChange}
+                      name="file"
+                      types={fileTypes}
+                    >
+                      {' '}
+                      <p className=" text-gray-500">
+                        Drag label here or
+                        <Input
+                          type="file"
+                          id="files"
+                          className="hidden"
+                          onChange={(e) => uploadToClient(e)}
+                        />
+                        <Label
+                          className="text-mediumText text-primary"
+                          htmlFor="files"
+                        >
+                          {' '}
+                          browse files
+                        </Label>
+                      </p>
+                    </FileUploader>
                   </div>
                   <div className="font-bold text-brand">
                     <Label htmlFor="description" className="text-right">
@@ -325,7 +359,7 @@ export default function PackageInfo() {
                   <DialogClose asChild>
                     <Button
                       className="w-full px-5"
-                      onClick={() => void addLabelToTable(label)}
+                      onClick={() => void addLabelToTable(file)}
                     >
                       {' '}
                       Add Package
