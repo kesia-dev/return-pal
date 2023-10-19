@@ -1,5 +1,5 @@
 import { type PropsWithChildren } from 'react'
-import ReturnProcessHeader from '@/components/Headers/ReturnProcessHeader'
+import ReturnProcessHeader from '@/components/Headers/ReturnProcess/ReturnProcessHeader'
 import ReturnProcessContextProvider from '@/context/ReturnProcessContext'
 
 export default function ReturnProcessLayout({ children }: PropsWithChildren) {
