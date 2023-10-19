@@ -5,13 +5,15 @@ export type ReturnProcessContextType = {
   setEditing: (value: boolean) => void
 }
 
-export const UserProfileContext = createContext<
+export const ReturnProcessContext = createContext<
   ReturnProcessContextType | undefined
 >(undefined)
 
-export default function ReturnProcessContext({ children }: PropsWithChildren) {
+export default function ReturnProcessContextProvider({
+  children,
+}: PropsWithChildren) {
   const [editing, setEditing] = useState(false)
-  const userProfileContextValue = useMemo(
+  const returnProcessContextValue = useMemo(
     () => ({
       editing,
       setEditing,
@@ -20,8 +22,8 @@ export default function ReturnProcessContext({ children }: PropsWithChildren) {
   )
 
   return (
-    <UserProfileContext.Provider value={userProfileContextValue}>
+    <ReturnProcessContext.Provider value={returnProcessContextValue}>
       {children}
-    </UserProfileContext.Provider>
+    </ReturnProcessContext.Provider>
   )
 }
