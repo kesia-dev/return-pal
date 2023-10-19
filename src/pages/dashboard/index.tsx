@@ -1,51 +1,96 @@
 import React from 'react'
 import DefaultLayout from '@/layouts/DefaultLayout'
-import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { Separator } from '@/components/ui/separator'
+import Image from 'next/image'
+import { LiaHomeSolid } from 'react-icons/lia'
+import { FiUser } from 'react-icons/fi'
+import { TfiEmail } from 'react-icons/tfi'
+import { RxGear } from 'react-icons/rx'
+import { VscSignOut } from 'react-icons/vsc'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import Link from 'next/link'
+import DashBoardMain from '@/components/DashBoard/DashBoardMain'
+
+const tabsTriggerClassName =
+  'data-[state=active]:ml-6 data-[state=active]:scale-105 data-[state=active]:border-l-8 data-[state=active]:bg-paleBlue data-[state=active]:text-primary dark:data-[state=active]:bg-slate-950 dark:data-[state=active]:text-slate-50 pl-10 justify-start'
+
+const tabsIconClassName = 'mr-2 h-12 w-12'
 function Dashboard() {
+  const tabsData = [
+    {
+      id: 1,
+      title: 'Main',
+      icon: <LiaHomeSolid className={tabsIconClassName} />,
+      value: 'main',
+    },
+    {
+      id: 2,
+      title: 'Profile',
+      icon: <FiUser className={tabsIconClassName} />,
+      value: 'profile',
+    },
+    {
+      id: 3,
+      title: 'Inbox',
+      icon: <TfiEmail className={tabsIconClassName} />,
+      value: 'inbox',
+    },
+    {
+      id: 4,
+      title: 'Security',
+      icon: <RxGear className={tabsIconClassName} />,
+      value: 'security',
+    },
+    {
+      id: 5,
+      title: 'Sign Out',
+      icon: <VscSignOut className={tabsIconClassName} />,
+      value: 'signOut',
+    },
+  ]
   return (
-    <Tabs defaultValue="main" className="w-full">
+    <Tabs defaultValue="main" className="h-full animate-in animate-out">
       <section className="flex">
-        <TabsList className="flex flex-col">
-          <TabsTrigger value="main">DashBoard</TabsTrigger>
-          <TabsTrigger value="mrofile">Profile</TabsTrigger>
-          <TabsTrigger value="inbox">Inbox</TabsTrigger>
-          <TabsTrigger value="security">Security</TabsTrigger>
-          <TabsTrigger value="signOut">Sign Out</TabsTrigger>
+        <TabsList className="flex h-full min-h-screen w-1/4 flex-col justify-center space-y-5 bg-brand pb-40 text-white">
+          <Link href="/" className="mb-16 p-4">
+            <Image
+              src={'/images/returnpal-logo.png'}
+              alt="logo"
+              width={200}
+              height={200}
+              className="mx-auto"
+            />
+          </Link>
+          {tabsData.map((tab) => (
+            <>
+              {tab.title === 'Sign Out' ? (
+                <Separator key={tab.id} className="mb-16" />
+              ) : null}
+              <TabsTrigger
+                className={tabsTriggerClassName}
+                value={tab.value}
+                key={tab.id}
+              >
+                {tab.icon}
+                <p className="ml-4 mt-2">{tab.title}</p>
+              </TabsTrigger>
+            </>
+          ))}
         </TabsList>
-        <TabsContent value="main">main</TabsContent>
-        <TabsContent value="password">
-          <Card>
-            <CardHeader>
-              <CardTitle>Password</CardTitle>
-              <CardDescription>
-                Change your password here. After saving, you will be logged out.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <div className="space-y-1">
-                <Label htmlFor="current">Current password</Label>
-                <Input id="current" type="password" />
-              </div>
-              <div className="space-y-1">
-                <Label htmlFor="new">New password</Label>
-                <Input id="new" type="password" />
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button>Save password</Button>
-            </CardFooter>
-          </Card>
+        <TabsContent value="main" className="mt-0 min-h-screen w-3/4">
+          <DashBoardMain />
+        </TabsContent>
+        <TabsContent value="profile" className="mt-0 min-h-screen w-3/4">
+          Profile
+        </TabsContent>
+        <TabsContent value="inbox" className="mt-0 min-h-screen w-3/4">
+          inbox
+        </TabsContent>
+        <TabsContent value="security" className="mt-0 min-h-screen w-3/4">
+          security
+        </TabsContent>
+        <TabsContent value="signOut" className="mt-0 min-h-screen w-3/4">
+          signOut
         </TabsContent>
       </section>
     </Tabs>
