@@ -16,12 +16,7 @@ function ProgressBarItem2({ name, start = false, state }: ProgressBarProps2) {
   return (
     <div className="w-1/4">
       <div className="relative mb-2">
-        <div
-          className="align-center absolute top-5 flex w-full content-center items-center align-middle"
-          style={{
-            transform: 'translate(-50%, -50%)',
-          }}
-        >
+        <div className="align-center absolute top-5 flex w-full translate-x-[-50%] translate-y-[-50%]  content-center items-center align-middle">
           {!start && (
             <div
               className={cn(
