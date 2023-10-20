@@ -4,7 +4,6 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -13,11 +12,12 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
-import { useState, type ChangeEvent, type DragEvent, useEffect } from 'react'
+import { useState, type ChangeEvent, useEffect } from 'react'
 import { FileUploader } from 'react-drag-drop-files'
+import Image from 'next/image'
 
 export default function PackageInfo() {
-  const [label, setLabel] = useState<File | null>(null)
+  // const [label, setLabel] = useState<File | null>(null)
   const [arrayOfLabels, setArrayOfLabels] = useState<labelFile[]>([])
   const [labelDescription, setLabelDescription] = useState<string | null>(null)
 
@@ -61,13 +61,13 @@ export default function PackageInfo() {
   //   }
   // }
 
-  const uploadToClient = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files?.[0]) {
-      setLabel(event.target.files[0])
-    }
-  }
+  // const uploadToClient = (event: ChangeEvent<HTMLInputElement>) => {
+  //   if (event.target.files?.[0]) {
+  //     setLabel(event.target.files[0])
+  //   }
+  // }
 
-  const addLabelToTable = (file: File | null) => {
+  const addLabelToTable = (file: File | null, type: string) => {
     console.log(labelDescription)
     console.log(file)
     if (file) {
@@ -75,7 +75,7 @@ export default function PackageInfo() {
         ...arrayOfLabels,
         {
           name: file?.name,
-          type: 'digital',
+          type: type,
           description: labelDescription,
         },
       ])
@@ -239,11 +239,19 @@ export default function PackageInfo() {
             {arrayOfLabels && labelMapper(arrayOfLabels)}
           </div>
         </div>
-        <div className="my-5 flex w-4/5 max-w-[90%] flex-row justify-between px-5 text-center lg:my-0 lg:w-3/5">
-          <div className="w-[30%] min-w-[30%] rounded-md border-4 border-brand font-bold text-brand lg:text-2xl">
+        <div className="my-5 flex w-4/5 max-w-[90%] flex-row justify-between px-5 text-center lg:my-0 lg:w-1/2">
+          <div className="flex w-[30%] min-w-[30%] flex-col justify-between rounded-md border-4 border-brand bg-white font-bold text-brand lg:text-2xl">
             <Dialog>
               <DialogTrigger>
-                Physical Label
+                <div className="mt-2 flex justify-center text-center">
+                  <Image
+                    height={58}
+                    width={65}
+                    src="/images/physical.png"
+                    alt="physical label image"
+                  />
+                </div>
+                <div className="my-2  ">Physical Label</div>
                 <div className="text-largeText text-primary  lg:text-6xl">
                   +
                 </div>
@@ -275,10 +283,18 @@ export default function PackageInfo() {
               </DialogContent>
             </Dialog>
           </div>
-          <div className="w-[30%] min-w-[30%] rounded-md border-4 border-brand font-bold text-brand lg:text-2xl">
+          <div className="flex w-[30%] min-w-[30%] flex-col justify-between rounded-md border-4 border-brand bg-white font-bold text-brand lg:text-2xl">
             <Dialog>
               <DialogTrigger>
-                Digital Label
+                <div className="mt-2 flex justify-center text-center">
+                  <Image
+                    height={58}
+                    width={65}
+                    src="/images/digital.png"
+                    alt="digital label image"
+                  />
+                </div>
+                <div className="my-2  ">Digital Label</div>
                 <div className="text-largeText text-primary  lg:text-6xl">
                   +
                 </div>
@@ -326,12 +342,7 @@ export default function PackageInfo() {
                       {' '}
                       <p className=" text-gray-500">
                         Drag label here or
-                        <Input
-                          type="file"
-                          id="files"
-                          className="hidden"
-                          onChange={(e) => uploadToClient(e)}
-                        />
+                        <Input type="file" id="files" className="hidden" />
                         <Label
                           className="text-mediumText text-primary"
                           htmlFor="files"
@@ -359,7 +370,7 @@ export default function PackageInfo() {
                   <DialogClose asChild>
                     <Button
                       className="w-full px-5"
-                      onClick={() => void addLabelToTable(file)}
+                      onClick={() => void addLabelToTable(file, 'digital')}
                     >
                       {' '}
                       Add Package
@@ -369,8 +380,16 @@ export default function PackageInfo() {
               </DialogContent>
             </Dialog>
           </div>
-          <div className="w-[30%] min-w-[30%] rounded-md border-4 border-brand font-bold text-brand lg:text-2xl">
-            Amazon QR Code
+          <div className="flex w-[30%] min-w-[30%] flex-col justify-between rounded-md border-4 border-brand bg-white font-bold text-brand lg:text-2xl">
+            <div className="mt-2 flex justify-center text-center">
+              <Image
+                height={58}
+                width={65}
+                src="/images/qr.png"
+                alt="QR code image"
+              />
+            </div>
+            <div className="my-2  ">Amazon QR Code</div>
             <div className="text-largeText text-primary  lg:text-6xl">+</div>
           </div>
         </div>
