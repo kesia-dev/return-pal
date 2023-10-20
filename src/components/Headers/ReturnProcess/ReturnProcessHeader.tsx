@@ -6,51 +6,59 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import Logo from '../../SvgComponents/Logo'
 import { cn } from '@/lib/utils'
 
-type ProgressBarProps = {
+type ProgressBarProps2 = {
   name: string
   state: 'not-completed' | 'in-progress' | 'completed'
-  end?: boolean // TODO: We will most likely move this into an array, so we won't need this variable later
+  start?: boolean // TODO: We will most likely move this into an array, so we won't need this variable later
 }
 
-function ProgressBarItem({ name, end = false, state }: ProgressBarProps) {
+function ProgressBarItem2({ name, start = false, state }: ProgressBarProps2) {
   return (
-    <div className="relative mb-6 sm:mb-0">
-      <div className="flex items-center">
+    <div className="w-1/4">
+      <div className="relative mb-2">
         <div
-          className={cn(
-            'z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary',
-            state === 'in-progress' && 'border-4 border-primary bg-brand',
-            state === 'not-completed' && 'border-2 border-primary bg-brand'
-          )}
+          className="align-center absolute top-5 flex w-full content-center items-center align-middle"
+          style={{
+            transform: 'translate(-50%, -50%)',
+          }}
         >
-          {state === 'completed' && (
-            <FontAwesomeIcon
-              icon={faCheck}
-              width="15"
-              height="15"
-              className="text-white"
+          {!start && (
+            <div
+              className={cn(
+                'align-center z-10 h-1 w-full flex-1 items-center rounded bg-primary align-middle',
+                state === 'completed' && 'h-2'
+              )}
             />
           )}
         </div>
-        {!end && (
-          <div
-            className={cn(
-              'hidden h-0.5 w-full bg-primary dark:bg-gray-700 sm:flex',
-              state === 'completed' && 'h-1'
-            )}
-          />
-        )}
-      </div>
-      <div className="abs mt-1 sm:pr-8">
-        <p
+
+        <div
           className={cn(
-            'text-sm font-normal text-white',
-            state === 'in-progress' && 'font-bold'
+            'relative z-30 mx-auto flex h-10 w-10 items-center rounded-full border-2 border-primary bg-brand text-lg text-white',
+            state === 'in-progress' && 'border-4',
+            state === 'completed' && 'bg-primary'
           )}
         >
-          {name}
-        </p>
+          {state === 'completed' && (
+            <span className="flex w-full items-center justify-center text-center text-gray-600">
+              <FontAwesomeIcon
+                icon={faCheck}
+                width="25"
+                height="25"
+                className="text-center text-white"
+              />
+            </span>
+          )}
+        </div>
       </div>
+      <p
+        className={cn(
+          'select-none text-center text-xs text-white md:text-base',
+          state === 'in-progress' && 'font-bold'
+        )}
+      >
+        {name}
+      </p>
     </div>
   )
 }
@@ -67,11 +75,23 @@ export default function ReturnProcessHeader() {
         </Link>
 
         <HeaderContent className="items-center justify-center sm:flex">
-          <ProgressBarItem name="Pickup Date" state="completed" />
-          <ProgressBarItem name="Pickup Details" state="in-progress" />
-          <ProgressBarItem name="Choose Plan" state="not-completed" />
-          <ProgressBarItem name="Package Details" state="not-completed" />
-          <ProgressBarItem name="Confirm" end state="not-completed" />
+          <div className="flex w-full">
+            <ProgressBarItem2 start name="Pickup Date" state="completed" />
+            <ProgressBarItem2 name="Pickup Details" state="completed" />
+            <ProgressBarItem2 name="Choose Plan" state="in-progress" />
+            <ProgressBarItem2 name="Package Details" state="not-completed" />
+            <ProgressBarItem2 name="Confirm" state="not-completed" />
+          </div>
+
+          {/* <div className="flex">
+            <ul className="steps">
+              <li className="step step-primary">Register</li>
+              <li className="step step-primary">Choose plan</li>
+              <li className="step">Purchase</li>
+              <li className="step">Receive Product</li>
+            </ul>
+          </div> */}
+
           {/* <div className="relative mb-6 sm:mb-0">
             <div className="flex items-center">
               <div className="z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary">
