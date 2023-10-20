@@ -1,90 +1,154 @@
-import { type ChangeEvent } from 'react'
+import React from 'react'
 import { useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose,
+} from '@/components/ui/dialog'
+import * as z from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@components/ui/form'
+import DashBoardHeader from './DashBoardHeader'
 
 interface UserInfo {
   username: string
   email: string
 }
 
+const profileFormSchema = z.object({
+  username: z
+    .string()
+    .min(1, {
+      message: 'Username is required',
+    })
+    .max(60, {
+      message: 'Username must be less than 60 characters',
+    }),
+
+  email: z.string().email({
+    message: 'Please enter a valid email address',
+  }),
+})
+
 function Profile() {
-  const [isEditing, setEditing] = useState(false)
   const [userInfo, setUserInfo] = useState<UserInfo>({
-    username: 'john_doe',
+    username: 'John Doe',
     email: 'john@example.com',
   })
 
-  const handleEditClick = () => {
-    setEditing(true)
-  }
+  const form = useForm({
+    resolver: zodResolver(profileFormSchema),
+    defaultValues: {
+      username: userInfo.username,
+      email: userInfo.email,
+    },
+  })
 
-  const handleSaveClick = () => {
-    setEditing(false)
-  }
+  const onSubmit = (values: z.infer<typeof profileFormSchema>) => {
+    console.log(values)
 
-  const handleCancelClick = () => {
-    setEditing(false)
-  }
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
     setUserInfo({
-      ...userInfo,
-      [name]: value,
+      username: values.username,
+      email: values.email,
     })
   }
 
   return (
-    <div className="w-full">
-      <div className="relative h-[15rem] w-full bg-[url('/images/returnpal-gta.webp')]  bg-cover bg-center text-title text-white">
-        <div className="absolute h-full w-full backdrop-blur-sm"></div>
-        <div className="absolute bottom-0">banner</div>
-      </div>
+    <div className="w-full text-brand">
+      <DashBoardHeader username={userInfo.username} email={userInfo.email} />
+      <section className="space-y-12 p-20 text-largeText">
+        <h2 className="mb-4 text-title font-semibold">Profile</h2>
+        <div className="mb-2 flex gap-10">
+          <label className="block">Username:</label>
 
-      <h2 className="mb-4 text-title font-semibold">Profile</h2>
-      <div className="mb-2">
-        <label className="block">Username:</label>
-        {isEditing ? (
-          <Input
-            type="text"
-            name="username"
-            value={userInfo.username}
-            onChange={handleChange}
-            className="w-full"
-          />
-        ) : (
           <span>{userInfo.username}</span>
-        )}
-      </div>
-      <div className="mb-2">
-        <label className="block">Email:</label>
-        {isEditing ? (
-          <Input
-            type="email"
-            name="email"
-            value={userInfo.email}
-            onChange={handleChange}
-            className="w-full"
-          />
-        ) : (
-          <span>{userInfo.email}</span>
-        )}
-      </div>
-      {isEditing ? (
-        <div className="space-x-2">
-          <Button onClick={handleSaveClick} className="bg-green-500 text-white">
-            Save
-          </Button>
-          <Button onClick={handleCancelClick} className="bg-red-500 text-white">
-            Cancel
-          </Button>
         </div>
-      ) : (
-        <Button onClick={handleEditClick} className="bg-blue-500 text-white">
-          Edit Profile
-        </Button>
-      )}
+        <div className="mb-2 flex gap-10">
+          <label className="block">Email:</label>
+
+          <span>{userInfo.email}</span>
+        </div>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button>Edit Profile</Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <Form {...form}>
+              {/* TODO figure out api call for user profile update */}
+              {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
+              <form onSubmit={form.handleSubmit(onSubmit)}>
+                <DialogHeader>
+                  <DialogTitle>Edit profile</DialogTitle>
+                  <DialogDescription>
+                    Make changes to your profile here. Click save when you are
+                    done.
+                  </DialogDescription>
+                </DialogHeader>
+
+                <div className="my-8 flex w-full flex-col space-y-8">
+                  <div className="flex flex-col">
+                    <FormField
+                      control={form.control}
+                      name="username"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-right">
+                            User Name
+                          </FormLabel>
+                          <FormControl>
+                            <Input id="username" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-right">Email</FormLabel>
+                          <FormControl>
+                            <Input id="email" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </div>
+                <DialogFooter>
+                  <DialogClose asChild>
+                    <Button type="submit">Save changes</Button>
+                  </DialogClose>
+                  <DialogClose asChild>
+                    <Button type="button" variant="secondary">
+                      Close
+                    </Button>
+                  </DialogClose>
+                </DialogFooter>
+              </form>
+            </Form>
+          </DialogContent>
+        </Dialog>
+      </section>
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import DefaultLayout from '@/layouts/DefaultLayout'
 import { Separator } from '@/components/ui/separator'
 import Image from 'next/image'
@@ -11,6 +11,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Link from 'next/link'
 import DashBoardMain from '@/components/DashBoard/DashBoardMain'
 import Profile from '@/components/DashBoard/Profile'
+import Inbox from '@/components/DashBoard/Inbox'
+import Security from '@/components/DashBoard/Security'
 
 const tabsTriggerClassName =
   'data-[state=active]:ml-6 data-[state=active]:scale-105 data-[state=active]:border-l-8 data-[state=active]:bg-paleBlue data-[state=active]:text-primary dark:data-[state=active]:bg-slate-950 dark:data-[state=active]:text-slate-50 pl-10 justify-start'
@@ -63,9 +65,9 @@ function Dashboard() {
             />
           </Link>
           {tabsData.map((tab) => (
-            <>
+            <Fragment key={tab.id}>
               {tab.title === 'Sign Out' ? (
-                <Separator key={tab.id} className="mb-16" />
+                <Separator key={`separator ${tab.id}`} className="mb-16" />
               ) : null}
               <TabsTrigger
                 className={tabsTriggerClassName}
@@ -73,9 +75,11 @@ function Dashboard() {
                 key={tab.id}
               >
                 {tab.icon}
-                <p className="ml-4 mt-2">{tab.title}</p>
+                <p key={`p tag ${tab.id}`} className="ml-4 mt-2">
+                  {tab.title}
+                </p>
               </TabsTrigger>
-            </>
+            </Fragment>
           ))}
         </TabsList>
         <TabsContent value="main" className="mt-0 min-h-screen w-3/4">
@@ -85,10 +89,10 @@ function Dashboard() {
           <Profile />
         </TabsContent>
         <TabsContent value="inbox" className="mt-0 min-h-screen w-3/4">
-          inbox
+          <Inbox />
         </TabsContent>
         <TabsContent value="security" className="mt-0 min-h-screen w-3/4">
-          security
+          <Security />
         </TabsContent>
         <TabsContent value="signOut" className="mt-0 min-h-screen w-3/4">
           signOut
