@@ -82,67 +82,6 @@ export default function ReturnProcessHeader() {
             <ProgressBarItem2 name="Package Details" state="not-completed" />
             <ProgressBarItem2 name="Confirm" state="not-completed" />
           </div>
-
-          {/* <div className="flex">
-            <ul className="steps">
-              <li className="step step-primary">Register</li>
-              <li className="step step-primary">Choose plan</li>
-              <li className="step">Purchase</li>
-              <li className="step">Receive Product</li>
-            </ul>
-          </div> */}
-
-          {/* <div className="relative mb-6 sm:mb-0">
-            <div className="flex items-center">
-              <div className="z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary">
-                <FontAwesomeIcon
-                  icon={faCheck}
-                  width="15"
-                  height="15"
-                  className="text-white"
-                />
-              </div>
-              <div className="hidden h-1 w-full bg-primary dark:bg-gray-700 sm:flex"></div>
-            </div>
-            <div className="abs mt-1 sm:pr-8">
-              <p className="text-sm font-normal text-white">Pickup Date</p>
-            </div>
-          </div>
-          <div className="relative mb-6 sm:mb-0">
-            <div className="flex items-center">
-              <div className="z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-4 border-primary" />
-              <div className="hidden h-1 w-full bg-primary dark:bg-gray-700 sm:flex" />
-            </div>
-            <div className="abs mt-1 sm:pr-8">
-              <p className="text-sm font-normal text-white">Pickup Details</p>
-            </div>
-          </div>
-          <div className="relative mb-6 sm:mb-0">
-            <div className="flex items-center">
-              <div className="z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-primary" />
-              <div className="hidden h-1 w-full bg-primary dark:bg-gray-700 sm:flex" />
-            </div>
-            <div className="abs mt-1 sm:pr-8">
-              <p className="text-sm font-normal text-white">Choose Plan</p>
-            </div>
-          </div>
-          <div className="relative mb-6 sm:mb-0">
-            <div className="flex items-center">
-              <div className="z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-primary" />
-              <div className="hidden h-1 w-full bg-primary dark:bg-gray-700 sm:flex" />
-            </div>
-            <div className="abs mt-1 sm:pr-8">
-              <p className="text-sm font-normal text-white">Package Details</p>
-            </div>
-          </div>
-          <div className="relative mb-6 sm:mb-0">
-            <div className="flex items-center">
-              <div className="z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-primary" />
-            </div>
-            <div className="abs mt-1 sm:pr-8">
-              <p className="text-sm font-normal text-white">Pay & Confirm</p>
-            </div>
-          </div> */}
         </HeaderContent>
       </HeaderSub>
     </HeaderRoot>
