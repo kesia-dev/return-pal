@@ -34,7 +34,7 @@ import { FileUploader } from 'react-drag-drop-files'
 
 type FileUploadType = {
   attachment: string
-  labelType: 'physical' | 'digital' | 'amazon'
+  labelType: 'Physical' | 'Digital' | 'Amazon'
   description: string | null
 }
 
@@ -43,9 +43,7 @@ export const columns: ColumnDef<FileUploadType>[] = [
     accessorKey: 'attachment',
     header: 'Attachment',
     cell: ({ row }) => (
-      <div className="overflow-hidden truncate break-all text-center">
-        {row.original.attachment}
-      </div>
+      <div className="break-all text-center">{row.original.attachment}</div>
     ),
   },
   {
@@ -65,8 +63,20 @@ export const columns: ColumnDef<FileUploadType>[] = [
     accessorKey: ' ',
     cell: () => (
       <div className="flex justify-end space-x-1">
-        <FontAwesomeIcon icon={faPen} width={'15'} height={'15'} />
-        <FontAwesomeIcon icon={faTrashCan} width={'15'} height={'15'} />
+        <FontAwesomeIcon
+          className="text-primary"
+          onClick={() => console.log(123)}
+          icon={faPen}
+          width={'15'}
+          height={'15'}
+        />
+        <FontAwesomeIcon
+          className="text-primary"
+          onClick={() => console.log(456)}
+          icon={faTrashCan}
+          width={'15'}
+          height={'15'}
+        />
       </div>
     ),
   },
@@ -75,19 +85,19 @@ export const columns: ColumnDef<FileUploadType>[] = [
 const uploads: FileUploadType[] = [
   {
     attachment: 'INV001',
-    labelType: 'physical',
+    labelType: 'Physical',
     description: 'nike shoes',
   },
   {
     attachment: 'INV002',
-    labelType: 'digital',
+    labelType: 'Digital',
     description: 'nike shoes',
   },
   {
     // attachment: 'INV003',
     attachment: 'supercalifragilisticexpialidocious',
-    labelType: 'amazon',
-    description: 'nike shoes',
+    labelType: 'Amazon',
+    description: 'The rain in Spain stays mainly in the plain',
   },
 ]
 
@@ -152,7 +162,7 @@ export default function PackageInfo3() {
                     return (
                       <TableHead
                         key={header.id}
-                        className="font-semibold text-primary"
+                        className="text-center font-semibold text-primary"
                       >
                         {header.isPlaceholder
                           ? null
@@ -172,9 +182,10 @@ export default function PackageInfo3() {
                   <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && 'selected'}
+                    className="bg-white"
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
+                      <TableCell key={cell.id} className="text-center">
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
@@ -304,7 +315,7 @@ export default function PackageInfo3() {
                   <DialogClose asChild>
                     <Button
                       className="w-full px-5"
-                      onClick={() => void addLabelToTable(file, 'digital')}
+                      onClick={() => void addLabelToTable(file, 'Digital')}
                     >
                       {' '}
                       Add Package
