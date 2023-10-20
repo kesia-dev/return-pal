@@ -1,5 +1,4 @@
 import React from 'react'
-import { getLayout } from '@/layouts/DefaultLayout'
 import { Button } from '@/components/ui/button'
 import { useState, useEffect } from 'react'
 import { z } from 'zod'
@@ -9,8 +8,13 @@ import { Label } from '@/components/ui/label'
 import Router from 'next/router'
 import { useToast } from '@/components/ui/use-toast'
 import Link from 'next/link'
+import {
+  ReturnProcessBackButton,
+  ReturnProcessNextButton,
+} from '@/components/ui/common'
+import { getLayout } from '@/layouts/ReturnProcessLayout'
 
-function Address() {
+export default function Address() {
   const [addresses, setAddresses] = useState<
     { name: string; address: string; default: boolean }[]
   >([])
@@ -239,19 +243,13 @@ function Address() {
         )}
         <span className="mt-5 flex justify-between">
           <Link href="/pick-date">
-            <Button className="bg-transparent font-bold text-primary hover:bg-transparent ">
-              ← Back{' '}
-            </Button>
+            <ReturnProcessBackButton />
           </Link>
           {/* TODO: Validate form - This link is only here for viewing purposes! Will be changed later */}
           <Link href="/pickup">
-            <Button
-              className="next font-bold text-white"
-              //onClick={handleAddressSelection}
-            >
-              {' '}
-              Next →{' '}
-            </Button>
+            <ReturnProcessNextButton
+            // onClick={handleAddressSelection}
+            />
           </Link>
         </span>
       </div>
@@ -292,6 +290,5 @@ function Address() {
     </div>
   )
 }
-Address.getLayout = getLayout
 
-export default Address
+Address.getLayout = getLayout
