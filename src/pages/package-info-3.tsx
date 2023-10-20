@@ -20,7 +20,6 @@ import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Separator } from '@/components/ui/separator'
 import { useState, type ChangeEvent, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPen, faTrashCan } from '@fortawesome/free-solid-svg-icons'
@@ -36,18 +35,27 @@ import { FileUploader } from 'react-drag-drop-files'
 type FileUploadType = {
   attachment: string
   labelType: 'physical' | 'digital' | 'amazon'
-  description: string
+  description: string | null
 }
 
 export const columns: ColumnDef<FileUploadType>[] = [
   {
     accessorKey: 'attachment',
     header: 'Attachment',
+    cell: ({ row }) => (
+      <div className="overflow-hidden truncate break-all text-center">
+        {row.original.attachment}
+      </div>
+    ),
   },
   {
     accessorKey: 'labelType',
     header: 'Label Type',
-    cell: ({ row }) => <Badge>{row.original.labelType}</Badge>,
+    cell: ({ row }) => (
+      <Badge className="text-slate bg-green-200">
+        {row.original.labelType}
+      </Badge>
+    ),
   },
   {
     accessorKey: 'description',
@@ -76,19 +84,15 @@ const uploads: FileUploadType[] = [
     description: 'nike shoes',
   },
   {
-    attachment: 'INV003',
+    // attachment: 'INV003',
+    attachment: 'supercalifragilisticexpialidocious',
     labelType: 'amazon',
     description: 'nike shoes',
   },
 ]
 
 export default function PackageInfo3() {
-  const table = useReactTable({
-    data: uploads,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-  })
-  const [arrayOfLabels, setArrayOfLabels] = useState<labelFile[]>([])
+  const [arrayOfLabels, setArrayOfLabels] = useState<FileUploadType[]>([])
   const [labelDescription, setLabelDescription] = useState<string | null>(null)
   const [file, setFile] = useState<File | null>(null)
   const handleChange = (loadedFile: File) => {
@@ -96,13 +100,16 @@ export default function PackageInfo3() {
     console.log(file)
     console.log(loadedFile)
   }
+  const table = useReactTable({
+    data: arrayOfLabels,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  })
   const fileTypes = ['JPG', 'PNG', 'PDF']
-  type labelFile = {
-    attachment: string
-    labelType: string
-    description: string | null
-  }
-  const addLabelToTable = (file: File | null, type: string) => {
+  const addLabelToTable = (
+    file: File | null,
+    type: 'physical' | 'digital' | 'amazon'
+  ) => {
     console.log(labelDescription)
     console.log(file)
     if (file) {
@@ -121,14 +128,8 @@ export default function PackageInfo3() {
     setLabelDescription(event.target.value)
   }
 
-  const mockLabel: labelFile = {
-    attachment: 'label.png',
-    labelType: 'Digital',
-    description: 'this is a label with a longer description',
-  }
-
   useEffect(() => {
-    setArrayOfLabels([mockLabel])
+    setArrayOfLabels(uploads)
   }, [])
 
   return (
@@ -141,7 +142,7 @@ export default function PackageInfo3() {
         repackaging. You can add multiple packages.
       </div>
 
-      <div className="flex flex-col justify-between lg:flex-row">
+      <div className="flex w-full flex-col justify-between lg:flex-row">
         <div className="relative w-full overflow-auto rounded-lg border-2 border-primary dark:border-gray-700 lg:w-1/2">
           <Table>
             <TableHeader className="border-b-2 border-primary bg-primary bg-opacity-20">
@@ -196,7 +197,7 @@ export default function PackageInfo3() {
           </Table>
         </div>
 
-        <div className="my-5 flex max-w-[90%] flex-row justify-between px-5 text-center lg:my-0 lg:w-1/2">
+        <div className="my-5 flex flex-row justify-between px-5 text-center lg:my-0 lg:w-1/2">
           <div className="flex w-[30%] min-w-[30%] flex-col justify-between rounded-md border-4 border-brand bg-white font-bold text-brand lg:text-2xl">
             <Dialog>
               <DialogTrigger>
