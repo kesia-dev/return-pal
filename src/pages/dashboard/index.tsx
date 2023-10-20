@@ -10,6 +10,7 @@ import { VscSignOut } from 'react-icons/vsc'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Link from 'next/link'
 import DashBoardMain from '@/components/DashBoard/DashBoardMain'
+import Profile from '@/components/DashBoard/Profile'
 
 const tabsTriggerClassName =
   'data-[state=active]:ml-6 data-[state=active]:scale-105 data-[state=active]:border-l-8 data-[state=active]:bg-paleBlue data-[state=active]:text-primary dark:data-[state=active]:bg-slate-950 dark:data-[state=active]:text-slate-50 pl-10 justify-start'
@@ -51,7 +52,7 @@ function Dashboard() {
   return (
     <Tabs defaultValue="main" className="h-full animate-in animate-out">
       <section className="flex">
-        <TabsList className="flex h-full min-h-screen w-1/4 flex-col justify-center space-y-5 bg-brand pb-40 text-white">
+        <TabsList className="flex h-full min-h-screen w-1/4 flex-col justify-center space-y-5 rounded-none bg-brand pb-40 text-white">
           <Link href="/" className="mb-16 p-4">
             <Image
               src={'/images/returnpal-logo.png'}
@@ -81,7 +82,7 @@ function Dashboard() {
           <DashBoardMain />
         </TabsContent>
         <TabsContent value="profile" className="mt-0 min-h-screen w-3/4">
-          Profile
+          <Profile />
         </TabsContent>
         <TabsContent value="inbox" className="mt-0 min-h-screen w-3/4">
           inbox
