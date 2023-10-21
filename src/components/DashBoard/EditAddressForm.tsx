@@ -28,6 +28,7 @@ import {
   addressSchema,
   type UserInfo,
 } from '@/components/DashBoard/types'
+import { ProvincesSelector } from './ProvincesSelector'
 
 function EditAddressForm({
   address,
@@ -197,7 +198,11 @@ function EditAddressForm({
                       <FormItem>
                         <FormLabel className="text-right">Province</FormLabel>
                         <FormControl>
-                          <Input id="province" {...field} />
+                          {/* <Input id="province" {...field} /> */}
+                          <ProvincesSelector
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -221,7 +226,7 @@ function EditAddressForm({
                     )}
                   />
                 </div>
-                <DialogFooter>
+                <DialogFooter className="mt-4">
                   <DialogClose asChild>
                     <Button variant="ghost">Cancel</Button>
                   </DialogClose>

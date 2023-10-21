@@ -1,36 +1,17 @@
 'use client'
 
 import React from 'react'
-import { BiEditAlt } from 'react-icons/bi'
-import { MdOutlineDeleteOutline } from 'react-icons/md'
+
 import { useState } from 'react'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
+
 import { Separator } from '@/components/ui/separator'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogClose,
-} from '@/components/ui/dialog'
-import type * as z from 'zod'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@components/ui/form'
+
 import DashBoardHeader from '@/components/DashBoard/DashBoardHeader'
 import EditProfileForm from '@/components/DashBoard/EditProfileForm'
-import { profileFormSchema, addressSchema, type UserInfo } from './types'
+import { profileFormSchema, type UserInfo } from './types'
 import EditAddressForm from './EditAddressForm'
 
 function Profile() {
