@@ -1,6 +1,8 @@
 'use client'
 
 import React from 'react'
+import { BiEditAlt } from 'react-icons/bi'
+import { MdOutlineDeleteOutline } from 'react-icons/md'
 import { useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -28,7 +30,8 @@ import {
 } from '@components/ui/form'
 import DashBoardHeader from '@/components/DashBoard/DashBoardHeader'
 import EditProfileForm from '@/components/DashBoard/EditProfileForm'
-import { profileFormSchema, type UserInfo } from './types'
+import { profileFormSchema, addressSchema, type UserInfo } from './types'
+import EditAddressForm from './EditAddressForm'
 
 function Profile() {
   const [userInfo, setUserInfo] = useState<UserInfo>({
@@ -43,7 +46,7 @@ function Profile() {
       postal: 'M1M1M1',
     },
     email: 'john@example.com',
-    addtionalAddress: [
+    additionalAddress: [
       {
         apartmentUnitNumber: '0',
         streetNumber: 999,
@@ -69,7 +72,7 @@ function Profile() {
       lastName: userInfo.lastName,
       primaryAddress: userInfo.primaryAddress,
       email: userInfo.email,
-      additionalAddress: userInfo.addtionalAddress,
+      additionalAddress: userInfo.additionalAddress,
     },
   })
 
@@ -92,10 +95,10 @@ function Profile() {
         lastName={userInfo.lastName}
         email={userInfo.email}
       />
-      <section className="space-y-12 p-10 text-xl">
+      <section className="space-y-8 p-10 text-xl">
         <h2 className="mb-4 text-largeText font-semibold">Profile</h2>
 
-        <div className="mb-2 flex h-4 items-center gap-10">
+        <div className="mb-2 flex h-8 items-center gap-10">
           <label className="block">First Name:</label>
 
           <span>{userInfo.firstName}</span>
@@ -131,21 +134,36 @@ function Profile() {
             {', '} {userInfo.primaryAddress.postal}
           </span>
         </div>
-        {userInfo.addtionalAddress && userInfo?.addtionalAddress?.length > 0 ? (
+        {userInfo.additionalAddress &&
+        userInfo?.additionalAddress?.length > 0 ? (
           <div className="mb-2 flex gap-10">
             <label className="block">Additional Addresses:</label>
             <div className="flex flex-col">
-              {userInfo.addtionalAddress.map((address, index) => (
-                <span key={index}>
-                  {typeof address.apartmentUnitNumber === 'string' ? '# ' : ''}
-                  {address.apartmentUnitNumber}{' '}
-                  {typeof address.apartmentUnitNumber === 'string' ? '- ' : ''}
-                  {address.streetNumber} {address.streetName}
-                  {', '} {address.city}
-                  {', '} {address.province}
-                  {', '} {address.postal}
-                </span>
-              ))}
+              {userInfo.additionalAddress.map((address, index) => {
+                return (
+                  <EditAddressForm
+                    key={`${address.streetNumber} ${index}`}
+                    type="edit"
+                    address={address}
+                    setUserInfo={setUserInfo}
+                    index={index}
+                  />
+                )
+              })}
+              {/* <Button className="w-40">Add More Address</Button> */}
+              <EditAddressForm
+                type="add"
+                address={{
+                  apartmentUnitNumber: '',
+                  streetNumber: '',
+                  streetName: '',
+                  city: '',
+                  province: '',
+                  postal: '',
+                }}
+                setUserInfo={setUserInfo}
+                index={0}
+              />
             </div>
           </div>
         ) : null}

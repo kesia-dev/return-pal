@@ -24,11 +24,27 @@ export const addressSchema = z.object({
   postal: z
     .string()
     .min(6)
-    .max(6)
-    .regex(/^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/, {
+    .max(7)
+    // use regex to validate postal code
+    .regex(/^[A-Za-z]\d[A-Za-z] ?\d[A-Za-z]\d$/, {
       message: 'Please enter a valid postal code',
+    })
+    .transform((val: string) => {
+      if (val.length === 6 && typeof val[3] === 'string') {
+        console.log(val)
+        console.log(val.slice(0, 3) + ' ' + val.slice(3))
+
+        return val.slice(0, 3) + ' ' + val.slice(3)
+      }
+      console.log(val)
+
+      return val
     }),
 })
+
+export type Address = Omit<z.infer<typeof addressSchema>, 'streetNumber'> & {
+  streetNumber: string | number
+}
 
 export const profileFormSchema = z.object({
   firstName: z
@@ -51,17 +67,27 @@ export const profileFormSchema = z.object({
   email: z.string().email({
     message: 'Please enter a valid email address',
   }),
-  addtionalAddress: z.array(addressSchema).optional(),
+  additionalAddress: z.array(addressSchema).optional(),
 })
 
-export type UserInfo = z.infer<typeof profileFormSchema>
+type UserInfoBaseWithoutPrimaryAddress = Omit<
+  z.infer<typeof profileFormSchema>,
+  'primaryAddress'
+>
+
+type UserInfoBase = Omit<UserInfoBaseWithoutPrimaryAddress, 'additionalAddress'>
+
+export type UserInfo = UserInfoBase & {
+  primaryAddress: Address
+  additionalAddress?: Address[]
+}
 
 export type EditProfileFormPropsType = {
   form: UseFormReturn<{
     firstName: string
     lastName: string
     primaryAddress: {
-      streetNumber: number
+      streetNumber: number | string
       streetName: string
       city: string
       province: string
@@ -71,7 +97,7 @@ export type EditProfileFormPropsType = {
     email: string
     additionalAddress:
       | {
-          streetNumber: number
+          streetNumber: number | string
           streetName: string
           city: string
           province: string
