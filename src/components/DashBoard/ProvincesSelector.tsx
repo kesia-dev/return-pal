@@ -5,7 +5,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
@@ -87,7 +86,7 @@ export function ProvincesSelector({
 }) {
   return (
     <Select onValueChange={onValueChange} defaultValue={defaultValue}>
-      <SelectTrigger className="w-full">
+      <SelectTrigger className="w-full text-stone-400">
         <SelectValue placeholder="Select a Province" />
       </SelectTrigger>
       <SelectContent>
