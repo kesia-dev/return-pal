@@ -106,5 +106,5 @@ export type EditProfileFormPropsType = {
         }[]
       | undefined
   }>
-  onSubmit: (values: z.infer<typeof profileFormSchema>) => void
+  onSubmit: (values: UserInfo) => void
 }

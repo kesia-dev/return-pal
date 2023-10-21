@@ -76,7 +76,7 @@ function Profile() {
     },
   })
 
-  const onSubmit = (values: z.infer<typeof profileFormSchema>) => {
+  const onSubmit = (values: UserInfo) => {
     setUserInfo((prev) => {
       return {
         ...prev,

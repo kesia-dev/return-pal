@@ -22,7 +22,6 @@ import {
   FormControl,
 } from '@/components/ui/form'
 import { useForm } from 'react-hook-form'
-import type * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
   type Address,
@@ -119,6 +118,7 @@ function EditAddressForm({
             </DialogHeader>
             <Form {...addressForm}>
               <form
+                // eslint-disable-next-line
                 onSubmit={addressForm.handleSubmit(
                   type === 'edit' ? onSubmit : onCreate
                 )}
