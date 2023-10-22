@@ -108,3 +108,14 @@ export type EditProfileFormPropsType = {
   }>
   onSubmit: (values: UserInfo) => void
 }
+
+export type Mail = {
+  id: string
+  email: string
+  message: string
+  pickupAddress: Address
+  deliveryAddress: Address
+  retrunDate: string
+  amount: number
+  shippingStatus: 'Delivered' | 'In Transit' | 'Pending' | 'Error'
+}
