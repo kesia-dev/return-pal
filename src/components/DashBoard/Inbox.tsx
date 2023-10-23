@@ -143,11 +143,11 @@ function Inbox() {
                       })
                   }}
                 >
-                  Copy payment ID
+                  Copy messasge ID
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>View customer</DropdownMenuItem>
-                <DropdownMenuItem>View payment details</DropdownMenuItem>
+                <DropdownMenuItem>View Complete Message</DropdownMenuItem>
+                <DropdownMenuItem>Delete Message</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           )

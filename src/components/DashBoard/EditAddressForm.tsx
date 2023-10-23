@@ -72,12 +72,16 @@ function EditAddressForm({
   }
 
   const onClickDelete = () => {
-    setUserInfo((prev) => ({
-      ...prev,
-      additionalAddress: prev.additionalAddress
-        ? prev.additionalAddress.filter((_, i) => i !== index)
-        : undefined,
-    }))
+    setUserInfo((prev) => {
+      console.log('prev', prev)
+
+      return {
+        ...prev,
+        additionalAddress: prev.additionalAddress
+          ? prev.additionalAddress.filter((_, i) => i !== index)
+          : undefined,
+      }
+    })
   }
 
   return (

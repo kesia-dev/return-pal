@@ -45,7 +45,7 @@ function InboxDataTable({ data, columns }: InboxDataTablePropsType) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
+    React.useState<VisibilityState>({}
   const [rowSelection, setRowSelection] = useState({})
 
   const table = useReactTable({
@@ -77,6 +77,8 @@ function InboxDataTable({ data, columns }: InboxDataTablePropsType) {
     estimateSize: () => 35,
     overscan: 5,
   })
+
+  console.log(rowVirtualizer.getVirtualItems())
 
   return (
     <div className="w-full px-4">
@@ -120,10 +122,10 @@ function InboxDataTable({ data, columns }: InboxDataTablePropsType) {
         ref={tableContainerRef}
         className="relative h-[60vh] overflow-y-auto rounded-md border"
       >
-        <Table>
-          <TableHeader className="sticky top-0 z-10 bg-gradient-to-r from-gradientL to-primary ">
+        <Table className="space-y-4">
+          <TableHeader className="fixed z-10 w-full bg-gradient-to-r from-gradientL to-primary">
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id} className="sticky top-0">
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead
@@ -142,7 +144,7 @@ function InboxDataTable({ data, columns }: InboxDataTablePropsType) {
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody>
+          <TableBody className="">
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
