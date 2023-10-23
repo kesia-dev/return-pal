@@ -20,12 +20,12 @@ import Head from 'next/head'
 import { ReturnProcessNextButton } from '@/components/ui/common'
 import { useDateSelection } from '@/hooks/useDateSelection'
 
-type PickCardType2 = React.HTMLAttributes<HTMLDivElement> & {
+type PickCardType = React.HTMLAttributes<HTMLDivElement> & {
   date: Date
 }
 // TODO: Selecting a card moves all the other cards down, make sure only the selected card grows and the other ones don't move
 
-const PickDateCard = React.forwardRef<HTMLDivElement, PickCardType2>(
+const PickDateCard = React.forwardRef<HTMLDivElement, PickCardType>(
   // eslint-disable-next-line react/prop-types
   ({ date, className, ...props }, ref) => {
     return (
@@ -55,18 +55,14 @@ PickDateCard.displayName = 'PickDateCard'
 export default function PickDate() {
   const dateSelection = useDateSelection(new Date())
 
-  // These functions are temporary until we move these into Back/Forward button components
+  // TODO: These functions are temporary until we move these into Back/Forward button components
   function nextWeek() {
-    //console.log('nextWeek')
     dateSelection.forward()
   }
 
   function lastWeek() {
-    // console.log('lastWeek')
     dateSelection.back()
   }
-
-  // console.log('dates: ', dateSelection.getCurrentDays)
 
   return (
     <>
