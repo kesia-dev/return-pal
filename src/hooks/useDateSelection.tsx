@@ -1,6 +1,8 @@
 import { getDateFrom } from '@/lib/utils'
 import { useMemo, useState } from 'react'
 
+const DAYS_TO_FETCH = 7
+
 export function useDateSelection(initialDate: Date) {
   const [initialStartingDate] = useState<Date>(initialDate)
   const [cursorStartDate, setCursorStartingDate] = useState<Date>(initialDate)
@@ -8,7 +10,7 @@ export function useDateSelection(initialDate: Date) {
   const getCurrentDays = useMemo(() => {
     const dateArray = []
     const currentDate = new Date(cursorStartDate)
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < DAYS_TO_FETCH; i++) {
       dateArray.push(new Date(currentDate))
       currentDate.setDate(currentDate.getDate() + 1)
     }
@@ -16,11 +18,11 @@ export function useDateSelection(initialDate: Date) {
   }, [cursorStartDate])
 
   function forward() {
-    setCursorStartingDate((prev) => getDateFrom(prev, 7))
+    setCursorStartingDate((prev) => getDateFrom(prev, DAYS_TO_FETCH))
   }
 
   function back() {
-    const newDate = getDateFrom(cursorStartDate, -7)
+    const newDate = getDateFrom(cursorStartDate, -DAYS_TO_FETCH)
     if (canGoBackwards()) {
       setCursorStartingDate(newDate)
     }
