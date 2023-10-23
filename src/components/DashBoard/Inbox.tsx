@@ -59,6 +59,7 @@ function Inbox() {
           return (
             <Button
               variant="ghost"
+              className="hover:bg-transparent hover:text-white"
               onClick={() =>
                 column.toggleSorting(column.getIsSorted() === 'asc')
               }
@@ -78,6 +79,7 @@ function Inbox() {
           return (
             <Button
               variant="ghost"
+              className="hover:bg-transparent hover:text-white"
               onClick={() =>
                 column.toggleSorting(column.getIsSorted() === 'asc')
               }
@@ -102,7 +104,20 @@ function Inbox() {
       },
       {
         accessorKey: 'amount',
-        header: () => <div className="text-right">Amount</div>,
+        header: ({ column }) => {
+          return (
+            <Button
+              className="hover:bg-transparent hover:text-white"
+              variant="ghost"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === 'asc')
+              }
+            >
+              Email
+              <RxCaretSort className="ml-2 h-4 w-4" />
+            </Button>
+          )
+        },
         cell: ({ row }) => {
           const amount = parseFloat(row.getValue('amount'))
 

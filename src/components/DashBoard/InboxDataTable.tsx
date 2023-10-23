@@ -44,8 +44,7 @@ function InboxDataTable({ data, columns }: InboxDataTablePropsType) {
   const [mails, setMails] = useState<Mail[]>(data)
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({}
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = useState({})
 
   const table = useReactTable({
@@ -78,11 +77,18 @@ function InboxDataTable({ data, columns }: InboxDataTablePropsType) {
     overscan: 5,
   })
 
+  console.log('rows', rows)
+
+  const { getVirtualItems, getTotalSize } = rowVirtualizer
+
+  const virtualItems = getVirtualItems()
+  console.log('virtualItems', virtualItems)
+
   console.log(rowVirtualizer.getVirtualItems())
 
   return (
     <div className="w-full px-4">
-      <div className="flex items-center justify-center py-4">
+      <div className="flex items-center justify-center py-3">
         <Input
           placeholder="Filter emails..."
           value={(table.getColumn('email')?.getFilterValue() as string) ?? ''}
@@ -120,15 +126,19 @@ function InboxDataTable({ data, columns }: InboxDataTablePropsType) {
       </div>
       <div
         ref={tableContainerRef}
-        className="relative h-[60vh] overflow-y-auto rounded-md border"
+        className="h-[60vh] overflow-y-auto rounded-md border"
       >
         <Table className="space-y-4">
-          <TableHeader className="fixed z-10 w-full bg-gradient-to-r from-gradientL to-primary">
+          <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id} className="sticky top-0">
+              <TableRow
+                key={headerGroup.id}
+                className="sticky top-0 bg-gradient-to-r from-gradientL to-primary"
+              >
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead
+                      colSpan={header.colSpan}
                       className="text-center text-white"
                       key={header.id}
                     >
