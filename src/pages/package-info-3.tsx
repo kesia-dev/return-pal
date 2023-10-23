@@ -161,18 +161,47 @@ export default function PackageInfo3() {
                 How to add a package
               </DialogTitle>
             </DialogHeader>
-            <div className="flex flex-col px-5">
-              <div className="font-bold text-brand">Instructions</div>
-              <div className="flex justify-around text-brand">
-                <div>Step 1: Click on the type of label you have.</div>
-                <div>
-                  Step 2: Drag your file over the area or click to browse your
-                  computer&apos;s files
-                </div>
-                <div>Step 3: Fill in the description</div>
-                <div>
-                  Step 4: Click &quot;Add Package&quot; to add it to the list.
-                </div>
+            <div className="px-5 text-brand">
+              <div className="text-center font-bold text-brand">
+                Instructions
+              </div>
+              <div>
+                Step 1: Click on the type of label you have.
+                <Image
+                  height={300}
+                  width={500}
+                  src="/images/Step1.png"
+                  alt="Step 1 example Image"
+                />
+              </div>
+              <div>
+                Step 2: Drag your file over the area or click to browse your
+                computer&apos;s files
+                <Image
+                  height={300}
+                  width={500}
+                  src="/images/Step2.png"
+                  alt="Step 2 example image"
+                />
+              </div>
+              <div>
+                Step 3: Fill in the description
+                <Image
+                  height={300}
+                  width={500}
+                  src="/images/Step3.png"
+                  alt="Step 3 example image"
+                />
+              </div>
+
+              <div>
+                Step 4: Click &quot;Add Package&quot; to add it to the list.
+                <Image
+                  height={300}
+                  width={500}
+                  src="/images/Step4.png"
+                  alt="Step 4 example image"
+                />
               </div>
             </div>
             <DialogFooter>
@@ -358,7 +387,7 @@ export default function PackageInfo3() {
                 <DialogClose asChild>
                   <Button
                     className="w-full px-5"
-                    onClick={() => void addLabelToTable(file, 'Amazon')}
+                    onClick={() => void addLabelToTable(file, 'Digital')}
                   >
                     {' '}
                     Add Package
@@ -434,7 +463,7 @@ export default function PackageInfo3() {
                 <DialogClose asChild>
                   <Button
                     className="w-full px-5"
-                    onClick={() => void addLabelToTable(file, 'Digital')}
+                    onClick={() => void addLabelToTable(file, 'Amazon')}
                   >
                     {' '}
                     Add Package
