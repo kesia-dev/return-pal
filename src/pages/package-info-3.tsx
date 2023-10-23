@@ -94,7 +94,6 @@ const uploads: FileUploadType[] = [
     description: 'nike shoes',
   },
   {
-    // attachment: 'INV003',
     attachment: 'supercalifragilisticexpialidocious',
     labelType: 'Amazon',
     description: 'The rain in Spain stays mainly in the plain',
@@ -118,7 +117,7 @@ export default function PackageInfo3() {
   const fileTypes = ['JPG', 'PNG', 'PDF']
   const addLabelToTable = (
     file: File | null,
-    type: 'physical' | 'digital' | 'amazon'
+    type: 'Physical' | 'Digital' | 'Amazon'
   ) => {
     console.log(labelDescription)
     console.log(file)
@@ -147,9 +146,42 @@ export default function PackageInfo3() {
       <div className="my-5 text-mediumText font-bold text-brand">
         Package Details
       </div>
-      <div className="mb-5 text-brand">
-        Select label type and we&apos;ll handle the label printing and
-        repackaging. You can add multiple packages.
+      <div className="mb-5 mr-5 flex justify-between text-brand">
+        <div>
+          Select label type and we&apos;ll handle the label printing and
+          repackaging. You can add multiple packages.
+        </div>
+        <Dialog>
+          <DialogTrigger>
+            <div>How it works</div>
+          </DialogTrigger>
+          <DialogContent className="bg-paleBlue">
+            <DialogHeader>
+              <DialogTitle className="text-center font-bold text-brand">
+                How to add a package
+              </DialogTitle>
+            </DialogHeader>
+            <div className="flex flex-col px-5">
+              <div className="font-bold text-brand">Instructions</div>
+              <div className="flex justify-around text-brand">
+                <div>Step 1: Click on the type of label you have.</div>
+                <div>
+                  Step 2: Drag your file over the area or click to browse your
+                  computer&apos;s files
+                </div>
+                <div>Step 3: Fill in the description</div>
+                <div>
+                  Step 4: Click &quot;Add Package&quot; to add it to the list.
+                </div>
+              </div>
+            </div>
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button className="w-full px-5"> I understand</Button>
+              </DialogClose>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
 
       <div className="flex w-full flex-col justify-between lg:flex-row">
@@ -209,134 +241,208 @@ export default function PackageInfo3() {
         </div>
 
         <div className="my-5 flex flex-row justify-between px-5 text-center lg:my-0 lg:w-1/2">
-          <div className="flex w-[30%] min-w-[30%] flex-col justify-between rounded-md border-4 border-brand bg-white font-bold text-brand lg:text-2xl">
-            <Dialog>
-              <DialogTrigger>
-                <div className="mt-2 flex justify-center text-center">
-                  <Image
-                    height={58}
-                    width={65}
-                    src="/images/physical.png"
-                    alt="physical label image"
-                  />
-                </div>
-                <div className="my-2  ">Physical Label</div>
-                <div className="text-largeText text-primary  lg:text-6xl">
-                  +
-                </div>
-              </DialogTrigger>
-              <DialogContent className="bg-paleBlue">
-                <DialogHeader>
-                  <DialogTitle className="text-center font-bold text-brand">
-                    Add Physical Label
-                  </DialogTitle>
-                </DialogHeader>
-                <div className="flex flex-col px-5">
-                  <div className="font-bold text-brand">
-                    Upload Return Label
-                  </div>
-                  <div className="font-bold text-brand">
-                    <Label htmlFor="description" className="text-right">
-                      Description
-                    </Label>
-                    <Input
-                      id="description"
-                      defaultValue='Label the item(s) inside: e.g. "laptop covers/"'
-                      className="col-span-3"
+          {/* <div className="flex w-[30%] min-w-[30%] flex-col justify-between rounded-md border-4 border-brand bg-white font-bold text-brand lg:text-2xl">
+          </div> */}
+          <Dialog>
+            <DialogTrigger className="flex w-[30%] min-w-[30%] max-w-2xl flex-col justify-between rounded-md border-4 border-brand bg-white font-bold text-brand lg:text-2xl">
+              <div className="mx-2 flex h-full grow flex-col justify-center self-center">
+                <div className="h-3/4">
+                  <div className="mt-2 flex justify-center text-center">
+                    <Image
+                      height={58}
+                      width={65}
+                      src="/images/physical.png"
+                      alt="physical label image"
                     />
                   </div>
+                  <div className="3xl:mx-10  my-2 2xl:mx-5">Physical Label</div>
                 </div>
-                <DialogFooter>
-                  <Button className="w-full px-5"> Add Package</Button>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
-          </div>
-          <div className="flex w-[30%] min-w-[30%] flex-col justify-between rounded-md border-4 border-brand bg-white font-bold text-brand lg:text-2xl">
-            <Dialog>
-              <DialogTrigger>
-                <div className="mt-2 flex justify-center text-center">
-                  <Image
-                    height={58}
-                    width={65}
-                    src="/images/digital.png"
-                    alt="digital label image"
-                  />
-                </div>
-                <div className="my-2  ">Digital Label</div>
-                <div className="text-largeText text-primary  lg:text-6xl">
+                <div className="h-1/4 text-largeText text-primary  lg:text-6xl">
                   +
                 </div>
-              </DialogTrigger>
-              <DialogContent className="bg-paleBlue">
-                <DialogHeader>
-                  <DialogTitle className="text-center font-bold text-brand">
-                    Add Digital Label
-                  </DialogTitle>
-                </DialogHeader>
-                <div className="flex flex-col px-5">
-                  <div className="font-bold text-brand">
-                    Upload Return Label
-                  </div>
-                  <div className="align-center min-h-20 flex h-20 flex-col justify-center rounded-lg border-2 bg-blue-200 text-center">
-                    <FileUploader
-                      handleChange={handleChange}
-                      name="file"
-                      types={fileTypes}
-                    >
-                      {' '}
-                      <p className=" text-gray-500">
-                        Drag label here or
-                        <Input type="file" id="files" className="hidden" />
-                        <Label
-                          className="text-mediumText text-primary"
-                          htmlFor="files"
-                        >
-                          {' '}
-                          browse files
-                        </Label>
-                      </p>
-                    </FileUploader>
-                  </div>
-                  <div className="font-bold text-brand">
-                    <Label htmlFor="description" className="text-right">
-                      Description
-                    </Label>
-                    <Input
-                      id="description"
-                      defaultValue='Label the item(s) inside: e.g. "laptop covers/"'
-                      // value={labelDescription}
-                      onChange={handleDescriptionChange}
-                      className="col-span-3"
+              </div>
+            </DialogTrigger>
+            <DialogContent className="bg-paleBlue">
+              <DialogHeader>
+                <DialogTitle className="text-center font-bold text-brand">
+                  Add Physical Label
+                </DialogTitle>
+              </DialogHeader>
+              <div className="flex flex-col px-5">
+                <div className="font-bold text-brand">Instructions</div>
+                <div className=" text-brand">
+                  {/* <Label htmlFor="description" className="text-right">
+                    Description
+                  </Label>
+                  <Input
+                    id="description"
+                    defaultValue='Label the item(s) inside: e.g. "laptop covers/"'
+                    className="col-span-3"
+                  /> */}
+                  Please leave your physical label with your package.
+                </div>
+              </div>
+              <DialogFooter>
+                <DialogClose asChild>
+                  <Button className="w-full px-5"> I understand</Button>
+                </DialogClose>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+          {/* <div className="flex w-[30%] min-w-[30%] flex-col justify-between rounded-md border-4 border-brand bg-white font-bold text-brand lg:text-2xl">
+          </div> */}
+          <Dialog>
+            <DialogTrigger className="flex w-[30%] min-w-[30%] max-w-2xl  flex-col justify-between rounded-md border-4 border-brand bg-white font-bold text-brand lg:text-2xl">
+              <div className="mx-2 flex h-full grow flex-col justify-center self-center">
+                <div className="h-3/4">
+                  <div className="mt-2 flex justify-center text-center">
+                    <Image
+                      height={58}
+                      width={65}
+                      src="/images/digital.png"
+                      alt="digital label image"
                     />
                   </div>
+                  <div className="3xl:mx-15 my-2 md:mx-4 2xl:mx-10">
+                    {' '}
+                    Digital Label{' '}
+                  </div>
                 </div>
-                <DialogFooter>
-                  <DialogClose asChild>
-                    <Button
-                      className="w-full px-5"
-                      onClick={() => void addLabelToTable(file, 'Digital')}
-                    >
-                      {' '}
-                      Add Package
-                    </Button>
-                  </DialogClose>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
-          </div>
-          <div className="flex w-[30%] min-w-[30%] flex-col justify-between rounded-md border-4 border-brand bg-white font-bold text-brand lg:text-2xl">
-            <div className="mt-2 flex justify-center text-center">
-              <Image
-                height={58}
-                width={65}
-                src="/images/qr.png"
-                alt="QR code image"
-              />
-            </div>
-            <div className="my-2  ">Amazon QR Code</div>
-            <div className="text-largeText text-primary  lg:text-6xl">+</div>
-          </div>
+                <div className="h-1/4 text-largeText text-primary  lg:text-6xl">
+                  +
+                </div>
+              </div>
+            </DialogTrigger>
+            <DialogContent className="bg-paleBlue">
+              <DialogHeader>
+                <DialogTitle className="text-center font-bold text-brand">
+                  Add Digital Label
+                </DialogTitle>
+              </DialogHeader>
+              <div className="flex flex-col px-5">
+                <div className="font-bold text-brand">Upload Return Label</div>
+                <div className="align-center min-h-20 flex h-20 flex-col justify-center rounded-lg border-2 bg-blue-200 text-center">
+                  <FileUploader
+                    handleChange={handleChange}
+                    name="file"
+                    types={fileTypes}
+                  >
+                    {' '}
+                    <p className=" text-gray-500">
+                      Drag label here or
+                      <Input type="file" id="files" className="hidden" />
+                      <Label
+                        className="text-mediumText text-primary"
+                        htmlFor="files"
+                      >
+                        {' '}
+                        browse files
+                      </Label>
+                    </p>
+                  </FileUploader>
+                </div>
+                <div className="font-bold text-brand">
+                  <Label htmlFor="description" className="text-right">
+                    Description
+                  </Label>
+                  <Input
+                    id="description"
+                    defaultValue='Label the item(s) inside: e.g. "laptop covers/"'
+                    // value={labelDescription}
+                    onChange={handleDescriptionChange}
+                    className="col-span-3"
+                  />
+                </div>
+              </div>
+              <DialogFooter>
+                <DialogClose asChild>
+                  <Button
+                    className="w-full px-5"
+                    onClick={() => void addLabelToTable(file, 'Amazon')}
+                  >
+                    {' '}
+                    Add Package
+                  </Button>
+                </DialogClose>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+          {/* <div className="flex w-[30%] min-w-[30%] flex-col justify-between rounded-md border-4 border-brand bg-white font-bold text-brand lg:text-2xl">
+            
+          </div> */}
+          <Dialog>
+            <DialogTrigger className="flex w-[30%] min-w-[30%] max-w-2xl  flex-col justify-between rounded-md border-4 border-brand bg-white font-bold text-brand lg:text-2xl">
+              <div className="mx-2 flex h-full grow flex-col justify-center self-center">
+                <div className="h-3/4">
+                  <div className="mt-2 flex justify-center text-center">
+                    <Image
+                      height={58}
+                      width={65}
+                      src="/images/qr.png"
+                      alt="QR code image"
+                    />
+                  </div>
+                  <div className="my-2  ">Amazon QR Code</div>
+                </div>
+                <div className="h-1/4 text-largeText text-primary  lg:text-6xl">
+                  +
+                </div>
+              </div>
+            </DialogTrigger>
+            <DialogContent className="bg-paleBlue">
+              <DialogHeader>
+                <DialogTitle className="text-center font-bold text-brand">
+                  Add Amazon QR Code
+                </DialogTitle>
+              </DialogHeader>
+              <div className="flex flex-col px-5">
+                <div className="font-bold text-brand">Upload Return Label</div>
+                <div className="align-center min-h-20 flex h-20 flex-col justify-center rounded-lg border-2 bg-blue-200 text-center">
+                  <FileUploader
+                    handleChange={handleChange}
+                    name="file"
+                    types={fileTypes}
+                  >
+                    {' '}
+                    <p className=" text-gray-500">
+                      Drag label here or
+                      <Input type="file" id="files" className="hidden" />
+                      <Label
+                        className="text-mediumText text-primary"
+                        htmlFor="files"
+                      >
+                        {' '}
+                        browse files
+                      </Label>
+                    </p>
+                  </FileUploader>
+                </div>
+                <div className="font-bold text-brand">
+                  <Label htmlFor="description" className="text-right">
+                    Description
+                  </Label>
+                  <Input
+                    id="description"
+                    defaultValue='Label the item(s) inside: e.g. "laptop covers/"'
+                    // value={labelDescription}
+                    onChange={handleDescriptionChange}
+                    className="col-span-3"
+                  />
+                </div>
+              </div>
+              <DialogFooter>
+                <DialogClose asChild>
+                  <Button
+                    className="w-full px-5"
+                    onClick={() => void addLabelToTable(file, 'Digital')}
+                  >
+                    {' '}
+                    Add Package
+                  </Button>
+                </DialogClose>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
     </div>
