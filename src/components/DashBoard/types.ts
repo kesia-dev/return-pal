@@ -1,5 +1,6 @@
 import { type UseFormReturn } from 'react-hook-form'
 import * as z from 'zod'
+import { type ColumnDef } from '@tanstack/react-table'
 
 export const addressSchema = z.object({
   apartmentUnitNumber: z
@@ -118,4 +119,9 @@ export type Mail = {
   retrunDate: string
   amount: number
   shippingStatus: 'Delivered' | 'In Transit' | 'Pending' | 'Error'
+}
+
+export type InboxDataTablePropsType = {
+  data: Mail[]
+  columns: ColumnDef<Mail>[]
 }
