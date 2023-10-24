@@ -54,7 +54,7 @@ export default function PickDateTESTPAGE() {
   return (
     <>
       <Head>
-        <title>Pick Date</title>
+        <title>TEST - Pick-date</title>
       </Head>
 
       <div className="container space-y-20 bg-paleBlue pt-16">
