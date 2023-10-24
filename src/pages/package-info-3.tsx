@@ -153,7 +153,7 @@ export default function PackageInfo3() {
         </div>
         <Dialog>
           <DialogTrigger>
-            <div>How it works</div>
+            <div className="font-bold text-primary">How it works</div>
           </DialogTrigger>
           <DialogContent className="bg-paleBlue">
             <DialogHeader>
