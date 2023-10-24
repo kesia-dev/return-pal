@@ -12,7 +12,7 @@ const ReturnProcessNextButton = React.forwardRef<
   <Button
     ref={ref}
     variant={'default'}
-    className={cn('text-md w-28 space-x-2', className)}
+    className={cn('text-md w-28 space-x-2 select-none', className)}
     asChild
     {...props}
   >
@@ -31,7 +31,7 @@ const ReturnProcessBackButton = React.forwardRef<
   <Button
     ref={ref}
     variant={'link'}
-    className={cn(className, 'font-semibold text-primary decoration-primary hover:underline text-md space-x-2')}
+    className={cn(className, 'select-none font-semibold text-primary decoration-primary hover:underline text-md space-x-2')}
     {...props}
   >
     <BackArrow /> <p>Back</p> 
