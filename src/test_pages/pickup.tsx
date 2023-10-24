@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/common'
 import Head from 'next/head'
 
-export default function PickupTESTPAGE() {
+export default function Pickup() {
   const [selectedMethod, setSelectedMethod] = useState('')
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue: string = event.target.value

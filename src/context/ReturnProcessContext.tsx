@@ -1,4 +1,11 @@
-import { useMemo, type PropsWithChildren, createContext } from 'react'
+import {
+  useMemo,
+  type PropsWithChildren,
+  createContext,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from 'react'
 
 export type ReturnProcessStep = {
   id: string
@@ -8,6 +15,8 @@ export type ReturnProcessStep = {
 
 export type ReturnProcessContextType = {
   steps: ReturnProcessStep[]
+  currentStepIndex: number
+  setCurrentStepIndex: Dispatch<SetStateAction<number>>
 }
 
 export const ReturnProcessContext = createContext<ReturnProcessContextType>(
@@ -18,10 +27,17 @@ export default function ReturnProcessContextProvider({
   children,
   steps,
 }: PropsWithChildren<ReturnProcessContextType>) {
-  const returnProcessContextValue = useMemo(() => steps, [steps])
-
+  const [currentStepIndex, setCurrentStepIndex] = useState(0)
+  const returnProcessContextValue = useMemo(
+    () => ({
+      currentStepIndex,
+      setCurrentStepIndex,
+      steps,
+    }),
+    [currentStepIndex, steps]
+  )
   return (
-    <ReturnProcessContext.Provider value={{ steps: returnProcessContextValue }}>
+    <ReturnProcessContext.Provider value={returnProcessContextValue}>
       {children}
     </ReturnProcessContext.Provider>
   )

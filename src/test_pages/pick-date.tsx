@@ -17,6 +17,7 @@ import React from 'react'
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
 import Head from 'next/head'
 import { ReturnProcessNextButton } from '@/components/ui/common'
+import { useReturnProcess } from '@/hooks/useReturnProcess'
 
 // TODO: Change type to just accept a full date instead of having 2 props for day number and actual name date
 type PickCardType = React.HTMLAttributes<HTMLDivElement> & {
@@ -50,7 +51,8 @@ const PickDateCard = React.forwardRef<HTMLDivElement, PickCardType>(
 )
 PickDateCard.displayName = 'PickDateCard'
 
-export default function PickDateTESTPAGE() {
+export default function PickDate() {
+  const returnProcess = useReturnProcess()
   return (
     <>
       <Head>
@@ -161,9 +163,7 @@ export default function PickDateTESTPAGE() {
         </div>
 
         <div className="flex w-full flex-row-reverse">
-          <Link href="/address">
-            <ReturnProcessNextButton />
-          </Link>
+          <ReturnProcessNextButton onClick={() => returnProcess.forward()} />
         </div>
       </div>
     </>

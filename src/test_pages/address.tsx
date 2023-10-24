@@ -12,7 +12,6 @@ import {
   ReturnProcessBackButton,
   ReturnProcessNextButton,
 } from '@/components/ui/common'
-import { getLayout } from '@/layouts/ReturnProcessLayout'
 
 export default function Address() {
   const [addresses, setAddresses] = useState<
@@ -290,5 +289,3 @@ export default function Address() {
     </div>
   )
 }
-
-Address.getLayout = getLayout
