@@ -1,16 +1,20 @@
 import { type PropsWithChildren } from 'react'
 import ReturnProcessHeader from '@/components/Headers/ReturnProcess/ReturnProcessHeader'
-import ReturnProcessContextProvider from '@/context/ReturnProcessContext'
+import ReturnProcessContextProvider, {
+  type ReturnProcessStep,
+} from '@/context/ReturnProcessContext'
 import PickDateTESTPAGE from '@/test_pages/pick-date_test'
 import PickupTESTPAGE from '@/test_pages/pickup_test'
 
-const steps = [
+const steps: ReturnProcessStep[] = [
   {
     id: 'pick-date',
+    name: 'Pickup Date',
     component: <PickDateTESTPAGE />,
   },
   {
     id: 'pickup-details',
+    name: 'Pickup Details',
     component: <PickupTESTPAGE />,
   },
 ]

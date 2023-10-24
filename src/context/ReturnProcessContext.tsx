@@ -2,6 +2,7 @@ import { useMemo, type PropsWithChildren, createContext } from 'react'
 
 export type ReturnProcessStep = {
   id: string
+  name: string
   component: JSX.Element
 }
 
