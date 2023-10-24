@@ -12,8 +12,10 @@ import {
   ReturnProcessBackButton,
   ReturnProcessNextButton,
 } from '@/components/ui/common'
+import { useReturnProcess } from '@/hooks/useReturnProcess'
 
 export default function Address() {
+  const returnProcess = useReturnProcess()
   const [addresses, setAddresses] = useState<
     { name: string; address: string; default: boolean }[]
   >([])
@@ -241,15 +243,9 @@ export default function Address() {
           </form>
         )}
         <span className="mt-5 flex justify-between">
-          <Link href="/pick-date">
-            <ReturnProcessBackButton />
-          </Link>
-          {/* TODO: Validate form - This link is only here for viewing purposes! Will be changed later */}
-          <Link href="/pickup">
-            <ReturnProcessNextButton
-            // onClick={handleAddressSelection}
-            />
-          </Link>
+          <ReturnProcessBackButton onClick={() => returnProcess.back()} />
+
+          <ReturnProcessNextButton onClick={() => returnProcess.forward()} />
         </span>
       </div>
 

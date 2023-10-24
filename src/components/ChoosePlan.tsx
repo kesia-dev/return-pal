@@ -3,6 +3,7 @@ import Plan from './Plan'
 import { RadioGroup } from '@/components/ui/radio-group'
 import Link from 'next/link'
 import { ReturnProcessBackButton, ReturnProcessNextButton } from './ui/common'
+import { useReturnProcess } from '@/hooks/useReturnProcess'
 
 export type PlanDataType = {
   name: string
@@ -54,6 +55,7 @@ const planData: PlanDataType[] = [
 ]
 
 export default function ChoosePlan() {
+  const returnProcess = useReturnProcess()
   const [selectedPlanName, setSelectedPlanName] = useState('')
 
   return (
@@ -76,43 +78,9 @@ export default function ChoosePlan() {
         })}
       </RadioGroup>
       <div className="mt-8 flex w-10/12 items-center justify-between">
-        <Link href="/pickup">
-          <ReturnProcessBackButton />
-          {/* <button
-            type="button"
-            className="flex items-center bg-transparent text-base font-semibold text-primary sm:bottom-[80px] sm:left-[10%] sm:text-xl"
-          >
-            <BackArrow />
-            <span>&nbsp;Back</span>
-          </button> */}
-        </Link>
-        {/* Next button transparent in mobile view */}
-        <Link href="/">
-          {/* <Link href="/address">
-          <ReturnProcessBackButton />
-        </Link>
-        <Link href="/temp-dashboard">
-          <ReturnProcessNextButton />
-        </Link> */}
-          <ReturnProcessNextButton />
-          {/* <button
-            type="button"
-            className="flex items-center bg-transparent text-base font-semibold text-primary sm:bottom-[80px] sm:left-[10%] sm:hidden sm:text-xl"
-          >
-            <span>Next&nbsp;</span>
-            <NextArrow />
-          </button> */}
-        </Link>
-        {/* Next button blue in desktop view */}
-        {/* <Link href="/">
-          <Button
-            type="button"
-            className="hidden rounded-3xl text-lg sm:inline-flex sm:h-10 sm:w-[125px]"
-          >
-            Next&nbsp;&nbsp;
-            <NextArrow />
-          </Button>
-        </Link> */}
+        <ReturnProcessBackButton onClick={() => returnProcess.back()} />
+
+        <ReturnProcessNextButton onClick={() => returnProcess.forward()} />
       </div>
     </div>
   )

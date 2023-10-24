@@ -2,14 +2,15 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import Link from 'next/link'
 import {
   ReturnProcessBackButton,
   ReturnProcessNextButton,
 } from '@/components/ui/common'
 import Head from 'next/head'
+import { useReturnProcess } from '@/hooks/useReturnProcess'
 
 export default function Pickup() {
+  const returnProcess = useReturnProcess()
   const [selectedMethod, setSelectedMethod] = useState('')
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue: string = event.target.value
@@ -160,12 +161,9 @@ export default function Pickup() {
         </form>
 
         <span className="mt-5 flex justify-between">
-          <Link href="/address">
-            <ReturnProcessBackButton />
-          </Link>
-          <Link href="/temp-dashboard">
-            <ReturnProcessNextButton />
-          </Link>
+          <ReturnProcessBackButton onClick={() => returnProcess.back()} />
+
+          <ReturnProcessNextButton onClick={() => returnProcess.forward()} />
         </span>
       </div>
     </>
