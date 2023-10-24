@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button'
 import { useReturnProcess } from '@/hooks/useReturnProcess'
 
 export default function TestReturnProcessRender() {
-  const { getCurrentMemo, currentStepIndex, forward, back } = useReturnProcess()
+  const { getCurrentStep, currentStepIndex, forward, back } = useReturnProcess()
   console.log('ContextTest getCurrentMemo', currentStepIndex)
   return (
     <>
@@ -24,7 +24,7 @@ export default function TestReturnProcessRender() {
       >
         Next
       </Button>
-      {getCurrentMemo?.component}
+      {getCurrentStep?.component}
     </>
   )
 }

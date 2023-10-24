@@ -1,5 +1,5 @@
 import { ReturnProcessContext } from '@/context/ReturnProcessContext'
-import { useCallback, useContext, useMemo } from 'react'
+import { useContext, useMemo } from 'react'
 
 export function useReturnProcess() {
   const context = useContext(ReturnProcessContext)
@@ -14,22 +14,14 @@ export function useReturnProcess() {
     throw new Error('useReturnProcess is supposed to have at least one step')
   }
 
-  const getCurrentStep = useCallback(() => {
-    // console.log('getCurrentStep changed')
-    context.steps[context.currentStepIndex]
-  }, [context.currentStepIndex, context.steps])
-
-  const getCurrentMemo = useMemo(() => {
-    const t = context.steps[context.currentStepIndex]
-    // console.log('getCurrentMemo changed ', t)
-    return t
+  const getCurrentStep = useMemo(() => {
+    return context.steps[context.currentStepIndex]
   }, [context.currentStepIndex, context.steps])
 
   function forward() {
     if (context.currentStepIndex === context.steps.length - 1) {
       return
     }
-    console.log('should call')
     context.setCurrentStepIndex(context.currentStepIndex + 1)
   }
 
@@ -40,13 +32,10 @@ export function useReturnProcess() {
     context.setCurrentStepIndex((prev) => prev - 1)
   }
 
-  // console.log('currentStepIndex', currentStepIndex)
-
   return {
     steps: context.steps,
     currentStepIndex: context.currentStepIndex,
-    getCurrentStep,
-    getCurrentMemo,
+    getCurrentStep: getCurrentStep,
     forward,
     back,
   }
