@@ -79,12 +79,8 @@ function InboxDataTable({ data, columns }: InboxDataTablePropsType) {
 
   console.log('rows', rows)
 
-  const { getVirtualItems, getTotalSize } = rowVirtualizer
-
-  const virtualItems = getVirtualItems()
-  console.log('virtualItems', virtualItems)
-
-  console.log(rowVirtualizer.getVirtualItems())
+  const virtualItems = rowVirtualizer.getVirtualItems()
+  const totalHeight = rowVirtualizer.getTotalSize()
 
   return (
     <div className="w-full px-4">
@@ -128,34 +124,79 @@ function InboxDataTable({ data, columns }: InboxDataTablePropsType) {
         ref={tableContainerRef}
         className="h-[60vh] overflow-y-auto rounded-md border"
       >
-        <Table className="space-y-4">
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow
-                key={headerGroup.id}
-                className="sticky top-0 bg-gradient-to-r from-gradientL to-primary"
-              >
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead
-                      colSpan={header.colSpan}
-                      className="text-center text-white"
-                      key={header.id}
+        <div className="relative" style={{ height: totalHeight }}>
+          <section
+            className="absolute left-0 top-0 w-full"
+            style={{ transform: `translateY(${virtualItems[0]?.start}px)` }}
+          >
+            <Table className="space-y-4">
+              <TableHeader>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <TableRow
+                    key={headerGroup.id}
+                    className="sticky top-0 bg-gradient-to-r from-gradientL to-primary"
+                  >
+                    {headerGroup.headers.map((header) => {
+                      return (
+                        <TableHead
+                          colSpan={header.colSpan}
+                          className="text-center text-white"
+                          key={header.id}
+                        >
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
+                        </TableHead>
+                      )
+                    })}
+                  </TableRow>
+                ))}
+              </TableHeader>
+              <TableBody className="">
+                {table.getRowModel().rows?.length ? (
+                  virtualItems.map((virturalItem) => {
+                    const row = table.getRowModel().rows[virturalItem.index]
+                    return row ? (
+                      <TableRow
+                        key={row.id}
+                        data-state={row.getIsSelected() && 'selected'}
+                        className="h-12"
+                      >
+                        {row.getVisibleCells().map((cell) => (
+                          <TableCell key={cell.id} className="text-center">
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ) : (
+                      <TableRow>
+                        <TableCell
+                          colSpan={columns.length}
+                          className="h-24 text-center"
+                        >
+                          No results.
+                        </TableCell>
+                      </TableRow>
+                    )
+                  })
+                ) : (
+                  <TableRow>
+                    <TableCell
+                      colSpan={columns.length}
+                      className="h-24 text-center"
                     >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  )
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody className="">
-            {table.getRowModel().rows?.length ? (
+                      No results.
+                    </TableCell>
+                  </TableRow>
+                )}
+
+                {/* {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
@@ -180,9 +221,11 @@ function InboxDataTable({ data, columns }: InboxDataTablePropsType) {
                   No results.
                 </TableCell>
               </TableRow>
-            )}
-          </TableBody>
-        </Table>
+            )} */}
+              </TableBody>
+            </Table>
+          </section>
+        </div>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="text-muted-foreground flex-1 text-sm">
