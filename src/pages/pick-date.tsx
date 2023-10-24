@@ -154,33 +154,6 @@ export default function PickDate() {
                   </ToggleGroup.Item>
                 )
               })}
-              {/* <ToggleGroup.Item value="fri-22" asChild>
-                <PickDateCard date={startDate} />
-              </ToggleGroup.Item>
-
-              <ToggleGroup.Item value="sat-23" asChild>
-                <PickDateCard date={startDate} />
-              </ToggleGroup.Item>
-
-              <ToggleGroup.Item value="sun-24" asChild>
-                <PickDateCard date={startDate} />
-              </ToggleGroup.Item>
-
-              <ToggleGroup.Item value="mon-25" asChild>
-                <PickDateCard date={startDate} />
-              </ToggleGroup.Item>
-
-              <ToggleGroup.Item value="tue-26" asChild>
-                <PickDateCard date={startDate} />
-              </ToggleGroup.Item>
-
-              <ToggleGroup.Item value="wed-27" asChild>
-                <PickDateCard date={startDate} />
-              </ToggleGroup.Item>
-
-              <ToggleGroup.Item value="thu-28" asChild>
-                <PickDateCard date={startDate} />
-              </ToggleGroup.Item> */}
             </ToggleGroup.Root>
             <div
               className="hidden w-fit flex-col items-center justify-center space-y-4 text-center font-semibold text-brand hover:cursor-pointer hover:text-primary xl:flex"
