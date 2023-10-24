@@ -16,7 +16,7 @@ const steps = [
 
 export default function ContextTest() {
   return (
-    <ReturnProcessContextProvider>
+    <ReturnProcessContextProvider steps={steps}>
       <div>asd</div>
     </ReturnProcessContextProvider>
   )

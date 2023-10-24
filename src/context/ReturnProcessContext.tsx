@@ -1,8 +1,12 @@
-import { useMemo, type PropsWithChildren, useState, createContext } from 'react'
+import { useMemo, type PropsWithChildren, createContext } from 'react'
+
+export type ReturnProcessStep = {
+  id: string
+  component: JSX.Element
+}
 
 export type ReturnProcessContextType = {
-  editing: boolean
-  setEditing: (value: boolean) => void
+  steps: ReturnProcessStep[]
 }
 
 export const ReturnProcessContext = createContext<
@@ -11,18 +15,12 @@ export const ReturnProcessContext = createContext<
 
 export default function ReturnProcessContextProvider({
   children,
-}: PropsWithChildren) {
-  const [editing, setEditing] = useState(false)
-  const returnProcessContextValue = useMemo(
-    () => ({
-      editing,
-      setEditing,
-    }),
-    [editing, setEditing]
-  )
+  steps,
+}: PropsWithChildren<ReturnProcessContextType>) {
+  const returnProcessContextValue = useMemo(() => steps, [steps])
 
   return (
-    <ReturnProcessContext.Provider value={returnProcessContextValue}>
+    <ReturnProcessContext.Provider value={{ steps: returnProcessContextValue }}>
       {children}
     </ReturnProcessContext.Provider>
   )
