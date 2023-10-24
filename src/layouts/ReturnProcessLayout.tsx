@@ -3,19 +3,31 @@ import ReturnProcessHeader from '@/components/Headers/ReturnProcess/ReturnProces
 import ReturnProcessContextProvider, {
   type ReturnProcessStep,
 } from '@/context/ReturnProcessContext'
-import PickDateTESTPAGE from '@/test_pages/pick-date_test'
-import PickupTESTPAGE from '@/test_pages/pickup_test'
+import PickDate from '@/test_pages/pick-date'
+import Address from '@/test_pages/address'
+import Pickup from '@/test_pages/pickup'
+import Pricing from '@/test_pages/pricing'
 
 const steps: ReturnProcessStep[] = [
   {
     id: 'pick-date',
     name: 'Pickup Date',
-    component: <PickDateTESTPAGE />,
+    component: <PickDate />,
+  },
+  {
+    id: 'address',
+    name: 'Addresses',
+    component: <Address />,
   },
   {
     id: 'pickup-details',
     name: 'Pickup Details',
-    component: <PickupTESTPAGE />,
+    component: <Pickup />,
+  },
+  {
+    id: 'pricing',
+    name: 'Pricing',
+    component: <Pricing />,
   },
 ]
 

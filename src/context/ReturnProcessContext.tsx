@@ -23,10 +23,14 @@ export const ReturnProcessContext = createContext<ReturnProcessContextType>(
   {} as ReturnProcessContextType
 )
 
+type ReturnProcessContextProviderType = {
+  steps: ReturnProcessContextType['steps']
+}
+
 export default function ReturnProcessContextProvider({
   children,
   steps,
-}: PropsWithChildren<ReturnProcessContextType>) {
+}: PropsWithChildren<ReturnProcessContextProviderType>) {
   const [currentStepIndex, setCurrentStepIndex] = useState(0)
   const returnProcessContextValue = useMemo(
     () => ({

@@ -1,5 +1,4 @@
 import ChoosePlan from '@/components/ChoosePlan'
-import { getLayout } from '@/layouts/ReturnProcessLayout'
 
 export default function Pricing() {
   return (
@@ -8,5 +7,3 @@ export default function Pricing() {
     </div>
   )
 }
-
-Pricing.getLayout = getLayout
