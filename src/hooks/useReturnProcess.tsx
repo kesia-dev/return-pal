@@ -1,5 +1,5 @@
 import { ReturnProcessContext } from '@/context/ReturnProcessContext'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 
 export function useReturnProcess() {
   const context = useContext(ReturnProcessContext)
@@ -10,5 +10,11 @@ export function useReturnProcess() {
     )
   }
 
-  return { ...context }
+  if (!context.steps || context.steps.length === 0) {
+    throw new Error('useReturnProcess is supposed to have at least one step')
+  }
+
+  const [currentStep, setCurrentStep] = useState(context.steps[0]!)
+
+  return { ...context, currentStep }
 }

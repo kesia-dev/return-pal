@@ -9,9 +9,9 @@ export type ReturnProcessContextType = {
   steps: ReturnProcessStep[]
 }
 
-export const ReturnProcessContext = createContext<
-  ReturnProcessContextType | undefined
->(undefined)
+export const ReturnProcessContext = createContext<ReturnProcessContextType>(
+  {} as ReturnProcessContextType
+)
 
 export default function ReturnProcessContextProvider({
   children,
