@@ -1,13 +1,15 @@
 import React, { useState, useMemo, useRef } from 'react'
 import DashBoardHeader from './DashBoardHeader'
-import { RxCaretSort, RxDotsHorizontal, RxChevronDown } from 'react-icons/rx'
+import { RxChevronDown } from 'react-icons/rx'
 import {
   type ColumnFiltersState,
   type SortingState,
   type VisibilityState,
+  type Row,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
+  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
@@ -38,26 +40,30 @@ import {
 } from '@/components/DashBoard/types'
 import { mailData } from '@/components/DashBoard/dummyData'
 import { Badge } from '@/components/ui/badge'
-import { useVirtualizer } from '@tanstack/react-virtual'
 
 function InboxDataTable({ data, columns }: InboxDataTablePropsType) {
-  const [mails, setMails] = useState<Mail[]>(data)
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = useState({})
 
   const table = useReactTable({
-    data: mails,
+    data,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
-
+    initialState: {
+      pagination: {
+        pageSize: 10,
+        pageIndex: 0,
+      },
+    },
     state: {
       sorting,
       columnFilters,
@@ -66,21 +72,7 @@ function InboxDataTable({ data, columns }: InboxDataTablePropsType) {
     },
   })
 
-  const tableContainerRef = useRef<HTMLDivElement>(null)
-
   const { rows } = table.getRowModel()
-
-  const rowVirtualizer = useVirtualizer({
-    count: rows.length,
-    getScrollElement: () => tableContainerRef.current,
-    estimateSize: () => 35,
-    overscan: 5,
-  })
-
-  console.log('rows', rows)
-
-  const virtualItems = rowVirtualizer.getVirtualItems()
-  const totalHeight = rowVirtualizer.getTotalSize()
 
   return (
     <div className="w-full px-4">
@@ -91,7 +83,7 @@ function InboxDataTable({ data, columns }: InboxDataTablePropsType) {
           onChange={(event) =>
             table.getColumn('email')?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="max-w-xs"
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -120,84 +112,36 @@ function InboxDataTable({ data, columns }: InboxDataTablePropsType) {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div
-        ref={tableContainerRef}
-        className="h-[60vh] overflow-y-auto rounded-md border"
-      >
-        <div className="relative" style={{ height: totalHeight }}>
-          <section
-            className="absolute left-0 top-0 w-full"
-            style={{ transform: `translateY(${virtualItems[0]?.start}px)` }}
-          >
-            <Table className="space-y-4">
-              <TableHeader>
-                {table.getHeaderGroups().map((headerGroup) => (
-                  <TableRow
-                    key={headerGroup.id}
-                    className="sticky top-0 bg-gradient-to-r from-gradientL to-primary"
-                  >
-                    {headerGroup.headers.map((header) => {
-                      return (
-                        <TableHead
-                          colSpan={header.colSpan}
-                          className="text-center text-white"
-                          key={header.id}
-                        >
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
-                        </TableHead>
-                      )
-                    })}
-                  </TableRow>
-                ))}
-              </TableHeader>
-              <TableBody className="">
-                {table.getRowModel().rows?.length ? (
-                  virtualItems.map((virturalItem) => {
-                    const row = table.getRowModel().rows[virturalItem.index]
-                    return row ? (
-                      <TableRow
-                        key={row.id}
-                        data-state={row.getIsSelected() && 'selected'}
-                        className="h-12"
-                      >
-                        {row.getVisibleCells().map((cell) => (
-                          <TableCell key={cell.id} className="text-center">
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext()
-                            )}
-                          </TableCell>
-                        ))}
-                      </TableRow>
-                    ) : (
-                      <TableRow>
-                        <TableCell
-                          colSpan={columns.length}
-                          className="h-24 text-center"
-                        >
-                          No results.
-                        </TableCell>
-                      </TableRow>
-                    )
-                  })
-                ) : (
-                  <TableRow>
-                    <TableCell
-                      colSpan={columns.length}
-                      className="h-24 text-center"
+      <div className="relative h-[60vh] overflow-y-auto rounded-md border">
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow
+                key={headerGroup.id}
+                className="sticky top-0 bg-gradient-to-r from-gradientL to-primary"
+              >
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead
+                      colSpan={header.colSpan}
+                      className="text-center text-white"
+                      key={header.id}
                     >
-                      No results.
-                    </TableCell>
-                  </TableRow>
-                )}
-
-                {/* {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  )
+                })}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {rows.length ? (
+              rows.map((row) => (
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
@@ -214,23 +158,50 @@ function InboxDataTable({ data, columns }: InboxDataTablePropsType) {
               ))
             ) : (
               <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
+                <TableCell colSpan={columns.length} className="text-center">
                   No results.
                 </TableCell>
               </TableRow>
-            )} */}
-              </TableBody>
-            </Table>
-          </section>
-        </div>
+            )}
+          </TableBody>
+        </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="text-muted-foreground flex-1 text-sm">
+      <div className="flex py-2">
+        <div className="flex-1 text-sm">
           {table.getFilteredSelectedRowModel().rows.length} of{' '}
           {table.getFilteredRowModel().rows.length} row(s) selected.
+        </div>
+        <div className="mr-8 space-x-8">
+          <span className="space-x-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              Previous
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              Next
+            </Button>
+          </span>
+          <select
+            value={table.getState().pagination.pageSize}
+            onChange={(e) => {
+              table.setPageSize(Number(e.target.value))
+            }}
+          >
+            {[5, 10, 20, 30, 40, 50].map((pageSize) => (
+              <option key={pageSize} value={pageSize}>
+                Show {pageSize}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
     </div>

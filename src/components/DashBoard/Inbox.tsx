@@ -21,7 +21,10 @@ import { Badge } from '@/components/ui/badge'
 import InboxDataTable from '@/components/DashBoard/InboxDataTable'
 
 function Inbox() {
+  // TODO get data from Apollo Client cache intead of dummy data
   const data = useMemo(() => mailData, [])
+  // TODO replace useState with useQuery or any other global state management
+  const [mails, setMails] = useState<Mail[]>(data)
 
   const columns = useMemo<ColumnDef<Mail>[]>(() => {
     return [
@@ -113,7 +116,7 @@ function Inbox() {
                 column.toggleSorting(column.getIsSorted() === 'asc')
               }
             >
-              Email
+              Amount
               <RxCaretSort className="ml-2 h-4 w-4" />
             </Button>
           )
@@ -127,7 +130,7 @@ function Inbox() {
             currency: 'CAD',
           }).format(amount)
 
-          return <div className="text-right font-medium">{formatted}</div>
+          return <div className="text-center font-medium">{formatted}</div>
         },
       },
       {
@@ -163,6 +166,7 @@ function Inbox() {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>View Complete Message</DropdownMenuItem>
                 <DropdownMenuItem>Delete Message</DropdownMenuItem>
+                <DropdownMenuItem>Delete All Selected</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           )
@@ -178,7 +182,7 @@ function Inbox() {
         lastName="Doe"
         email="john@example.com"
       />
-      <InboxDataTable data={data} columns={columns} />
+      <InboxDataTable data={mails} columns={columns} />
     </>
   )
 }
