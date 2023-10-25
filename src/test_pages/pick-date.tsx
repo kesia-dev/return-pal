@@ -84,18 +84,10 @@ export default function PickDate() {
     returnProcess.forward()
   }
 
-  console.log('Errors: ', form.formState.errors)
-  console.log('Form Value: ', form.getValues('pickupDate'))
-  console.log('currentData: ', returnProcess.currentData)
-  console.log(
-    'returnProcess.currentData.pickupDate: ',
-    returnProcess.currentData.pickupDate
-  )
-
   return (
     <>
       <Head>
-        <title>TEST - Pick-date</title>
+        <title>Return Process - Pick Date</title>
       </Head>
 
       <Form {...form}>
