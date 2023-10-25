@@ -27,6 +27,9 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import Door from '@/components/SvgComponents/Door'
+import Box from '@/components/SvgComponents/Box'
+import HandingPackage from '@/components/SvgComponents/HandingPackage'
 
 const formSchema = z.object({
   pickupType: z.union([z.literal('direct'), z.literal('doorstep')]),
@@ -83,11 +86,15 @@ export default function Pickup() {
                       className="flex w-full justify-center gap-x-10"
                     >
                       <ExtendedToggleGroupItem value="direct" asChild>
-                        <Card className="flex h-96 w-72 flex-col items-center border-brand bg-white text-brand data-[state=on]:scale-110 data-[state=on]:border-8 data-[state=on]:border-primary data-[state=off]:bg-slate-300 data-[state=off]:opacity-50 data-[state=on]:shadow-2xl">
+                        <Card className="flex h-96 w-72 select-none flex-col items-center border-brand bg-white text-brand data-[state=on]:scale-110 data-[state=on]:border-8 data-[state=on]:border-primary data-[state=off]:bg-slate-300 data-[state=off]:opacity-50 data-[state=on]:shadow-2xl">
                           <CardHeader className="flex items-center">
                             <CardTitle className="text-2xl font-bold">
-                              Direct Handoff
+                              <div className="flex items-end justify-center align-bottom">
+                                <HandingPackage className="h-24 w-24 fill-primary" />
+                              </div>
+                              Leave on Doorstep
                             </CardTitle>
+
                             <CardDescription className="flex items-center">
                               Hand the package directly to our specialist at
                               your door
@@ -96,9 +103,13 @@ export default function Pickup() {
                         </Card>
                       </ExtendedToggleGroupItem>
                       <ExtendedToggleGroupItem value="doorstep" asChild>
-                        <Card className="flex h-96 w-72 flex-col items-center border-brand bg-white text-brand data-[state=on]:scale-110 data-[state=on]:border-8 data-[state=on]:border-primary data-[state=off]:bg-slate-300 data-[state=off]:opacity-50 data-[state=on]:shadow-2xl">
-                          <CardHeader className="flex items-center">
-                            <CardTitle className="text-2xl font-bold">
+                        <Card className="flex h-96 w-72 select-none flex-col items-center border-brand bg-white text-brand data-[state=on]:scale-110 data-[state=on]:border-8 data-[state=on]:border-primary data-[state=off]:bg-slate-300 data-[state=off]:opacity-50 data-[state=on]:shadow-2xl">
+                          <CardHeader className="">
+                            <CardTitle className="flex flex-col text-center text-2xl font-bold">
+                              <div className="flex items-end justify-center align-bottom">
+                                <Door className="h-24 w-24" />
+                                <Box className="h-10 w-10" />
+                              </div>
                               Leave on Doorstep
                             </CardTitle>
                             <CardDescription className="flex items-center">
