@@ -56,13 +56,13 @@ const uploads: FileUploadType[] = [
   },
 ]
 
-const uploadButtonClasses =
-  'flex w-[30%] min-w-[30%] max-w-2xl flex-col justify-between rounded-lg border-4 border-brand bg-white font-bold text-brand lg:text-2xl'
-
 export default function PackageInfo3() {
   const [arrayOfLabels, setArrayOfLabels] = useState<FileUploadType[]>([])
   const [labelDescription, setLabelDescription] = useState<string | null>(null)
   const [file, setFile] = useState<File | null>(null)
+
+  const labelDialogClasses =
+    'flex w-[30%] min-w-[30%] max-w-2xl flex-col justify-between rounded-lg border-4 border-brand bg-white font-bold text-brand lg:text-2xl'
   const columns: ColumnDef<FileUploadType>[] = [
     {
       accessorKey: 'attachment',
@@ -75,7 +75,7 @@ export default function PackageInfo3() {
       accessorKey: 'labelType',
       header: 'Label Type',
       cell: ({ row }) => (
-        <Badge className="text-slate bg-green-200">
+        <Badge className="bg-green-200 text-primary hover:text-white">
           {row.original.labelType}
         </Badge>
       ),
@@ -87,6 +87,7 @@ export default function PackageInfo3() {
     {
       accessorKey: ' ',
       cell: (row) => {
+        // using a variable as using state to hold / set value for the new description will close the dialog on change
         let newDescription: string
         return (
           <div className="flex justify-end space-x-1">
@@ -209,6 +210,7 @@ export default function PackageInfo3() {
           description: labelDescription,
         },
       ])
+      setLabelDescription(null)
     }
   }
 
@@ -237,14 +239,11 @@ export default function PackageInfo3() {
           <DialogContent className="bg-paleBlue">
             <DialogHeader>
               <DialogTitle className="text-center font-bold text-brand">
-                How to add a package
+                How to add a digital / Amazon QR package label
               </DialogTitle>
             </DialogHeader>
             <div className="px-5 text-brand">
-              <div className="text-center font-bold text-brand">
-                Instructions
-              </div>
-              <div>
+              <div className="my-2">
                 Step 1: Click on the type of label you have.
                 <Image
                   height={300}
@@ -253,7 +252,7 @@ export default function PackageInfo3() {
                   alt="Step 1 example Image"
                 />
               </div>
-              <div>
+              <div className="my-2">
                 Step 2: Drag your file over the area or click to browse your
                 computer&apos;s files
                 <Image
@@ -263,7 +262,7 @@ export default function PackageInfo3() {
                   alt="Step 2 example image"
                 />
               </div>
-              <div>
+              <div className="my-2">
                 Step 3: Fill in the description
                 <Image
                   height={300}
@@ -273,7 +272,7 @@ export default function PackageInfo3() {
                 />
               </div>
 
-              <div>
+              <div className="my-2">
                 Step 4: Click &quot;Add Package&quot; to add it to the list.
                 <Image
                   height={300}
@@ -293,7 +292,7 @@ export default function PackageInfo3() {
       </div>
 
       <div className="flex w-full flex-col justify-between lg:flex-row">
-        <div className="relative w-full overflow-auto rounded-lg border-2 border-primary dark:border-gray-700 lg:w-1/2">
+        <div className="relative w-full overflow-auto rounded-lg border-2 border-primary bg-white dark:border-gray-700 lg:w-1/2">
           <Table>
             <TableHeader className="border-b-2 border-primary bg-primary bg-opacity-20">
               {table.getHeaderGroups().map((headerGroup) => (
@@ -350,7 +349,7 @@ export default function PackageInfo3() {
 
         <div className="my-5 flex flex-row justify-between px-5 text-center lg:my-0 lg:w-1/2">
           <Dialog>
-            <DialogTrigger className={uploadButtonClasses}>
+            <DialogTrigger className={labelDialogClasses}>
               <div className="mx-2 flex h-full grow flex-col justify-center self-center">
                 <div className="h-3/4">
                   <div className="mt-2 flex justify-center text-center">
@@ -388,7 +387,7 @@ export default function PackageInfo3() {
             </DialogContent>
           </Dialog>
           <Dialog>
-            <DialogTrigger className={uploadButtonClasses}>
+            <DialogTrigger className={labelDialogClasses}>
               <div className="mx-2 flex h-full grow flex-col justify-center self-center">
                 <div className="h-3/4">
                   <div className="mt-2 flex justify-center text-center">
@@ -462,7 +461,7 @@ export default function PackageInfo3() {
                   </Label>
                   <Input
                     id="description"
-                    defaultValue='Label the item(s) inside: e.g. "laptop covers/"'
+                    placeholder='Label the item(s) inside: e.g. "laptop covers"'
                     onChange={handleDescriptionChange}
                     className="col-span-3"
                   />
@@ -482,7 +481,7 @@ export default function PackageInfo3() {
             </DialogContent>
           </Dialog>
           <Dialog>
-            <DialogTrigger className={uploadButtonClasses}>
+            <DialogTrigger className={labelDialogClasses}>
               <div className="mx-2 flex h-full grow flex-col justify-center self-center">
                 <div className="h-3/4">
                   <div className="mt-2 flex justify-center text-center">
@@ -554,7 +553,7 @@ export default function PackageInfo3() {
                   </Label>
                   <Input
                     id="description"
-                    defaultValue='Label the item(s) inside: e.g. "laptop covers/"'
+                    placeholder='Label the item(s) inside: e.g. "laptop covers"'
                     onChange={handleDescriptionChange}
                     className="col-span-3"
                   />
