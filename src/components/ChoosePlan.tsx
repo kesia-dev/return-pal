@@ -108,10 +108,7 @@ export default function ChoosePlan() {
                   <ExtendedToggleGroup
                     type="single"
                     selectionType="unselect"
-                    onValueChange={(v) => {
-                      console.log('change: ', v)
-                      field.onChange(v)
-                    }}
+                    onValueChange={field.onChange}
                     defaultValue={field.value}
                     className="flex w-full flex-wrap justify-center gap-8"
                   >
