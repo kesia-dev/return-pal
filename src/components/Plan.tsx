@@ -13,26 +13,18 @@ import {
 import { Check } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
 import { Label } from '@/components/ui/label'
-import { RadioGroupItem } from '@/components/ui/radio-group'
 import Stamp from './SvgComponents/Stamp'
 import { type PlanDataType } from './ChoosePlan'
-import { type Dispatch, type SetStateAction } from 'react'
 
 type PlanProps = {
   plan: PlanDataType
-  status: 'normal' | 'selected' | 'unselected'
-  setSelectedPlanName: Dispatch<SetStateAction<string>>
 }
 
-export default function Plan({ plan, status, setSelectedPlanName }: PlanProps) {
-  const formatUnselected = status === 'unselected' ? 'opacity-50' : ''
-  const formatSelected =
-    status === 'selected' ? 'border-[6px] border-primary shadow-xl' : ''
-
+export default function Plan({ plan, ...rest }: PlanProps) {
   return (
     <Card
-      className={`min-w-72 flex h-[450px] w-[275px] scale-90 flex-col items-center justify-start rounded-2xl border-2 border-brand bg-white text-brand sm:scale-100 ${formatUnselected} ${formatSelected}`}
-      onClick={() => setSelectedPlanName(plan.name)}
+      {...rest}
+      className="min-w-72 ${formatSelected} flex h-[450px] w-[275px] scale-90 flex-col items-center justify-start rounded-2xl border-2 border-brand bg-white text-brand data-[state=on]:border-[6px] data-[state=on]:border-primary data-[state=off]:opacity-50 data-[state=on]:shadow-xl sm:scale-100"
     >
       <CardHeader className="pb-3">
         {plan.name === 'Bronze' && (
@@ -90,12 +82,12 @@ export default function Plan({ plan, status, setSelectedPlanName }: PlanProps) {
         </p>
       </CardContent>
       <CardFooter className="flex flex-col items-center justify-start">
-        <RadioGroupItem
+        {/* <RadioGroupItem
           className="mb-2 h-10 w-10 border-2 border-brand p-0 text-primary focus:border-primary"
           value={plan.name}
           id={plan.name}
           checked={status === 'selected'}
-        />
+        /> */}
         <Label
           htmlFor={plan.name}
           className="text-base font-normal text-primary"

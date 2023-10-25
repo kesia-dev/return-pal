@@ -1,12 +1,21 @@
-import { useState } from 'react'
-import Plan from './Plan'
-import { RadioGroup } from '@/components/ui/radio-group'
 import { ReturnProcessBackButton, ReturnProcessNextButton } from './ui/common'
 import { useReturnProcess } from '@/hooks/useReturnProcess'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { Form } from './ui/form'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '@/components/ui/form'
+import Plan from './Plan'
+import {
+  ExtendedToggleGroup,
+  ExtendedToggleGroupItem,
+} from './ui/extended-toggle-group'
+import { Button } from './ui/button'
 
 export type PlanDataType = {
   name: string
@@ -82,8 +91,6 @@ export default function ChoosePlan() {
     // returnProcess.forward()
   }
 
-  const [selectedPlanName, setSelectedPlanName] = useState('')
-
   return (
     <Form {...form}>
       <form
@@ -92,23 +99,41 @@ export default function ChoosePlan() {
         className="space-y-8"
       >
         <div className="flex min-h-screen w-screen flex-col items-center justify-start bg-paleBlue p-10">
-          <RadioGroup className="flex w-full flex-wrap justify-center gap-8">
-            {planData.map((plan) => {
-              const status = !selectedPlanName
-                ? 'normal'
-                : selectedPlanName === plan.name
-                ? 'selected'
-                : 'unselected'
-              return (
-                <Plan
-                  key={plan.name}
-                  plan={plan}
-                  status={status}
-                  setSelectedPlanName={setSelectedPlanName}
-                />
-              )
-            })}
-          </RadioGroup>
+          <FormField
+            control={form.control}
+            name="plan"
+            render={({ field }) => (
+              <FormItem className="space-y-3">
+                <FormControl>
+                  <ExtendedToggleGroup
+                    type="single"
+                    selectionType="unselect"
+                    onValueChange={(v) => {
+                      console.log('change: ', v)
+                      field.onChange(v)
+                    }}
+                    defaultValue={field.value}
+                    className="flex w-full flex-wrap justify-center gap-8"
+                  >
+                    {/* <RadioGroup className="flex w-full flex-wrap justify-center gap-8"> */}
+                    {planData.map((plan) => {
+                      return (
+                        <ExtendedToggleGroupItem
+                          key={plan.name}
+                          value={plan.name.toLowerCase()}
+                          asChild
+                        >
+                          <Plan plan={plan} />
+                        </ExtendedToggleGroupItem>
+                      )
+                    })}
+                  </ExtendedToggleGroup>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit">Submit</Button>
           <div className="mt-8 flex w-10/12 items-center justify-between">
             <ReturnProcessBackButton onClick={() => returnProcess.back()} />
 
