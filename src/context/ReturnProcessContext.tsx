@@ -13,10 +13,10 @@ export type ReturnProcessStep = {
   component: JSX.Element
 }
 
-export type LabelUploadType = {
+export type FileUploadType = {
   attachment: string
-  labelType: 'physical' | 'digital' | 'amazon'
-  description: string
+  labelType: 'Physical' | 'Digital' | 'Amazon'
+  description: string | undefined
 }
 
 export type ReturnProcessFullObjectType = {
@@ -24,7 +24,7 @@ export type ReturnProcessFullObjectType = {
   address: string
   pickupType: 'direct' | 'doorstep'
   plan: 'bronze' | 'silver' | 'gold' | 'platinum'
-  labelFileUploads: LabelUploadType[]
+  labelFileUploads: FileUploadType[]
 }
 
 export type ReturnProcessContextType = {

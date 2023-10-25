@@ -7,6 +7,7 @@ import PickDate from '@/test_pages/pick-date'
 import Address from '@/test_pages/address'
 import Pickup from '@/test_pages/pickup'
 import Pricing from '@/test_pages/pricing'
+import PackageInfo from '@/test_pages/package-info'
 
 const steps: ReturnProcessStep[] = [
   {
@@ -28,6 +29,11 @@ const steps: ReturnProcessStep[] = [
     id: 'pricing',
     name: 'Pricing',
     component: <Pricing />,
+  },
+  {
+    id: 'package-info',
+    name: 'Package Info',
+    component: <PackageInfo />,
   },
 ]
 
