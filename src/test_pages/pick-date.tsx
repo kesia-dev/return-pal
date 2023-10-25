@@ -5,7 +5,7 @@ import {
   SectionHeaderHighlight,
 } from '@/components/home/Home'
 import { Card, CardContent } from '@/components/ui/card'
-import { cn } from '@/lib/utils'
+import { cn, getDayName } from '@/lib/utils'
 import {
   faChevronLeft,
   faChevronRight,
@@ -20,7 +20,7 @@ import {
 } from '@/components/ui/form'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React from 'react'
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
 import Head from 'next/head'
 import { useReturnProcess } from '@/hooks/useReturnProcess'
@@ -28,19 +28,16 @@ import { Button } from '@/components/ui/button'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useDateSelection } from '@/hooks/useDateSelection'
 
-// TODO: Change type to just accept a full date instead of having 2 props for day number and actual name date
 type PickCardType = React.HTMLAttributes<HTMLDivElement> & {
-  dayNum: number
-  day: string
-  selected?: boolean
+  date: Date
 }
-
 // TODO: Selecting a card moves all the other cards down, make sure only the selected card grows and the other ones don't move
 
 const PickDateCard = React.forwardRef<HTMLDivElement, PickCardType>(
   // eslint-disable-next-line react/prop-types
-  ({ day, dayNum, className, ...props }, ref) => {
+  ({ date, className, ...props }, ref) => {
     return (
       <Card
         className={cn(
@@ -51,9 +48,14 @@ const PickDateCard = React.forwardRef<HTMLDivElement, PickCardType>(
         {...props}
       >
         <CardContent className="flex flex-col items-center space-y-4 pt-6">
-          <p className="text-2xl font-semibold">Oct</p>
-          <p className="text-5xl font-bold">{dayNum}</p>
-          <p className="text-2xl font-semibold">{day}</p>
+          <p className="text-2xl font-semibold">
+            {/* eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call */}
+            {getDayName(date.getDay())?.substring(0, 3)}
+          </p>
+          <p className="text-5xl font-bold">{date.getDate()}</p>
+          <p className="flex text-lg font-semibold">
+            {date.toLocaleString('en-us', { month: 'short', year: 'numeric' })}
+          </p>
         </CardContent>
       </Card>
     )
@@ -63,11 +65,11 @@ PickDateCard.displayName = 'PickDateCard'
 
 export default function PickDate() {
   const returnProcess = useReturnProcess()
-  const [initialDate] = useState(new Date())
+  const dateSelection = useDateSelection(new Date())
   const formSchema = z.object({
     pickupDate: z.coerce
       .string()
-      .refine((data) => new Date(data) > initialDate, {
+      .refine((data) => new Date(data) > dateSelection.initialDate, {
         message: 'Start date must be in the future',
       }),
   })
@@ -165,17 +167,21 @@ export default function PickDate() {
                           onValueChange={field.onChange}
                           defaultValue={field.value}
                         >
-                          <ToggleGroup.Item value="2023/10/24" asChild>
-                            <PickDateCard dayNum={24} day="Fri" />
-                          </ToggleGroup.Item>
-
-                          <ToggleGroup.Item value="2023/10/25" asChild>
-                            <PickDateCard dayNum={25} day="Sat" />
-                          </ToggleGroup.Item>
-
-                          <ToggleGroup.Item value="2023/10/26" asChild>
-                            <PickDateCard dayNum={26} day="Sun" />
-                          </ToggleGroup.Item>
+                          {dateSelection.getCurrentDays.map((date) => {
+                            const dateString = `${date.getFullYear()}/${
+                              date.getMonth() + 1
+                            }/${date.getDate()}`
+                            console.log('dateString: ', dateString)
+                            return (
+                              <ToggleGroup.Item
+                                key={dateString}
+                                value={dateString}
+                                asChild
+                              >
+                                <PickDateCard date={date} />
+                              </ToggleGroup.Item>
+                            )
+                          })}
                         </ToggleGroup.Root>
                       </FormControl>
                       <FormMessage />
