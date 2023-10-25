@@ -1,4 +1,7 @@
-import { ReturnProcessContext } from '@/context/ReturnProcessContext'
+import {
+  ReturnProcessContext,
+  type ReturnProcessFullObjectType,
+} from '@/context/ReturnProcessContext'
 import { useContext, useMemo } from 'react'
 
 export function useReturnProcess() {
@@ -32,11 +35,17 @@ export function useReturnProcess() {
     context.setCurrentStepIndex((prev) => prev - 1)
   }
 
+  function setCurrentData(data: Partial<ReturnProcessFullObjectType>) {
+    context.setCurrentData((prev) => ({ ...prev, ...data }))
+  }
+
   return {
     steps: context.steps,
     currentStepIndex: context.currentStepIndex,
     getCurrentStep: getCurrentStep,
     forward,
     back,
+    setCurrentData,
+    currentData: context.currentData,
   }
 }
