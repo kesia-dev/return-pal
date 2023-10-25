@@ -75,7 +75,7 @@ export default function PackageInfo3() {
       accessorKey: 'labelType',
       header: 'Label Type',
       cell: ({ row }) => (
-        <Badge className="bg-green-200 text-primary hover:text-white">
+        <Badge className="bg-green-200 text-primary hover:bg-brand hover:text-white">
           {row.original.labelType}
         </Badge>
       ),
@@ -130,7 +130,6 @@ export default function PackageInfo3() {
                           newArrayOfLabels[rowId]!.description = newDescription
                         }
                         setArrayOfLabels(newArrayOfLabels)
-                        console.log('saving description')
                       }}
                     >
                       {' '}
@@ -199,7 +198,6 @@ export default function PackageInfo3() {
     file: File | null,
     type: 'Physical' | 'Digital' | 'Amazon'
   ) => {
-    console.log(labelDescription)
     console.log(file)
     if (file) {
       setArrayOfLabels([
@@ -211,7 +209,9 @@ export default function PackageInfo3() {
         },
       ])
       setLabelDescription(null)
+      setFile(null)
     }
+    // upload file to server after implementation
   }
 
   const handleDescriptionChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -234,7 +234,7 @@ export default function PackageInfo3() {
         </div>
         <Dialog>
           <DialogTrigger>
-            <div className="font-bold text-primary">How it works</div>
+            <div className="font-bold text-primary">Tutorial</div>
           </DialogTrigger>
           <DialogContent className="bg-paleBlue">
             <DialogHeader>
@@ -284,7 +284,7 @@ export default function PackageInfo3() {
             </div>
             <DialogFooter>
               <DialogClose asChild>
-                <Button className="w-full px-5"> I understand</Button>
+                <Button className="w-full px-5">Got it!</Button>
               </DialogClose>
             </DialogFooter>
           </DialogContent>
