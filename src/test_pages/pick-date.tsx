@@ -171,7 +171,6 @@ export default function PickDate() {
                             const dateString = `${date.getFullYear()}/${
                               date.getMonth() + 1
                             }/${date.getDate()}`
-                            console.log('dateString: ', dateString)
                             return (
                               <ToggleGroup.Item
                                 key={dateString}

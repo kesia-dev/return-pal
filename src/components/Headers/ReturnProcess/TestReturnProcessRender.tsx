@@ -3,13 +3,11 @@ import { useReturnProcess } from '@/hooks/useReturnProcess'
 
 export default function TestReturnProcessRender() {
   const { getCurrentStep, currentStepIndex, forward, back } = useReturnProcess()
-  console.log('ContextTest getCurrentMemo', currentStepIndex)
   return (
     <>
       {' '}
       <Button
         onClick={() => {
-          console.log('111')
           back()
         }}
       >
@@ -18,7 +16,6 @@ export default function TestReturnProcessRender() {
       {currentStepIndex}{' '}
       <Button
         onClick={() => {
-          console.log('111')
           forward()
         }}
       >
