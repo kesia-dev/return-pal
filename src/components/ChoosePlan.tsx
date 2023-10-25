@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import Plan from './Plan'
 import { RadioGroup } from '@/components/ui/radio-group'
-import { Button } from './ui/button'
 import Link from 'next/link'
+import { ReturnProcessBackButton, ReturnProcessNextButton } from './ui/common'
 
 export type PlanDataType = {
   name: string
@@ -75,49 +75,44 @@ export default function ChoosePlan() {
           )
         })}
       </RadioGroup>
-      <div className="mt-8 flex w-10/12 justify-between">
-        <Link href="/">
-          <button
+      <div className="mt-8 flex w-10/12 items-center justify-between">
+        <Link href="/pickup">
+          <ReturnProcessBackButton />
+          {/* <button
             type="button"
             className="flex items-center bg-transparent text-base font-semibold text-primary sm:bottom-[80px] sm:left-[10%] sm:text-xl"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="h-4 w-4"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
-              />
-            </svg>
+            <BackArrow />
             <span>&nbsp;Back</span>
-          </button>
+          </button> */}
         </Link>
-        <Button
-          type="button"
-          className="h-10 w-[100px] rounded-3xl text-lg sm:h-10 sm:w-[125px]"
-        >
-          Next&nbsp;&nbsp;
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="h-3 w-3"
+        {/* Next button transparent in mobile view */}
+        <Link href="/">
+          {/* <Link href="/address">
+          <ReturnProcessBackButton />
+        </Link>
+        <Link href="/temp-dashboard">
+          <ReturnProcessNextButton />
+        </Link> */}
+          <ReturnProcessNextButton />
+          {/* <button
+            type="button"
+            className="flex items-center bg-transparent text-base font-semibold text-primary sm:bottom-[80px] sm:left-[10%] sm:hidden sm:text-xl"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-            />
-          </svg>
-        </Button>
+            <span>Next&nbsp;</span>
+            <NextArrow />
+          </button> */}
+        </Link>
+        {/* Next button blue in desktop view */}
+        {/* <Link href="/">
+          <Button
+            type="button"
+            className="hidden rounded-3xl text-lg sm:inline-flex sm:h-10 sm:w-[125px]"
+          >
+            Next&nbsp;&nbsp;
+            <NextArrow />
+          </Button>
+        </Link> */}
       </div>
     </div>
   )

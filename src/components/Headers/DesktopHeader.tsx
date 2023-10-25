@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Button } from '../ui/button'
 import { HeaderContent } from './Header'
+import SigninModal from '../SigninModal'
 
 export type MenuItem = {
   title: string
@@ -50,10 +51,13 @@ export default function DesktopHeader() {
         })}
       </div>
       <div className="flex space-x-2 lg:space-x-5">
-        <Button asChild variant={'secondary'} className="h-9 w-24">
-          <Link href="/sign-in">Sign In</Link>
-        </Button>
-        <Button className="h-9 w-36">Schedule Pickup</Button>
+        {/* <Button asChild variant={'secondary'} className="h-9 w-24">
+          <Link href="/sign-in">Sign In</Link> */}
+        <SigninModal headerType="desktop" />
+        {/* </Button> */}
+        <Link href="/pick-date">
+          <Button className="h-9 w-36">Schedule Pickup</Button>
+        </Link>
       </div>
     </HeaderContent>
   )
