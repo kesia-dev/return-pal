@@ -133,7 +133,7 @@ export default function PackageInfo3() {
                       }}
                     >
                       {' '}
-                      Save Package Info
+                      Update Package Description
                     </Button>
                   </DialogClose>
                 </DialogFooter>
@@ -144,7 +144,6 @@ export default function PackageInfo3() {
               <DialogTrigger>
                 <FontAwesomeIcon
                   className="text-primary"
-                  onClick={() => console.log(456)}
                   icon={faTrashCan}
                   width={'15'}
                   height={'15'}
@@ -160,11 +159,19 @@ export default function PackageInfo3() {
                   This action cannot be undone. Are you sure you want to
                   permanently delete this file from our servers?
                 </div>
-                <DialogFooter>
+                <DialogFooter className="flex flex-row justify-end">
+                  <DialogClose asChild>
+                    <Button
+                      variant="destructive"
+                      className="mx-2 w-1/5 rounded-full"
+                    >
+                      Cancel
+                    </Button>
+                  </DialogClose>
                   <DialogClose asChild>
                     <Button
                       type="submit"
-                      className="w-full px-5"
+                      className="mx-2 w-1/5"
                       onClick={() => {
                         const newArrayOfLabels = [...arrayOfLabels]
                         const rowId = Number(row.row.id)
@@ -173,7 +180,7 @@ export default function PackageInfo3() {
                       }}
                     >
                       {' '}
-                      Delete
+                      Confirm
                     </Button>
                   </DialogClose>
                 </DialogFooter>
@@ -339,7 +346,7 @@ export default function PackageInfo3() {
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    No results.
+                    No labels added.
                   </TableCell>
                 </TableRow>
               )}
@@ -357,7 +364,7 @@ export default function PackageInfo3() {
                       height={58}
                       width={65}
                       src="/images/physical.png"
-                      alt="physical label image"
+                      alt="physical label icon"
                     />
                   </div>
                   <div className="3xl:mx-10  my-2 2xl:mx-5">Physical Label</div>
@@ -381,7 +388,7 @@ export default function PackageInfo3() {
               </div>
               <DialogFooter>
                 <DialogClose asChild>
-                  <Button className="w-full px-5"> I understand</Button>
+                  <Button className="w-full px-5">I understand</Button>
                 </DialogClose>
               </DialogFooter>
             </DialogContent>
@@ -395,7 +402,7 @@ export default function PackageInfo3() {
                       height={58}
                       width={65}
                       src="/images/digital.png"
-                      alt="digital label image"
+                      alt="digital label icon"
                     />
                   </div>
                   <div className="3xl:mx-15 my-2 md:mx-4 2xl:mx-10">
@@ -492,7 +499,7 @@ export default function PackageInfo3() {
                       alt="QR code image"
                     />
                   </div>
-                  <div className="my-2  ">Amazon QR Code</div>
+                  <div className="my-2">Amazon QR Code</div>
                 </div>
                 <div className="h-1/4 text-largeText text-primary  lg:text-6xl">
                   +
