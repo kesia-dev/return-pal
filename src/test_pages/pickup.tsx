@@ -23,7 +23,6 @@ import {
 } from '@/components/home/Home'
 import {
   Card,
-  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
@@ -81,10 +80,10 @@ export default function Pickup() {
                       selectionType="unselect"
                       onValueChange={field.onChange}
                       defaultValue={field.value}
-                      className="flex w-full justify-center gap-x-5"
+                      className="flex w-full justify-center gap-x-10"
                     >
                       <ExtendedToggleGroupItem value="direct" asChild>
-                        <Card className="flex h-96 w-72 flex-col items-center bg-white text-brand data-[state=off]:bg-slate-300 data-[state=off]:opacity-75">
+                        <Card className="flex h-96 w-72 flex-col items-center border-brand bg-white text-brand data-[state=on]:scale-110 data-[state=on]:border-8 data-[state=on]:border-primary data-[state=off]:bg-slate-300 data-[state=off]:opacity-50 data-[state=on]:shadow-2xl">
                           <CardHeader className="flex items-center">
                             <CardTitle className="text-2xl font-bold">
                               Direct Handoff
@@ -94,11 +93,10 @@ export default function Pickup() {
                               your door
                             </CardDescription>
                           </CardHeader>
-                          <CardContent>Card Content</CardContent>
                         </Card>
                       </ExtendedToggleGroupItem>
                       <ExtendedToggleGroupItem value="doorstep" asChild>
-                        <Card className="flex h-96 w-72 flex-col items-center bg-white text-brand data-[state=off]:bg-slate-300 data-[state=off]:opacity-75">
+                        <Card className="flex h-96 w-72 flex-col items-center border-brand bg-white text-brand data-[state=on]:scale-110 data-[state=on]:border-8 data-[state=on]:border-primary data-[state=off]:bg-slate-300 data-[state=off]:opacity-50 data-[state=on]:shadow-2xl">
                           <CardHeader className="flex items-center">
                             <CardTitle className="text-2xl font-bold">
                               Leave on Doorstep
@@ -108,7 +106,6 @@ export default function Pickup() {
                               up window
                             </CardDescription>
                           </CardHeader>
-                          <CardContent>Card Content</CardContent>
                         </Card>
                       </ExtendedToggleGroupItem>
                     </ExtendedToggleGroup>
