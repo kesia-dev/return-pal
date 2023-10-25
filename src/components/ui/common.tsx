@@ -13,10 +13,9 @@ const ReturnProcessNextButton = React.forwardRef<
     ref={ref}
     variant={'default'}
     className={cn('text-md w-28 space-x-2 select-none', className)}
-    asChild
     {...props}
   >
-    <div>
+    <div className='flex justify-center items-center space-x-2'>
       <p>Next</p> <NextArrow />
     </div>
     
