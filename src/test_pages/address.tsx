@@ -23,6 +23,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import Head from 'next/head'
 
 const formSchema = z.object({
   address: z.string().min(1),
@@ -187,127 +188,134 @@ export default function Address() {
   }
 
   return (
-    <Form {...form}>
-      <form
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
-        onSubmit={form.handleSubmit(onSubmit)}
-      >
-        <div className="mx-5 my-5">
-          <div className="text-largeText text-brand">Pickup Details</div>
-          <div>
-            <div className="text-brand">Select or add your pickup address</div>
-            <div className="mt-5 text-smallText font-bold text-brand">
-              Your Addresses:
-            </div>
-            <Separator className="h-[0.15rem] w-3/4 rounded-full bg-brand" />
-            <FormField
-              control={form.control}
-              name="address"
-              render={({ field }) => (
-                <FormItem className="space-y-3">
-                  <FormControl>
-                    <RadioGroup
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                      className="flex flex-col space-y-1"
-                    >
-                      {mockAddresses.map((address) => {
-                        return (
-                          <FormItem
-                            key={address.address}
-                            className="flex items-center space-x-3 space-y-0"
-                          >
-                            <FormControl>
-                              <RadioGroupItem value={address.address} />
-                            </FormControl>
-                            <FormLabel className="font-normal">
-                              {address.address}
-                            </FormLabel>
-                          </FormItem>
-                        )
-                      })}
-                    </RadioGroup>
-                  </FormControl>
-                  <FormMessage />
-                  <Button type="submit">Submit</Button>
-                </FormItem>
-              )}
-            />
+    <>
+      <Head>
+        <title>Return Process - Pick Address</title>
+      </Head>
+      <Form {...form}>
+        <form
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
+          <div className="mx-5 my-5">
+            <div className="text-largeText text-brand">Pickup Details</div>
+            <div>
+              <div className="text-brand">
+                Select or add your pickup address
+              </div>
+              <div className="mt-5 text-smallText font-bold text-brand">
+                Your Addresses:
+              </div>
+              <Separator className="h-[0.15rem] w-3/4 rounded-full bg-brand" />
+              <FormField
+                control={form.control}
+                name="address"
+                render={({ field }) => (
+                  <FormItem className="space-y-3">
+                    <FormControl>
+                      <RadioGroup
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        className="flex flex-col space-y-1"
+                      >
+                        {mockAddresses.map((address) => {
+                          return (
+                            <FormItem
+                              key={address.address}
+                              className="flex items-center space-x-3 space-y-0"
+                            >
+                              <FormControl>
+                                <RadioGroupItem value={address.address} />
+                              </FormControl>
+                              <FormLabel className="font-normal">
+                                {address.address}
+                              </FormLabel>
+                            </FormItem>
+                          )
+                        })}
+                      </RadioGroup>
+                    </FormControl>
+                    <FormMessage />
+                    <Button type="submit">Submit</Button>
+                  </FormItem>
+                )}
+              />
 
-            <Button
-              className="bg-transparent font-bold text-primary hover:bg-transparent"
-              onClick={toggleAddressForm}
-            >
-              + Add a new address{' '}
-            </Button>
-            {addAddress && (
-              <form
-                className="flex-column flex w-3/4 justify-around"
-                onSubmit={(e) => addNewAddress(e)}
+              <Button
+                className="bg-transparent font-bold text-primary hover:bg-transparent"
+                onClick={toggleAddressForm}
               >
-                <div className="flex-column flex">
-                  <div className="flex flex-row items-center ">
-                    <div className="mr-5 items-center">
-                      <div className="my-2 flex items-center">
-                        <Label className="w-1/3">Name:</Label>
-                        <Input
-                          type="text"
-                          name="name"
-                          className="my-2  w-3/4"
-                        />
-                      </div>
-                      <div className="my-2 flex items-center">
-                        <Label className="w-1/3">Address: </Label>
-                        <Input
-                          type="text"
-                          name="address"
-                          className="my-2  w-3/4"
-                        />
-                      </div>
-                      <div className="my-2 flex items-center">
-                        <Label className="w-1/3">City: </Label>
-                        <Input
-                          type="text"
-                          name="address"
-                          className="my-2 w-3/4"
-                        />
-                      </div>
-                      <div className="my-2 flex items-center">
-                        <Label className="w-1/3">Province: (e.g. ON) </Label>
-                        <Input
-                          type="text"
-                          name="address"
-                          className="my-2  w-3/4"
-                        />
-                      </div>
-                      <div className="my-2 flex items-center">
-                        <Label className="w-1/3">Postal Code </Label>
-                        <Input
-                          type="text"
-                          name="address"
-                          className="my-2  w-3/4"
-                        />
+                + Add a new address{' '}
+              </Button>
+              {addAddress && (
+                <form
+                  className="flex-column flex w-3/4 justify-around"
+                  onSubmit={(e) => addNewAddress(e)}
+                >
+                  <div className="flex-column flex">
+                    <div className="flex flex-row items-center ">
+                      <div className="mr-5 items-center">
+                        <div className="my-2 flex items-center">
+                          <Label className="w-1/3">Name:</Label>
+                          <Input
+                            type="text"
+                            name="name"
+                            className="my-2  w-3/4"
+                          />
+                        </div>
+                        <div className="my-2 flex items-center">
+                          <Label className="w-1/3">Address: </Label>
+                          <Input
+                            type="text"
+                            name="address"
+                            className="my-2  w-3/4"
+                          />
+                        </div>
+                        <div className="my-2 flex items-center">
+                          <Label className="w-1/3">City: </Label>
+                          <Input
+                            type="text"
+                            name="address"
+                            className="my-2 w-3/4"
+                          />
+                        </div>
+                        <div className="my-2 flex items-center">
+                          <Label className="w-1/3">Province: (e.g. ON) </Label>
+                          <Input
+                            type="text"
+                            name="address"
+                            className="my-2  w-3/4"
+                          />
+                        </div>
+                        <div className="my-2 flex items-center">
+                          <Label className="w-1/3">Postal Code </Label>
+                          <Input
+                            type="text"
+                            name="address"
+                            className="my-2  w-3/4"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="flex items-center justify-around">
-                  <button className="h-1/4 text-primary" type="submit">
-                    Add new address
-                  </button>
-                </div>
-              </form>
-            )}
-            <span className="mt-5 flex justify-between">
-              <ReturnProcessBackButton onClick={() => returnProcess.back()} />
+                  <div className="flex items-center justify-around">
+                    <button className="h-1/4 text-primary" type="submit">
+                      Add new address
+                    </button>
+                  </div>
+                </form>
+              )}
+              <span className="mt-5 flex justify-between">
+                <ReturnProcessBackButton onClick={() => returnProcess.back()} />
 
-              <ReturnProcessNextButton
-                onClick={() => returnProcess.forward()}
-              />
-            </span>
+                <ReturnProcessNextButton
+                  onClick={() => returnProcess.forward()}
+                />
+              </span>
+            </div>
           </div>
-        </div>
-      </form>
-    </Form>
+        </form>
+      </Form>
+    </>
   )
 }
