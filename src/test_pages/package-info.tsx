@@ -37,6 +37,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { type FileUploadType } from '@/context/ReturnProcessContext'
 import { Form } from '@/components/ui/form'
+import { ReturnProcessNextButton } from '@/components/ui/common'
 
 const uploads: FileUploadType[] = [
   {
@@ -126,7 +127,7 @@ export default function PackageInfo() {
     console.log('Submitted:', values.labelFileUploads)
 
     returnProcess.setCurrentData({ labelFileUploads: values.labelFileUploads })
-    //returnProcess.forward()
+    returnProcess.forward()
   }
 
   console.log('currentData:', returnProcess.currentData.labelFileUploads)
@@ -327,7 +328,6 @@ export default function PackageInfo() {
                 Select label type and we&apos;ll handle the label printing and
                 repackaging. You can add multiple packages.
               </div>
-              <Button type="submit">Submit</Button>
               <Dialog>
                 <DialogTrigger>
                   <div className="font-bold text-primary">Tutorial</div>
@@ -685,6 +685,7 @@ export default function PackageInfo() {
                 </Dialog>
               </div>
             </div>
+            <ReturnProcessNextButton type="submit" />
           </div>
         </form>
       </Form>

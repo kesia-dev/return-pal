@@ -29,6 +29,7 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useDateSelection } from '@/hooks/useDateSelection'
+import { ReturnProcessNextButton } from '@/components/ui/common'
 
 type PickCardType = React.HTMLAttributes<HTMLDivElement> & {
   date: Date
@@ -199,25 +200,9 @@ export default function PickDate() {
                 </div> */}
               </div>
             </div>
-
-            <div className="flex w-full flex-row-reverse">
-              <div>
-                <Button type="submit">Submit</Button>
-              </div>
-              {/* <Button
-                variant={'default'}
-                disabled={!form.formState.isDirty || !form.formState.isValid}
-                onClick={() => returnProcess.forward()}
-              >
-                NEXT
-              </Button> */}
-              {/* <ReturnProcessNextButton
-            disabled={!isDirty || !isValid}
-            //onClick={() => returnProcess.forward()}
-          >
-            NEXT
-          </ReturnProcessNextButton> */}
-            </div>
+            <span className="mt-5 flex justify-end">
+              <ReturnProcessNextButton type="submit" />
+            </span>
           </div>
         </form>
       </Form>

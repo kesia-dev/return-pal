@@ -42,7 +42,7 @@ export default function Address() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log('Submitted:', values)
     returnProcess.setCurrentData(values)
-    // returnProcess.forward()
+    returnProcess.forward()
   }
   const [addresses, setAddresses] = useState<
     { name: string; address: string; default: boolean }[]
@@ -308,9 +308,7 @@ export default function Address() {
               <span className="mt-5 flex justify-between">
                 <ReturnProcessBackButton onClick={() => returnProcess.back()} />
 
-                <ReturnProcessNextButton
-                  onClick={() => returnProcess.forward()}
-                />
+                <ReturnProcessNextButton type="submit" />
               </span>
             </div>
           </div>

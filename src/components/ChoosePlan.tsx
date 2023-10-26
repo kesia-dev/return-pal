@@ -88,7 +88,7 @@ export default function ChoosePlan() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log('Submitted:', values)
     returnProcess.setCurrentData(values)
-    // returnProcess.forward()
+    returnProcess.forward()
   }
 
   return (
@@ -130,11 +130,10 @@ export default function ChoosePlan() {
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
           <div className="mt-8 flex w-10/12 items-center justify-between">
             <ReturnProcessBackButton onClick={() => returnProcess.back()} />
 
-            <ReturnProcessNextButton onClick={() => returnProcess.forward()} />
+            <ReturnProcessNextButton type="submit" />
           </div>
         </div>
       </form>

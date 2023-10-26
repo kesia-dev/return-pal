@@ -30,6 +30,10 @@ import {
 import Door from '@/components/SvgComponents/Door'
 import Box from '@/components/SvgComponents/Box'
 import HandingPackage from '@/components/SvgComponents/HandingPackage'
+import {
+  ReturnProcessBackButton,
+  ReturnProcessNextButton,
+} from '@/components/ui/common'
 
 const formSchema = z.object({
   pickupType: z.union([z.literal('direct'), z.literal('doorstep')]),
@@ -48,7 +52,7 @@ export default function Pickup() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log('Submitted:', values)
     returnProcess.setCurrentData(values)
-    // returnProcess.forward()
+    returnProcess.forward()
   }
 
   return (
@@ -127,12 +131,9 @@ export default function Pickup() {
             />
 
             <span className="mt-5 flex justify-between">
-              <Button type="submit">Submit</Button>
-              {/* <ReturnProcessBackButton onClick={() => returnProcess.back()} />
+              <ReturnProcessBackButton onClick={() => returnProcess.back()} />
 
-              <ReturnProcessNextButton
-                onClick={() => returnProcess.forward()}
-              /> */}
+              <ReturnProcessNextButton type="submit" />
             </span>
           </div>
         </form>
