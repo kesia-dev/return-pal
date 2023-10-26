@@ -19,7 +19,7 @@ import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { useState, type ChangeEvent, useEffect } from 'react'
+import { useState, type ChangeEvent } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPen, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import {
@@ -693,22 +693,6 @@ export default function PackageInfo() {
               </div>
             </div>
             <span className="mt-5 flex justify-between">
-              <div>
-                <p>isDirty: {form.formState.isDirty && 'dirty'}</p>
-                <p>
-                  touchedFields:{' '}
-                  {form.formState.touchedFields.labelFileUploads &&
-                    'touched field'}
-                </p>
-                <p>
-                  dirtyFields:
-                  {form.formState.dirtyFields.labelFileUploads && 'dirty field'}
-                </p>
-                <p>isValid: {form.formState.isValid && 'valid'}</p>
-                <p>
-                  error: {form.formState.errors.labelFileUploads && 'error'}
-                </p>
-              </div>
               <ReturnProcessBackButton onClick={() => returnProcess.back()} />
 
               <ReturnProcessNextButton formState={form.formState} />
