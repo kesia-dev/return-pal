@@ -18,6 +18,7 @@ export default function Terms(props: {
     text: string[]
   }
   /*
+  Just add useState for acceptance and pass it to prop.
   Add the future terms and conditions once it is made into the termsAndConditions array in sections.
   */
   const termsAndConditions: termsSection[] = [
@@ -65,7 +66,7 @@ export default function Terms(props: {
         </DialogTrigger>
         <DialogContent className="bg-paleBlue">
           <DialogHeader>
-            <DialogTitle className="text-center font-['Edwardian_Script_ITC'] font-bold text-brand">
+            <DialogTitle className="text-center font-bold text-brand">
               Terms and Conditions
             </DialogTitle>
           </DialogHeader>
@@ -73,15 +74,12 @@ export default function Terms(props: {
             <ScrollArea className="h-[400px] rounded-md border p-4">
               {termsAndConditionsMapper(termsAndConditions)}
             </ScrollArea>
-            {/* <ScrollArea className="h-[200px] rounded-md border p-4">
-              {termsAndConditionsText}
-            </ScrollArea> */}
           </div>
           <DialogFooter className="flex flex-row justify-center">
             <DialogClose asChild>
               <Button
                 type="submit"
-                onClick={() => void props.setAcceptance(true)}
+                onClick={() => void props?.setAcceptance(true)}
               >
                 {' '}
                 I understand
