@@ -132,7 +132,7 @@ export default function Address() {
             id={address.address}
             value={address.address}
             name="address"
-            className="mx-2 h-6 w-8 w-[10%]"
+            className="mx-2 h-6 w-[10%]"
           />{' '}
           <Label
             htmlFor={address.address}
