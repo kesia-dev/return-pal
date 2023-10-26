@@ -37,7 +37,10 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { type FileUploadType } from '@/context/ReturnProcessContext'
 import { Form } from '@/components/ui/form'
-import { ReturnProcessNextButton } from '@/components/ui/common'
+import {
+  ReturnProcessBackButton,
+  ReturnProcessNextButton,
+} from '@/components/ui/common'
 
 const uploads: FileUploadType[] = [
   {
@@ -134,6 +137,7 @@ export default function PackageInfo() {
   console.log('Errors:', form.formState.errors)
   console.log('labelFileUploads:', form.getValues('labelFileUploads'))
   console.log('arrayOfLabels:', arrayOfLabels)
+  console.log('isValid:', form.formState.isValid)
 
   const labelDialogClasses =
     'flex w-[30%] min-w-[30%] max-w-2xl flex-col justify-between rounded-lg border-4 border-brand bg-white font-bold text-brand lg:text-2xl'
@@ -267,15 +271,18 @@ export default function PackageInfo() {
   ]
   const handleChange = (loadedFile: File) => {
     setFile(loadedFile)
-    console.log(loadedFile)
-    console.log('this even setting???????????????')
-    form.setValue('labelFileUploads', [
-      {
-        attachment: 'sad',
-        description: 'df',
-        labelType: 'Amazon',
-      },
-    ])
+    // TODO: Change this later - this is only here to pass the validation step.
+    form.setValue(
+      'labelFileUploads',
+      [
+        {
+          attachment: 'sad',
+          description: 'df',
+          labelType: 'Amazon',
+        },
+      ],
+      { shouldValidate: true }
+    )
   }
   const table = useReactTable({
     data: arrayOfLabels,
@@ -685,7 +692,27 @@ export default function PackageInfo() {
                 </Dialog>
               </div>
             </div>
-            <ReturnProcessNextButton formState={form.formState} />
+            <span className="mt-5 flex justify-between">
+              <div>
+                <p>isDirty: {form.formState.isDirty && 'dirty'}</p>
+                <p>
+                  touchedFields:{' '}
+                  {form.formState.touchedFields.labelFileUploads &&
+                    'touched field'}
+                </p>
+                <p>
+                  dirtyFields:
+                  {form.formState.dirtyFields.labelFileUploads && 'dirty field'}
+                </p>
+                <p>isValid: {form.formState.isValid && 'valid'}</p>
+                <p>
+                  error: {form.formState.errors.labelFileUploads && 'error'}
+                </p>
+              </div>
+              <ReturnProcessBackButton onClick={() => returnProcess.back()} />
+
+              <ReturnProcessNextButton formState={form.formState} />
+            </span>
           </div>
         </form>
       </Form>
