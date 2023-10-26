@@ -201,7 +201,7 @@ export default function PickDate() {
               </div>
             </div>
             <span className="mt-5 flex justify-end">
-              <ReturnProcessNextButton type="submit" />
+              <ReturnProcessNextButton formState={form.formState} />
             </span>
           </div>
         </form>

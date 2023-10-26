@@ -133,7 +133,7 @@ export default function Pickup() {
             <span className="mt-5 flex justify-between">
               <ReturnProcessBackButton onClick={() => returnProcess.back()} />
 
-              <ReturnProcessNextButton type="submit" />
+              <ReturnProcessNextButton formState={form.formState} />
             </span>
           </div>
         </form>

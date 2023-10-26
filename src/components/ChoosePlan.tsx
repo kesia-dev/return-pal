@@ -133,7 +133,7 @@ export default function ChoosePlan() {
           <div className="mt-8 flex w-10/12 items-center justify-between">
             <ReturnProcessBackButton onClick={() => returnProcess.back()} />
 
-            <ReturnProcessNextButton type="submit" />
+            <ReturnProcessNextButton formState={form.formState} />
           </div>
         </div>
       </form>

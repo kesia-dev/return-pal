@@ -308,7 +308,7 @@ export default function Address() {
               <span className="mt-5 flex justify-between">
                 <ReturnProcessBackButton onClick={() => returnProcess.back()} />
 
-                <ReturnProcessNextButton type="submit" />
+                <ReturnProcessNextButton formState={form.formState} />
               </span>
             </div>
           </div>

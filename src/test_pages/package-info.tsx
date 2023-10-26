@@ -685,7 +685,7 @@ export default function PackageInfo() {
                 </Dialog>
               </div>
             </div>
-            <ReturnProcessNextButton type="submit" />
+            <ReturnProcessNextButton formState={form.formState} />
           </div>
         </form>
       </Form>
