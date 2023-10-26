@@ -21,31 +21,6 @@ export default function Address() {
   const [addAddress, setAddAddress] = useState(false)
   const { toast } = useToast()
 
-  // const handleRadioChange = (event: any) => {
-  //   setSelectedMethod(event.target.value);
-  //   const form = document.getElementById("selectPickupMethod") as HTMLElement;
-  //   if (form) {
-  //     const radioInputs = form.querySelectorAll('input[type="radio"]');
-  //     let selectedValue;
-
-  //     radioInputs.forEach(function (input: any) {
-  //       const parentDiv: HTMLElement = input.parentNode?.parentNode;
-  //       if (parentDiv) {
-  //         if (input.checked) {
-  //           parentDiv?.classList.remove("border-brand");
-  //           parentDiv?.classList.add("border-primary");
-  //           parentDiv?.classList.remove("opacity-50")
-  //         } else {
-  //           parentDiv?.classList.add("border-brand");
-  //           parentDiv?.classList.remove("border-primary");
-  //           parentDiv?.classList.add("opacity-50")
-  //         }
-  //       }
-  //     });
-  //     setStep(2);
-  //   }
-
-  // };
   const mockAddresses: { name: string; address: string; default: boolean }[] = [
     {
       name: 'Bob Gunderson',
