@@ -29,6 +29,11 @@ function useInboxMessage(
       return preV.filter((mail) => !selectedRowsData.includes(mail))
     })
     table.toggleAllRowsSelected(false)
+    toast({
+      title: 'Messages deleted',
+      description: `Messages has been deleted`,
+      duration: 2000,
+    })
   }
 
   return {

@@ -8,6 +8,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
+  DropdownMenuGroup,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
@@ -20,7 +21,16 @@ import { type Mail } from '@/components/DashBoard/types'
 import { mailData } from '@/components/DashBoard/dummyData'
 import { Badge } from '@/components/ui/badge'
 import InboxDataTable from '@/components/DashBoard/InboxDataTable'
-
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 function Inbox() {
   // TODO get data from Apollo Client cache intead of dummy data
   const data = useMemo(() => mailData, [])
@@ -172,18 +182,67 @@ function Inbox() {
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>View Complete Message</DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => {
-                    handleRemoveMessage(row)
-                  }}
-                >
-                  Delete Message
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => handleRemoveSelectedMessages(table)}
-                >
-                  Delete All Selected
-                </DropdownMenuItem>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                      Delete Message
+                    </DropdownMenuItem>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader className="my-4 space-y-4">
+                      <DialogTitle>Message delete confirmation</DialogTitle>
+                      <DialogDescription>
+                        Are you sure you want to delete this message?
+                      </DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter>
+                      <DialogClose asChild>
+                        <Button variant="outline">Cancel</Button>
+                      </DialogClose>
+                      <DialogClose asChild>
+                        <Button
+                          variant="destructive"
+                          onClick={() => {
+                            handleRemoveMessage(row)
+                          }}
+                        >
+                          Delete
+                        </Button>
+                      </DialogClose>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+                {table.getIsSomeRowsSelected() ? (
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                        Delete All Selected
+                      </DropdownMenuItem>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader className="my-4 space-y-4">
+                        <DialogTitle>Messages delete confirmation</DialogTitle>
+                        <DialogDescription>
+                          Are you sure you want to delete these messages from
+                          Inbox?
+                        </DialogDescription>
+                      </DialogHeader>
+                      <DialogFooter>
+                        <DialogClose asChild>
+                          <Button variant="outline">Cancel</Button>
+                        </DialogClose>
+                        <DialogClose asChild>
+                          <Button
+                            variant="destructive"
+                            onClick={() => handleRemoveSelectedMessages(table)}
+                          >
+                            Delete
+                          </Button>
+                        </DialogClose>
+                      </DialogFooter>
+                    </DialogContent>
+                  </Dialog>
+                ) : null}
               </DropdownMenuContent>
             </DropdownMenu>
           )
