@@ -1,11 +1,9 @@
-import React, { useState, useMemo, useRef } from 'react'
-import DashBoardHeader from './DashBoardHeader'
+import React, { useState } from 'react'
 import { RxChevronDown } from 'react-icons/rx'
 import {
   type ColumnFiltersState,
   type SortingState,
   type VisibilityState,
-  type Row,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -15,7 +13,6 @@ import {
 } from '@tanstack/react-table'
 
 import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -34,12 +31,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import {
-  type InboxDataTablePropsType,
-  type Mail,
-} from '@/components/DashBoard/types'
-import { mailData } from '@/components/DashBoard/dummyData'
-import { Badge } from '@/components/ui/badge'
+import { type InboxDataTablePropsType } from '@/components/DashBoard/types'
 
 function InboxDataTable({ data, columns }: InboxDataTablePropsType) {
   const [sorting, setSorting] = useState<SortingState>([])

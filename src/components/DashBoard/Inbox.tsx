@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react'
 import DashBoardHeader from './DashBoardHeader'
-import { RxCaretSort, RxDotsHorizontal, RxChevronDown } from 'react-icons/rx'
+import { RxCaretSort, RxDotsHorizontal } from 'react-icons/rx'
 import { type ColumnDef } from '@tanstack/react-table'
 
 import { Button } from '@/components/ui/button'
@@ -14,6 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import useInboxMessage from '@/hooks/useInboxMessage'
 
 import { type Mail } from '@/components/DashBoard/types'
 import { mailData } from '@/components/DashBoard/dummyData'
@@ -25,6 +26,12 @@ function Inbox() {
   const data = useMemo(() => mailData, [])
   // TODO replace useState with useQuery or any other global state management
   const [mails, setMails] = useState<Mail[]>(data)
+
+  // TODO replace handleRemoveMessage with a mutation and update the cache.
+  const { handleRemoveMessage, handleRemoveSelectedMessages } = useInboxMessage(
+    mails,
+    setMails
+  )
 
   const columns = useMemo<ColumnDef<Mail>[]>(() => {
     return [
@@ -136,7 +143,7 @@ function Inbox() {
       {
         id: 'actions',
         enableHiding: false,
-        cell: ({ row }) => {
+        cell: ({ row, table }) => {
           const mail = row.original
 
           return (
@@ -165,15 +172,25 @@ function Inbox() {
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>View Complete Message</DropdownMenuItem>
-                <DropdownMenuItem>Delete Message</DropdownMenuItem>
-                <DropdownMenuItem>Delete All Selected</DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    handleRemoveMessage(row)
+                  }}
+                >
+                  Delete Message
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => handleRemoveSelectedMessages(table)}
+                >
+                  Delete All Selected
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           )
         },
       },
     ]
-  }, [])
+  }, [handleRemoveMessage, handleRemoveSelectedMessages])
 
   return (
     <>
