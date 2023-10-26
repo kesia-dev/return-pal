@@ -22,17 +22,25 @@ export function useReturnProcess() {
   }, [context.currentStepIndex, context.steps])
 
   function forward() {
-    if (context.currentStepIndex === context.steps.length - 1) {
+    if (!canGoForwards()) {
       return
     }
     context.setCurrentStepIndex(context.currentStepIndex + 1)
   }
 
   function back() {
-    if (context.currentStepIndex <= 0) {
+    if (!canGoBack()) {
       return
     }
     context.setCurrentStepIndex((prev) => prev - 1)
+  }
+
+  function canGoForwards() {
+    return context.currentStepIndex < context.steps.length - 1
+  }
+
+  function canGoBack() {
+    return context.currentStepIndex > 0
   }
 
   function setCurrentData(data: Partial<ReturnProcessFullObjectType>) {
@@ -45,6 +53,8 @@ export function useReturnProcess() {
     getCurrentStep: getCurrentStep,
     forward,
     back,
+    canGoForwards,
+    canGoBack,
     setCurrentData,
     currentData: context.currentData,
   }
