@@ -19,7 +19,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from '@/components/ui/form'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
@@ -30,6 +29,11 @@ const formSchema = z.object({
 })
 
 export default function Address() {
+  const [addresses, setAddresses] = useState<
+    { name: string; address: string; default: boolean }[]
+  >([])
+  const [addressFormVisibility, setAddressFormVisiblity] = useState(false)
+  const { toast } = useToast()
   const returnProcess = useReturnProcess()
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -44,11 +48,6 @@ export default function Address() {
     returnProcess.setCurrentData(values)
     returnProcess.forward()
   }
-  const [addresses, setAddresses] = useState<
-    { name: string; address: string; default: boolean }[]
-  >([])
-  const [addAddress, setAddAddress] = useState(false)
-  const { toast } = useToast()
 
   const mockAddresses: { name: string; address: string; default: boolean }[] = [
     {
@@ -66,8 +65,8 @@ export default function Address() {
     name: z.string().min(2),
     address: z.string().min(3).max(50),
     city: z.string().min(3).max(50),
-    province: z.string().min(2).max(2),
-    postal: z.string().min(6),
+    province: z.string().length(2),
+    postal: z.string().min(6).max(7),
   })
   const validateFormData = (inputs: unknown) => {
     const isValidData = addressSchema.parse(inputs)
@@ -92,9 +91,17 @@ export default function Address() {
         address: `${addressObj.address}, ${addressObj.city}, ${addressObj.province}, ${addressObj.postal}`,
         default: false,
       }
+      if (addresses.length === 0) {
+        newAddress.default = true
+      }
       setAddresses([...addresses, newAddress])
-    } catch (err) {
+    } catch (err: unknown) {
       console.log(err)
+      // let errorMessage = ''
+      // for (const field of err.issues) {
+      //   console.log(field)
+      //   errorMessage += field.message as string
+      // }
       toast({
         variant: 'destructive',
         description:
@@ -119,7 +126,7 @@ export default function Address() {
     addressValidator(addressToAdd)
   }
   const toggleAddressForm = () => {
-    setAddAddress(!addAddress)
+    setAddressFormVisiblity(!addressFormVisibility)
   }
   const handleAddressSelection = () => {
     const form = document.getElementById('selectAddressForm')
@@ -159,9 +166,8 @@ export default function Address() {
           <Input
             type="radio"
             id={address.address}
-            value={address.address}
             name="address"
-            className="mx-2 h-6 w-8 w-[10%]"
+            className="mx-2 h-6 w-[10%]"
           />{' '}
           <Label
             htmlFor={address.address}
@@ -222,32 +228,57 @@ export default function Address() {
                           return (
                             <FormItem
                               key={address.address}
-                              className="flex items-center space-x-3 space-y-0"
+                              className="my-7 flex h-10 w-full items-center"
                             >
-                              <FormControl>
-                                <RadioGroupItem value={address.address} />
-                              </FormControl>
-                              <FormLabel className="font-normal">
+                              <RadioGroupItem value={address.address} />
+                              {/* <Input
+                                type="radio"
+                                id={address.address}
+                                name="address"
+                                value={address.address}
+                                className="mx-2 h-6 w-[10%]"
+                              /> */}
+                              <Label
+                                htmlFor={address.address}
+                                className="break-word mx-2  w-[20%] font-bold sm:w-[10%] "
+                              >
+                                {address.name}
+                              </Label>
+                              <Label
+                                htmlFor={address.address}
+                                className="break-word my-2 w-[35%] max-w-max py-2 sm:w-[50%] "
+                              >
                                 {address.address}
-                              </FormLabel>
+                              </Label>
+                              <Label
+                                htmlFor={address.address}
+                                className="mx-2 w-[10%] font-bold text-primary"
+                              >
+                                {address.default && 'Default address'}
+                              </Label>
                             </FormItem>
                           )
                         })}
                       </RadioGroup>
                     </FormControl>
                     <FormMessage />
-                    <Button type="submit">Submit</Button>
                   </FormItem>
                 )}
               />
-
+              {/* <div>
+                <form id="selectAddressForm" className="mt-5">
+                  {!addresses.length &&
+                    'There are no addresses on file.  Please add a new address.'}
+                  {addresses.length > 0 && addressArrayMapper(addresses)}
+                </form>
+              </div> */}
               <Button
                 className="bg-transparent font-bold text-primary hover:bg-transparent"
                 onClick={toggleAddressForm}
               >
                 + Add a new address{' '}
               </Button>
-              {addAddress && (
+              {addressFormVisibility && (
                 <form
                   className="flex-column flex w-3/4 justify-around"
                   onSubmit={(e) => addNewAddress(e)}
@@ -293,6 +324,7 @@ export default function Address() {
                             type="text"
                             name="address"
                             className="my-2  w-3/4"
+                            pattern="[a-zA-Z][a-zA-Z0-9\s]{7}"
                           />
                         </div>
                       </div>
