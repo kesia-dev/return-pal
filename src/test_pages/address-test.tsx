@@ -23,6 +23,7 @@ import {
 } from '@/components/ui/form'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import Head from 'next/head'
+import { addressSchema } from '@/components/DashBoard/types'
 
 const formSchema = z.object({
   address: z.string().min(1),
@@ -61,24 +62,22 @@ export default function Address() {
       default: false,
     },
   ]
-  const addressSchema = z.object({
-    name: z.string().min(2),
-    address: z.string().min(3).max(50),
-    city: z.string().min(3).max(50),
-    province: z.string().length(2),
-    postal: z.string().min(6).max(7),
-  })
+
   const validateFormData = (inputs: unknown) => {
     const isValidData = addressSchema.parse(inputs)
     return isValidData
   }
-  const addressValidator = (addressObj: {
-    name: string
-    address: string
-    city: string
-    province: string
-    postal: string
-  }) => {
+  const addressValidator = (
+    name: string,
+    addressObj: {
+      apartmentUnitNumber: string
+      streetNumber: number
+      streetName: string
+      city: string
+      province: string
+      postal: string
+    }
+  ) => {
     try {
       const valid = validateFormData(addressObj)
       if (!valid) {
@@ -87,8 +86,8 @@ export default function Address() {
       console.log(valid)
       console.log('adding new address to profile!')
       const newAddress: { name: string; address: string; default: boolean } = {
-        name: addressObj.name,
-        address: `${addressObj.address}, ${addressObj.city}, ${addressObj.province}, ${addressObj.postal}`,
+        name: name,
+        address: `${addressObj.apartmentUnitNumber} ${addressObj.streetNumber} ${addressObj.streetName}, ${addressObj.city}, ${addressObj.province}, ${addressObj.postal}`,
         default: false,
       }
       if (addresses.length === 0) {
@@ -112,81 +111,82 @@ export default function Address() {
     event.preventDefault()
     const target = event.target as HTMLFormElement
     const addressToAdd = {
-      name: (target[0] as HTMLInputElement).value,
-      address: (target[1] as HTMLInputElement).value,
-      city: (target[2] as HTMLInputElement).value,
-      province: (target[3] as HTMLInputElement).value,
-      postal: (target[4] as HTMLInputElement).value,
+      apartmentUnitNumber: (target[1] as HTMLInputElement).value,
+      streetNumber: Number((target[2] as HTMLInputElement).value),
+      streetName: (target[3] as HTMLInputElement).value,
+      city: (target[4] as HTMLInputElement).value,
+      province: (target[5] as HTMLInputElement).value,
+      postal: (target[6] as HTMLInputElement).value,
     }
-    addressValidator(addressToAdd)
+    addressValidator((target[0] as HTMLInputElement).value, addressToAdd)
   }
   const toggleAddressForm = () => {
     setAddressFormVisiblity(!addressFormVisibility)
   }
-  const handleAddressSelection = () => {
-    const form = document.getElementById('selectAddressForm')
-    if (form) {
-      const radioInputs = form.querySelectorAll('input[type="radio"]')
-      let selectedValue: string | undefined
+  // const handleAddressSelection = () => {
+  //   const form = document.getElementById('selectAddressForm')
+  //   if (form) {
+  //     const radioInputs = form.querySelectorAll('input[type="radio"]')
+  //     let selectedValue: string | undefined
 
-      radioInputs.forEach((element: Element) => {
-        if (element instanceof HTMLInputElement) {
-          const input = element
-          if (input.checked) {
-            selectedValue = input.value
-          }
-        }
-      })
-      console.log(selectedValue)
+  //     radioInputs.forEach((element: Element) => {
+  //       if (element instanceof HTMLInputElement) {
+  //         const input = element
+  //         if (input.checked) {
+  //           selectedValue = input.value
+  //         }
+  //       }
+  //     })
+  //     console.log(selectedValue)
 
-      if (selectedValue) {
-        void Router.push('/pickup')
-      } else {
-        toast({
-          variant: 'destructive',
-          description: 'Please select an address before proceeding.',
-        })
-      }
-    }
-  }
-  const addressArrayMapper = (
-    addressArray: { name: string; address: string; default: boolean }[]
-  ) => {
-    return addressArray.map((address) => {
-      return (
-        <div
-          key={addressArray.indexOf(address)}
-          className="fontSize-large my-7 flex h-10 w-full items-center "
-        >
-          <Input
-            type="radio"
-            id={address.address}
-            name="address"
-            className="mx-2 h-6 w-[10%]"
-          />{' '}
-          <Label
-            htmlFor={address.address}
-            className="break-word mx-2  w-[20%] font-bold sm:w-[10%] "
-          >
-            {address.name}{' '}
-          </Label>{' '}
-          <Label
-            htmlFor={address.address}
-            className="break-word my-2 w-[35%] max-w-max py-2 sm:w-[50%] "
-          >
-            {' '}
-            {address.address}{' '}
-          </Label>{' '}
-          <Label
-            htmlFor={address.address}
-            className="mx-2 w-[10%] font-bold text-primary"
-          >
-            {address.default && 'Default address'}
-          </Label>
-        </div>
-      )
-    })
-  }
+  //     if (selectedValue) {
+  //       void Router.push('/pickup')
+  //     } else {
+  //       toast({
+  //         variant: 'destructive',
+  //         description: 'Please select an address before proceeding.',
+  //       })
+  //     }
+  //   }
+  // }
+  // const addressArrayMapper = (
+  //   addressArray: { name: string; address: string; default: boolean }[]
+  // ) => {
+  //   return addressArray.map((address) => {
+  //     return (
+  //       <div
+  //         key={addressArray.indexOf(address)}
+  //         className="fontSize-large my-7 flex h-10 w-full items-center "
+  //       >
+  //         <Input
+  //           type="radio"
+  //           id={address.address}
+  //           name="address"
+  //           className="mx-2 h-6 w-[10%]"
+  //         />{' '}
+  //         <Label
+  //           htmlFor={address.address}
+  //           className="break-word mx-2  w-[20%] font-bold sm:w-[10%] "
+  //         >
+  //           {address.name}{' '}
+  //         </Label>{' '}
+  //         <Label
+  //           htmlFor={address.address}
+  //           className="break-word my-2 w-[35%] max-w-max py-2 sm:w-[50%] "
+  //         >
+  //           {' '}
+  //           {address.address}{' '}
+  //         </Label>{' '}
+  //         <Label
+  //           htmlFor={address.address}
+  //           className="mx-2 w-[10%] font-bold text-primary"
+  //         >
+  //           {address.default && 'Default address'}
+  //         </Label>
+  //       </div>
+  //     )
+  //   })
+  // }
 
   return (
     <>
