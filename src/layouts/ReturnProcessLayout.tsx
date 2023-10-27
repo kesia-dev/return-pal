@@ -8,6 +8,7 @@ import Address from '@/return-process/address'
 import Pickup from '@/return-process/pickup'
 import Pricing from '@/return-process/pricing'
 import PackageInfo from '@/return-process/package-info'
+import Confirmation from '@/return-process/confirmation'
 
 const steps: ReturnProcessStep[] = [
   {
@@ -34,6 +35,11 @@ const steps: ReturnProcessStep[] = [
     id: 'package-info',
     name: 'Package Info',
     component: <PackageInfo />,
+  },
+  {
+    id: 'confirmation',
+    name: 'Confirm',
+    component: <Confirmation />,
   },
 ]
 
