@@ -24,6 +24,16 @@ type PlanProps = {
   setSelectedPlanName: Dispatch<SetStateAction<string>>
 }
 
+export const planTextClassName = (plan: string) => {
+  return `${
+    plan === 'Bronze' ? 'from-orange-400 via-amber-600 to-lime-900' : ''
+  } ${plan === 'Silver' ? 'from-gray-200 via-gray-400 to-gray-600' : ''} ${
+    plan === 'Gold' ? ' from-yellow-200 via-yellow-400 to-yellow-600' : ''
+  } ${
+    plan === 'Platinum' ? 'from-slate-200 via-slate-400 to-slate-600' : ''
+  } bg-gradient-to-b bg-clip-text text-2xl font-extrabold tracking-wider text-transparent`
+}
+
 export default function Plan({ plan, status, setSelectedPlanName }: PlanProps) {
   const formatUnselected = status === 'unselected' ? 'opacity-50' : ''
   const formatSelected =
@@ -35,21 +45,11 @@ export default function Plan({ plan, status, setSelectedPlanName }: PlanProps) {
       onClick={() => setSelectedPlanName(plan.name)}
     >
       <CardHeader className="pb-3">
-        {plan.name === 'Bronze' && (
-          <CardTitle className="bg-gradient-to-b from-orange-400 via-amber-600 to-lime-900 bg-clip-text text-2xl font-extrabold tracking-wider text-transparent">
+        {plan.name !== 'Platinum' ? (
+          <CardTitle className={`${planTextClassName(plan.name)}`}>
             {plan.name}
           </CardTitle>
-        )}
-        {plan.name === 'Silver' && (
-          <CardTitle className="bg-gradient-to-b from-gray-200 via-gray-400 to-gray-600 bg-clip-text text-2xl font-extrabold tracking-wider text-transparent">
-            {plan.name}
-          </CardTitle>
-        )}
-        {plan.name === 'Gold' && (
-          <CardTitle className="bg-gradient-to-b from-yellow-200 via-yellow-400 to-yellow-600 bg-clip-text text-2xl font-extrabold tracking-wider text-transparent">
-            {plan.name}
-          </CardTitle>
-        )}
+        ) : null}
         {plan.name === 'Platinum' && (
           <CardTitle className="relative bg-gradient-to-b from-slate-200 via-slate-400 to-slate-600 bg-clip-text text-2xl font-extrabold tracking-wider text-transparent">
             {plan.name}

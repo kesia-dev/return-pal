@@ -65,6 +65,7 @@ export const profileFormSchema = z.object({
       message: 'Last name must be less than 60 characters',
     }),
   primaryAddress: addressSchema,
+  role: z.enum(['Admin', 'Platinum', 'Gold', 'Silver', 'Bronze']),
   email: z.string().email({
     message: 'Please enter a valid email address',
   }),
@@ -95,6 +96,7 @@ export type EditProfileFormPropsType = {
       postal: string
       apartmentUnitNumber?: string | undefined
     }
+    role: 'Admin' | 'Platinum' | 'Gold' | 'Silver' | 'Bronze'
     email: string
     additionalAddress:
       | {
@@ -124,4 +126,9 @@ export type Mail = {
 export type InboxDataTablePropsType = {
   data: Mail[]
   columns: ColumnDef<Mail>[]
+}
+
+export type ProfilePropsType = {
+  userInfo: UserInfo
+  setUserInfo: React.Dispatch<React.SetStateAction<UserInfo>>
 }
