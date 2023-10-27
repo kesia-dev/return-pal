@@ -15,7 +15,6 @@ import {
   ExtendedToggleGroup,
   ExtendedToggleGroupItem,
 } from '@/components/ui/extended-toggle-group'
-import { HomeSection } from '@/components/home/Home'
 import {
   Card,
   CardDescription,
@@ -28,6 +27,8 @@ import HandingPackage from '@/components/SvgComponents/HandingPackage'
 import {
   ReturnProcessBackButton,
   ReturnProcessNextButton,
+  ReturnProcessRoot,
+  ReturnProcessSection,
 } from '@/components/home/return-process'
 import { SectionDescription, SectionHeader } from '@/components/home/section'
 
@@ -60,17 +61,14 @@ export default function Pickup() {
         <form
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-8"
         >
-          <div className="container space-y-20 bg-paleBlue pt-16">
-            <HomeSection className="items-start space-y-3">
-              <SectionHeader className="flex w-full justify-between font-semibold">
-                Pickup Details
-              </SectionHeader>
+          <ReturnProcessRoot>
+            <ReturnProcessSection>
+              <SectionHeader>Pickup Details</SectionHeader>
               <SectionDescription>
                 Which pickup method do you prefer?
               </SectionDescription>
-            </HomeSection>
+            </ReturnProcessSection>
 
             <FormField
               control={form.control}
@@ -86,7 +84,7 @@ export default function Pickup() {
                       className="flex w-full justify-center gap-x-10"
                     >
                       <ExtendedToggleGroupItem value="direct" asChild>
-                        <Card className="flex h-96 w-72 select-none flex-col items-center border-brand bg-white text-brand data-[state=on]:scale-110 data-[state=on]:border-8 data-[state=on]:border-primary data-[state=off]:bg-slate-300 data-[state=off]:opacity-50 data-[state=on]:shadow-2xl">
+                        <Card className="flex h-96 w-96 select-none flex-col items-center border-brand bg-white text-brand data-[state=on]:scale-110 data-[state=on]:border-8 data-[state=on]:border-primary data-[state=off]:bg-slate-300 data-[state=off]:opacity-50 data-[state=on]:shadow-2xl">
                           <CardHeader className="flex items-center">
                             <CardTitle className="text-2xl font-bold">
                               <div className="flex items-end justify-center align-bottom">
@@ -103,7 +101,7 @@ export default function Pickup() {
                         </Card>
                       </ExtendedToggleGroupItem>
                       <ExtendedToggleGroupItem value="doorstep" asChild>
-                        <Card className="flex h-96 w-72 select-none flex-col items-center border-brand bg-white text-brand data-[state=on]:scale-110 data-[state=on]:border-8 data-[state=on]:border-primary data-[state=off]:bg-slate-300 data-[state=off]:opacity-50 data-[state=on]:shadow-2xl">
+                        <Card className="flex h-96 w-96 select-none flex-col items-center border-brand bg-white text-brand data-[state=on]:scale-110 data-[state=on]:border-8 data-[state=on]:border-primary data-[state=off]:bg-slate-300 data-[state=off]:opacity-50 data-[state=on]:shadow-2xl">
                           <CardHeader className="">
                             <CardTitle className="flex flex-col text-center text-2xl font-bold">
                               <div className="flex items-end justify-center align-bottom">
@@ -131,7 +129,7 @@ export default function Pickup() {
 
               <ReturnProcessNextButton />
             </span>
-          </div>
+          </ReturnProcessRoot>
         </form>
       </Form>
     </>

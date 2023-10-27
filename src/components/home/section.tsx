@@ -33,7 +33,7 @@ const SectionDescription = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      'shrink text-center text-base font-semibold text-brand sm:text-lg', //  md:w-4/5
+      'shrink text-center text-base font-semibold text-brand sm:text-lg',
       className
     )} //  md:w-4/5
     {...props}
@@ -45,14 +45,7 @@ const SectionBackground = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      'm-[calc(-50vw+50%)]', //  md:w-4/5
-      className
-    )} //  md:w-4/5
-    {...props}
-  />
+  <div ref={ref} className={cn('m-[calc(-50vw+50%)]', className)} {...props} />
 ))
 SectionBackground.displayName = 'SectionBackground'
 

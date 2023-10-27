@@ -28,11 +28,7 @@ const HomeSectionImageRoot = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn('space-y-4', className)} //md:h-72 md:w-72
-    {...props}
-  />
+  <div ref={ref} className={cn('space-y-4', className)} {...props} />
 ))
 HomeSectionImageRoot.displayName = 'HomeSectionImageRoot'
 

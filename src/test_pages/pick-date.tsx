@@ -1,4 +1,3 @@
-import { HomeSection } from '@/components/home/Home'
 import { faClose } from '@fortawesome/free-solid-svg-icons'
 import {
   Form,
@@ -17,7 +16,11 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useDateSelection } from '@/hooks/useDateSelection'
-import { ReturnProcessNextButton } from '@/components/home/return-process'
+import {
+  ReturnProcessNextButton,
+  ReturnProcessRoot,
+  ReturnProcessSection,
+} from '@/components/home/return-process'
 import {
   LastWeekButton,
   NextWeekButton,
@@ -71,15 +74,13 @@ export default function PickDate() {
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onSubmit={form.handleSubmit(onSubmit)}
         >
-          <div className="container space-y-20 bg-paleBlue pt-16">
-            <HomeSection className="items-start space-y-3">
-              <SectionHeader className="flex w-full justify-between font-semibold">
+          <ReturnProcessRoot>
+            <ReturnProcessSection>
+              <SectionHeader className="flex w-full justify-between">
                 <div>
                   Choose a pickup{' '}
                   <SectionHeaderHighlight>date</SectionHeaderHighlight>
                 </div>
-                {/* TODO: This may need to change later depending on what we decide to
-            do to exit the return process. Confirmation prompt? */}
                 <Link
                   href="/"
                   className="flex flex-col items-center justify-center text-base text-primary hover:cursor-pointer hover:text-brand"
@@ -92,7 +93,7 @@ export default function PickDate() {
                 We&apos;ll text you the morning of your pickup with an estimated
                 time arrival.
               </SectionDescription>
-            </HomeSection>
+            </ReturnProcessSection>
 
             <div className="flex-row justify-center gap-x-4 space-y-11">
               <div className="flex justify-center gap-x-11 xl:hidden">
@@ -152,7 +153,7 @@ export default function PickDate() {
             <span className="mt-5 flex justify-end">
               <ReturnProcessNextButton />
             </span>
-          </div>
+          </ReturnProcessRoot>
         </form>
       </Form>
     </>
