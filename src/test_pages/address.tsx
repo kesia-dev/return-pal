@@ -10,7 +10,7 @@ import { useToast } from '@/components/ui/use-toast'
 import {
   ReturnProcessBackButton,
   ReturnProcessNextButton,
-} from '@/components/home/common'
+} from '@/components/home/return-process'
 import { useReturnProcess } from '@/hooks/useReturnProcess'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'

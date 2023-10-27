@@ -5,12 +5,6 @@ import {
   HomeSectionImageTitle,
   HomeSectionImageTitleDescription,
   HomeSectionImageTitleHeader,
-  SectionBackground,
-  SectionBackgroundAbsolute,
-  SectionBackgroundContent,
-  SectionDescription,
-  SectionHeader,
-  SectionHeaderHighlight,
 } from '@/components/home/Home'
 import { getLayout } from '@/layouts/DefaultLayout'
 
@@ -23,6 +17,14 @@ import Hands from '@/components/SvgComponents/Hands'
 import Toronto from '@/components/SvgComponents/Toronto'
 import OurFoundersBackground from '@/components/SvgComponents/OurFoundersBackground'
 import WhyChooseUsBackground from '@/components/SvgComponents/WhyChooseUsBackground'
+import {
+  SectionBackground,
+  SectionBackgroundAbsolute,
+  SectionBackgroundContent,
+  SectionDescription,
+  SectionHeader,
+  SectionHeaderHighlight,
+} from '@/components/home/section'
 
 export default function AboutUs() {
   return (

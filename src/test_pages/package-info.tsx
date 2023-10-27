@@ -40,7 +40,7 @@ import { Form } from '@/components/ui/form'
 import {
   ReturnProcessBackButton,
   ReturnProcessNextButton,
-} from '@/components/home/common'
+} from '@/components/home/return-process'
 
 const uploads: FileUploadType[] = [
   {

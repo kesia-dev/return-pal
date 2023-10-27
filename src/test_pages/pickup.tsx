@@ -15,11 +15,7 @@ import {
   ExtendedToggleGroup,
   ExtendedToggleGroupItem,
 } from '@/components/ui/extended-toggle-group'
-import {
-  HomeSection,
-  SectionDescription,
-  SectionHeader,
-} from '@/components/home/Home'
+import { HomeSection } from '@/components/home/Home'
 import {
   Card,
   CardDescription,
@@ -32,7 +28,8 @@ import HandingPackage from '@/components/SvgComponents/HandingPackage'
 import {
   ReturnProcessBackButton,
   ReturnProcessNextButton,
-} from '@/components/home/common'
+} from '@/components/home/return-process'
+import { SectionDescription, SectionHeader } from '@/components/home/section'
 
 const formSchema = z.object({
   pickupType: z.union([z.literal('direct'), z.literal('doorstep')]),

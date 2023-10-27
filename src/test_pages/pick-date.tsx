@@ -1,9 +1,4 @@
-import {
-  HomeSection,
-  SectionDescription,
-  SectionHeader,
-  SectionHeaderHighlight,
-} from '@/components/home/Home'
+import { HomeSection } from '@/components/home/Home'
 import { faClose } from '@fortawesome/free-solid-svg-icons'
 import {
   Form,
@@ -22,12 +17,17 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useDateSelection } from '@/hooks/useDateSelection'
-import { ReturnProcessNextButton } from '@/components/home/common'
+import { ReturnProcessNextButton } from '@/components/home/return-process'
 import {
   LastWeekButton,
   NextWeekButton,
   PickDateCard,
 } from '@/components/PickDate/PickDate'
+import {
+  SectionDescription,
+  SectionHeader,
+  SectionHeaderHighlight,
+} from '@/components/home/section'
 
 export default function PickDate() {
   const returnProcess = useReturnProcess()
@@ -70,7 +70,6 @@ export default function PickDate() {
         <form
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-8"
         >
           <div className="container space-y-20 bg-paleBlue pt-16">
             <HomeSection className="items-start space-y-3">

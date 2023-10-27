@@ -1,11 +1,5 @@
 import React from 'react'
 import Image from 'next/image'
-import {
-  HomeSection,
-  SectionDescription,
-  SectionHeader,
-  SectionHeaderHighlight,
-} from '@/components/home/Home'
 import { getLayout } from '@/layouts/DefaultLayout'
 import { Button } from '@/components/ui/button'
 import HomePageSVG from '@/components/SvgComponents/HomePageSVG'
@@ -13,6 +7,12 @@ import DemoCards from '@/components/DemoCards/DemoCards'
 import CourierBanner from '@/components/CourierBanner'
 import PartnerBanner from '@/components/PartnerBanner'
 import Link from 'next/link'
+import { HomeSection } from '@/components/home/Home'
+import {
+  SectionDescription,
+  SectionHeader,
+  SectionHeaderHighlight,
+} from '@/components/home/section'
 
 function Home() {
   return (
