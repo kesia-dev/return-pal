@@ -9,21 +9,6 @@ import {
 import Image from 'next/image'
 import React from 'react'
 
-const HomeSection = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      'flex flex-col items-center justify-center space-y-10 text-brand',
-      className
-    )}
-    {...props}
-  />
-))
-HomeSection.displayName = 'HomeSection'
-
 const HomeSectionImageRoot = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -76,7 +61,6 @@ HomeSectionImageTitleDescription.displayName =
   'HomeSectionImageTitleDescription'
 
 export {
-  HomeSection,
   HomeSectionImageRoot,
   HomeSectionImage,
   HomeSectionImageContent,

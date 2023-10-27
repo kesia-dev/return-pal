@@ -2,6 +2,21 @@
 import { cn } from '@/lib/utils'
 import React from 'react'
 
+const Section = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(
+      'flex flex-col items-center justify-center space-y-10 text-brand',
+      className
+    )}
+    {...props}
+  />
+))
+Section.displayName = 'Section'
+
 const SectionHeader = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -70,6 +85,7 @@ const SectionBackgroundAbsolute = React.forwardRef<
 SectionBackgroundAbsolute.displayName = 'SectionBackgroundAbsolute'
 
 export {
+  Section,
   SectionHeader,
   SectionHeaderHighlight,
   SectionDescription,

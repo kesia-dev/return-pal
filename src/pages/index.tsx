@@ -7,8 +7,8 @@ import DemoCards from '@/components/DemoCards/DemoCards'
 import CourierBanner from '@/components/CourierBanner'
 import PartnerBanner from '@/components/PartnerBanner'
 import Link from 'next/link'
-import { HomeSection } from '@/components/common/home'
 import {
+  Section,
   SectionDescription,
   SectionHeader,
   SectionHeaderHighlight,
@@ -20,8 +20,8 @@ function Home() {
       <div className="container mx-auto flex max-w-5xl pb-16 pt-12 md:pt-20 xl:max-w-7xl">
         <div className="w-full space-y-8 px-4 sm:px-3 xl:space-y-12">
           <section className="flex gap-8">
-            <HomeSection className="flex-1">
-              <SectionHeader className="font-medium">
+            <Section className="flex-1">
+              <SectionHeader>
                 Return Your Package The{' '}
                 <SectionHeaderHighlight>Easy Way</SectionHeaderHighlight>
               </SectionHeader>
@@ -33,7 +33,7 @@ function Home() {
               <Link href="/return">
                 <Button className="h-9">Schedule a Pickup Now</Button>
               </Link>
-            </HomeSection>
+            </Section>
             <div className="hidden aspect-[1.35/1] flex-1 md:block">
               <Image
                 className="h-full w-full object-cover"
