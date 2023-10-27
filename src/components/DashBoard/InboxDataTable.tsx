@@ -17,9 +17,6 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Input } from '@/components/ui/input'
@@ -32,6 +29,14 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { type InboxDataTablePropsType } from '@/components/DashBoard/types'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 function InboxDataTable({ data, columns }: InboxDataTablePropsType) {
   const [sorting, setSorting] = useState<SortingState>([])
@@ -67,15 +72,15 @@ function InboxDataTable({ data, columns }: InboxDataTablePropsType) {
   const { rows } = table.getRowModel()
 
   return (
-    <div className="w-full px-4">
-      <div className="flex items-center justify-center py-3">
+    <div className="w-full px-3">
+      <div className="flex items-center justify-center py-2">
         <Input
           placeholder="Filter emails..."
           value={(table.getColumn('email')?.getFilterValue() as string) ?? ''}
           onChange={(event) =>
             table.getColumn('email')?.setFilterValue(event.target.value)
           }
-          className="max-w-xs"
+          className="max-w-xs "
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -163,10 +168,10 @@ function InboxDataTable({ data, columns }: InboxDataTablePropsType) {
           {table.getFilteredSelectedRowModel().rows.length} of{' '}
           {table.getFilteredRowModel().rows.length} row(s) selected.
         </div>
-        <div className="mr-8 space-x-8">
-          <span className="space-x-2">
+        <div className="mr-8 flex space-x-8">
+          <span className="flex space-x-2">
             <Button
-              variant="outline"
+              variant="secondary"
               size="sm"
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
@@ -174,7 +179,7 @@ function InboxDataTable({ data, columns }: InboxDataTablePropsType) {
               Previous
             </Button>
             <Button
-              variant="outline"
+              variant="secondary"
               size="sm"
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
@@ -182,18 +187,25 @@ function InboxDataTable({ data, columns }: InboxDataTablePropsType) {
               Next
             </Button>
           </span>
-          <select
-            value={table.getState().pagination.pageSize}
-            onChange={(e) => {
-              table.setPageSize(Number(e.target.value))
+          <Select
+            defaultValue={table.getState().pagination.pageSize.toString()}
+            onValueChange={(value: string) => {
+              table.setPageSize(Number(value))
             }}
           >
-            {[5, 10, 20, 30, 40, 50].map((pageSize) => (
-              <option key={pageSize} value={pageSize}>
-                Show {pageSize}
-              </option>
-            ))}
-          </select>
+            <SelectTrigger className="h-9 w-full text-stone-400">
+              <SelectValue placeholder="Show" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                {[5, 10, 20, 30, 40, 50].map((pageSize) => (
+                  <SelectItem key={pageSize} value={pageSize.toString()}>
+                    Show {pageSize}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
       </div>
     </div>

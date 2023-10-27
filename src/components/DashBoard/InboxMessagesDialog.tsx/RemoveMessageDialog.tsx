@@ -38,14 +38,14 @@ function RemoveMessageDialog({
         <DialogHeader className="my-4 space-y-4">
           <DialogTitle>
             {' '}
-            {getMessageTypeLabel === 'Table'
+            {getMessageTypeLabel === 'Row'
               ? 'Message'
               : 'Selected messages'}{' '}
             delete confirmation
           </DialogTitle>
           <DialogDescription>
             Are you sure you want to delete{' '}
-            {getMessageTypeLabel === 'Table'
+            {getMessageTypeLabel === 'Row'
               ? 'this message'
               : 'delete all selected messages'}{' '}
             ?
