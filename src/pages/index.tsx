@@ -7,12 +7,12 @@ import DemoCards from '@/components/DemoCards/DemoCards'
 import CourierBanner from '@/components/CourierBanner'
 import PartnerBanner from '@/components/PartnerBanner'
 import Link from 'next/link'
-import { HomeSection } from '@/components/home/Home'
+import { HomeSection } from '@/components/common/home'
 import {
   SectionDescription,
   SectionHeader,
   SectionHeaderHighlight,
-} from '@/components/home/section'
+} from '@/components/common/section'
 
 function Home() {
   return (

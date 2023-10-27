@@ -5,7 +5,7 @@ import {
   HomeSectionImageTitle,
   HomeSectionImageTitleDescription,
   HomeSectionImageTitleHeader,
-} from '@/components/home/Home'
+} from '@/components/common/Home'
 import { getLayout } from '@/layouts/DefaultLayout'
 
 import hasanFounderImage from '@images/Hasan-cropped_founder.jpg'
@@ -24,7 +24,7 @@ import {
   SectionDescription,
   SectionHeader,
   SectionHeaderHighlight,
-} from '@/components/home/section'
+} from '@/components/common/section'
 
 export default function AboutUs() {
   return (

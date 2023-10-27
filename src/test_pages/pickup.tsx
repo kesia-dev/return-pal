@@ -29,8 +29,8 @@ import {
   ReturnProcessNextButton,
   ReturnProcessRoot,
   ReturnProcessSection,
-} from '@/components/home/return-process'
-import { SectionDescription, SectionHeader } from '@/components/home/section'
+} from '@/components/common/return-process'
+import { SectionDescription, SectionHeader } from '@/components/common/section'
 
 const formSchema = z.object({
   pickupType: z.union([z.literal('direct'), z.literal('doorstep')]),

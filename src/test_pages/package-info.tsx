@@ -42,8 +42,8 @@ import {
   ReturnProcessNextButton,
   ReturnProcessRoot,
   ReturnProcessSection,
-} from '@/components/home/return-process'
-import { SectionDescription, SectionHeader } from '@/components/home/section'
+} from '@/components/common/return-process'
+import { SectionDescription, SectionHeader } from '@/components/common/section'
 
 const ACCEPTED_FILE_TYPES = ['JPG', 'PNG', 'PDF']
 

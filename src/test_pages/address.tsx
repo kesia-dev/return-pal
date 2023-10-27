@@ -12,7 +12,7 @@ import {
   ReturnProcessNextButton,
   ReturnProcessRoot,
   ReturnProcessSection,
-} from '@/components/home/return-process'
+} from '@/components/common/return-process'
 import { useReturnProcess } from '@/hooks/useReturnProcess'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -25,7 +25,7 @@ import {
 } from '@/components/ui/form'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import Head from 'next/head'
-import { SectionDescription, SectionHeader } from '@/components/home/section'
+import { SectionDescription, SectionHeader } from '@/components/common/section'
 
 const formSchema = z.object({
   address: z.string().min(1),

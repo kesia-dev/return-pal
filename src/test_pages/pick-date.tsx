@@ -20,7 +20,7 @@ import {
   ReturnProcessNextButton,
   ReturnProcessRoot,
   ReturnProcessSection,
-} from '@/components/home/return-process'
+} from '@/components/common/return-process'
 import {
   LastWeekButton,
   NextWeekButton,
@@ -30,7 +30,7 @@ import {
   SectionDescription,
   SectionHeader,
   SectionHeaderHighlight,
-} from '@/components/home/section'
+} from '@/components/common/section'
 
 export default function PickDate() {
   const returnProcess = useReturnProcess()
