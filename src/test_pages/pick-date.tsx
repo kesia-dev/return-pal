@@ -105,7 +105,11 @@ export default function PickDate() {
               </div>
 
               <div className="flex">
-                <LastWeekButton size="small" onClick={() => weekBackwards()} />
+                <LastWeekButton
+                  className="hidden xl:flex"
+                  size="small"
+                  onClick={() => weekBackwards()}
+                />
 
                 <FormField
                   control={form.control}
@@ -139,7 +143,11 @@ export default function PickDate() {
                     </FormItem>
                   )}
                 />
-                <NextWeekButton size="small" onClick={() => weekForwards()} />
+                <NextWeekButton
+                  className="hidden xl:flex"
+                  size="small"
+                  onClick={() => weekForwards()}
+                />
               </div>
             </div>
             <span className="mt-5 flex justify-end">

@@ -45,10 +45,13 @@ export type ButtonProps = {
 } & React.HTMLAttributes<HTMLDivElement>
 
 const NextWeekButton = React.forwardRef<HTMLDivElement, ButtonProps>(
-  ({ size = 'default', onClick }, ref) => {
+  ({ className, size = 'default', onClick }, ref) => {
     return (
       <div
-        className="flex select-none flex-col items-center justify-center space-y-4 text-center font-semibold text-brand hover:cursor-pointer hover:text-primary"
+        className={cn(
+          'flex select-none flex-col items-center justify-center space-y-4 text-center font-semibold text-brand hover:cursor-pointer hover:text-primary',
+          className
+        )}
         onClick={onClick}
         ref={ref}
       >
@@ -68,11 +71,14 @@ const NextWeekButton = React.forwardRef<HTMLDivElement, ButtonProps>(
 NextWeekButton.displayName = 'NextWeekButton'
 
 const LastWeekButton = React.forwardRef<HTMLDivElement, ButtonProps>(
-  ({ size = 'default', onClick }, ref) => {
+  ({ className, size = 'default', onClick }, ref) => {
     return (
       <div
         onClick={onClick}
-        className="flex select-none flex-col items-center justify-center space-y-4 text-center font-semibold text-brand hover:cursor-pointer hover:text-primary"
+        className={cn(
+          'flex select-none flex-col items-center justify-center space-y-4 text-center font-semibold text-brand hover:cursor-pointer hover:text-primary',
+          className
+        )}
         ref={ref}
       >
         <FontAwesomeIcon
