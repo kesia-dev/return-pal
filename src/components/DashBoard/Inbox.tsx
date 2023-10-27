@@ -21,6 +21,8 @@ import { type Mail } from '@/components/DashBoard/types'
 import { mailData } from '@/components/DashBoard/dummyData'
 import { Badge } from '@/components/ui/badge'
 import InboxDataTable from '@/components/DashBoard/InboxDataTable'
+import InboxMessagesDialog from './InboxMessagesDialog.tsx'
+import dollarFormat from '@/utils/dollarFormat'
 
 function Inbox() {
   // TODO get data from Apollo Client cache intead of dummy data
@@ -130,15 +132,9 @@ function Inbox() {
           )
         },
         cell: ({ row }) => {
-          const amount = parseFloat(row.getValue('amount'))
+          const amount = dollarFormat(parseFloat(row.getValue('amount')))
 
-          // Format the amount as a dollar amount
-          const formatted = new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'CAD',
-          }).format(amount)
-
-          return <div className="text-center font-medium">{formatted}</div>
+          return <div className="text-center font-medium">{amount}</div>
         },
       },
       {
@@ -172,7 +168,7 @@ function Inbox() {
                   Copy messasge ID
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>View Complete Message</DropdownMenuItem>
+                <InboxMessagesDialog mailOriginal={mail} />
                 {/* Components that handle confirmation modal when user click delete message button. */}
                 <RemoveMessageDialog
                   removeMessageHook={handleRemoveMessage}

@@ -3,6 +3,8 @@ import { type Table, type Row } from '@tanstack/react-table'
 import type React from 'react'
 import { useToast } from '@/components/ui/use-toast'
 
+// CUSTOM HOOK FOR INBOX MESSAGE
+// TODO - add api call to delete messages
 function useInboxMessage(
   mails: Mail[],
   setMails: React.Dispatch<React.SetStateAction<Mail[]>>

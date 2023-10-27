@@ -109,7 +109,7 @@ function EditAddressForm({
                 <BiEditAlt />
               </Button>
             ) : (
-              <Button variant="ghost" onClick={() => addressForm.reset()}>
+              <Button variant="secondary" onClick={() => addressForm.reset()}>
                 Create New Address
               </Button>
             )}

@@ -12,7 +12,7 @@ import { useForm } from 'react-hook-form'
 import DashBoardHeader from '@/components/DashBoard/DashBoardHeader'
 import EditProfileForm from '@/components/DashBoard/EditProfileForm'
 import { profileFormSchema, type UserInfo } from './types'
-import EditAddressForm from './EditAddressForm'
+import EditAddressForm from '@/components/DashBoard/EditAddressForm'
 
 function Profile() {
   const [userInfo, setUserInfo] = useState<UserInfo>({
@@ -131,23 +131,25 @@ function Profile() {
                   />
                 )
               })}
-              <EditAddressForm
-                type="add"
-                address={{
-                  apartmentUnitNumber: '',
-                  streetNumber: '',
-                  streetName: '',
-                  city: '',
-                  province: '',
-                  postal: '',
-                }}
-                setUserInfo={setUserInfo}
-                index={0}
-              />
             </div>
           </div>
         ) : null}
-        <EditProfileForm form={form} onSubmit={onSubmit} />
+        <div className="flex justify-between">
+          <EditProfileForm form={form} onSubmit={onSubmit} />
+          <EditAddressForm
+            type="add"
+            address={{
+              apartmentUnitNumber: '',
+              streetNumber: '',
+              streetName: '',
+              city: '',
+              province: '',
+              postal: '',
+            }}
+            setUserInfo={setUserInfo}
+            index={0}
+          />
+        </div>
       </section>
     </div>
   )
