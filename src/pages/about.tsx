@@ -4,7 +4,7 @@ import {
   HomeSectionImageTitle,
   HomeSectionImageTitleDescription,
   HomeSectionImageTitleHeader,
-} from '@/components/common/Home'
+} from '@/components/common/home'
 import { getLayout } from '@/layouts/DefaultLayout'
 
 import hasanFounderImage from '@images/Hasan-cropped_founder.jpg'
