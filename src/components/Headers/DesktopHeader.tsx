@@ -19,6 +19,10 @@ const menuItems: MenuItem[] = [
     title: 'Contact Us',
     href: '/contact',
   },
+  {
+    title: 'Dashboard',
+    href: '/dashboard',
+  },
 ]
 
 export default function DesktopHeader() {
