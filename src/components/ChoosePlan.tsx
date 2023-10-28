@@ -1,4 +1,7 @@
-import { ReturnProcessBackButton, ReturnProcessNextButton } from './ui/common'
+import {
+  ReturnProcessBackButton,
+  ReturnProcessNextButton,
+} from './common/return-process'
 import { useReturnProcess } from '@/hooks/useReturnProcess'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -106,7 +109,7 @@ export default function ChoosePlan() {
                 <FormControl>
                   <ExtendedToggleGroup
                     type="single"
-                    selectionType="unselect"
+                    selectionType="keep-selected"
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                     className="flex w-full flex-wrap justify-center gap-8"
@@ -130,9 +133,9 @@ export default function ChoosePlan() {
             )}
           />
           <div className="mt-8 flex w-10/12 items-center justify-between">
-            <ReturnProcessBackButton onClick={() => returnProcess.back()} />
+            <ReturnProcessBackButton />
 
-            <ReturnProcessNextButton formState={form.formState} />
+            <ReturnProcessNextButton />
           </div>
         </div>
       </form>
