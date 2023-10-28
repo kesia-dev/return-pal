@@ -14,16 +14,22 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
+import { Separator } from '../ui/separator'
+import Link from 'next/link'
 
 const securityFormSchema = z.object({
-  email: z.string().email({ message: 'Please enter a valid email' }),
+  oldPassword: z.string().min(8, 'Password must be at least 8 characters'),
+  newPassword: z.string().min(8, 'Password must be at least 8 characters'),
+  confirmPassword: z.string().min(8, 'Password must be at least 8 characters'),
 })
 
 function Security() {
   const form = useForm<z.infer<typeof securityFormSchema>>({
     resolver: zodResolver(securityFormSchema),
     defaultValues: {
-      email: '',
+      oldPassword: '',
+      newPassword: '',
+      confirmPassword: '',
     },
   })
 
@@ -38,32 +44,78 @@ function Security() {
         lastName="Doe"
         email="john@example.com"
       />
-      <div className="flex flex-col items-center justify-center text-brand">
-        <h1 className="text-title font-bold">Security</h1>
-        <div className="flex flex-col items-center justify-center">
-          <label className="block">Reset Password:</label>
+      <div className="flex flex-col space-y-8 px-8 py-4 text-brand">
+        <h1 className="text-subtitle font-bold">Security</h1>
+        <div className="flex flex-col">
+          <Separator className=" bg-slate-300" />
+          <label className="mb-4 block text-mediumText">Change Password:</label>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
                 control={form.control}
-                name="email"
+                name="oldPassword"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>Old Password</FormLabel>
                     <FormControl>
                       <Input
+                        className="max-w-sm"
+                        placeholder="Please Enter Current Password to verify"
+                        {...field}
+                      />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="newPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>New Password</FormLabel>
+                    <FormControl>
+                      <Input
+                        className="max-w-sm"
                         placeholder="Please Enter Email to Reset Password"
                         {...field}
                       />
                     </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="confirmPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Confirm Password</FormLabel>
+                    <FormControl>
+                      <Input
+                        className="max-w-sm"
+                        placeholder="Please Enter New Password to Reset Password"
+                        {...field}
+                      />
+                    </FormControl>
                     <FormDescription>
-                      This is your public display name.
+                      Make sure it is at least at least 8 characters.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button type="submit">Submit</Button>
+              <div className=" space-x-20">
+                <Button type="submit" variant="outline">
+                  Update Password
+                </Button>
+                <Link href="/dashboard">
+                  <Button variant="link">I forgot my password</Button>
+                </Link>
+              </div>
             </form>
           </Form>
         </div>
