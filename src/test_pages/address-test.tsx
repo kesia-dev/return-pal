@@ -5,7 +5,6 @@ import { z } from 'zod'
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 import { Label } from '@/components/ui/label'
-import Router from 'next/router'
 import { useToast } from '@/components/ui/use-toast'
 import {
   ReturnProcessBackButton,
@@ -34,8 +33,21 @@ export default function Address() {
     { name: string; address: string; default: boolean }[]
   >([])
   const [addressFormVisibility, setAddressFormVisiblity] = useState(false)
+  const [senderName, setSenderName] = useState<string | null>(null)
+  const [addressFromForm, setAddressFromForm] = useState<newAddress | null>(
+    null
+  )
   const { toast } = useToast()
   const returnProcess = useReturnProcess()
+
+  type newAddress = {
+    apartmentUnitNumber?: string
+    streetNumber?: number
+    streetName?: string
+    city?: string
+    province?: string
+    postal?: string
+  }
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -67,17 +79,7 @@ export default function Address() {
     const isValidData = addressSchema.parse(inputs)
     return isValidData
   }
-  const addressValidator = (
-    name: string,
-    addressObj: {
-      apartmentUnitNumber: string
-      streetNumber: number
-      streetName: string
-      city: string
-      province: string
-      postal: string
-    }
-  ) => {
+  const addressValidator = (name: string, addressObj: newAddress) => {
     try {
       const valid = validateFormData(addressObj)
       if (!valid) {
@@ -85,15 +87,24 @@ export default function Address() {
       }
       console.log(valid)
       console.log('adding new address to profile!')
+      let addressString
+      if (addressObj.apartmentUnitNumber) {
+        addressString = `${addressObj.apartmentUnitNumber}-${addressObj.streetNumber} ${addressObj.streetName}, ${addressObj.city}, ${addressObj.province}, ${addressObj.postal}`
+      } else {
+        addressString = `${addressObj.streetNumber} ${addressObj.streetName}, ${addressObj.city}, ${addressObj.province}, ${addressObj.postal}`
+      }
+
       const newAddress: { name: string; address: string; default: boolean } = {
         name: name,
-        address: `${addressObj.apartmentUnitNumber} ${addressObj.streetNumber} ${addressObj.streetName}, ${addressObj.city}, ${addressObj.province}, ${addressObj.postal}`,
+        address: addressString,
         default: false,
       }
       if (addresses.length === 0) {
         newAddress.default = true
       }
       setAddresses([...addresses, newAddress])
+      setSenderName(null)
+      setAddressFromForm(null)
     } catch (err: unknown) {
       console.log(err)
       toast({
@@ -107,21 +118,21 @@ export default function Address() {
     setAddresses(mockAddresses)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  const addNewAddress = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const target = event.target as HTMLFormElement
-    const addressToAdd = {
-      apartmentUnitNumber: (target[1] as HTMLInputElement).value,
-      streetNumber: Number((target[2] as HTMLInputElement).value),
-      streetName: (target[3] as HTMLInputElement).value,
-      city: (target[4] as HTMLInputElement).value,
-      province: (target[5] as HTMLInputElement).value,
-      postal: (target[6] as HTMLInputElement).value,
-    }
-    addressValidator((target[0] as HTMLInputElement).value, addressToAdd)
-  }
-  const toggleAddressForm = () => {
+  const toggleAddressForm = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event?.preventDefault()
     setAddressFormVisiblity(!addressFormVisibility)
+  }
+  const handleAddress = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.preventDefault()
+    console.log(senderName)
+    console.log(addressFromForm)
+    if (senderName && addressFromForm) {
+      addressValidator(senderName, addressFromForm)
+    }
   }
   // const handleAddressSelection = () => {
   //   const form = document.getElementById('selectAddressForm')
@@ -219,7 +230,7 @@ export default function Address() {
                         defaultValue={field.value}
                         className="flex flex-col space-y-1"
                       >
-                        {mockAddresses.map((address) => {
+                        {addresses.map((address) => {
                           return (
                             <FormItem
                               key={address.address}
@@ -269,15 +280,12 @@ export default function Address() {
               </div> */}
               <Button
                 className="bg-transparent font-bold text-primary hover:bg-transparent"
-                onClick={toggleAddressForm}
+                onClick={(e) => toggleAddressForm(e)}
               >
                 + Add a new address{' '}
               </Button>
               {addressFormVisibility && (
-                <form
-                  className="flex-column flex w-3/4 justify-around"
-                  onSubmit={(e) => addNewAddress(e)}
-                >
+                <form className="flex-column flex w-3/4 justify-around">
                   <div className="flex-column flex">
                     <div className="flex flex-row items-center ">
                       <div className="mr-5 items-center">
@@ -287,14 +295,48 @@ export default function Address() {
                             type="text"
                             name="name"
                             className="my-2  w-3/4"
+                            onChange={(e) => setSenderName(e.target.value)}
                           />
                         </div>
                         <div className="my-2 flex items-center">
-                          <Label className="w-1/3">Address: </Label>
+                          <Label className="w-1/3">Apartment No: </Label>
                           <Input
                             type="text"
                             name="address"
                             className="my-2  w-3/4"
+                            onChange={(e) =>
+                              setAddressFromForm({
+                                ...addressFromForm,
+                                apartmentUnitNumber: e.target.value,
+                              })
+                            }
+                          />
+                          <Label className="w-1/3">Street No: </Label>
+                          <Input
+                            type="text"
+                            name="address"
+                            className="my-2  w-3/4"
+                            onChange={(e) =>
+                              setAddressFromForm({
+                                ...addressFromForm,
+                                streetNumber: Number(e.target.value),
+                              })
+                            }
+                          />
+                        </div>
+                        <div className="my-2 flex items-center"></div>
+                        <div className="my-2 flex items-center">
+                          <Label className="w-1/3">Street Name: </Label>
+                          <Input
+                            type="text"
+                            name="address"
+                            className="my-2  w-3/4"
+                            onChange={(e) =>
+                              setAddressFromForm({
+                                ...addressFromForm,
+                                streetName: e.target.value,
+                              })
+                            }
                           />
                         </div>
                         <div className="my-2 flex items-center">
@@ -303,6 +345,12 @@ export default function Address() {
                             type="text"
                             name="address"
                             className="my-2 w-3/4"
+                            onChange={(e) =>
+                              setAddressFromForm({
+                                ...addressFromForm,
+                                city: e.target.value,
+                              })
+                            }
                           />
                         </div>
                         <div className="my-2 flex items-center">
@@ -311,6 +359,12 @@ export default function Address() {
                             type="text"
                             name="address"
                             className="my-2  w-3/4"
+                            onChange={(e) =>
+                              setAddressFromForm({
+                                ...addressFromForm,
+                                province: e.target.value,
+                              })
+                            }
                           />
                         </div>
                         <div className="my-2 flex items-center">
@@ -319,14 +373,23 @@ export default function Address() {
                             type="text"
                             name="address"
                             className="my-2  w-3/4"
-                            pattern="[a-zA-Z][a-zA-Z0-9\s]{7}"
+                            onChange={(e) =>
+                              setAddressFromForm({
+                                ...addressFromForm,
+                                postal: e.target.value,
+                              })
+                            }
                           />
                         </div>
                       </div>
                     </div>
                   </div>
                   <div className="flex items-center justify-around">
-                    <button className="h-1/4 text-primary" type="submit">
+                    <button
+                      className="h-1/4 text-white"
+                      type="submit"
+                      onClick={(e) => handleAddress(e)}
+                    >
                       Add new address
                     </button>
                   </div>
