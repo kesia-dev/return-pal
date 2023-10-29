@@ -74,12 +74,13 @@ export default function ReturnProcessHeader() {
         <HeaderContent className="items-center justify-center sm:flex">
           <div className="flex w-full">
             {returnProcess.steps.map((step, index) => {
-              const state =
-                returnProcess.currentStepIndex === index
-                  ? 'in-progress'
-                  : returnProcess.currentStepIndex > index
-                  ? 'completed'
-                  : 'not-completed'
+              const state = returnProcess.isFinished
+                ? 'completed'
+                : returnProcess.currentStepIndex === index
+                ? 'in-progress'
+                : returnProcess.currentStepIndex > index
+                ? 'completed'
+                : 'not-completed'
               return (
                 <ProgressBarItem
                   key={step.id}
