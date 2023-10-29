@@ -75,10 +75,10 @@ export default function ReturnProcessHeader() {
           <div className="flex w-full">
             {returnProcess.steps.map((step, index) => {
               const state = returnProcess.isFinished
-                ? 'completed'
-                : returnProcess.currentStepIndex === index
+                ? 'completed' // If process is finished, mark every option as completed
+                : returnProcess.currentStepIndex === index // Mark the current step as in-progress
                 ? 'in-progress'
-                : returnProcess.currentStepIndex > index
+                : returnProcess.currentStepIndex > index // Mark all previous steps as completed and the options in front as not-completed
                 ? 'completed'
                 : 'not-completed'
               return (
