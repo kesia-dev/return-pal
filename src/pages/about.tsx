@@ -54,7 +54,7 @@ export default function AboutUs() {
                 <div className="grid w-full place-items-center gap-7 md:flex md:grid-cols-2 md:justify-between md:px-9">
                   <HomeSectionImageRoot>
                     <HomeSectionImage
-                      className="h-52 w-52 md:h-64 md:w-64"
+                      className="h-52 w-52 md:h-72 md:w-72"
                       src={hasanFounderImage}
                       priority
                       alt="CEO of Returnpal of ReturnPal Hasan-Ali Abidi"
@@ -71,7 +71,7 @@ export default function AboutUs() {
 
                   <HomeSectionImageRoot>
                     <HomeSectionImage
-                      className="h-52 w-52 md:h-64 md:w-64"
+                      className="h-52 w-52 md:h-72 md:w-72"
                       src={alamdarFounderImage}
                       priority
                       alt="Co-Founder of ReturnPal Alamdar-Ali Abidi"
