@@ -15,7 +15,7 @@ import {
 import { getLayout } from '@/layouts/DefaultLayout'
 
 import hasanFounderImage from '@images/Hasan-cropped_founder.jpg'
-import mohammedFounderImage from '@images/Mohammed-cropped_founder.jpg'
+import alamdarFounderImage from '@images/Alamdar-cropped_founder.jpg'
 
 import Earth from '@/components/SvgComponents/Earth'
 import People from '@/components/SvgComponents/People'
@@ -72,13 +72,13 @@ export default function AboutUs() {
                   <HomeSectionImageRoot>
                     <HomeSectionImage
                       className="h-52 w-52 md:h-64 md:w-64"
-                      src={mohammedFounderImage}
+                      src={alamdarFounderImage}
                       priority
-                      alt="Co-Founder of ReturnPal Mohammed Al-Salem"
+                      alt="Co-Founder of ReturnPal Alamdar-Ali Abidi"
                     />
                     <HomeSectionImageTitle className="text-center">
                       <HomeSectionImageTitleHeader>
-                        Mohammed Al-Salem
+                        Alamdar-Ali Abidi
                       </HomeSectionImageTitleHeader>
                       <HomeSectionImageTitleDescription>
                         Co-Founder of ReturnPal
