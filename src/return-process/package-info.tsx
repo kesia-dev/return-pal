@@ -299,11 +299,12 @@ export default function PackageInfo() {
     setArrayOfLabels([
       ...arrayOfLabels,
       {
-        attachment: 'Physical Label',
+        attachment: 'N/A',
         labelType: 'Physical',
-        description: 'Physical Label to be left at the door',
+        description: labelDescription,
       },
     ])
+    setLabelDescription(undefined)
   }
 
   const handleDescriptionChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -338,7 +339,7 @@ export default function PackageInfo() {
                   <DialogContent className="bg-paleBlue">
                     <DialogHeader>
                       <DialogTitle className="text-center font-bold text-brand">
-                        How to add a digital / Amazon QR package label
+                        How to add a Digital / Amazon QR package label
                       </DialogTitle>
                     </DialogHeader>
                     <div className="px-5 text-brand">
@@ -480,6 +481,20 @@ export default function PackageInfo() {
                       <div className="font-bold text-brand">Instructions</div>
                       <div className=" text-brand">
                         Please leave your physical label with your package.
+                      </div>
+                      <div className="font-bold text-brand">
+                        <Label
+                          htmlFor="description"
+                          className="text-right font-bold"
+                        >
+                          Description
+                        </Label>
+                        <Input
+                          id="description"
+                          placeholder='Label the item(s) inside: e.g. "laptop covers"'
+                          onChange={handleDescriptionChange}
+                          className="col-span-3"
+                        />
                       </div>
                     </div>
                     <DialogFooter>
