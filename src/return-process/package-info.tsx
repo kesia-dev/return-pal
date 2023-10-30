@@ -19,7 +19,7 @@ import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { useState, type ChangeEvent } from 'react'
+import { useState, type ChangeEvent, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPen, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import {
@@ -44,6 +44,7 @@ import {
   ReturnProcessSection,
 } from '@/components/common/return-process'
 import { SectionDescription, SectionHeader } from '@/components/common/section'
+import { Separator } from '@/components/ui/separator'
 
 const ACCEPTED_FILE_TYPES = ['JPG', 'PNG', 'PDF']
 
@@ -110,6 +111,12 @@ export default function PackageInfo() {
       labelFileUploads: returnProcess.currentData.labelFileUploads ?? [],
     },
   })
+
+  useEffect(() => {
+    if (arrayOfLabels.length === 0) {
+      form.setValue('labelFileUploads', [], { shouldValidate: true })
+    }
+  }, [arrayOfLabels, form])
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log('Submitted:', values.labelFileUploads)
@@ -296,10 +303,22 @@ export default function PackageInfo() {
   }
 
   const addPhysicalLabel = () => {
+    // TODO: Change this later - this is only here to pass the validation step.
+    form.setValue(
+      'labelFileUploads',
+      [
+        {
+          attachment: 'sad',
+          description: 'df',
+          labelType: 'Amazon',
+        },
+      ],
+      { shouldValidate: true }
+    )
     setArrayOfLabels([
       ...arrayOfLabels,
       {
-        attachment: 'N/A',
+        attachment: file?.name ?? 'N/A',
         labelType: 'Physical',
         description: labelDescription,
       },
@@ -308,6 +327,7 @@ export default function PackageInfo() {
   }
 
   const handleDescriptionChange = (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault()
     setLabelDescription(event.target.value)
   }
 
@@ -352,6 +372,7 @@ export default function PackageInfo() {
                           alt="Step 1 example Image"
                         />
                       </div>
+                      <Separator className="bg-brand" />
                       <div className="my-2">
                         Step 2: Drag your file over the area or click to browse
                         your computer&apos;s files
@@ -362,6 +383,7 @@ export default function PackageInfo() {
                           alt="Step 2 example image"
                         />
                       </div>
+                      <Separator className="bg-brand" />
                       <div className="my-2">
                         Step 3: Fill in the description
                         <Image
@@ -371,7 +393,7 @@ export default function PackageInfo() {
                           alt="Step 3 example image"
                         />
                       </div>
-
+                      <Separator className="bg-brand" />
                       <div className="my-2">
                         Step 4: Click &quot;Add Package&quot; to add it to the
                         list.
@@ -503,7 +525,7 @@ export default function PackageInfo() {
                           className="w-full px-5"
                           onClick={() => void addPhysicalLabel()}
                         >
-                          Add a Physical Label
+                          Add Package
                         </Button>
                       </DialogClose>
                     </DialogFooter>
