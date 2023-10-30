@@ -25,6 +25,7 @@ import {
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import Head from 'next/head'
 import { addressSchema } from '@/components/DashBoard/types'
+import { SectionDescription, SectionHeader } from '@/components/common/section'
 
 const formSchema = z.object({
   address: z.string().min(1),
@@ -211,199 +212,198 @@ export default function Address() {
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onSubmit={form.handleSubmit(onSubmit)}
         >
-          <div className="mx-5 my-5">
-            <div className="text-largeText text-brand">Pickup Details</div>
-            <div>
-              <div className="text-brand">
+          <ReturnProcessRoot>
+            <ReturnProcessSection>
+              <SectionHeader>Pickup Details</SectionHeader>
+              <SectionDescription>
                 Select or add your pickup address
-              </div>
-              <div className="mt-5 text-smallText font-bold text-brand">
-                Your Addresses:
-              </div>
-              <Separator className="h-[0.15rem] w-3/4 rounded-full bg-brand" />
-              <FormField
-                control={form.control}
-                name="address"
-                render={({ field }) => (
-                  <FormItem className="space-y-3">
-                    <FormControl>
-                      <RadioGroup
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                        className="flex flex-col space-y-1"
-                      >
-                        {addresses.map((address) => {
-                          return (
-                            <FormItem
-                              key={address.address}
-                              className="my-7 flex h-10 w-full items-center"
-                            >
-                              <RadioGroupItem value={address.address} />
-                              {/* <Input
-                                type="radio"
-                                id={address.address}
-                                name="address"
-                                value={address.address}
-                                className="mx-2 h-6 w-[10%]"
-                              /> */}
-                              <Label
-                                htmlFor={address.address}
-                                className="break-word mx-2  w-[20%] font-bold sm:w-[10%] "
+              </SectionDescription>
+            </ReturnProcessSection>
+            <div>
+              {/* <div className="text-largeText text-brand">Pickup Details</div> */}
+              <div>
+                {/* <div className="text-brand">
+                  Select or add your pickup address
+                </div> */}
+                <div className="mt-5 text-smallText font-bold text-brand">
+                  Your Addresses:
+                </div>
+                <Separator className="h-[0.15rem] w-3/4 rounded-full bg-brand" />
+                <FormField
+                  control={form.control}
+                  name="address"
+                  render={({ field }) => (
+                    <FormItem className="space-y-3">
+                      <FormControl>
+                        <RadioGroup
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                          className="flex flex-col space-y-1"
+                        >
+                          {addresses.map((address) => {
+                            return (
+                              <FormItem
+                                key={address.address}
+                                className="my-5 flex h-10 w-full items-center"
                               >
-                                {address.name}
-                              </Label>
-                              <Label
-                                htmlFor={address.address}
-                                className="break-word my-2 w-[35%] max-w-max py-2 sm:w-[50%] "
-                              >
-                                {address.address}
-                              </Label>
-                              <Label
-                                htmlFor={address.address}
-                                className="mx-2 w-[10%] font-bold text-primary"
-                              >
-                                {address.default && 'Default address'}
-                              </Label>
-                            </FormItem>
-                          )
-                        })}
-                      </RadioGroup>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              {/* <div>
-                <form id="selectAddressForm" className="mt-5">
-                  {!addresses.length &&
-                    'There are no addresses on file.  Please add a new address.'}
-                  {addresses.length > 0 && addressArrayMapper(addresses)}
-                </form>
-              </div> */}
-              <Button
-                className="bg-transparent font-bold text-primary hover:bg-transparent"
-                onClick={(e) => toggleAddressForm(e)}
-              >
-                + Add a new address{' '}
-              </Button>
-              {addressFormVisibility && (
-                <form className="flex-column flex w-3/4 justify-around">
-                  <div className="flex-column flex">
-                    <div className="flex flex-row items-center ">
-                      <div className="mr-5 items-center">
-                        <div className="my-2 flex items-center">
-                          <Label className="w-1/3">Name:</Label>
-                          <Input
-                            type="text"
-                            name="name"
-                            className="my-2  w-3/4"
-                            onChange={(e) => setSenderName(e.target.value)}
-                          />
-                        </div>
-                        <div className="my-2 flex items-center">
-                          <Label className="w-1/3">Apartment No: </Label>
-                          <Input
-                            type="text"
-                            name="address"
-                            className="my-2  w-3/4"
-                            onChange={(e) =>
-                              setAddressFromForm({
-                                ...addressFromForm,
-                                apartmentUnitNumber: e.target.value,
-                              })
-                            }
-                          />
-                          <Label className="w-1/3">Street No: </Label>
-                          <Input
-                            type="text"
-                            name="address"
-                            className="my-2  w-3/4"
-                            onChange={(e) =>
-                              setAddressFromForm({
-                                ...addressFromForm,
-                                streetNumber: Number(e.target.value),
-                              })
-                            }
-                          />
-                        </div>
-                        <div className="my-2 flex items-center"></div>
-                        <div className="my-2 flex items-center">
-                          <Label className="w-1/3">Street Name: </Label>
-                          <Input
-                            type="text"
-                            name="address"
-                            className="my-2  w-3/4"
-                            onChange={(e) =>
-                              setAddressFromForm({
-                                ...addressFromForm,
-                                streetName: e.target.value,
-                              })
-                            }
-                          />
-                        </div>
-                        <div className="my-2 flex items-center">
-                          <Label className="w-1/3">City: </Label>
-                          <Input
-                            type="text"
-                            name="address"
-                            className="my-2 w-3/4"
-                            onChange={(e) =>
-                              setAddressFromForm({
-                                ...addressFromForm,
-                                city: e.target.value,
-                              })
-                            }
-                          />
-                        </div>
-                        <div className="my-2 flex items-center">
-                          <Label className="w-1/3">Province: (e.g. ON) </Label>
-                          <Input
-                            type="text"
-                            name="address"
-                            className="my-2  w-3/4"
-                            onChange={(e) =>
-                              setAddressFromForm({
-                                ...addressFromForm,
-                                province: e.target.value,
-                              })
-                            }
-                          />
-                        </div>
-                        <div className="my-2 flex items-center">
-                          <Label className="w-1/3">Postal Code </Label>
-                          <Input
-                            type="text"
-                            name="address"
-                            className="my-2  w-3/4"
-                            onChange={(e) =>
-                              setAddressFromForm({
-                                ...addressFromForm,
-                                postal: e.target.value,
-                              })
-                            }
-                          />
+                                <RadioGroupItem
+                                  id={address.address}
+                                  value={address.address}
+                                />
+                                <Label
+                                  htmlFor={address.address}
+                                  className="break-word md:mx-0w-[20%]  mx-2 ml-2 font-bold sm:w-[10%] "
+                                >
+                                  {address.name}
+                                </Label>
+                                <Label
+                                  htmlFor={address.address}
+                                  className="break-word mx-2 my-2 w-[35%] max-w-max py-2 sm:w-[50%] md:mx-0 "
+                                >
+                                  {address.address}
+                                </Label>
+                                <Label
+                                  htmlFor={address.address}
+                                  className="mx-2 w-[10%] font-bold text-primary"
+                                >
+                                  {address.default && 'Default address'}
+                                </Label>
+                              </FormItem>
+                            )
+                          })}
+                        </RadioGroup>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button
+                  className="bg-transparent font-bold text-primary hover:bg-transparent"
+                  onClick={(e) => toggleAddressForm(e)}
+                >
+                  + Add a new address{' '}
+                </Button>
+                {addressFormVisibility && (
+                  <form className="flex-column flex w-3/4 justify-around">
+                    <div className="flex-column flex">
+                      <div className="flex flex-row items-center ">
+                        <div className="mr-5 items-center">
+                          <div className="my-2 flex items-center">
+                            <Label className="w-1/3">Name:</Label>
+                            <Input
+                              type="text"
+                              name="name"
+                              className="my-2  w-3/4"
+                              onChange={(e) => setSenderName(e.target.value)}
+                            />
+                          </div>
+                          <div className="my-2 flex items-center">
+                            <Label className="w-1/3">Apt # </Label>
+                            <Input
+                              type="text"
+                              name="address"
+                              className="my-2  w-3/4"
+                              onChange={(e) =>
+                                setAddressFromForm({
+                                  ...addressFromForm,
+                                  apartmentUnitNumber: e.target.value,
+                                })
+                              }
+                            />
+                            <Label className="w-1/3">Street # </Label>
+                            <Input
+                              type="text"
+                              name="address"
+                              className="my-2  w-3/4"
+                              onChange={(e) =>
+                                setAddressFromForm({
+                                  ...addressFromForm,
+                                  streetNumber: Number(e.target.value),
+                                })
+                              }
+                            />
+                          </div>
+                          <div className="my-2 flex items-center"></div>
+                          <div className="my-2 flex items-center">
+                            <Label className="w-1/3">Street Name: </Label>
+                            <Input
+                              type="text"
+                              name="address"
+                              className="my-2  w-3/4"
+                              onChange={(e) =>
+                                setAddressFromForm({
+                                  ...addressFromForm,
+                                  streetName: e.target.value,
+                                })
+                              }
+                            />
+                          </div>
+                          <div className="my-2 flex items-center">
+                            <Label className="w-1/3">City: </Label>
+                            <Input
+                              type="text"
+                              name="address"
+                              className="my-2 w-3/4"
+                              onChange={(e) =>
+                                setAddressFromForm({
+                                  ...addressFromForm,
+                                  city: e.target.value,
+                                })
+                              }
+                            />
+                          </div>
+                          <div className="my-2 flex items-center">
+                            <Label className="w-1/3">
+                              Province: (e.g. ON){' '}
+                            </Label>
+                            <Input
+                              type="text"
+                              name="address"
+                              className="my-2  w-3/4"
+                              onChange={(e) =>
+                                setAddressFromForm({
+                                  ...addressFromForm,
+                                  province: e.target.value,
+                                })
+                              }
+                            />
+                          </div>
+                          <div className="my-2 flex items-center">
+                            <Label className="w-1/3">Postal Code </Label>
+                            <Input
+                              type="text"
+                              name="address"
+                              className="my-2  w-3/4"
+                              onChange={(e) =>
+                                setAddressFromForm({
+                                  ...addressFromForm,
+                                  postal: e.target.value,
+                                })
+                              }
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="flex items-center justify-around">
-                    <button
-                      className="h-1/4 text-white"
-                      type="submit"
-                      onClick={(e) => handleAddress(e)}
-                    >
-                      Add new address
-                    </button>
-                  </div>
-                </form>
-              )}
-              <span className="mt-5 flex justify-between">
-                <ReturnProcessBackButton />
+                    <div className="flex items-center justify-around">
+                      <Button
+                        className="border-2 text-white"
+                        type="submit"
+                        onClick={(e) => handleAddress(e)}
+                      >
+                        Add new address
+                      </Button>
+                    </div>
+                  </form>
+                )}
+                <span className="mt-5 flex justify-between">
+                  <ReturnProcessBackButton />
 
-                <ReturnProcessNextButton />
-              </span>
+                  <ReturnProcessNextButton />
+                </span>
+              </div>
             </div>
-          </div>
+          </ReturnProcessRoot>
         </form>
       </Form>
     </>
