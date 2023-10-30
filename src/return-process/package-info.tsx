@@ -292,7 +292,18 @@ export default function PackageInfo() {
       setLabelDescription(undefined)
       setFile(undefined)
     }
-    // upload file to server after implementation
+    // TODO: upload file to server after implementation
+  }
+
+  const addPhysicalLabel = () => {
+    setArrayOfLabels([
+      ...arrayOfLabels,
+      {
+        attachment: 'Physical Label',
+        labelType: 'Physical',
+        description: 'Physical Label to be left at the door',
+      },
+    ])
   }
 
   const handleDescriptionChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -473,7 +484,12 @@ export default function PackageInfo() {
                     </div>
                     <DialogFooter>
                       <DialogClose asChild>
-                        <Button className="w-full px-5">I understand</Button>
+                        <Button
+                          className="w-full px-5"
+                          onClick={() => void addPhysicalLabel()}
+                        >
+                          Add a Physical Label
+                        </Button>
                       </DialogClose>
                     </DialogFooter>
                   </DialogContent>
