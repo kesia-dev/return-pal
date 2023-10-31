@@ -6,7 +6,7 @@ import {
   type PlaceholderValue,
   type StaticImport,
 } from 'next/dist/shared/lib/get-img-props'
-import Image from 'next/image'
+import Image from 'next/legacy/image'
 import React from 'react'
 
 const HomeSectionImageRoot = React.forwardRef<

@@ -16,7 +16,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
-import Image from 'next/image'
+import Image from 'next/legacy/image'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useState, type ChangeEvent } from 'react'

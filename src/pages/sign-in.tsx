@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from 'next/legacy/image'
 import SignInForm from '@/components/SignInForm/SignInForm'
 import GuestSignInForm from '@/components/SignInForm/GuestSignInForm'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'

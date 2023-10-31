@@ -1,6 +1,6 @@
 import React from 'react'
 import ContactForm from '@/components/ContactForm/ContactForm'
-import Image from 'next/image'
+import Image from 'next/legacy/image'
 import DefaultLayout from '@/layouts/DefaultLayout'
 import Link from 'next/link'
 
