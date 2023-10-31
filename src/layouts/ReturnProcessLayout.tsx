@@ -4,7 +4,7 @@ import ReturnProcessContextProvider, {
   type ReturnProcessStep,
 } from '@/context/ReturnProcessContext'
 import PickDate from '@/return-process/pick-date'
-import Address from '@/return-process/address-test'
+import Address from '@/return-process/address'
 import Pickup from '@/return-process/pickup'
 import Pricing from '@/return-process/pricing'
 import PackageInfo from '@/return-process/package-info'

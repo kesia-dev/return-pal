@@ -126,10 +126,7 @@ export default function PackageInfo() {
   }
 
   console.log('currentData:', returnProcess.currentData.labelFileUploads)
-  console.log('Errors:', form.formState.errors)
   console.log('labelFileUploads:', form.getValues('labelFileUploads'))
-  console.log('arrayOfLabels:', arrayOfLabels)
-  console.log('isValid:', form.formState.isValid)
 
   const labelDialogClasses =
     'flex w-[30%] min-w-[30%] max-w-2xl flex-col justify-between rounded-lg border-4 border-brand bg-white font-bold text-brand lg:text-2xl'
