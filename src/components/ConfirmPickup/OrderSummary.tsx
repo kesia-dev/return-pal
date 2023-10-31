@@ -114,7 +114,7 @@ export default function OrderSummary({
         </div>
       </div>
       <Button
-        className="mt-6 h-fit w-full max-w-[300px] sm:text-xl"
+        className="my-6 h-fit w-full max-w-[300px] sm:text-xl"
         onClick={() => returnProcess.forward()}
       >
         Confirm Pickup
