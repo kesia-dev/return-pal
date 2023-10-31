@@ -16,7 +16,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useState, type ChangeEvent } from 'react'
@@ -338,6 +338,10 @@ export default function PackageInfo() {
                           width={500}
                           src="/images/Step1.png"
                           alt="Step 1 example Image"
+                          style={{
+                            maxWidth: '100%',
+                            height: 'auto',
+                          }}
                         />
                       </div>
                       <div className="my-2">
@@ -348,6 +352,10 @@ export default function PackageInfo() {
                           width={500}
                           src="/images/Step2.png"
                           alt="Step 2 example image"
+                          style={{
+                            maxWidth: '100%',
+                            height: 'auto',
+                          }}
                         />
                       </div>
                       <div className="my-2">
@@ -357,6 +365,10 @@ export default function PackageInfo() {
                           width={500}
                           src="/images/Step3.png"
                           alt="Step 3 example image"
+                          style={{
+                            maxWidth: '100%',
+                            height: 'auto',
+                          }}
                         />
                       </div>
 
@@ -368,6 +380,10 @@ export default function PackageInfo() {
                           width={500}
                           src="/images/Step4.png"
                           alt="Step 4 example image"
+                          style={{
+                            maxWidth: '100%',
+                            height: 'auto',
+                          }}
                         />
                       </div>
                     </div>
@@ -448,6 +464,10 @@ export default function PackageInfo() {
                             width={65}
                             src="/images/physical.png"
                             alt="physical label icon"
+                            style={{
+                              maxWidth: '100%',
+                              height: 'auto',
+                            }}
                           />
                         </div>
                         <div className="3xl:mx-10  my-2 2xl:mx-5">
@@ -488,6 +508,10 @@ export default function PackageInfo() {
                             width={65}
                             src="/images/digital.png"
                             alt="digital label icon"
+                            style={{
+                              maxWidth: '100%',
+                              height: 'auto',
+                            }}
                           />
                         </div>
                         <div className="3xl:mx-15 my-2 md:mx-4 2xl:mx-10">
@@ -588,6 +612,10 @@ export default function PackageInfo() {
                             width={65}
                             src="/images/qr.png"
                             alt="QR code image"
+                            style={{
+                              maxWidth: '100%',
+                              height: 'auto',
+                            }}
                           />
                         </div>
                         <div className="my-2">Amazon QR Code</div>

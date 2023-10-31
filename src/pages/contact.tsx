@@ -1,6 +1,6 @@
 import React from 'react'
 import ContactForm from '@/components/ContactForm/ContactForm'
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 import DefaultLayout from '@/layouts/DefaultLayout'
 import Link from 'next/link'
 
@@ -22,6 +22,10 @@ function Contact() {
             alt="Contact Us"
             width={160}
             height={0}
+            style={{
+              maxWidth: '100%',
+              height: 'auto',
+            }}
           />
         </Link>
       </section>
@@ -31,6 +35,10 @@ function Contact() {
         alt="Contact Us"
         width={160}
         height={160}
+        style={{
+          maxWidth: '100%',
+          height: 'auto',
+        }}
       />
     </div>
   )

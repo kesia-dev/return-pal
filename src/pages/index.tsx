@@ -1,5 +1,5 @@
 import React from 'react'
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 import { getLayout } from '@/layouts/DefaultLayout'
 import { Button } from '@/components/ui/button'
 import HomePageSVG from '@/components/SvgComponents/HomePageSVG'
@@ -38,10 +38,11 @@ function Home() {
             </Section>
             <div className="relative hidden flex-1 md:block">
               <Image
-                layout="fill"
                 className="h-full w-full object-contain"
                 src="/images/pexels-norma-mortenson.png"
                 alt="Return Pal"
+                fill
+                sizes="100vw"
               />
             </div>
           </section>
@@ -62,6 +63,10 @@ function Home() {
               alt="checking order process"
               width={890}
               height={500}
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+              }}
             />
             <article className="max-w-lg text-center text-base text-brand  sm:text-lg md:text-2xl lg:max-w-7xl lg:text-3xl  xl:text-5xl">
               We accept all online retailers with just a click of a button.
@@ -86,6 +91,10 @@ function Home() {
               alt="checking order process"
               width={890}
               height={500}
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+              }}
             />
 
             <article className="max-w-lg text-center text-base  text-brand sm:text-lg md:text-2xl lg:max-w-7xl lg:text-3xl  xl:text-5xl">

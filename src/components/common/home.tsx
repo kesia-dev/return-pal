@@ -6,7 +6,7 @@ import {
   type PlaceholderValue,
   type StaticImport,
 } from 'next/dist/shared/lib/get-img-props'
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 import React from 'react'
 
 const HomeSectionImageRoot = React.forwardRef<
@@ -19,11 +19,16 @@ HomeSectionImageRoot.displayName = 'HomeSectionImageRoot'
 
 const HomeSectionImage = React.forwardRef<HTMLImageElement, NextImageProps>(
   ({ className, ...props }, ref) => (
-    // eslint-disable-next-line jsx-a11y/alt-text
+    // props will override the default props
+    //eslint-disable-next-line jsx-a11y/alt-text
     <Image
       className={cn('rounded-full border-8 border-primary', className)}
       ref={ref}
       {...props}
+      style={{
+        maxWidth: '100%',
+        height: 'auto',
+      }}
     />
   )
 )

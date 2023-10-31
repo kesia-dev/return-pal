@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import DefaultLayout from '@/layouts/DefaultLayout'
 import { Separator } from '@/components/ui/separator'
-import Image from 'next/legacy/image'
+import Image from 'next/image'
 import { LiaHomeSolid } from 'react-icons/lia'
 import { FiUser } from 'react-icons/fi'
 import { TfiEmail } from 'react-icons/tfi'
@@ -96,6 +96,10 @@ function Dashboard() {
               width={200}
               height={200}
               className="mx-auto"
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+              }}
             />
           </Link>
           {tabsData.map((tab) => (
