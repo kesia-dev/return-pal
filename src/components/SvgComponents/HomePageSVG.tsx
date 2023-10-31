@@ -3,7 +3,7 @@ import React from 'react'
 const HomePageSVG: React.FC = () => {
   return (
     <svg
-      className="h-[135rem] w-screen md:h-[60rem] lg:h-[70rem] xl:h-[75rem]"
+      className="h-[135rem] w-screen md:h-[58rem] lg:h-[68rem] xl:h-[73rem]"
       preserveAspectRatio="none"
       width="1920"
       height="1974"
