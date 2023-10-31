@@ -39,8 +39,7 @@ function Home() {
             <div className="relative hidden flex-1 md:block">
               <Image
                 layout="fill"
-                objectFit={'contain'}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-contain"
                 src="/images/pexels-norma-mortenson.png"
                 alt="Return Pal"
               />
