@@ -67,13 +67,18 @@ export default function Address() {
 
   const mockAddresses: { name: string; address: string; default: boolean }[] = [
     {
-      name: 'Bob Gunderson',
+      name: 'Bartholomew Gunderson',
       address: '6500 Boulevard de Rome, Brossard, QC, J4Y 0B6, Canada',
       default: true,
     },
     {
-      name: 'Marky Mark',
-      address: '123 King St',
+      name: 'Chandler Bing',
+      address: '20-90 Bedford St, New York, NY 10014, USA',
+      default: false,
+    },
+    {
+      name: 'Jay Esse',
+      address: 'Rolf Bedford St, New York, NY 10014, USA',
       default: false,
     },
   ]
@@ -137,70 +142,6 @@ export default function Address() {
       addressValidator(senderName, addressFromForm)
     }
   }
-  // const handleAddressSelection = () => {
-  //   const form = document.getElementById('selectAddressForm')
-  //   if (form) {
-  //     const radioInputs = form.querySelectorAll('input[type="radio"]')
-  //     let selectedValue: string | undefined
-
-  //     radioInputs.forEach((element: Element) => {
-  //       if (element instanceof HTMLInputElement) {
-  //         const input = element
-  //         if (input.checked) {
-  //           selectedValue = input.value
-  //         }
-  //       }
-  //     })
-  //     console.log(selectedValue)
-
-  //     if (selectedValue) {
-  //       void Router.push('/pickup')
-  //     } else {
-  //       toast({
-  //         variant: 'destructive',
-  //         description: 'Please select an address before proceeding.',
-  //       })
-  //     }
-  //   }
-  // }
-  // const addressArrayMapper = (
-  //   addressArray: { name: string; address: string; default: boolean }[]
-  // ) => {
-  //   return addressArray.map((address) => {
-  //     return (
-  //       <div
-  //         key={addressArray.indexOf(address)}
-  //         className="fontSize-large my-7 flex h-10 w-full items-center "
-  //       >
-  //         <Input
-  //           type="radio"
-  //           id={address.address}
-  //           name="address"
-  //           className="mx-2 h-6 w-[10%]"
-  //         />{' '}
-  //         <Label
-  //           htmlFor={address.address}
-  //           className="break-word mx-2  w-[20%] font-bold sm:w-[10%] "
-  //         >
-  //           {address.name}{' '}
-  //         </Label>{' '}
-  //         <Label
-  //           htmlFor={address.address}
-  //           className="break-word my-2 w-[35%] max-w-max py-2 sm:w-[50%] "
-  //         >
-  //           {' '}
-  //           {address.address}{' '}
-  //         </Label>{' '}
-  //         <Label
-  //           htmlFor={address.address}
-  //           className="mx-2 w-[10%] font-bold text-primary"
-  //         >
-  //           {address.default && 'Default address'}
-  //         </Label>
-  //       </div>
-  //     )
-  //   })
-  // }
 
   return (
     <>
@@ -252,7 +193,7 @@ export default function Address() {
                                 />
                                 <Label
                                   htmlFor={address.address}
-                                  className="break-word md:mx-0w-[20%]  mx-2 ml-2 font-bold sm:w-[10%] "
+                                  className="break-word mx-6 ml-2  w-[20%] font-bold sm:w-[10%] md:pl-2 lg:mx-2"
                                 >
                                   {address.name}
                                 </Label>
@@ -284,7 +225,7 @@ export default function Address() {
                   + Add a new address{' '}
                 </Button>
                 {addressFormVisibility && (
-                  <form className="flex-column flex w-3/4 justify-around">
+                  <form className="flex-column flex justify-around md:w-3/4">
                     <div className="flex-column flex">
                       <div className="flex flex-row items-center ">
                         <div className="mr-5 items-center">
@@ -385,13 +326,13 @@ export default function Address() {
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center justify-around">
+                    <div className="flex w-1/4 items-center justify-around">
                       <Button
-                        className="border-2 text-white"
+                        className="break-word border-2 text-white"
                         type="submit"
                         onClick={(e) => handleAddress(e)}
                       >
-                        Add new address
+                        Add address
                       </Button>
                     </div>
                   </form>
