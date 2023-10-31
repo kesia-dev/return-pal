@@ -77,8 +77,8 @@ export default function Address() {
       default: false,
     },
     {
-      name: 'Jay Esse',
-      address: 'Rolf Bedford St, New York, NY 10014, USA',
+      name: 'Henry Norman Bethune',
+      address: '235 John Street North, Gravenhurst, Ontario P1P 1G4, Canada',
       default: false,
     },
   ]
@@ -185,7 +185,7 @@ export default function Address() {
                             return (
                               <FormItem
                                 key={address.address}
-                                className="my-5 flex h-10 w-full items-center"
+                                className="my-5 flex h-12 w-full  items-center sm:h-10"
                               >
                                 <RadioGroupItem
                                   id={address.address}
@@ -193,13 +193,13 @@ export default function Address() {
                                 />
                                 <Label
                                   htmlFor={address.address}
-                                  className="break-word mx-6 ml-2  w-[20%] font-bold sm:w-[10%] md:pl-2 lg:mx-2"
+                                  className="break-word mx-6 ml-2  w-[20%] font-bold sm:w-[15%] md:pl-2 lg:mx-2 lg:w-[10%]"
                                 >
                                   {address.name}
                                 </Label>
                                 <Label
                                   htmlFor={address.address}
-                                  className="break-word mx-2 my-2 w-[35%] max-w-max py-2 sm:w-[50%] md:mx-0 "
+                                  className="break-word mx-2 my-4 w-[35%] max-w-max sm:w-[50%] md:mx-0"
                                 >
                                   {address.address}
                                 </Label>
@@ -219,7 +219,7 @@ export default function Address() {
                   )}
                 />
                 <Button
-                  className="bg-transparent font-bold text-primary hover:bg-transparent"
+                  className="mt-4 bg-transparent font-bold text-primary hover:bg-transparent"
                   onClick={(e) => toggleAddressForm(e)}
                 >
                   + Add a new address{' '}

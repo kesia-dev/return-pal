@@ -81,14 +81,14 @@ export default function Pickup() {
                       selectionType="keep-selected"
                       onValueChange={field.onChange}
                       defaultValue={field.value}
-                      className="flex w-full justify-center gap-x-10"
+                      className="flex justify-center gap-x-5 sm:w-full sm:gap-x-10"
                     >
                       <ExtendedToggleGroupItem value="direct" asChild>
-                        <Card className="flex h-96 w-96 select-none flex-col items-center border-brand bg-white text-brand data-[state=on]:scale-110 data-[state=on]:border-8 data-[state=on]:border-primary data-[state=off]:bg-slate-300 data-[state=off]:opacity-50 data-[state=on]:shadow-2xl">
+                        <Card className="flex h-96 w-1/2 select-none flex-col items-center border-brand bg-white text-brand data-[state=on]:scale-110 data-[state=on]:border-8 data-[state=on]:border-primary data-[state=off]:bg-slate-300 data-[state=off]:opacity-50 data-[state=on]:shadow-2xl sm:w-96">
                           <CardHeader className="flex items-center">
-                            <CardTitle className="text-2xl font-bold">
+                            <CardTitle className="text-center text-2xl font-bold">
                               <div className="flex items-end justify-center align-bottom">
-                                <HandingPackage className="h-24 w-24 fill-primary" />
+                                <HandingPackage className="w-16sm:h-24 h-16 fill-primary sm:w-24" />
                               </div>
                               Direct Handoff
                             </CardTitle>
@@ -101,12 +101,12 @@ export default function Pickup() {
                         </Card>
                       </ExtendedToggleGroupItem>
                       <ExtendedToggleGroupItem value="doorstep" asChild>
-                        <Card className="flex h-96 w-96 select-none flex-col items-center border-brand bg-white text-brand data-[state=on]:scale-110 data-[state=on]:border-8 data-[state=on]:border-primary data-[state=off]:bg-slate-300 data-[state=off]:opacity-50 data-[state=on]:shadow-2xl">
+                        <Card className="flex h-96 w-1/2 select-none flex-col items-center border-brand bg-white text-brand data-[state=on]:scale-110 data-[state=on]:border-8 data-[state=on]:border-primary data-[state=off]:bg-slate-300 data-[state=off]:opacity-50 data-[state=on]:shadow-2xl sm:w-96">
                           <CardHeader className="">
                             <CardTitle className="flex flex-col text-center text-2xl font-bold">
                               <div className="flex items-end justify-center align-bottom">
-                                <Door className="h-24 w-24" />
-                                <Box className="h-10 w-10" />
+                                <Door className="h-16 w-16 sm:h-24 sm:w-24" />
+                                <Box className="h-7 w-7 sm:h-10 sm:w-10" />
                               </div>
                               Leave on Doorstep
                             </CardTitle>
