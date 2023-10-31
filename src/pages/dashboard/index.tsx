@@ -96,10 +96,6 @@ function Dashboard() {
               width={200}
               height={200}
               className="mx-auto"
-              style={{
-                maxWidth: '100%',
-                height: 'auto',
-              }}
             />
           </Link>
           {tabsData.map((tab) => (

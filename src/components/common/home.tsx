@@ -25,10 +25,6 @@ const HomeSectionImage = React.forwardRef<HTMLImageElement, NextImageProps>(
       className={cn('rounded-full border-8 border-primary', className)}
       ref={ref}
       {...props}
-      style={{
-        maxWidth: '100%',
-        height: 'auto',
-      }}
     />
   )
 )

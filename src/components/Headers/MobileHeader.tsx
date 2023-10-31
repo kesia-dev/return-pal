@@ -60,10 +60,6 @@ export default function MobileMenu() {
               alt="logo"
               width={200}
               height={200}
-              style={{
-                maxWidth: '100%',
-                height: 'auto',
-              }}
             />
           </SheetTitle>
           <p className="flex gap-x-2">

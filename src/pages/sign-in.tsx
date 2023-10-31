@@ -19,10 +19,6 @@ function SignIn() {
           height="0"
           className="my-4 h-[40px] w-auto sm:my-6"
           sizes="100vw"
-          style={{
-            maxWidth: '100%',
-            height: 'auto',
-          }}
         />
 
         <Tabs defaultValue="account" className="w-[400px]">

@@ -22,10 +22,6 @@ function Contact() {
             alt="Contact Us"
             width={160}
             height={0}
-            style={{
-              maxWidth: '100%',
-              height: 'auto',
-            }}
           />
         </Link>
       </section>
@@ -35,10 +31,6 @@ function Contact() {
         alt="Contact Us"
         width={160}
         height={160}
-        style={{
-          maxWidth: '100%',
-          height: 'auto',
-        }}
       />
     </div>
   )

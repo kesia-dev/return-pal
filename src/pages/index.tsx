@@ -63,10 +63,6 @@ function Home() {
               alt="checking order process"
               width={890}
               height={500}
-              style={{
-                maxWidth: '100%',
-                height: 'auto',
-              }}
             />
             <article className="max-w-lg text-center text-base text-brand  sm:text-lg md:text-2xl lg:max-w-7xl lg:text-3xl  xl:text-5xl">
               We accept all online retailers with just a click of a button.
@@ -91,10 +87,6 @@ function Home() {
               alt="checking order process"
               width={890}
               height={500}
-              style={{
-                maxWidth: '100%',
-                height: 'auto',
-              }}
             />
 
             <article className="max-w-lg text-center text-base  text-brand sm:text-lg md:text-2xl lg:max-w-7xl lg:text-3xl  xl:text-5xl">
