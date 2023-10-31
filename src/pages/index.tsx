@@ -19,9 +19,9 @@ function Home() {
     <>
       <div className="container mx-auto flex max-w-5xl pb-16 pt-12 md:pt-20 xl:max-w-7xl">
         <div className="w-full space-y-8 px-4 sm:px-3 xl:space-y-12">
-          <section className="flex gap-8">
+          <section className="flex gap-4">
             <Section className="flex-1">
-              <SectionHeader>
+              <SectionHeader className="font-medium xl:text-title">
                 Return Your Package The{' '}
                 <SectionHeaderHighlight>Easy Way</SectionHeaderHighlight>
               </SectionHeader>
@@ -30,17 +30,19 @@ function Home() {
                 need for printing labels, packaging, or visits to the post
                 office.
               </SectionDescription>
-              <Link href="/return">
-                <Button className="h-9">Schedule a Pickup Now</Button>
+              <Link href="/return" className=" self-start justify-self-center">
+                <Button className="h-7 text-sm lg:h-9 lg:text-base xl:h-12 xl:text-lg">
+                  Schedule a Pickup Now
+                </Button>
               </Link>
             </Section>
-            <div className="hidden aspect-[1.35/1] flex-1 md:block">
+            <div className="relative hidden flex-1 md:block">
               <Image
+                layout="fill"
+                objectFit={'contain'}
                 className="h-full w-full object-cover"
-                src="/images/np_delivery_man.png"
+                src="/images/pexels-norma-mortenson.png"
                 alt="Return Pal"
-                width={500}
-                height={500}
               />
             </div>
           </section>
