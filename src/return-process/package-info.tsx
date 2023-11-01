@@ -45,6 +45,7 @@ import {
 } from '@/components/common/return-process'
 import { SectionDescription, SectionHeader } from '@/components/common/section'
 import { Separator } from '@/components/ui/separator'
+import { ScrollArea } from '@components/ui/scroll-area'
 
 const ACCEPTED_FILE_TYPES = ['JPG', 'PNG', 'PDF']
 
@@ -353,55 +354,61 @@ export default function PackageInfo() {
                   <DialogTrigger className="pr-5">
                     <div className="font-bold text-primary">Tutorial</div>
                   </DialogTrigger>
-                  <DialogContent className="bg-paleBlue">
+                  <DialogContent className="h-5/6 bg-paleBlue object-scale-down">
                     <DialogHeader>
                       <DialogTitle className="text-center font-bold text-brand">
                         How to add a Digital / Amazon QR package label
+                        <div className="text-xs font-normal sm:invisible">
+                          Please scroll/swipe down below for more information
+                        </div>
                       </DialogTitle>
                     </DialogHeader>
-                    <div className="px-5 text-brand">
-                      <div className="my-2">
-                        Step 1: Click on the type of label you have.
-                        <Image
-                          height={300}
-                          width={500}
-                          src="/images/Step1.png"
-                          alt="Step 1 example Image"
-                        />
+                    <ScrollArea>
+                      <div className="px-5 text-brand">
+                        <div className="my-2">
+                          Step 1: Click on the type of label you have.
+                          <Image
+                            height={300}
+                            width={500}
+                            src="/images/Step1.png"
+                            alt="Step 1 example Image"
+                          />
+                        </div>
+                        <Separator className="bg-brand" />
+                        <div className="my-2">
+                          Step 2: Drag your file over the area or click to
+                          browse your computer&apos;s files
+                          <Image
+                            height={300}
+                            width={500}
+                            src="/images/Step2.png"
+                            alt="Step 2 example image"
+                          />
+                        </div>
+                        <Separator className="bg-brand" />
+                        <div className="my-2">
+                          Step 3: Fill in the description
+                          <Image
+                            height={300}
+                            width={500}
+                            src="/images/Step3.png"
+                            alt="Step 3 example image"
+                          />
+                        </div>
+                        <Separator className="bg-brand" />
+                        <div className="my-2">
+                          Step 4: Click &quot;Add Package&quot; to add it to the
+                          list.
+                          <Image
+                            height={300}
+                            width={500}
+                            src="/images/Step4.png"
+                            alt="Step 4 example image"
+                          />
+                        </div>
                       </div>
-                      <Separator className="bg-brand" />
-                      <div className="my-2">
-                        Step 2: Drag your file over the area or click to browse
-                        your computer&apos;s files
-                        <Image
-                          height={300}
-                          width={500}
-                          src="/images/Step2.png"
-                          alt="Step 2 example image"
-                        />
-                      </div>
-                      <Separator className="bg-brand" />
-                      <div className="my-2">
-                        Step 3: Fill in the description
-                        <Image
-                          height={300}
-                          width={500}
-                          src="/images/Step3.png"
-                          alt="Step 3 example image"
-                        />
-                      </div>
-                      <Separator className="bg-brand" />
-                      <div className="my-2">
-                        Step 4: Click &quot;Add Package&quot; to add it to the
-                        list.
-                        <Image
-                          height={300}
-                          width={500}
-                          src="/images/Step4.png"
-                          alt="Step 4 example image"
-                        />
-                      </div>
-                    </div>
+                    </ScrollArea>
+
                     <DialogFooter>
                       <DialogClose asChild>
                         <Button className="w-full px-5">Got it!</Button>
