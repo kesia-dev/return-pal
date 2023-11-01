@@ -161,11 +161,7 @@ export default function Address() {
               </SectionDescription>
             </ReturnProcessSection>
             <div>
-              {/* <div className="text-largeText text-brand">Pickup Details</div> */}
               <div>
-                {/* <div className="text-brand">
-                  Select or add your pickup address
-                </div> */}
                 <div className="mt-5 text-smallText font-bold text-brand">
                   Your Addresses:
                 </div>

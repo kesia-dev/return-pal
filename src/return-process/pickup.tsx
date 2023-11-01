@@ -102,7 +102,7 @@ export default function Pickup() {
                       </ExtendedToggleGroupItem>
                       <ExtendedToggleGroupItem value="doorstep" asChild>
                         <Card className="flex h-96 w-1/2 select-none flex-col items-center border-brand bg-white text-brand data-[state=on]:scale-110 data-[state=on]:border-8 data-[state=on]:border-primary data-[state=off]:bg-slate-300 data-[state=off]:opacity-50 data-[state=on]:shadow-2xl sm:w-96">
-                          <CardHeader className="">
+                          <CardHeader>
                             <CardTitle className="flex flex-col text-center text-2xl font-bold">
                               <div className="flex items-end justify-center align-bottom">
                                 <Door className="h-16 w-16 sm:h-24 sm:w-24" />
