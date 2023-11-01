@@ -13,6 +13,7 @@ import { Button } from '@components/ui/button'
 import Link from 'next/link'
 import NextArrow from '@components/SvgComponents/NextArrow'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
+import Image from 'next/image'
 
 const formSchema = z
   .object({
@@ -69,16 +70,20 @@ function SignUpModule() {
           <span>&nbsp;Sign Up</span>
         </Link>
       </DialogTrigger>
-      <DialogContent className="m-0 flex h-3/4 min-h-[600px] flex-col flex-nowrap items-center justify-start gap-0 bg-paleBlue p-0">
-        <h1 className="mb-4 mt-8 font-semibold tracking-wide text-brand sm:text-3xl">
-          Sign Up to ReturnPal
-        </h1>
+      <DialogContent className="m-0 flex h-3/4 min-h-[95%] flex-col flex-nowrap items-center justify-start gap-0 bg-paleBlue p-0">
+        <Image
+          src="/images/returnpal-short-logo.png"
+          alt="Return Pal logo"
+          width={333}
+          height={134}
+          className="mb-4 mt-6 h-auto w-[50%] sm:mb-6"
+        />
 
         <Form {...form}>
           <form
             // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onSubmit={form.handleSubmit(onSubmit)}
-            className="mt-2 flex flex-col items-center justify-start sm:mt-0"
+            className="flex flex-col items-center justify-start"
           >
             <FormField
               control={form.control}
@@ -88,7 +93,7 @@ function SignUpModule() {
                   <FormControl>
                     <Input
                       minLength={1}
-                      className="my-4 h-10 w-[200px] rounded-xl border-4 border-primary text-lg placeholder:text-grey sm:h-12 sm:w-[275px]"
+                      className="my-4 h-10 w-[200px] rounded-xl border-4 border-primary text-sm placeholder:text-grey sm:h-12 sm:w-[275px] sm:text-lg"
                       placeholder="First Name"
                       {...field}
                     />
@@ -105,7 +110,7 @@ function SignUpModule() {
                   <FormControl>
                     <Input
                       minLength={1}
-                      className="my-4 h-10 w-[200px] rounded-xl border-4 border-primary text-lg placeholder:text-grey sm:h-12 sm:w-[275px]"
+                      className="my-4 h-10 w-[200px] rounded-xl border-4 border-primary text-sm placeholder:text-grey sm:h-12 sm:w-[275px] sm:text-lg"
                       placeholder="Last Name"
                       {...field}
                     />
@@ -121,7 +126,7 @@ function SignUpModule() {
                 <FormItem>
                   <FormControl>
                     <Input
-                      className="my-4 h-10 w-[200px] rounded-xl border-4 border-primary text-lg placeholder:text-grey sm:h-12 sm:w-[275px]"
+                      className="my-4 h-10 w-[200px] rounded-xl border-4 border-primary text-sm placeholder:text-grey sm:h-12 sm:w-[275px] sm:text-lg"
                       type="email"
                       placeholder="Email"
                       {...field}
@@ -138,7 +143,7 @@ function SignUpModule() {
                 <FormItem>
                   <FormControl>
                     <Input
-                      className="my-4 h-10 w-[200px] rounded-xl border-4 border-primary text-lg placeholder:text-grey sm:h-12 sm:w-[275px]"
+                      className="my-4 h-10 w-[200px] rounded-xl border-4 border-primary text-sm placeholder:text-grey sm:h-12 sm:w-[275px] sm:text-lg"
                       type="password"
                       placeholder="Password"
                       {...field}
@@ -155,7 +160,7 @@ function SignUpModule() {
                 <FormItem>
                   <FormControl>
                     <Input
-                      className="my-4 h-10 w-[200px] rounded-xl border-4 border-primary text-lg placeholder:text-grey sm:h-12 sm:w-[275px]"
+                      className="my-4 h-10 w-[200px] rounded-xl border-4 border-primary text-sm placeholder:text-grey sm:h-12 sm:w-[275px] sm:text-lg"
                       type="password"
                       placeholder="Confirm password"
                       {...field}
@@ -167,7 +172,7 @@ function SignUpModule() {
             />
             <Button
               type="submit"
-              className="mt-2 h-10 w-[150px] rounded-3xl text-lg sm:h-12 sm:w-[150px]"
+              className="mt-6 h-10 w-[150px] scale-75 rounded-3xl text-lg sm:h-12 sm:w-[150px] sm:scale-100"
             >
               Sign Up&nbsp;&nbsp;
               <NextArrow />
