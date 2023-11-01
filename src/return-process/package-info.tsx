@@ -158,7 +158,7 @@ export default function PackageInfo() {
         // using a variable as using state to hold / set value for the new description will close the dialog on change
         let newDescription: string
         return (
-          <div className="flex justify-end space-x-1">
+          <div className="flex justify-end space-x-3 md:space-x-2">
             <Dialog>
               <DialogTrigger>
                 <FontAwesomeIcon
@@ -475,12 +475,12 @@ export default function PackageInfo() {
                 </Table>
               </div>
 
-              <div className="my-5 flex flex-row justify-between px-5 text-center lg:my-0 lg:w-1/2">
+              <div className="my-5 flex flex-row justify-between text-center sm:px-5 lg:my-0 lg:w-1/2">
                 <Dialog>
                   <DialogTrigger className={labelDialogClasses}>
                     <div className="mx-2 flex h-full grow flex-col justify-center self-center">
                       <div className="h-3/4">
-                        <div className="mt-2 flex justify-center text-center">
+                        <div className="mt-2 flex justify-center object-scale-down text-center">
                           <Image
                             height={58}
                             width={65}
@@ -539,7 +539,7 @@ export default function PackageInfo() {
                   <DialogTrigger className={labelDialogClasses}>
                     <div className="mx-2 flex h-full grow flex-col justify-center self-center">
                       <div className="h-3/4">
-                        <div className="mt-2 flex justify-center text-center">
+                        <div className="mt-2 flex justify-center object-scale-down text-center">
                           <Image
                             height={58}
                             width={65}
@@ -639,7 +639,7 @@ export default function PackageInfo() {
                   <DialogTrigger className={labelDialogClasses}>
                     <div className="mx-2 flex h-full grow flex-col justify-center self-center">
                       <div className="h-3/4">
-                        <div className="mt-2 flex justify-center text-center">
+                        <div className="mt-2 flex justify-center object-scale-down text-center">
                           <Image
                             height={58}
                             width={65}
