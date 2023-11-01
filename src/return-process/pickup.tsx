@@ -93,7 +93,7 @@ export default function Pickup() {
                               Direct Handoff
                             </CardTitle>
 
-                            <CardDescription className="flex items-center">
+                            <CardDescription className="flex w-5/6 items-center font-semibold text-brand sm:w-full">
                               Hand the package directly to our specialist at
                               your door
                             </CardDescription>
@@ -110,7 +110,7 @@ export default function Pickup() {
                               </div>
                               Leave on Doorstep
                             </CardTitle>
-                            <CardDescription className="flex items-center">
+                            <CardDescription className="flex w-5/6 items-center font-semibold text-brand sm:w-full">
                               Place items outside your door ahead of your pick
                               up window
                             </CardDescription>

@@ -93,6 +93,7 @@ export default function Address() {
       if (!valid) {
         return
       }
+      //TODO: send information to backend once address is validated
       console.log(valid)
       console.log('adding new address to profile!')
       let addressString
@@ -165,7 +166,7 @@ export default function Address() {
                 <div className="mt-5 text-smallText font-bold text-brand">
                   Your Addresses:
                 </div>
-                <Separator className="h-[0.15rem] w-3/4 rounded-full bg-brand" />
+                <Separator className="h-[0.15rem] rounded-full bg-brand sm:w-3/4" />
                 <FormField
                   control={form.control}
                   name="address"
@@ -181,7 +182,7 @@ export default function Address() {
                             return (
                               <FormItem
                                 key={address.address}
-                                className="my-5 flex h-12 w-full  items-center sm:h-10"
+                                className="h-15 my-5 flex w-full  items-center sm:h-10"
                               >
                                 <RadioGroupItem
                                   id={address.address}
@@ -189,7 +190,7 @@ export default function Address() {
                                 />
                                 <Label
                                   htmlFor={address.address}
-                                  className="break-word mx-6 ml-2  w-[20%] font-bold sm:w-[15%] md:pl-2 lg:mx-2 lg:w-[10%]"
+                                  className="sm:keep-all mx-6  ml-2 w-[25%] font-bold sm:w-[18%] md:pl-2 lg:mx-2 lg:w-[10%]"
                                 >
                                   {address.name}
                                 </Label>
@@ -260,7 +261,6 @@ export default function Address() {
                               }
                             />
                           </div>
-                          <div className="my-2 flex items-center"></div>
                           <div className="my-2 flex items-center">
                             <Label className="w-1/3">Street Name: </Label>
                             <Input
@@ -324,7 +324,7 @@ export default function Address() {
                     </div>
                     <div className="flex w-1/4 items-center justify-around">
                       <Button
-                        className="break-word border-2 text-white"
+                        className="break-word border-2 px-2 text-white sm:px-4"
                         type="submit"
                         onClick={(e) => handleAddress(e)}
                       >
