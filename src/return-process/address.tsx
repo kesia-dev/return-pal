@@ -154,8 +154,10 @@ export default function Address() {
         >
           <ReturnProcessRoot>
             <ReturnProcessSection>
-              <SectionHeader>Pickup Details</SectionHeader>
-              <SectionDescription>
+              <SectionHeader className="max-xxs:text-3xl">
+                Pickup Details
+              </SectionHeader>
+              <SectionDescription className="max-xxs:text-left max-xxs:text-sm">
                 Select or add your pickup address
               </SectionDescription>
             </ReturnProcessSection>
@@ -188,19 +190,19 @@ export default function Address() {
                                 />
                                 <Label
                                   htmlFor={address.address}
-                                  className="sm:keep-all mx-6 ml-2  w-[20%] max-sm:text-xs sm:w-[18%] sm:font-bold md:pl-2 lg:mx-2 lg:w-[10%]"
+                                  className="sm:keep-all mx-6 ml-2  w-[20%] max-sm:text-xs sm:w-[18%] sm:font-bold md:pl-2 lg:mx-2 lg:w-[15%]"
                                 >
                                   {address.name}
                                 </Label>
                                 <Label
                                   htmlFor={address.address}
-                                  className="break-word mx-2 my-4 w-[35%] max-w-max max-sm:text-xs sm:w-[50%] md:mx-0"
+                                  className="break-word mx-2 my-4 w-[40%] max-w-max max-sm:text-xs sm:w-[50%] md:mx-0"
                                 >
                                   {address.address}
                                 </Label>
                                 <Label
                                   htmlFor={address.address}
-                                  className="mx-2 w-[10%] font-bold text-primary max-sm:text-xs"
+                                  className="mx-2 font-bold text-primary max-sm:text-xs"
                                 >
                                   {address.default && 'Default address'}
                                 </Label>
@@ -220,12 +222,12 @@ export default function Address() {
                   + Add a new address{' '}
                 </Button>
                 {addressFormVisibility && (
-                  <form className="flex-column flex justify-around md:w-3/4">
+                  <form className="sm:flex-column justify-around sm:flex">
                     <div className="flex-column flex">
                       <div className="flex flex-row items-center ">
                         <div className="mr-5 items-center">
                           <div className="my-2 flex items-center">
-                            <Label className="w-1/3">Name:</Label>
+                            <Label className="mx-2 w-1/3">Name:</Label>
                             <Input
                               type="text"
                               name="name"
@@ -234,7 +236,7 @@ export default function Address() {
                             />
                           </div>
                           <div className="my-2 flex items-center">
-                            <Label className="w-1/3">Apt # </Label>
+                            <Label className="mx-2 w-1/3">Apt #: </Label>
                             <Input
                               type="text"
                               name="address"
@@ -246,7 +248,7 @@ export default function Address() {
                                 })
                               }
                             />
-                            <Label className="w-1/3">Street # </Label>
+                            <Label className="mx-2 w-1/3">Street #: </Label>
                             <Input
                               type="text"
                               name="address"
@@ -260,7 +262,7 @@ export default function Address() {
                             />
                           </div>
                           <div className="my-2 flex items-center">
-                            <Label className="w-1/3">Street Name: </Label>
+                            <Label className="mx-2 w-1/3">Street Name: </Label>
                             <Input
                               type="text"
                               name="address"
@@ -274,7 +276,7 @@ export default function Address() {
                             />
                           </div>
                           <div className="my-2 flex items-center">
-                            <Label className="w-1/3">City: </Label>
+                            <Label className="mx-2 w-1/3">City: </Label>
                             <Input
                               type="text"
                               name="address"
@@ -288,7 +290,7 @@ export default function Address() {
                             />
                           </div>
                           <div className="my-2 flex items-center">
-                            <Label className="w-1/3">
+                            <Label className="mx-2 w-1/3">
                               Province: (e.g. ON){' '}
                             </Label>
                             <Input
@@ -304,7 +306,7 @@ export default function Address() {
                             />
                           </div>
                           <div className="my-2 flex items-center">
-                            <Label className="w-1/3">Postal Code </Label>
+                            <Label className="mx-2 w-1/3">Postal Code: </Label>
                             <Input
                               type="text"
                               name="address"
@@ -320,7 +322,7 @@ export default function Address() {
                         </div>
                       </div>
                     </div>
-                    <div className="flex w-1/4 items-center justify-around">
+                    <div className="flex items-center justify-around sm:w-1/4">
                       <Button
                         className="break-word border-2 px-2 text-white sm:px-4"
                         type="submit"
