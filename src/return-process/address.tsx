@@ -98,7 +98,7 @@ export default function Address() {
       console.log('adding new address to profile!')
       let addressString
       if (addressObj.apartmentUnitNumber) {
-        addressString = `${addressObj.apartmentUnitNumber}-${addressObj.streetNumber} ${addressObj.streetName}, ${addressObj.city}, ${addressObj.province}, ${addressObj.postal}`
+        addressString = `${addressObj.apartmentUnitNumber}-${addressObj.streetNumber} ${addressObj.streetName}, ${addressObj.city}, ${addressObj.province} ${addressObj.postal}`
       } else {
         addressString = `${addressObj.streetNumber} ${addressObj.streetName}, ${addressObj.city}, ${addressObj.province}, ${addressObj.postal}`
       }
@@ -137,8 +137,6 @@ export default function Address() {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault()
-    console.log(senderName)
-    console.log(addressFromForm)
     if (senderName && addressFromForm) {
       addressValidator(senderName, addressFromForm)
     }
@@ -163,7 +161,7 @@ export default function Address() {
             </ReturnProcessSection>
             <div>
               <div>
-                <div className="mt-5 text-smallText font-bold text-brand">
+                <div className="text-smallText font-bold text-brand max-sm:text-base sm:mt-5">
                   Your Addresses:
                 </div>
                 <Separator className="h-[0.15rem] rounded-full bg-brand sm:w-3/4" />
@@ -190,19 +188,19 @@ export default function Address() {
                                 />
                                 <Label
                                   htmlFor={address.address}
-                                  className="sm:keep-all mx-6  ml-2 w-[25%] font-bold sm:w-[18%] md:pl-2 lg:mx-2 lg:w-[10%]"
+                                  className="sm:keep-all mx-6 ml-2  w-[20%] max-sm:text-xs sm:w-[18%] sm:font-bold md:pl-2 lg:mx-2 lg:w-[10%]"
                                 >
                                   {address.name}
                                 </Label>
                                 <Label
                                   htmlFor={address.address}
-                                  className="break-word mx-2 my-4 w-[35%] max-w-max sm:w-[50%] md:mx-0"
+                                  className="break-word mx-2 my-4 w-[35%] max-w-max max-sm:text-xs sm:w-[50%] md:mx-0"
                                 >
                                   {address.address}
                                 </Label>
                                 <Label
                                   htmlFor={address.address}
-                                  className="mx-2 w-[10%] font-bold text-primary"
+                                  className="mx-2 w-[10%] font-bold text-primary max-sm:text-xs"
                                 >
                                   {address.default && 'Default address'}
                                 </Label>
