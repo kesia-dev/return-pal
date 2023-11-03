@@ -475,10 +475,10 @@ export default function PackageInfo() {
                 </Table>
               </div>
 
-              <div className="my-5 flex flex-row justify-between text-center sm:px-5 lg:my-0 lg:w-1/2">
+              <div className="my-5 flex flex-row justify-between space-x-2 text-center sm:px-5 lg:my-0 lg:w-1/2">
                 <Dialog>
                   <DialogTrigger className={labelDialogClasses}>
-                    <div className="mx-2 flex h-full grow flex-col justify-center self-center">
+                    <div className="flex h-full grow flex-col justify-center self-center">
                       <div className="h-3/4">
                         <div className="mt-2 flex justify-center object-scale-down text-center">
                           <Image
@@ -537,7 +537,7 @@ export default function PackageInfo() {
                 </Dialog>
                 <Dialog>
                   <DialogTrigger className={labelDialogClasses}>
-                    <div className="mx-2 flex h-full grow flex-col justify-center self-center">
+                    <div className="flex h-full grow flex-col justify-center self-center">
                       <div className="h-3/4">
                         <div className="mt-2 flex justify-center object-scale-down text-center">
                           <Image
@@ -637,7 +637,7 @@ export default function PackageInfo() {
                 </Dialog>
                 <Dialog>
                   <DialogTrigger className={labelDialogClasses}>
-                    <div className="mx-2 flex h-full grow flex-col justify-center self-center">
+                    <div className="flex h-full grow flex-col justify-center self-center">
                       <div className="h-3/4">
                         <div className="mt-2 flex justify-center object-scale-down text-center">
                           <Image
