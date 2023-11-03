@@ -358,7 +358,7 @@ export default function PackageInfo() {
                     <DialogHeader>
                       <DialogTitle className="text-center font-bold text-brand">
                         How to add a Digital / Amazon QR package label
-                        <div className="text-xs font-normal sm:invisible">
+                        <div className="text-xs font-normal xxs:invisible">
                           Please scroll/swipe down below for more information
                         </div>
                       </DialogTitle>
@@ -662,7 +662,7 @@ export default function PackageInfo() {
                     </DialogHeader>
                     <div className="flex flex-col px-5">
                       <div className="font-bold text-brand">
-                        Upload Return Label
+                        Upload Amazon QR Code
                       </div>
                       <div className="align-center min-h-20 flex h-20 flex-col justify-center rounded-lg border-2 bg-blue-200 text-center">
                         <FileUploader
