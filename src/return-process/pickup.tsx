@@ -53,7 +53,7 @@ export default function Pickup() {
   }
 
   const cardClassnames =
-    'data-[state=on]:border-6 sm:data-[state=on]:scale-120 flex h-96 md:w-2/6 select-none flex-col items-center space-y-2 border-brand bg-white text-brand data-[state=on]:scale-110 data-[state=on]:border-primary data-[state=off]:bg-slate-300 data-[state=off]:opacity-50 data-[state=on]:shadow-2xl xs:data-[state=on]:border-8'
+    'data-[state=on]:border-6 sm:data-[state=on]:scale-120 flex h-96 md:w-2/6  select-none flex-col items-center space-y-2 border-brand bg-white text-brand data-[state=on]:scale-110 data-[state=on]:border-primary data-[state=off]:bg-slate-300 data-[state=off]:opacity-50 data-[state=on]:shadow-2xl xs:data-[state=on]:border-8'
 
   const cardTitleClassnames =
     'flex flex-col text-base xxs:text-xl md:text-2xl  text-center font-semibold md:font-bold sm:h-36'
@@ -83,14 +83,14 @@ export default function Pickup() {
               control={form.control}
               name="pickupType"
               render={({ field }) => (
-                <FormItem className="space-y-3">
+                <FormItem className="flex justify-center space-y-3">
                   <FormControl>
                     <ExtendedToggleGroup
                       type="single"
                       selectionType="keep-selected"
                       onValueChange={field.onChange}
                       defaultValue={field.value}
-                      className="flex justify-center gap-x-5 sm:gap-x-10"
+                      className=" flex max-w-screen-lg justify-center gap-x-5 sm:gap-x-10 md:gap-x-20"
                     >
                       <ExtendedToggleGroupItem value="direct" asChild>
                         <Card className={cardClassnames}>

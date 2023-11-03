@@ -46,6 +46,7 @@ import {
 import { SectionDescription, SectionHeader } from '@/components/common/section'
 import { Separator } from '@/components/ui/separator'
 import { ScrollArea } from '@components/ui/scroll-area'
+import UploadIconSvg from '@components/SvgComponents/UploadIcon'
 
 const ACCEPTED_FILE_TYPES = ['JPG', 'PNG', 'PDF']
 
@@ -108,7 +109,6 @@ export default function PackageInfo() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      // labelFileUploads: returnProcess.currentData.labelFileUploads ?? uploads,
       labelFileUploads: returnProcess.currentData.labelFileUploads ?? [],
     },
   })
@@ -131,6 +131,7 @@ export default function PackageInfo() {
 
   const labelDialogClasses =
     'flex w-[30%] min-w-[30%] max-w-2xl flex-col justify-between rounded-lg border-4 border-brand bg-white font-bold text-brand lg:text-2xl'
+
   const columns: ColumnDef<FileUploadType>[] = [
     {
       accessorKey: 'attachment',
@@ -155,7 +156,7 @@ export default function PackageInfo() {
     {
       accessorKey: ' ',
       cell: (row) => {
-        // using a variable as using state to hold / set value for the new description will close the dialog on change
+        // using a variable as using state to hold / set value for the new description will close the dialog on change due to re-rendering thus newDescription is being held in a variable
         let newDescription: string
         return (
           <div className="flex justify-end space-x-3 md:space-x-2">
@@ -231,7 +232,7 @@ export default function PackageInfo() {
                   <DialogClose asChild>
                     <Button
                       variant="destructive"
-                      className="mx-2 w-1/5 rounded-full"
+                      className="mx-2 w-1/5 scale-75 rounded-full xs:scale-100"
                     >
                       Cancel
                     </Button>
@@ -239,7 +240,7 @@ export default function PackageInfo() {
                   <DialogClose asChild>
                     <Button
                       type="submit"
-                      className="mx-2 w-1/5"
+                      className="mx-2 w-1/5 scale-75 xs:scale-100"
                       onClick={() => {
                         const newArrayOfLabels = [...arrayOfLabels]
                         const rowId = Number(row.row.id)
@@ -345,7 +346,7 @@ export default function PackageInfo() {
             <ReturnProcessSection>
               <SectionHeader>Pickup Details</SectionHeader>
               <SectionDescription className="flex w-full justify-between">
-                <p>
+                <p className="text-start">
                   Select label type and we&apos;ll handle the label printing and
                   repackaging. You can add multiple packages.
                 </p>
@@ -357,7 +358,7 @@ export default function PackageInfo() {
                   <DialogContent className="h-5/6 bg-paleBlue object-scale-down">
                     <DialogHeader>
                       <DialogTitle className="text-center font-bold text-brand">
-                        How to add a Digital / Amazon QR package label
+                        How to add a package label
                         <div className="text-xs font-normal xxs:invisible">
                           Please scroll/swipe down below for more information
                         </div>
@@ -377,7 +378,8 @@ export default function PackageInfo() {
                         <Separator className="bg-brand" />
                         <div className="my-2">
                           Step 2: Drag your file over the area or click to
-                          browse your computer&apos;s files
+                          browse your computer&apos;s files. If you are using
+                          physical labels you can skip this step.
                           <Image
                             height={300}
                             width={500}
@@ -387,7 +389,7 @@ export default function PackageInfo() {
                         </div>
                         <Separator className="bg-brand" />
                         <div className="my-2">
-                          Step 3: Fill in the description
+                          Step 3: Fill in the description box
                           <Image
                             height={300}
                             width={500}
@@ -419,7 +421,7 @@ export default function PackageInfo() {
               </SectionDescription>
             </ReturnProcessSection>
 
-            <div className="flex w-full flex-col justify-between lg:flex-row">
+            <div className="flex w-full flex-col justify-between md:flex-row">
               <div className="relative w-full overflow-auto rounded-lg border-2 border-primary bg-white dark:border-gray-700 lg:w-1/2">
                 <Table>
                   <TableHeader className="border-b-2 border-primary bg-primary bg-opacity-20">
@@ -475,12 +477,12 @@ export default function PackageInfo() {
                 </Table>
               </div>
 
-              <div className="my-5 flex flex-row justify-between space-x-2 text-center sm:px-5 lg:my-0 lg:w-1/2">
+              <div className="my-5 flex flex-row justify-between space-x-2 text-center sm:px-5 md:my-0 md:w-2/3 lg:w-1/2">
                 <Dialog>
                   <DialogTrigger className={labelDialogClasses}>
                     <div className="flex h-full grow flex-col justify-center self-center">
                       <div className="h-3/4">
-                        <div className="mt-2 flex justify-center object-scale-down text-center">
+                        <div className="mt-2 flex scale-75 justify-center object-scale-down text-center sm:scale-100 md:scale-75 lg:scale-100">
                           <Image
                             height={58}
                             width={65}
@@ -539,7 +541,7 @@ export default function PackageInfo() {
                   <DialogTrigger className={labelDialogClasses}>
                     <div className="flex h-full grow flex-col justify-center self-center">
                       <div className="h-3/4">
-                        <div className="mt-2 flex justify-center object-scale-down text-center">
+                        <div className="mt-2 flex scale-75 justify-center object-scale-down text-center sm:scale-100 md:scale-75 lg:scale-100">
                           <Image
                             height={58}
                             width={65}
@@ -576,21 +578,7 @@ export default function PackageInfo() {
                           {' '}
                           <p className="flex h-20 flex-col justify-around text-gray-500">
                             <div className="flex justify-center">
-                              <svg
-                                width="50px"
-                                height="50px"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M12 10V16M12 10L10 12M12 10L14 12M12.0627 6.06274L11.9373 5.93726C11.5914 5.59135 11.4184 5.4184 11.2166 5.29472C11.0376 5.18506 10.8425 5.10425 10.6385 5.05526C10.4083 5 10.1637 5 9.67452 5H6.2C5.0799 5 4.51984 5 4.09202 5.21799C3.71569 5.40973 3.40973 5.71569 3.21799 6.09202C3 6.51984 3 7.07989 3 8.2V15.8C3 16.9201 3 17.4802 3.21799 17.908C3.40973 18.2843 3.71569 18.5903 4.09202 18.782C4.51984 19 5.07989 19 6.2 19H17.8C18.9201 19 19.4802 19 19.908 18.782C20.2843 18.5903 20.5903 18.2843 20.782 17.908C21 17.4802 21 16.9201 21 15.8V10.2C21 9.0799 21 8.51984 20.782 8.09202C20.5903 7.71569 20.2843 7.40973 19.908 7.21799C19.4802 7 18.9201 7 17.8 7H14.3255C13.8363 7 13.5917 7 13.3615 6.94474C13.1575 6.89575 12.9624 6.81494 12.7834 6.70528C12.5816 6.5816 12.4086 6.40865 12.0627 6.06274Z"
-                                  stroke="#008BE7"
-                                  strokeWidth="1"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
+                              <UploadIconSvg />
                             </div>
                             <div className="self-center">
                               Drag label here or
@@ -639,7 +627,7 @@ export default function PackageInfo() {
                   <DialogTrigger className={labelDialogClasses}>
                     <div className="flex h-full grow flex-col justify-center self-center">
                       <div className="h-3/4">
-                        <div className="mt-2 flex justify-center object-scale-down text-center">
+                        <div className="mt-2 flex scale-75 justify-center object-scale-down text-center sm:scale-100 md:scale-75 lg:scale-100">
                           <Image
                             height={58}
                             width={65}
@@ -674,21 +662,7 @@ export default function PackageInfo() {
                           {' '}
                           <p className="flex h-20 flex-col justify-around text-gray-500">
                             <div className="flex justify-center">
-                              <svg
-                                width="50px"
-                                height="50px"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M12 10V16M12 10L10 12M12 10L14 12M12.0627 6.06274L11.9373 5.93726C11.5914 5.59135 11.4184 5.4184 11.2166 5.29472C11.0376 5.18506 10.8425 5.10425 10.6385 5.05526C10.4083 5 10.1637 5 9.67452 5H6.2C5.0799 5 4.51984 5 4.09202 5.21799C3.71569 5.40973 3.40973 5.71569 3.21799 6.09202C3 6.51984 3 7.07989 3 8.2V15.8C3 16.9201 3 17.4802 3.21799 17.908C3.40973 18.2843 3.71569 18.5903 4.09202 18.782C4.51984 19 5.07989 19 6.2 19H17.8C18.9201 19 19.4802 19 19.908 18.782C20.2843 18.5903 20.5903 18.2843 20.782 17.908C21 17.4802 21 16.9201 21 15.8V10.2C21 9.0799 21 8.51984 20.782 8.09202C20.5903 7.71569 20.2843 7.40973 19.908 7.21799C19.4802 7 18.9201 7 17.8 7H14.3255C13.8363 7 13.5917 7 13.3615 6.94474C13.1575 6.89575 12.9624 6.81494 12.7834 6.70528C12.5816 6.5816 12.4086 6.40865 12.0627 6.06274Z"
-                                  stroke="#008BE7"
-                                  strokeWidth="1"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
+                              <UploadIconSvg />
                             </div>
                             <div className="self-center">
                               Drag label here or
