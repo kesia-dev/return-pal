@@ -6,8 +6,8 @@ import Reveal from '@components/common/reveal'
 
 function Contact() {
   return (
-    <div className="mt-8 flex justify-end lg:w-1/2">
-      <section className="flex w-5/6 flex-col space-y-8">
+    <div className="mx-auto mt-8 flex w-11/12 justify-end sm:mx-0 sm:w-5/6 sm:justify-end md:w-3/4 lg:w-1/2">
+      <section className="flex w-full flex-col space-y-8 sm:w-5/6">
         <Reveal>
           <h2 className="text-subtitle">
             <span className="mr-2 font-thin text-brand">CONTACT</span>

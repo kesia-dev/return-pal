@@ -79,8 +79,9 @@ function ContactForm() {
                   <Reveal>
                     <Input
                       minLength={1}
-                      className="h-10 w-[200px] rounded-md border-2 border-black text-sm placeholder:text-grey sm:h-12 sm:w-[275px] sm:text-lg"
+                      className="h-10 shrink rounded-md border-2 border-black text-sm placeholder:text-grey sm:h-12 sm:text-lg"
                       placeholder="First Name"
+                      size={30}
                       {...field}
                     />
                   </Reveal>
@@ -101,8 +102,9 @@ function ContactForm() {
                   <Reveal>
                     <Input
                       minLength={1}
-                      className="h-10 w-[200px] rounded-md border-2 border-black text-sm placeholder:text-grey sm:h-12 sm:w-[275px] sm:text-lg"
+                      className="h-10 shrink rounded-md border-2 border-black text-sm placeholder:text-grey sm:h-12 sm:text-lg"
                       placeholder="Last Name"
+                      size={30}
                       {...field}
                     />
                   </Reveal>
@@ -123,8 +125,9 @@ function ContactForm() {
               <FormControl>
                 <Reveal width="100%">
                   <Input
-                    className="h-10 w-full rounded-md border-2 border-black text-sm placeholder:text-grey sm:h-12 sm:text-lg"
+                    className="h-10 rounded-md border-2 border-black text-sm placeholder:text-grey sm:h-12 sm:text-lg"
                     placeholder="Please Enter Your Email."
+                    size={60}
                     {...field}
                   />
                 </Reveal>
