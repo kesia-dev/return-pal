@@ -8,7 +8,7 @@ import Reveal from '@components/common/reveal'
 
 function DashBoardMain({ userInfo }: { userInfo: UserInfo }) {
   return (
-    <section className="flex flex-col justify-center space-y-16 p-36">
+    <section className="flex flex-col justify-center space-y-16 p-2 sm:p-10 md:p-36">
       <Reveal>
         <h3 className="text-title">
           Welcome back,{' '}
@@ -22,9 +22,9 @@ function DashBoardMain({ userInfo }: { userInfo: UserInfo }) {
           user <span className="font-bold text-primary">John</span>
         </h3>
       </Reveal>
-      <Reveal>
+      <Reveal width="100%">
         <div className="flex rounded-3xl bg-brand p-8 text-subtitle">
-          <div className="flex w-4/5 flex-col space-y-5">
+          <div className="flex w-full flex-col space-y-5 md:w-4/5">
             <Reveal>
               <h3 className="text-start text-white">
                 Ready to schedule your pickup?
@@ -36,11 +36,11 @@ function DashBoardMain({ userInfo }: { userInfo: UserInfo }) {
               </Reveal>
             </Link>
           </div>
-          <div className="h-auto w-auto">
-            <Reveal width="100%">
+          <Reveal>
+            <div className="hidden w-1/5 lg:block">
               <NounDelivery />
-            </Reveal>
-          </div>
+            </div>
+          </Reveal>
         </div>
       </Reveal>
     </section>
