@@ -60,10 +60,16 @@ const useAuth = () => {
   const router = useRouter()
 
   const { toast } = useToast()
-  const [loginRequest, { client: afterLoginClient }] =
-    useMutation<LoginMutation>(LOGIN)
-  const [registerRequest, { client: afterRegisterClient }] =
-    useMutation<RegisterMutation>(REGISTER)
+  const [
+    loginRequest,
+    // TODO - use client to reset store when backend is ready
+    // {client: afterLoginClient}
+  ] = useMutation<LoginMutation>(LOGIN)
+  const [
+    registerRequest,
+    // TODO - use client to reset store when backend is ready
+    // {client: afterRegisterClient}
+  ] = useMutation<RegisterMutation>(REGISTER)
 
   const login = async (
     email: string,
@@ -72,7 +78,7 @@ const useAuth = () => {
     try {
       const response = await loginRequest({
         variables: { email, password },
-
+        // TODO - use client to reset store when backend is ready
         // onCompleted: () => {
         //   afterLoginClient.resetStore()
         // },
@@ -101,6 +107,7 @@ const useAuth = () => {
     try {
       const response = await registerRequest({
         variables: { username, email, password },
+        // TODO - use client to reset store when backend is ready
         // onCompleted: () => {
         //   afterRegisterClient.resetStore()
         // },
