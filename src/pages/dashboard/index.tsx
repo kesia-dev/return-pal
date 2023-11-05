@@ -18,9 +18,9 @@ import LoadingSpinner from '@/components/LoadingSpinner'
 import useAuth from '@/services/authentication/useAuth'
 
 const tabsTriggerClassName =
-  'data-[state=active]:ml-6 data-[state=active]:scale-105 data-[state=active]:border-l-8 data-[state=active]:bg-paleBlue data-[state=active]:text-primary dark:data-[state=active]:bg-slate-950 dark:data-[state=active]:text-slate-50 pl-10 justify-start text-sm sm:text-mediumText md:text-largeText xl:text-subtitle'
+  'data-[state=active]:ml-6 data-[state=active]:scale-105 data-[state=active]:border-l-8 data-[state=active]:bg-paleBlue data-[state=active]:text-primary dark:data-[state=active]:bg-slate-950 dark:data-[state=active]:text-slate-50 pl-10 justify-start text-sm md:text-lg lg:text-mediumText xl:text-subtitle'
 
-const tabsIconClassName = 'mr-2 h-12 w-12'
+const tabsIconClassName = 'mr-2 h-8 w-8 lg:h-10 lg:w-10 xl:h-12 xl:w-12'
 function Dashboard() {
   const { readUserInfoFromFragment } = useAuth()
 
@@ -91,6 +91,7 @@ function Dashboard() {
     },
   ]
 
+  // TODO: replace this with Apollo client query instead of fragment
   useEffect(() => {
     setUserInfo((preV) => {
       return userInCache
@@ -103,7 +104,7 @@ function Dashboard() {
               city: userInCache.primaryAddress.city,
               province: userInCache.primaryAddress.province,
               postal: userInCache.primaryAddress.postal,
-            } as Address,
+            },
             role: userInCache.user.role,
             email: userInCache.user.email,
           }
@@ -114,7 +115,7 @@ function Dashboard() {
   return (
     <Tabs defaultValue="main" className="h-full animate-in animate-out">
       <section className="flex">
-        <TabsList className="flex h-full min-h-screen w-1/4 flex-col justify-center space-y-5 rounded-none bg-brand pb-40 text-white">
+        <TabsList className="hidden h-full min-h-screen w-1/4 flex-col justify-center space-y-5 rounded-none bg-brand pb-40 text-white md:flex">
           <Link href="/" className="mb-16 p-4">
             <Image
               src={'/images/returnpal-logo.png'}
@@ -128,6 +129,7 @@ function Dashboard() {
           </Link>
           {tabsData.map((tab) => (
             <Fragment key={tab.id}>
+              {/* Render a Separator on top when tap is "Sign Out" */}
               {tab.title === 'Sign Out' ? (
                 <Separator key={`separator ${tab.id}`} className="mb-16" />
               ) : null}
