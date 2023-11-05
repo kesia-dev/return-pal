@@ -17,7 +17,8 @@ function DashBoardMain({ userInfo }: { userInfo: UserInfo }) {
         >
           {userInfo.role}
         </span>{' '}
-        user <span className="font-bold text-primary">John</span>
+        user{' '}
+        <span className="font-bold text-primary">{userInfo.firstName}</span>
       </h3>
       <div className="flex rounded-3xl bg-brand p-8 text-subtitle">
         <div className="flex w-4/5 flex-col space-y-5">

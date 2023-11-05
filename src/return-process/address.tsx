@@ -60,7 +60,6 @@ export default function Address() {
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log('Submitted:', values)
     returnProcess.setCurrentData(values)
     returnProcess.forward()
   }
@@ -94,8 +93,6 @@ export default function Address() {
         return
       }
       //TODO: send information to backend once address is validated
-      console.log(valid)
-      console.log('adding new address to profile!')
       let addressString
       if (addressObj.apartmentUnitNumber) {
         addressString = `${addressObj.apartmentUnitNumber}-${addressObj.streetNumber} ${addressObj.streetName}, ${addressObj.city}, ${addressObj.province} ${addressObj.postal}`
