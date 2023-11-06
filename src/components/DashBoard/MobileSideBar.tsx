@@ -2,14 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import { TabsTrigger } from '@components/ui/tabs'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  type IconDefinition,
-  faBars,
-  faUsers,
-  faTruck,
-  faHome,
-  faMailBulk,
-} from '@fortawesome/free-solid-svg-icons'
+import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { LiaHomeSolid } from 'react-icons/lia'
 import { FiUser } from 'react-icons/fi'
 import { TfiEmail } from 'react-icons/tfi'
@@ -20,9 +13,6 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
@@ -42,10 +32,17 @@ export function MobileTab({ value, icon, children }: MobileViewType) {
         value={value}
         className="text-secondary justify-start hover:text-primary active:scale-95"
       >
-        <p className="flex items-center gap-x-6">
-          {icon}
-          {children}
-        </p>
+        {value === 'signOut' ? (
+          <Link href="/" className="flex items-center gap-x-6">
+            {icon}
+            {children}
+          </Link>
+        ) : (
+          <p className="flex items-center gap-x-6">
+            {icon}
+            {children}
+          </p>
+        )}
       </TabsTrigger>
     </SheetClose>
   )
@@ -54,8 +51,8 @@ export function MobileTab({ value, icon, children }: MobileViewType) {
 function MobileSideBar() {
   return (
     <Sheet>
-      <SheetTrigger>
-        <FontAwesomeIcon icon={faBars} width={'20'} />
+      <SheetTrigger className="absolute right-12 top-8 z-50">
+        <FontAwesomeIcon icon={faBars} width={'24'} />
       </SheetTrigger>
       <SheetContent
         side="left"

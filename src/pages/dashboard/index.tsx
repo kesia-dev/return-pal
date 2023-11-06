@@ -154,24 +154,36 @@ function Dashboard() {
           ))}
         </TabsList>
 
-        <TabsList className="flex md:hidden">
+        <TabsList className="flex p-0 md:hidden">
           <MobileSideBar />
         </TabsList>
 
-        <TabsContent value="main" className="mt-0 min-h-screen w-3/4">
+        <TabsContent value="main" className="mt-0 min-h-screen w-full md:w-3/4">
           <DashBoardMain userInfo={userInfo} />
         </TabsContent>
-        <TabsContent value="profile" className="mt-0 min-h-screen w-3/4">
+        <TabsContent
+          value="profile"
+          className="mt-0 min-h-screen w-full md:w-3/4"
+        >
           <Profile setUserInfo={setUserInfo} userInfo={userInfo} />
         </TabsContent>
-        <TabsContent value="inbox" className="mt-0 min-h-screen w-3/4">
+        <TabsContent
+          value="inbox"
+          className="mt-0 min-h-screen w-full md:w-3/4"
+        >
           <Inbox userInfo={userInfo} />
         </TabsContent>
-        <TabsContent value="security" className="mt-0 min-h-screen w-3/4">
+        <TabsContent
+          value="security"
+          className="mt-0 min-h-screen w-full md:w-3/4"
+        >
           <Security userInfo={userInfo} />
         </TabsContent>
         {/* TODO - redirect when logout*/}
-        <TabsContent value="signOut" className="mt-0 min-h-screen w-3/4">
+        <TabsContent
+          value="signOut"
+          className="mt-0 min-h-screen w-full md:w-3/4"
+        >
           <div className="flex h-full items-center justify-center text-center">
             <LoadingSpinner />
           </div>
