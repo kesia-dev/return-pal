@@ -16,6 +16,7 @@ import Security from '@/components/DashBoard/Security'
 import { type UserInfo } from '@/components/DashBoard/types'
 import LoadingSpinner from '@/components/LoadingSpinner'
 import useAuth from '@/services/authentication/useAuth'
+import MobileSideBar from '@components/DashBoard/MobileSideBar'
 
 const tabsTriggerClassName =
   'data-[state=active]:ml-6 data-[state=active]:scale-105 data-[state=active]:border-l-8 data-[state=active]:bg-paleBlue data-[state=active]:text-primary dark:data-[state=active]:bg-slate-950 dark:data-[state=active]:text-slate-50 pl-10 justify-start text-sm md:text-lg lg:text-mediumText xl:text-subtitle'
@@ -152,6 +153,11 @@ function Dashboard() {
             </Fragment>
           ))}
         </TabsList>
+
+        <TabsList className="flex md:hidden">
+          <MobileSideBar />
+        </TabsList>
+
         <TabsContent value="main" className="mt-0 min-h-screen w-3/4">
           <DashBoardMain userInfo={userInfo} />
         </TabsContent>
