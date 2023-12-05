@@ -1,5 +1,8 @@
 import React, { useRef } from 'react'
 import emailjs from '@emailjs/browser'
+import { ToastContainer, toast } from 'react-toastify' // Import ToastContainer and toast
+import 'react-toastify/dist/ReactToastify.css' // Import the styles for the toast notifications
+
 import {
   Form,
   FormControl,
@@ -15,35 +18,21 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { Button } from '@components/ui/button'
 import Reveal from '@components/common/reveal'
-import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
 
 const contactFormSchema = z.object({
   firstName: z
     .string()
-    .min(1, {
-      message: 'First name is required',
-    })
-    .max(60, {
-      message: 'First name must be less than 60 characters',
-    }),
+    .min(1, 'First name is required')
+    .max(60, 'First name must be less than 60 characters'),
   lastName: z
     .string()
-    .min(1, {
-      message: 'Last name is required',
-    })
-    .max(60, {
-      message: 'Last name must be less than 60 characters',
-    }),
+    .min(1, 'Last name is required')
+    .max(60, 'Last name must be less than 60 characters'),
   email: z.string().email(),
   message: z
     .string()
-    .min(1, {
-      message: 'Message is required',
-    })
-    .max(1000, {
-      message: 'Message must be less than 1000 characters',
-    }),
+    .min(1, 'Message is required')
+    .max(1000, 'Message must be less than 1000 characters'),
 })
 
 function ContactForm() {
