@@ -18,6 +18,12 @@ import useAuth from '@/services/authentication/useAuth'
 import { motion } from 'framer-motion'
 import { container, item } from '@styles/framer'
 
+const phoneRegex = new RegExp(
+  /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
+)
+
+const postalCodeRegex = new RegExp(/^([A-Z][0-9][A-Z])\s*([0-9][A-Z][0-9])$/)
+
 const formSchema = z
   .object({
     firstName: z
@@ -37,6 +43,13 @@ const formSchema = z
         message: 'Max 60 characters',
       }),
     email: z.string().email({ message: 'Please enter a valid email' }),
+    phone: z.string().regex(phoneRegex, 'Please enter a valid number'),
+    street: z.string().min(1, 'Please enter a valid address'),
+    unit_number: z.string().max(60, 'Max 60 characters').optional(),
+    city: z.string().min(3).max(60),
+    postalCode: z
+      .string()
+      .regex(postalCodeRegex, 'Please enter a valid postal code'),
     password: z.string().min(8, 'Must be at least 8 characters'),
     confirmPassword: z.string(),
   })
@@ -65,7 +78,48 @@ function SignUpModule() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
-    writeUserInfoToFragment(values.email, values.firstName, values.lastName)
+    // writeUserInfoToFragment(values.email, values.firstName, values.lastName)
+
+    const userData = {
+      first_name: values.firstName,
+      last_name: values.lastName,
+      subscription: null,
+      email: values.email,
+      phone_number: values.phone,
+      password: values.password,
+      addresses: [
+        {
+          contact_full_name: `${values.firstName} ${values.lastName}`,
+          contact_phone_number: values.phone,
+          street: values.street,
+          unit_number: values.unit_number || null,
+          city: values.city,
+          province: 'British Columbia',
+          country: 'Canada',
+          postal_code: values.postalCode,
+          instructions: null,
+          primary: true,
+        },
+      ],
+    }
+
+    fetch('/api/users/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log('User registered')
+        } else {
+          console.error('Failed to register user:', response.statusText)
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error)
+      })
   }
 
   return (
@@ -164,6 +218,102 @@ function SignUpModule() {
                   </FormItem>
                 )}
               />
+              <FormField
+                control={form.control}
+                name="phone"
+                render={({ field }) => (
+                  <FormItem className="mt-4 h-14 sm:mt-6 sm:h-14">
+                    <FormControl>
+                      <motion.div variants={item}>
+                        <Input
+                          minLength={1}
+                          className="h-10 w-[200px] rounded-xl border-4 border-primary text-sm placeholder:text-grey sm:h-12 sm:w-[275px] sm:text-lg"
+                          placeholder="Phone Number"
+                          {...field}
+                        />
+                      </motion.div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="street"
+                render={({ field }) => (
+                  <FormItem className="mt-4 h-14 sm:mt-6 sm:h-14">
+                    <FormControl>
+                      <motion.div variants={item}>
+                        <Input
+                          minLength={1}
+                          className="h-10 w-[200px] rounded-xl border-4 border-primary text-sm placeholder:text-grey sm:h-12 sm:w-[275px] sm:text-lg"
+                          placeholder="Primary Street Address"
+                          {...field}
+                        />
+                      </motion.div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="flex flex-row space-x-4">
+                <FormField
+                  control={form.control}
+                  name="unit_number"
+                  render={({ field }) => (
+                    <FormItem className="mt-4 h-14 sm:mt-6 sm:h-14">
+                      <FormControl>
+                        <motion.div variants={item}>
+                          <Input
+                            className="h-10 w-[200px] rounded-xl border-4 border-primary text-sm placeholder:text-grey sm:h-12 sm:w-[275px] sm:text-lg"
+                            placeholder="Office, Apt."
+                            {...field}
+                          />
+                        </motion.div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="city"
+                  render={({ field }) => (
+                    <FormItem className="mt-4 h-14 sm:mt-6 sm:h-14">
+                      <FormControl>
+                        <motion.div variants={item}>
+                          <Input
+                            minLength={3}
+                            className="h-10 w-[200px] rounded-xl border-4 border-primary text-sm placeholder:text-grey sm:h-12 sm:w-[275px] sm:text-lg"
+                            placeholder="City"
+                            {...field}
+                          />
+                        </motion.div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="postalCode"
+                  render={({ field }) => (
+                    <FormItem className="mt-4 h-14 sm:mt-6 sm:h-14">
+                      <FormControl>
+                        <motion.div variants={item}>
+                          <Input
+                            minLength={6}
+                            className="h-10 w-[200px] rounded-xl border-4 border-primary text-sm placeholder:text-grey sm:h-12 sm:w-[275px] sm:text-lg"
+                            placeholder="Postal Code"
+                            {...field}
+                          />
+                        </motion.div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
               <FormField
                 control={form.control}
                 name="password"

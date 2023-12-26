@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import client, { connectDB, disconnectDB } from '../../lib/db'
-import { type UserInfoTemp } from '../../components/DashBoard/types'
+import client, { connectDB, disconnectDB } from '../../../lib/db'
+import { type UserInfoTempNew } from '../../../components/DashBoard/types'
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,8 +11,10 @@ export default async function handler(
     //create new user
     try {
       const db = client.db('ReturnPal')
-      const users = db.collection('users')
-      const newUser = req.body as UserInfoTemp
+      const users = db.collection<UserInfoTempNew>('users')
+      const newUser = req.body as UserInfoTempNew
+
+      console.log(newUser)
 
       const result = await users.insertOne(newUser)
       res.status(200).json({

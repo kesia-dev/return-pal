@@ -156,3 +156,34 @@ export interface Order {
   specialInstructions?: string
   status: OrderStatus
 }
+
+export interface UserInfoTemp {
+  firstName: string
+  lastName: string
+  email: string
+  password: string
+  confirmPassword: string
+}
+
+export interface UserInfoTempNew {
+  first_name: string
+  last_name: string
+  subscription: string
+  email: string
+  phone_number: string
+  password: string
+  addresses: [
+    {
+      contact_full_name: string
+      contact_phone_number: string
+      street: string
+      unit_number: string
+      city: string
+      province: string
+      country: string
+      postal_code: string
+      instructions: string
+      primary: boolean
+    },
+  ]
+}
