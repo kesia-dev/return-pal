@@ -1,3 +1,4 @@
+// pages/api/orders/[orderId].ts
 import { ObjectId } from 'mongodb'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import client, { connectDB, disconnectDB } from '@/lib/db'
@@ -21,10 +22,8 @@ export default async function handler(
     try {
       const database = client.db(dbName)
       const orders = database.collection<Order>('orders')
-      const objectId = new ObjectId(String(orderId))
-      const order = await orders.findOne({
-        _id: objectId,
-      })
+
+      const order = await orders.findOne({ _id: new ObjectId(orderId) })
 
       if (order) {
         res.status(200).json(order)
@@ -36,20 +35,20 @@ export default async function handler(
     }
   } else if (req.method === 'PUT') {
     try {
-      const database = client.db(dbName)
+      const database = client.db('ReturnPal')
       const orders = database.collection<Order>('orders')
 
       const updatedOrder = req.body as Order
 
       const result = await orders.updateOne(
-        { _id: new ObjectId(String(orderId)) },
+        { _id: new ObjectId(orderId) },
         { $set: updatedOrder }
       )
 
-      if (result.modifiedCount > 0) {
+      if (result.matchedCount > 0) {
         res.status(200).json({ message: 'Order updated successfully' })
       } else {
-        res.status(404).json({ message: 'Order not found or not modified' })
+        res.status(404).json({ message: 'Order not found' })
       }
     } catch (error) {
       res.status(500).json({ message: 'Error updating order', error })
