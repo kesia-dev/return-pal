@@ -209,7 +209,7 @@ const OrderId = () => {
                       opacity:
                         order.status === 'Cancelled' ||
                         order.status === 'Delivered'
-                          ? '2.5'
+                          ? '0.5'
                           : '1',
                       cursor:
                         order.status === 'Cancelled' ||
