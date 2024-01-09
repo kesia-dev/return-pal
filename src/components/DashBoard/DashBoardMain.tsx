@@ -17,9 +17,10 @@ import {
 import HandingPackage from '@/components/SvgComponents/HandingPackage'
 import HandingPackage from '@/components/SvgComponents/HandingPackage'
 import { useRouter } from 'next/navigation'
-import Profile from './Profile'
+//import Profile from './Profile'
 import { CiCalendar } from 'react-icons/ci'
 import { FaRegCircleUser, FaRegClock } from 'react-icons/fa6'
+import RecentOrders from '@/components/Orders/RecentOrders' // Check the correct path
 
 function DashBoardMain({
   userInfo,
@@ -156,7 +157,7 @@ function DashBoardMain({
           <h4 className="text-subtitle font-bold">Recent Orders</h4>
         </div>
       )}
-      {showProfile && <Profile userInfo={userInfo} setUserInfo={setUserInfo} />}
+      {showProfile && <RecentOrders />}
     </section>
   )
 }
