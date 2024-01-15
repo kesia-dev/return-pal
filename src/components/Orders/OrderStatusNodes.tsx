@@ -1,4 +1,6 @@
 // components/Orders/OrderStatusNodes.tsx
+import { IoCheckmarkCircle } from 'react-icons/io5'
+import { cn } from '@lib/utils'
 import React from 'react'
 interface OrderStatusNodeProps {
   label: string
@@ -13,7 +15,10 @@ const OrderStatusNode: React.FC<OrderStatusNodeProps> = ({
   return (
     <div className={'w-1/5 pl-0 pr-0 pt-5'}>
       <div className="relative mb-4">
-        <div className="align-center absolute top-5 flex w-3/4 translate-x-[-50%] translate-y-[-50%] transform content-center items-center align-middle ">
+        <div
+          className="align-center absolute top-5 flex translate-x-[-50%] translate-y-[-50%] transform content-center items-center align-middle "
+          style={{ width: '70%' }}
+        >
           <div className="align-center z-10 h-1 w-full flex-1 items-center rounded bg-primary align-middle "></div>
         </div>
 
@@ -70,7 +75,7 @@ const OrderStatusNodes: React.FC<OrderStatusNodesProps> = ({ status }) => (
 
       <OrderStatusNode
         label="Cancelled"
-        isActive={status === 'Cancelled' || true}
+        isActive={status === 'Cancelled' || false}
       />
     </div>
   </div>
