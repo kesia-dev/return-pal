@@ -12,27 +12,25 @@ import {
 } from '@/components/ui/card'
 import HandingPackage from '@/components/SvgComponents/HandingPackage'
 import { useRouter } from 'next/navigation'
-import Profile from './Profile'
+// import Profile from '@/components/DashBoard/Profile'
 import { CiCalendar } from 'react-icons/ci'
 import { FaRegCircleUser, FaRegClock } from 'react-icons/fa6'
-
-function DashBoardMain() {
-  const [showProfile, setShowProfile] = useState(false)
-
+import RecentOrders from '@components/Orders/RecentOrders'
+function DashBoardMain({
+  userInfo,
+  setUserInfo,
+}: {
+  userInfo: UserInfo
+  setUserInfo: React.Dispatch<React.SetStateAction<UserInfo>>
+}) {
   const cardClassnames =
-    'border-l-0 border-r-0 border-t-0 border-b-0  border-black flex h-45 md:w-1/3 select-none flex-row items-center p-4 bg-white text-brand'
-  const cardTitleClassnames = 'text-xl md:text-2xl font-semibold'
-
-  const cardDescriptionClassNames = 'text-sm text-brand'
-
+    'border-l-0 border-r-0 border-t-0 border-b-0 border-black flex h-23  w-300 sm:w-1/3 md:w-1/3 lg:w-1/4 md:min-w-300 select-none flex-row items-center p-1 bg-white mr-50 text-brand '
+  const cardTitleClassnames = 'text-xl md:text-2xl font-semibold '
+  const cardDescriptionClassNames = 'text-sm text-brand md:text-xl'
   const router = useRouter()
 
   const handleRedirect = (path: string) => {
     router.push(path)
-  }
-
-  const handleProfileClick = () => {
-    setShowProfile(true)
   }
 
   return (
@@ -43,7 +41,6 @@ function DashBoardMain() {
             Your Dashboard
           </h3>
         </Reveal>
-
         <div className="justify-left mb-12 flex">
           <Card
             onClick={() => handleRedirect('/return')}
@@ -77,7 +74,6 @@ function DashBoardMain() {
               </Reveal>
             </CardHeader>
           </Card>
-
           <Card
             onClick={() => handleRedirect('/return')}
             className={`${cardClassnames} mr-4`}
@@ -110,9 +106,7 @@ function DashBoardMain() {
               </Reveal>
             </CardHeader>
           </Card>
-
           <Card
-            onClick={handleProfileClick}
             className={`${cardClassnames}`}
             style={{ borderLeft: '16px solid black' }}
           >
@@ -142,8 +136,6 @@ function DashBoardMain() {
         </div>
         <RecentOrders />
       </div>
-
-      {/* {showProfile && <Profile userInfo={userInfo} setUserInfo={setUserInfo} />} */}
     </section>
   )
 }
