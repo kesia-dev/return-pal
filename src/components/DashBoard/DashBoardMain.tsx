@@ -32,7 +32,6 @@ function DashBoardMain({
   const handleRedirect = (path: string) => {
     router.push(path)
   }
-
   return (
     <section className="lg:p-30 flex flex-col justify-center space-y-8  p-20 lg:space-y-16">
       <div>
