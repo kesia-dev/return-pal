@@ -1,5 +1,3 @@
-//components/Orders/OrderStatusNodes.tsx
-
 import { IoCheckmarkCircle } from 'react-icons/io5'
 import { cn } from '@lib/utils'
 import React from 'react'
@@ -16,19 +14,10 @@ const OrderStatusNode: React.FC<OrderStatusNodeProps> = ({
   console.log('isActive:', true) // Add this line
 
   return (
-    <div className={'w-1/5 pl-0  pr-0  pt-5'}>
+    <div className={'w-1/5 pl-0 pr-0 pt-5'}>
       <div className="relative mb-4">
-        <div className="align-center absolute top-5 flex w-2/4 translate-x-[-50%] translate-y-[-50%] transform content-center items-center align-middle ">
-          {/* <div className="align-center z-10 h-1 w-full flex-1 items-center rounded bg-primary align-middle " ></div>
-        </div> */}
-
-          <div
-            className={`align-center z-10 h-1 w-full flex-1 items-center rounded bg-primary ${
-              label === 'Order Placed'
-                ? 'border-none'
-                : 'border-2 border-primary'
-            } align-middle `}
-          ></div>
+        <div className="align-center absolute top-5 flex w-3/4 translate-x-[-50%] translate-y-[-50%] transform content-center items-center align-middle ">
+          <div className="align-center z-10 h-1 w-full flex-1 items-center rounded bg-primary align-middle "></div>
         </div>
 
         <div
@@ -63,27 +52,27 @@ const OrderStatusNodes: React.FC<OrderStatusNodesProps> = ({ status }) => (
   <div className="mt-16 flex items-center justify-center">
     <div className="order-status-nodes-container flex ">
       <OrderStatusNode
-        label="Order Placed"
+        label="Driver received"
         isActive={status === `Driver received` || true}
       />
 
       <OrderStatusNode
-        label="Picked Up"
+        label="Driver on the way"
         isActive={status === 'Driver on the way' || true}
       />
 
       <OrderStatusNode
-        label="In Transit"
+        label="Driver delivered to post office"
         isActive={status === 'Driver delivered to post office' || true}
       />
 
       <OrderStatusNode
-        label="Returned"
+        label="Delivered"
         isActive={status === 'Delivered' || true}
       />
 
       <OrderStatusNode
-        label="Order Cancelled"
+        label="Cancelled"
         isActive={status === 'Cancelled' || true}
       />
     </div>
