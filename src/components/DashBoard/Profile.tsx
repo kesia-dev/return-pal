@@ -92,19 +92,25 @@ function Profile({ userInfo, setUserInfo }: ProfilePropsType) {
 //           <div className="mb-2 flex h-8 items-center gap-10">
 //             <label className="block">First Name:</label>
 
+<<<<<<< HEAD
             <span>{userInfo.firstName}</span>
             <Separator orientation="vertical" className="bg-brand" />
             <label className="block">Last Name:</label>
+=======
+>>>>>>> edacdc1 (Remove unnecessary libraries)
 //             <span>{userInfo.first_name}</span>
 //             <Separator orientation="vertical" className="bg-brand" />
 //             <label className="block">Last Name:</label>
 
+<<<<<<< HEAD
             <span>{userInfo.lastName}</span>
           </div>
         </Reveal>
         <Reveal>
           <div className="mb-2 flex gap-10">
             <label className="block">Email:</label>
+=======
+>>>>>>> edacdc1 (Remove unnecessary libraries)
 //             <span>{userInfo.last_name}</span>
 //           </div>
 //         </Reveal>
