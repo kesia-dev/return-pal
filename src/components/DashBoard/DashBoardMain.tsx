@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { type UserInfo } from '@/components/DashBoard/types'
 import Reveal from '@components/common/reveal'
 import {
@@ -8,18 +8,10 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { useRouter } from 'next/navigation'
-<<<<<<< HEAD
 // import Profile from '@/components/DashBoard/Profile'
 import { CiCalendar } from 'react-icons/ci'
 import { FaRegCircleUser, FaRegClock } from 'react-icons/fa6'
 import RecentOrders from '@components/Orders/RecentOrders'
-=======
-//import Profile from './Profile'
-import { CiCalendar } from 'react-icons/ci'
-import { FaRegCircleUser, FaRegClock } from 'react-icons/fa6'
-import RecentOrders from '@/components/Orders/RecentOrders' // Check the correct path
-
->>>>>>> 5a53a65 (Modification:minor UI changes in Recent Order)
 function DashBoardMain({
   userInfo,
   setUserInfo,
@@ -28,16 +20,17 @@ function DashBoardMain({
   setUserInfo: React.Dispatch<React.SetStateAction<UserInfo>>
 }) {
   const cardClassnames =
-    'border-l-0 border-r-0 border-t-0 border-b-0 border-black flex h-23 sm:min-w-280 md:min-w-280 lg:min-w-280 sm:w-1/3 md:w-1/3 lg:w-1/4  select-none flex-row items-center p-1 bg-white mr-8 text-brand '
-  const cardTitleClassnames = 'text-xl md:text-2xl font-semibold '
-  const cardDescriptionClassNames = 'text-sm text-brand md:text-xl'
+    'border-l-0 border-r-0 border-t-0 border-b-0 border-black flex h-23 h-23 sm:w-1/3 md:w-1/3 lg:w-1/4  select-none flex-row items-center p-1 bg-white mr-8 text-brand '
+  const cardTitleClassnames =
+    'text-xl sm:text-base md:text-l lg:text-xl font-semibold '
+  const cardDescriptionClassNames =
+    'text-sm text-brand sm:text-base md:text-l lg:text-xl'
   const router = useRouter()
   const handleRedirect = (path: string) => {
     router.push(path)
   }
-
   return (
-    <section className="lg:p-30 flex flex-col justify-center space-y-8  p-20 lg:space-y-16">
+    <section className="lg:p-30 flex flex-col justify-center space-y-8 pb-10 pl-20 pr-20 pt-10 lg:space-y-16">
       <div>
         <Reveal>
           <h3 className="mb-6 text-subtitle font-bold lg:text-4xl">
@@ -46,21 +39,20 @@ function DashBoardMain({
         </Reveal>
         <div className="justify-left mb-12 flex">
           <Card
-            onClick={() => handleRedirect('/return')}
             className={`${cardClassnames}`}
-            style={{ borderLeft: '16px solid black' }}
+            style={{
+              borderLeft: '16px solid black',
+              minWidth: '335px',
+              minHeight: '150px',
+              maxHeight: '150px',
+            }}
           >
             <CardHeader className="flex items-center pl-5">
               <Reveal>
                 <div className="flex items-center">
-                  {' '}
-                  {/* Added a container */}
                   <div className="mr-4">
-                    {' '}
-                    {/* Container for the icon */}
                     <Reveal>
-                      <CiCalendar className="fill-secondary h-12 w-12 xxs:h-16 xxs:w-16 xs:h-24 xs:w-24" />
-                      {/* <HandingPackage className="h-12 w-12 fill-primary xxs:h-16 xxs:w-16 xs:h-24 xs:w-24" /> */}
+                      <CiCalendar className="fill-secondary xs:h-19 xs:w-19 h-12 w-12 xxs:h-16 xxs:w-16" />
                     </Reveal>
                   </div>
                   <div>
@@ -78,21 +70,20 @@ function DashBoardMain({
             </CardHeader>
           </Card>
           <Card
-            onClick={() => handleRedirect('/return')}
             className={`${cardClassnames}`}
-            style={{ borderLeft: '16px solid black' }}
+            style={{
+              borderLeft: '16px solid black',
+              minWidth: '335px',
+              minHeight: '150px',
+              maxHeight: '150px',
+            }}
           >
             <CardHeader className="flex items-center pl-5">
               <Reveal>
                 <div className="flex items-center">
-                  {' '}
-                  {/* Added a container */}
                   <div className="mr-4">
-                    {' '}
-                    {/* Container for the icon */}
                     <Reveal>
-                      {/* <HandingPackage className="h-12 w-12 fill-primary xxs:h-16 xxs:w-16 xs:h-24 xs:w-24" /> */}
-                      <FaRegClock className="fill-secondary h-12 w-12 xxs:h-16 xxs:w-16 xs:h-24 xs:w-24" />
+                      <FaRegClock className="fill-secondary xs:h-19 xs:w-19 h-12 w-12 xxs:h-16 xxs:w-16" />
                     </Reveal>
                   </div>
                   <div>
@@ -111,15 +102,19 @@ function DashBoardMain({
           </Card>
           <Card
             className={`${cardClassnames}`}
-            style={{ borderLeft: '16px solid black' }}
+            style={{
+              borderLeft: '16px solid black',
+              minWidth: '335px',
+              minHeight: '150px',
+              maxHeight: '150px',
+            }}
           >
             <CardHeader className="flex items-center pl-5">
               <Reveal>
                 <div className="flex items-center">
                   <div className="mr-4">
                     <Reveal>
-                      <FaRegCircleUser className="fill-secondary h-12 w-12 xxs:h-16 xxs:w-16 xs:h-24 xs:w-24" />
-                      {/* <HandingPackage className="h-12 w-12 fill-primary xxs:h-16 xxs:w-16 xs:h-24 xs:w-24" /> */}
+                      <FaRegCircleUser className="fill-secondary xs:h-19 xs:w-19 h-12 w-12 xxs:h-16 xxs:w-16" />
                     </Reveal>
                   </div>
                   <div>
@@ -137,13 +132,8 @@ function DashBoardMain({
             </CardHeader>
           </Card>
         </div>
-<<<<<<< HEAD
         <RecentOrders />
       </div>
-=======
-      )}
-      {showProfile && <RecentOrders />}
->>>>>>> 5a53a65 (Modification:minor UI changes in Recent Order)
     </section>
   )
 }
