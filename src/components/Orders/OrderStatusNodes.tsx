@@ -2,10 +2,12 @@
 import { IoCheckmarkCircle } from 'react-icons/io5'
 import { cn } from '@lib/utils'
 import React from 'react'
+
 interface OrderStatusNodeProps {
   label: string
   isActive: boolean
 }
+
 const OrderStatusNode: React.FC<OrderStatusNodeProps> = ({
   label,
   isActive,
@@ -55,7 +57,7 @@ const OrderStatusNodes: React.FC<OrderStatusNodesProps> = ({ status }) => (
     <div className="order-status-nodes-container flex ">
       <OrderStatusNode
         label="Driver received"
-        isActive={status === `Driver received` || true}
+        isActive={status === `Driver received` || false}
       />
 
       <OrderStatusNode
@@ -70,7 +72,7 @@ const OrderStatusNodes: React.FC<OrderStatusNodesProps> = ({ status }) => (
 
       <OrderStatusNode
         label="Delivered"
-        isActive={status === 'Delivered' || true}
+        isActive={status === 'Delivered' || false}
       />
 
       <OrderStatusNode

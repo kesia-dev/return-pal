@@ -1,7 +1,4 @@
-import React, { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import NounDelivery from '@/components/SvgComponents/NounDelivery'
-import Link from 'next/link'
+import React from 'react'
 import { type UserInfo } from '@/components/DashBoard/types'
 import Reveal from '@components/common/reveal'
 import {
@@ -10,7 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import HandingPackage from '@/components/SvgComponents/HandingPackage'
 import { useRouter } from 'next/navigation'
 import Profile from './Profile'
 import { CiCalendar } from 'react-icons/ci'
@@ -32,7 +28,6 @@ function DashBoardMain({
   const cardDescriptionClassNames = 'text-sm text-brand'
 
   const router = useRouter()
-
   const handleRedirect = (path: string) => {
     router.push(path)
   }

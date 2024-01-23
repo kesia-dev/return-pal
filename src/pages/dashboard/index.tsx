@@ -12,16 +12,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Link from 'next/link'
 import DashBoardMain from '@/components/DashBoard/DashBoardMain'
 import { type UserInfo } from '@/components/DashBoard/types'
-import LoadingSpinner from '@/components/LoadingSpinner'
-import useAuth from '@/services/authentication/useAuth'
-import MobileSideBar from '@components/DashBoard/MobileSideBar'
-import RecentOrders from '@components/Orders/RecentOrders'
-const tabsTriggerClassName =
-  'data-[state=active]:ml-6 data-[state=active]:scale-105 data-[state=active]:border-l-8 data-[state=active]:bg-paleBlue data-[state=active]:text-primary dark:data-[state=active]:bg-slate-950 dark:data-[state=active]:text-slate-50 pl-10 justify-start text-sm md:text-lg lg:text-mediumText xl:text-subtitle'
-const tabsIconClassName = 'mr-2 h-8 w-8 lg:h-10 lg:w-10 xl:h-12 xl:w-12'
+import { dummyUser } from './dummy-user'
 function Dashboard() {
-  const { readUserInfoFromFragment } = useAuth()
-  const userInCache = readUserInfoFromFragment()
+  // const { readUserInfoFromFragment } = useAuth()
+  // const userInCache = readUserInfoFromFragment()
   // TODO: replace this with global state management like Apollo Client cache
   const [userInfo, setUserInfo] = useState<UserInfo>({
     firstName: 'John',
@@ -197,9 +191,7 @@ function Dashboard() {
 Dashboard.getLayout = (page: React.ReactElement) => {
   return (
     <DashboardLayout isHeaderShow={true} isFooterShow={false}>
-    <DashboardLayout isHeaderShow={true} isFooterShow={false}>
       {page}
-    </DashboardLayout>
     </DashboardLayout>
   )
 }
