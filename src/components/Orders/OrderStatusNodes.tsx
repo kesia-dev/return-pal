@@ -7,34 +7,73 @@ interface OrderStatusNodeProps {
 const OrderStatusNode: React.FC<OrderStatusNodeProps> = ({
   label,
   isActive,
-}) => (
-  <div className={`order-status-node ${isActive ? 'active' : ''}`}>
-    {isActive && <img src="/blue-check.png" alt="Blue Check" />}
-    <span>{label}</span>
-  </div>
-)
-interface OrderStatusNodesProps {
-  status: string | undefined
-}
-const OrderStatusNodes: React.FC<OrderStatusNodesProps> = ({ status }) => {
+}) => {
+  console.log('isActive:', true) // Add this line
+
   return (
-    <div className="mt-8">
-      <h2 className="text-xl font-bold">Order Status</h2>
-      <div className="order-status-nodes-container mt-4 flex">
-        <OrderStatusNode
-          label="Order Placed"
-          isActive={status === 'OrderPlaced'}
-        />
-        <OrderStatusNode label="Picked Up" isActive={status === 'PickedUp'} />
-        <OrderStatusNode label="In Transit" isActive={status === 'InTransit'} />
-        <OrderStatusNode label="Returned" isActive={status === 'Returned'} />
-        <OrderStatusNode
-          label="Order Cancelled"
-          isActive={status === 'OrderCancelled'}
-        />
+    <div className={'w-1/5 pl-0 pr-0 pt-5'}>
+      <div className="relative mb-4">
+        <div className="align-center absolute top-5 flex w-3/4 translate-x-[-50%] translate-y-[-50%] transform content-center items-center align-middle ">
+          <div className="align-center z-10 h-1 w-full flex-1 items-center rounded bg-primary align-middle "></div>
+        </div>
+
+        <div
+          className={cn(
+            ' z-30 mx-auto flex h-10 w-10 items-center rounded-full border-2 border-primary text-lg text-white'
+          )}
+        >
+          {/* This part remains unchanged */}
+          {isActive ? (
+            <IoCheckmarkCircle size={40} className="rounded-full bg-primary " />
+          ) : (
+            <IoCheckmarkCircle
+              size={40}
+              className="h-2 rounded-full border-0 text-white "
+              // className="relative z-30 mx-auto flex h-10 w-10 items-center rounded-full border-0 text-white"
+            />
+          )}
+        </div>
       </div>
+      <p className="select-none text-center text-xs text-black md:text-base">
+        {label}
+      </p>
     </div>
   )
 }
+
+interface OrderStatusNodesProps {
+  status: string | undefined
+}
+
+const OrderStatusNodes: React.FC<OrderStatusNodesProps> = ({ status }) => (
+  <div className="mt-16 flex items-center justify-center">
+    <div className="order-status-nodes-container flex ">
+      <OrderStatusNode
+        label="Driver received"
+        isActive={status === `Driver received` || true}
+      />
+
+      <OrderStatusNode
+        label="Driver on the way"
+        isActive={status === 'Driver on the way' || true}
+      />
+
+      <OrderStatusNode
+        label="Driver delivered to post office"
+        isActive={status === 'Driver delivered to post office' || true}
+      />
+
+      <OrderStatusNode
+        label="Delivered"
+        isActive={status === 'Delivered' || true}
+      />
+
+      <OrderStatusNode
+        label="Cancelled"
+        isActive={status === 'Cancelled' || true}
+      />
+    </div>
+  </div>
+)
 export default OrderStatusNodes
 
