@@ -8,10 +8,18 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { useRouter } from 'next/navigation'
+<<<<<<< HEAD
 // import Profile from '@/components/DashBoard/Profile'
 import { CiCalendar } from 'react-icons/ci'
 import { FaRegCircleUser, FaRegClock } from 'react-icons/fa6'
 import RecentOrders from '@components/Orders/RecentOrders'
+=======
+//import Profile from './Profile'
+import { CiCalendar } from 'react-icons/ci'
+import { FaRegCircleUser, FaRegClock } from 'react-icons/fa6'
+import RecentOrders from '@/components/Orders/RecentOrders' // Check the correct path
+
+>>>>>>> 5a53a65 (Modification:minor UI changes in Recent Order)
 function DashBoardMain({
   userInfo,
   setUserInfo,
@@ -129,8 +137,13 @@ function DashBoardMain({
             </CardHeader>
           </Card>
         </div>
+<<<<<<< HEAD
         <RecentOrders />
       </div>
+=======
+      )}
+      {showProfile && <RecentOrders />}
+>>>>>>> 5a53a65 (Modification:minor UI changes in Recent Order)
     </section>
   )
 }

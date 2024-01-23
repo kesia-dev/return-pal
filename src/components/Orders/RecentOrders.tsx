@@ -77,10 +77,17 @@ const RecentOrders = () => {
   }
 
   return (
+<<<<<<< HEAD
     <div className="recent-orders-container mt-14 flex flex-col items-start">
       <div className="mb-5 flex w-full items-center justify-between">
         <div className="recent-order-header">
           <h2 className="mb-2 text-3xl font-bold">Recent Orders</h2>
+=======
+    <div className="recent-orders-container mt-14 flex flex-col items-start p-5">
+      <div className="mb-5 flex w-full items-center justify-between">
+        <div className="recent-order-header">
+          <h2 className="mb-2 text-2xl font-bold">Recent Orders</h2>
+>>>>>>> 5a53a65 (Modification:minor UI changes in Recent Order)
         </div>
         <div>
           <Link href="/orders">
