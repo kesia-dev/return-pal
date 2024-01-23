@@ -16,8 +16,11 @@ const OrderStatusNode: React.FC<OrderStatusNodeProps> = ({
   return (
     <div className={'w-1/5 pl-0 pr-0 pt-5'}>
       <div className="relative mb-4">
-        <div className="align-center absolute top-5 flex w-3/4 translate-x-[-50%] translate-y-[-50%] transform content-center items-center align-middle ">
-          <div className="align-center z-10 h-1 w-full flex-1 items-center rounded bg-primary align-middle "></div>
+        <div
+          className="align-center absolute top-5 flex translate-x-[-50%] translate-y-[-50%] transform content-center items-center align-middle "
+          style={{ width: '69%' }}
+        >
+          <div className="align-center z-10 h-1 w-10 flex-1 items-center rounded bg-primary align-middle "></div>
         </div>
 
         <div
@@ -53,27 +56,26 @@ const OrderStatusNodes: React.FC<OrderStatusNodesProps> = ({ status }) => (
     <div className="order-status-nodes-container flex ">
       <OrderStatusNode
         label="Driver received"
-        isActive={status === `Driver received` || true}
+        isActive={status === `Driver received` || false}
       />
 
       <OrderStatusNode
         label="Driver on the way"
-        isActive={status === 'Driver on the way' || true}
+        isActive={status === 'Driver on the way' || false}
       />
 
       <OrderStatusNode
         label="Driver delivered to post office"
-        isActive={status === 'Driver delivered to post office' || true}
+        isActive={status === 'Driver delivered to post office' || false}
       />
 
       <OrderStatusNode
         label="Delivered"
-        isActive={status === 'Delivered' || true}
+        isActive={status === 'Delivered' || false}
       />
-
       <OrderStatusNode
         label="Cancelled"
-        isActive={status === 'Cancelled' || true}
+        isActive={status === 'Cancelled' || false}
       />
     </div>
   </div>
