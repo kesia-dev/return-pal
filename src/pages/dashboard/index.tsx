@@ -1,6 +1,9 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import DashboardLayout from '@/layouts/DashboardLayout'
 import DashBoardMain from '@/components/DashBoard/DashBoardMain'
+//import Profile from '@/components/DashBoard/Profile'
+import Inbox from '@/components/DashBoard/Inbox'
+import Security from '@/components/DashBoard/Security'
 import { type UserInfo } from '@/components/DashBoard/types'
 import { dummyUser } from './dummy-user'
 function Dashboard() {
