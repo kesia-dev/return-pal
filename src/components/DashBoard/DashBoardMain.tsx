@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import { Button } from '@/components/ui/button'
+import NounDelivery from '@/components/SvgComponents/NounDelivery'
+import Link from 'next/link'
 import { type UserInfo } from '@/components/DashBoard/types'
 import Reveal from '@components/common/reveal'
 import {
@@ -7,12 +10,11 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import HandingPackage from '@/components/SvgComponents/HandingPackage'
 import { useRouter } from 'next/navigation'
-import Profile from '@/components/DashBoard/Profile'
-import Profile from '@/components/DashBoard/Profile'
+import Profile from './Profile'
 import { CiCalendar } from 'react-icons/ci'
 import { FaRegCircleUser, FaRegClock } from 'react-icons/fa6'
-import RecentOrders from '@components/Orders/RecentOrders'
 
 function DashBoardMain({
   userInfo,
@@ -22,23 +24,29 @@ function DashBoardMain({
   setUserInfo: React.Dispatch<React.SetStateAction<UserInfo>>
 }) {
   const [showProfile, setShowProfile] = useState(false)
+
   const cardClassnames =
-    'border-l-0 border-r-0 border-t-0 border-b-0  border-black flex h-23 md:w-3/4 select-none flex-row items-center p-4 bg-white mr-100 text-brand'
-  const cardTitleClassnames = 'text-xl md:text-2xl font-semibold '
+    'border-l-0 border-r-0 border-t-0 border-b-0  border-black flex h-45 md:w-1/3 select-none flex-row items-center p-4 bg-white text-brand'
+  const cardTitleClassnames = 'text-xl md:text-2xl font-semibold'
+
   const cardDescriptionClassNames = 'text-sm text-brand'
+
   const router = useRouter()
+
   const handleRedirect = (path: string) => {
     router.push(path)
   }
+
   const handleProfileClick = () => {
     setShowProfile(true)
   }
+
   return (
     <section className="lg:p-30 flex flex-col justify-center space-y-8  p-20 lg:space-y-16">
       {!showProfile && (
         <div>
           <Reveal>
-            <h3 className="mb-6 text-subtitle font-bold lg:text-5xl">
+            <h3 className="mb-6 text-subtitle font-bold lg:text-title">
               Your Dashboard
             </h3>
           </Reveal>
@@ -139,7 +147,7 @@ function DashBoardMain({
               </CardHeader>
             </Card>
           </div>
-          <RecentOrders />
+          <h4 className="text-subtitle font-bold">Recent Orders</h4>
         </div>
       )}
       {showProfile && <Profile userInfo={userInfo} setUserInfo={setUserInfo} />}
