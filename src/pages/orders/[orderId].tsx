@@ -119,8 +119,7 @@ const OrderId = () => {
                   </div>
                   {/* Add other order details as needed */}
                   <div className="text-black-900 font-avenir-next flex items-center space-x-4 text-2xl font-bold">
-                    Nike Return
-                    {order.order_details.package_details.description}
+                    {order.order_details.package_details[0].description}
                   </div>
                   <div className="w-{80} flex items-center space-x-4 text-smallText text-gray-900">
                     Order placed on
@@ -153,8 +152,7 @@ const OrderId = () => {
                       {order.order_details.pickup_details.postal_code}
                     </p>
                   </div>
-
-                  <OrderStatusNodes status={order.status} />
+                  <OrderStatusNodes status={order?.status} />
                 </div>
                 {/* Right side */}
                 <div
