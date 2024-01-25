@@ -1,11 +1,9 @@
 //pages/orders/[orderId].tsx
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import Image from 'next/image'
 import Link from 'next/link'
 import { VscArchive, VscCreditCard } from 'react-icons/vsc'
 import { IconContext } from 'react-icons'
-import DefaultLayout from '@/layouts/DefaultLayout'
 import OrderStatusNodes from '@/components/Orders/OrderStatusNodes'
 import { type Order } from '@/components/DashBoard/types'
 import { Button } from '@/components/ui/button'
@@ -68,9 +66,9 @@ const OrderId = () => {
     }
   }
   const handleCancelOrder = (id: ObjectId, order_number: string) => {
-    setSelectedOrder({ _id: id, order_number: order_number } as Order)
+    setSelectedOrder({ _id: id, order_number } as Order)
   }
-  // Extracting the month using toLocaleString
+
   const orderMonth = order?.order_date
     ? new Date(order.order_date).toLocaleString('en-US', { month: 'long' })
     : ''
@@ -117,7 +115,7 @@ const OrderId = () => {
                   >
                     Order #{order.order_number}
                   </div>
-                  {/* Add other order details as needed */}
+
                   <div className="text-black-900 font-avenir-next flex items-center space-x-4 text-2xl font-bold">
                     Nike Return
                   </div>
@@ -173,7 +171,7 @@ const OrderId = () => {
                       Total Packages:
                     </span>
                     <span className="w-{80} text-smallText text-gray-900">
-                      {order.order_details.total_packages}
+                      {order.status}
                     </span>
                   </div>
                   {/* Visa information */}
@@ -198,28 +196,39 @@ const OrderId = () => {
                   <Button className="buttons">Back</Button>
                 </Link>
                 &nbsp;
-                <Link href="/Orders/OrderList">
-                  <Button
-                    className="buttons"
-                    onClick={() =>
-                      handleCancelOrder(order._id, order.order_number)
-                    }
-                    style={{
-                      opacity:
-                        order.status === 'Cancelled' ||
-                        order.status === 'Delivered'
-                          ? '2.5'
-                          : '1',
-                      cursor:
-                        order.status === 'Cancelled' ||
-                        order.status === 'Delivered'
-                          ? 'not-allowed'
-                          : 'pointer',
-                    }}
-                  >
-                    Cancel Order
-                  </Button>
-                </Link>
+                <Button
+                  className="buttons"
+                  onClick={() =>
+                    handleCancelOrder(order._id, order.order_number)
+                  }
+                  style={{
+                    backgroundColor:
+                      order.status === 'Cancelled' ||
+                      order.status === 'Delivered' ||
+                      order.status === 'Driver delivered to post office'
+                        ? '#A3BEE8'
+                        : '',
+                    border:
+                      order.status === 'Cancelled' ||
+                      order.status === 'Delivered' ||
+                      order.status === 'Driver delivered to post office'
+                        ? '1px solid #4299E1'
+                        : 'none',
+                    cursor:
+                      order.status === 'Driver delivered to post office' ||
+                      order.status === 'Cancelled' ||
+                      order.status === 'Delivered'
+                        ? 'not-allowed'
+                        : 'pointer',
+                  }}
+                  disabled={[
+                    'Cancelled',
+                    'Delivered',
+                    'Driver delivered to post office',
+                  ].includes(order.status)}
+                >
+                  Cancel Order
+                </Button>
               </div>
             </div>
 

@@ -42,6 +42,18 @@ const RecentOrders = () => {
     fetchData()
   }, [currentPage])
 
+  const getCancelOrderButtonStyles = (status: string) => {
+    const isDisabled =
+      status === 'Cancelled' ||
+      status === 'Delivered' ||
+      status === 'Driver delivered to post office'
+
+    return {
+      opacity: isDisabled ? '0.7' : '1',
+      cursor: isDisabled ? 'not-allowed' : 'pointer',
+    }
+  }
+
   const handleCancelOrder = (id: ObjectId, order_number: string) => {
     setSelectedOrder({ _id: id, order_number } as Order)
   }
@@ -106,21 +118,12 @@ const RecentOrders = () => {
                   onClick={() =>
                     handleCancelOrder(order._id, order.order_number)
                   }
-                  style={{
-                    opacity:
-                      order.status === 'Cancelled' ||
-                      order.status === 'Delivered'
-                        ? '0.7'
-                        : '1',
-                    cursor:
-                      order.status === 'Cancelled' ||
-                      order.status === 'Delivered'
-                        ? 'not-allowed'
-                        : 'pointer',
-                  }}
-                  disabled={
-                    order.status === 'Cancelled' || order.status === 'Delivered'
-                  }
+                  style={getCancelOrderButtonStyles(order.status)}
+                  disabled={[
+                    'Cancelled',
+                    'Delivered',
+                    'Driver delivered to post office',
+                  ].includes(order.status)}
                 >
                   Cancel Order
                 </Button>

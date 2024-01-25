@@ -47,7 +47,11 @@ const OrderList: React.FC<OrderListProps> = ({ orders = [] }) => {
               </div>
             </div>
             <div className="flex-grow"></div>
-            {order.status === 'Cancelled' && (
+            {[
+              'Cancelled',
+              'Delivered',
+              'Driver delivered to post office',
+            ].includes(order.status) && (
               <div className="mr-4 h-6 w-24 rounded bg-gray-500 text-center">
                 Cancelled
               </div>
