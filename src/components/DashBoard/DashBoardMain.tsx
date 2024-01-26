@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { type UserInfo } from '@/components/DashBoard/types'
 import Reveal from '@components/common/reveal'
