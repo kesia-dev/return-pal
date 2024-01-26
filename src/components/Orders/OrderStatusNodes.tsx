@@ -66,7 +66,7 @@ const OrderStatusNodes: React.FC<OrderStatusNodesProps> = ({ order }) => (
       />
       <OrderStatusNode
         label="Driver delivered to post office"
-        isActive={order?.status === 'Driver delivered to post office' || true}
+        isActive={order?.status === 'Driver delivered to post office' || false}
       />
       <OrderStatusNode
         label="Delivered"
