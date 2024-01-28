@@ -112,7 +112,8 @@ const OrderId = () => {
                     Order #{order.order_number}
                   </div>
                   <div className="text-black-900 font-avenir-next flex items-center space-x-4 text-2xl font-bold">
-                    {order.order_details.package_details[0].description} : Nike Return
+                    {order.order_details.package_details[0].description} : Nike
+                    Return
                   </div>
                   <div className="w-{80} flex items-center space-x-4 text-smallText text-gray-900">
                     Order placed on
