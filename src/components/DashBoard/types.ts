@@ -33,7 +33,7 @@ export const profileFormSchema = z.object({
       message: 'First name must be less than 60 characters',
     }),
   last_name: z
-    .string()
+    .string().
     .min(1, {
       message: 'Last name is required',
     })
