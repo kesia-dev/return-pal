@@ -141,7 +141,6 @@ const ClientDetailsSchema = z.object({
   payment_type: z.string(),
   addresses: AddressesArraySchema,
 })
-
 const OrdersCollectionSchema = z.object({
   _id: z.instanceof(ObjectId),
   order_number: z.string(), // System-generated
