@@ -58,11 +58,11 @@ const OrderStatusNodes: React.FC<OrderStatusNodesProps> = ({ order }) => (
     <div className="order-status-nodes-container flex space-x-0.5">
       <OrderStatusNode
         label="Driver received"
-        isActive={order?.status === 'Driver received' || true}
+        isActive={order?.status === 'Driver received' || false}
       />
       <OrderStatusNode
         label="Driver on the way"
-        isActive={order?.status === 'Driver on the way' || true}
+        isActive={order?.status === 'Driver on the way' || false}
       />
       <OrderStatusNode
         label="Driver delivered to post office"
