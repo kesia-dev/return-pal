@@ -89,6 +89,8 @@ const OrderStatusNode: React.FC<OrderStatusNodeProps> = ({
   label,
   isActive,
 }) => {
+  console.log(`OrderStatusNode - Rendering for ${label}. isActive: ${isActive}`)
+
   return (
     <div className={`w-1/5 pl-0 pr-0 pt-5`}>
       {isActive && (
@@ -132,6 +134,9 @@ interface OrderStatusNodesProps {
 }
 
 const OrderStatusNodes: React.FC<OrderStatusNodesProps> = ({ order }) => {
+  console.log('Order:', order) // Log the order to the console
+  console.log('OrderStatusNodes - Rendering');
+
   const statuses = [
     'Driver received',
     'Driver on the way',
