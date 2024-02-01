@@ -70,37 +70,39 @@ function DashBoardMain({
               </CardHeader>
             </Card>
           </Link>
-          <Card
-            className={`${cardClassnames}`}
-            style={{
-              borderLeft: '16px solid black',
-              minWidth: '335px',
-              minHeight: '150px',
-              maxHeight: '150px',
-            }}
-          >
-            <CardHeader className="flex items-center pl-5">
-              <Reveal>
-                <div className="flex items-center">
-                  <div className="mr-4">
-                    <Reveal>
-                      <FaRegClock className="fill-secondary xs:h-19 xs:w-19 h-12 w-12 xxs:h-16 xxs:w-16" />
-                    </Reveal>
+          <Link href="/orders">
+            <Card
+              className={`${cardClassnames}`}
+              style={{
+                borderLeft: '16px solid black',
+                minWidth: '335px',
+                minHeight: '150px',
+                maxHeight: '150px',
+              }}
+            >
+              <CardHeader className="flex items-center pl-5">
+                <Reveal>
+                  <div className="flex items-center">
+                    <div className="mr-4">
+                      <Reveal>
+                        <FaRegClock className="fill-secondary xs:h-19 xs:w-19 h-12 w-12 xxs:h-16 xxs:w-16" />
+                      </Reveal>
+                    </div>
+                    <div>
+                      <CardTitle className={cardTitleClassnames}>
+                        View Recent Orders
+                      </CardTitle>
+                      <Reveal>
+                        <CardDescription className={cardDescriptionClassNames}>
+                          View all your recently scheduled orders here.
+                        </CardDescription>
+                      </Reveal>
+                    </div>
                   </div>
-                  <div>
-                    <CardTitle className={cardTitleClassnames}>
-                      View Recent Orders
-                    </CardTitle>
-                    <Reveal>
-                      <CardDescription className={cardDescriptionClassNames}>
-                        View all your recently scheduled orders here.
-                      </CardDescription>
-                    </Reveal>
-                  </div>
-                </div>
-              </Reveal>
-            </CardHeader>
-          </Card>
+                </Reveal>
+              </CardHeader>
+            </Card>
+          </Link>
           <Card
             className={`${cardClassnames}`}
             style={{
