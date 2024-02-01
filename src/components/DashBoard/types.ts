@@ -4,7 +4,7 @@ import { type ColumnDef } from '@tanstack/react-table'
 import { ObjectId } from 'mongodb'
 
 const addressSchema = z.object({
-  address_id: z.instanceof(ObjectId),
+  address_id: z.instanceof(ObjectId).optional(),
   contact_full_name: z.string(),
   contact_phone_number: z.string(),
   street: z.string(),
@@ -143,7 +143,7 @@ const ClientDetailsSchema = z.object({
 })
 
 const OrdersCollectionSchema = z.object({
-  _id: z.instanceof(ObjectId),
+  _id: z.instanceof(ObjectId).optional(),
   order_number: z.string(), // System-generated
   order_date: z.date(),
   status: z.enum([

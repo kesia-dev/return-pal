@@ -46,6 +46,7 @@ function DashBoardMain({
               minHeight: '150px',
               maxHeight: '150px',
             }}
+            onClick={() => handleRedirect('/return')}
           >
             <CardHeader className="flex items-center pl-5">
               <Reveal>
@@ -77,6 +78,7 @@ function DashBoardMain({
               minHeight: '150px',
               maxHeight: '150px',
             }}
+            onClick={() => handleRedirect('/orders')}
           >
             <CardHeader className="flex items-center pl-5">
               <Reveal>
