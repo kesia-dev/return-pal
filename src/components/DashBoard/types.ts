@@ -1,10 +1,17 @@
 import { type UseFormReturn } from 'react-hook-form'
 import * as z from 'zod'
 import { type ColumnDef } from '@tanstack/react-table'
-import { ObjectId } from 'mongodb'
+import { v4 as uuidv4 } from 'uuid'
+
+let objectId: any
+if (typeof window === 'undefined') {
+  objectId = (await import('mongodb')).ObjectId
+} else {
+  objectId = { mockId: uuidv4() }
+}
 
 const addressSchema = z.object({
-  address_id: z.instanceof(ObjectId).optional(),
+  address_id: z.instanceof(objectId),
   contact_full_name: z.string(),
   contact_phone_number: z.string(),
   street: z.string(),
@@ -23,7 +30,7 @@ export type Address = z.infer<typeof addressSchema>
 export const AddressesArraySchema = z.array(addressSchema)
 
 export const profileFormSchema = z.object({
-  _id: z.instanceof(ObjectId),
+  _id: z.instanceof(objectId),
   first_name: z
     .string()
     .min(1, {
@@ -143,7 +150,7 @@ const ClientDetailsSchema = z.object({
 })
 
 const OrdersCollectionSchema = z.object({
-  _id: z.instanceof(ObjectId).optional(),
+  _id: z.instanceof(objectId),
   order_number: z.string(), // System-generated
   order_date: z.date(),
   status: z.enum([
@@ -172,7 +179,7 @@ export interface ConfirmationDialogProps {
   message: string
   onCancel: () => void
   onConfirm: () => void
-  orderId: ObjectId
+  orderId: typeof objectId
 }
 
 export interface PaginatedResponse {

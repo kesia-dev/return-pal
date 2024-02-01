@@ -12,6 +12,8 @@ import { useRouter } from 'next/navigation'
 import { CiCalendar } from 'react-icons/ci'
 import { FaRegCircleUser, FaRegClock } from 'react-icons/fa6'
 import RecentOrders from '@components/Orders/RecentOrders'
+import Link from 'next/link'
+
 function DashBoardMain({
   userInfo,
   setUserInfo,
@@ -25,10 +27,7 @@ function DashBoardMain({
     'text-xl sm:text-base md:text-l lg:text-xl font-semibold '
   const cardDescriptionClassNames =
     'text-sm text-brand sm:text-base md:text-l lg:text-xl'
-  const router = useRouter()
-  const handleRedirect = (path: string) => {
-    router.push(path)
-  }
+
   return (
     <section className="lg:p-30 flex flex-col justify-center space-y-8 pb-10 pl-20 pr-20 pt-10 lg:space-y-16">
       <div>
@@ -38,6 +37,39 @@ function DashBoardMain({
           </h3>
         </Reveal>
         <div className="justify-left mb-12 flex">
+          <Link href="/schedule-pickup">
+            <Card
+              className={`${cardClassnames}`}
+              style={{
+                borderLeft: '16px solid black',
+                minWidth: '335px',
+                minHeight: '150px',
+                maxHeight: '150px',
+              }}
+            >
+              <CardHeader className="flex items-center pl-5">
+                <Reveal>
+                  <div className="flex items-center">
+                    <div className="mr-4">
+                      <Reveal>
+                        <CiCalendar className="fill-secondary xs:h-19 xs:w-19 h-12 w-12 xxs:h-16 xxs:w-16" />
+                      </Reveal>
+                    </div>
+                    <div>
+                      <CardTitle className={cardTitleClassnames}>
+                        Schedule Pickup
+                      </CardTitle>
+                      <Reveal>
+                        <CardDescription className={cardDescriptionClassNames}>
+                          Set up a new pickup for your returns.
+                        </CardDescription>
+                      </Reveal>
+                    </div>
+                  </div>
+                </Reveal>
+              </CardHeader>
+            </Card>
+          </Link>
           <Card
             className={`${cardClassnames}`}
             style={{
@@ -46,39 +78,6 @@ function DashBoardMain({
               minHeight: '150px',
               maxHeight: '150px',
             }}
-            onClick={() => handleRedirect('/return')}
-          >
-            <CardHeader className="flex items-center pl-5">
-              <Reveal>
-                <div className="flex items-center">
-                  <div className="mr-4">
-                    <Reveal>
-                      <CiCalendar className="fill-secondary xs:h-19 xs:w-19 h-12 w-12 xxs:h-16 xxs:w-16" />
-                    </Reveal>
-                  </div>
-                  <div>
-                    <CardTitle className={cardTitleClassnames}>
-                      Schedule Pickup
-                    </CardTitle>
-                    <Reveal>
-                      <CardDescription className={cardDescriptionClassNames}>
-                        Set up a new pickup for your returns.
-                      </CardDescription>
-                    </Reveal>
-                  </div>
-                </div>
-              </Reveal>
-            </CardHeader>
-          </Card>
-          <Card
-            className={`${cardClassnames}`}
-            style={{
-              borderLeft: '16px solid black',
-              minWidth: '335px',
-              minHeight: '150px',
-              maxHeight: '150px',
-            }}
-            onClick={() => handleRedirect('/orders')}
           >
             <CardHeader className="flex items-center pl-5">
               <Reveal>
