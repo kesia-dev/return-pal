@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import ConfirmationDialog from '@components/Orders/ConfirmationDialog'
 import { useRouter } from 'next/router'
 import { type ObjectId } from 'mongodb'
+import OrderStatusNodes from '@/components/Orders/OrderStatusNodes'
 
 const RecentOrders = () => {
   const [orders, setOrders] = useState<Order[]>([])
@@ -111,7 +112,9 @@ const RecentOrders = () => {
               <p className="mb-2 text-base font-bold">
                 Order #{order.order_number}
               </p>
-
+              <div>
+                <OrderStatusNodes status={order.status} />
+              </div>
               <div className="order-buttons mt-2">
                 <Button
                   variant="secondary"
