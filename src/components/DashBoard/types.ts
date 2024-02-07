@@ -1,7 +1,7 @@
 import { type UseFormReturn } from 'react-hook-form'
 import * as z from 'zod'
 import { type ColumnDef } from '@tanstack/react-table'
-import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuidv4 } from 'uuid';
 
 let objectId: any
 if (typeof window === 'undefined') {

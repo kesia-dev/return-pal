@@ -66,30 +66,30 @@ import Reveal from '@components/common/reveal'
 //           <div className="mb-2 flex gap-10">
 //             <label className="block">Email:</label>
 
-            <span>{userInfo.email}</span>
-          </div>
-        </Reveal>
-        <Reveal>
-          <div className="mb-2 flex gap-10">
-            <label className="block">Primary Address:</label>
-
-//             <span>
-//               {typeof userInfo.addresses.unit_number === 'string'
-//                 ? '# '
-//                 : ''}
-//               {userInfo.primaryAddress.apartmentUnitNumber}{' '}
-//               {typeof userInfo.primaryAddress.apartmentUnitNumber === 'string'
-//                 ? '- '
-//                 : ''}
-//               {userInfo.primaryAddress.streetNumber}{' '}
-//               {userInfo.primaryAddress.streetName}
-//               {', '}
-//               {userInfo.primaryAddress.city}
-//               {', '}
-//               {userInfo.primaryAddress.province}
-//               {', '} {userInfo.primaryAddress.postal}
-//             </span>
+//             <span>{userInfo.email}</span>
 //           </div>
+//         </Reveal>
+//         <Reveal>
+//           <div className="mb-2 flex gap-10">
+//             <label className="block">Primary Address:</label>
+
+// //             <span>
+// //               {typeof userInfo.addresses.unit_number === 'string'
+// //                 ? '# '
+// //                 : ''}
+// //               {userInfo.primaryAddress.apartmentUnitNumber}{' '}
+// //               {typeof userInfo.primaryAddress.apartmentUnitNumber === 'string'
+// //                 ? '- '
+// //                 : ''}
+// //               {userInfo.primaryAddress.streetNumber}{' '}
+// //               {userInfo.primaryAddress.streetName}
+// //               {', '}
+// //               {userInfo.primaryAddress.city}
+// //               {', '}
+// //               {userInfo.primaryAddress.province}
+// //               {', '} {userInfo.primaryAddress.postal}
+// //             </span>
+// //           </div>
 //         </Reveal>
 //         {userInfo.additionalAddress &&
 //         userInfo?.additionalAddress?.length > 0 ? (
@@ -137,4 +137,4 @@ import Reveal from '@components/common/reveal'
 //   )
 // }
 
-export default Profile
+//export default Profile
