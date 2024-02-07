@@ -66,15 +66,15 @@ import Reveal from '@components/common/reveal'
 //           <div className="mb-2 flex gap-10">
 //             <label className="block">Email:</label>
 
-            <span>{userInfo.email}</span>
-          </div>
-        </Reveal>
-        <Reveal>
-          <div className="mb-2 flex gap-10">
-            <label className="block">Primary Address:</label>
+//             <span>{userInfo.email}</span>
+//           </div>
+//         </Reveal>
+//         <Reveal>
+//           <div className="mb-2 flex gap-10">
+//             <label className="block">Primary Address:</label>
 
-//             <span>
-//               {typeof userInfo.addresses.unit_number === 'string'
+// //             <span>
+// //               {typeof userInfo.addresses.unit_number === 'string'
 //                 ? '# '
 //                 : ''}
 //               {userInfo.primaryAddress.apartmentUnitNumber}{' '}

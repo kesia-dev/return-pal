@@ -25,7 +25,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
   type Address,
-  addressSchema,
+  // addressSchema,
   type UserInfo,
 } from '@/components/DashBoard/types'
 import { ProvincesSelector } from './ProvincesSelector'
