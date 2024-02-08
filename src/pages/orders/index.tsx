@@ -19,7 +19,7 @@ const Orders: React.FC<OrdersProps> = ({ initialOrders }) => {
   const fetchOrders = async (page: number) => {
     try {
       const response = await axios.get<PaginatedResponse>(
-        `/api/orders?page=${page}`
+        `http://localhost:4200/api/orders?page=${page}`
       )
 
       if (Array.isArray(response.data.paginatedOrders)) {

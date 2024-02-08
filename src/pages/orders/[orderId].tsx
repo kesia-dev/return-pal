@@ -16,16 +16,14 @@ const OrderId = () => {
   const router = useRouter()
   const { orderId } = router.query
   const [order, setOrder] = useState<Order | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchOrderDetails = async () => {
       try {
         if (orderId) {
-          console.log('orderId : ', orderId)
-          const orderIdString = Array.isArray(orderId) ? orderId[0] : orderId
-          const response = await fetch(`/api/orders/${orderIdString}`)
+          const response = await fetch(
+            `http://localhost:4200/api/orders/${String(orderId)}`
+          )
           console.log('response is :: ', response)
           if (response.ok) {
             console.log('response is ok')

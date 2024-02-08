@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { type Order, type PaginatedResponse } from '@components/DashBoard/types'
+import { type Order } from '@components/DashBoard/types'
 import { Button } from '@/components/ui/button'
 import ConfirmationDialog from '@components/Orders/ConfirmationDialog'
 import { useRouter } from 'next/router'
