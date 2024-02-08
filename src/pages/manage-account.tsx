@@ -136,7 +136,7 @@ const handleSubmit = () => {
 
     <div className="recent-orders-container mt-14 flex flex-col items-start">
    
-   <div className='recent-order-header flex items-center space-x-4 mb-4'> {/* Added mb-4 for spacing */}
+   <div className='recent-order-header flex items-center space-x-4 mb-4'> 
     <h2 className=" md-2 text-3xl font-bold">General Information</h2>
     <p>
       Set your basic profile Information here.
