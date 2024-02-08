@@ -5,41 +5,24 @@ import { Button } from '@/components/ui/button'
 import ConfirmationDialog from '@components/Orders/ConfirmationDialog'
 import { useRouter } from 'next/router'
 import { type ObjectId } from 'mongodb'
+import { fetchRecentOrders } from '@/services/orderService'
 
 const RecentOrders = () => {
   const [orders, setOrders] = useState<Order[]>([])
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
   const [currentPage, setCurrentPage] = useState<number>(1)
-  const [totalPages, setTotalPages] = useState<number>(1)
   const router = useRouter()
 
-  const fetchRecentOrders: (page: number) => Promise<void> = async (page) => {
-    try {
-      const response = await fetch(`/api/orders?page=${page}`)
-
-      if (!response.ok) {
-        throw new Error(`Failed to fetch orders. Status: ${response.status}`)
-      }
-
-      const responseData = (await response.json()) as PaginatedResponse
-
-      setOrders(responseData.paginatedOrders)
-      setCurrentPage(responseData.currentPage)
-      setTotalPages(responseData.totalPages)
-    } catch (error) {
-      console.error('Error fetching recent orders:', error)
-      throw error
-    }
-  }
-
   useEffect(() => {
-    const fetchData = () => {
-      fetchRecentOrders(currentPage).catch((error) => {
+    const fetchData = async () => {
+      try {
+        const recentOrders = await fetchRecentOrders(currentPage)
+        setOrders(recentOrders)
+      } catch (error) {
         console.error('Error fetching recent orders:', error)
-      })
+      }
     }
-
-    fetchData()
+    fetchData().catch((error) => console.error('Error in fetchData:', error))
   }, [currentPage])
 
   const getCancelOrderButtonStyles = (status: string) => {
