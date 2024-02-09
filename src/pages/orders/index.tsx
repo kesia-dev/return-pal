@@ -15,11 +15,12 @@ const Orders: React.FC<OrdersProps> = ({ initialOrders }) => {
   const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
+  const baseUrl: string = process.env.BASE_URL ?? 'http://localhost:4200'
 
   const fetchOrders = async (page: number) => {
     try {
       const response = await axios.get<PaginatedResponse>(
-        `http://localhost:4200/api/orders?page=${page}`
+        `${baseUrl}/api/orders?page=${page}`
       )
 
       if (Array.isArray(response.data.paginatedOrders)) {

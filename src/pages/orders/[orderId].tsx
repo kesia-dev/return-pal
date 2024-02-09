@@ -17,13 +17,14 @@ const OrderId = () => {
   const router = useRouter()
   const { orderId } = router.query
   const [order, setOrder] = useState<Order | null>(null)
+  const baseUrl: string = process.env.BASE_URL ?? 'http://localhost:4200'
 
   useEffect(() => {
     const fetchOrderDetails = async () => {
       try {
         if (orderId) {
           const response: AxiosResponse<Order> = await axios.get(
-            `http://localhost:4200/api/orders/${String(orderId)}`
+            `${baseUrl}/api/orders/${String(orderId)}`
           )
           console.log('response is :: ', response)
 
