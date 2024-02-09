@@ -11,8 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { Button } from '@components/ui/button'
 import NextArrow from '@components/SvgComponents/NextArrow'
-import SignUpModule from '@components/SignUpModal'
-import useAuth from '@/services/authentication/useAuth'
+import SignUpModule from '@/popups/SignUpModal'
 import { motion } from 'framer-motion'
 import { container, item } from '@styles/framer'
 
@@ -21,7 +20,6 @@ const formSchema = z.object({
 })
 
 function GuestSignInForm() {
-  const { writeUserInfoToFragment } = useAuth()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -31,7 +29,6 @@ function GuestSignInForm() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
-    writeUserInfoToFragment(values.email, 'guest', 'guest user')
   }
 
   return (

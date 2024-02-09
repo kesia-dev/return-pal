@@ -127,7 +127,7 @@ function ContactForm() {
                   <Reveal>
                     <Input
                       minLength={1}
-                      className="h-10 shrink rounded-md border-2 border-black text-sm placeholder:text-grey sm:h-12 sm:text-lg"
+                      className="h-10 shrink rounded-md border-2 text-sm placeholder:text-grey sm:h-12 sm:text-lg"
                       placeholder="First Name"
                       size={30}
                       {...field}

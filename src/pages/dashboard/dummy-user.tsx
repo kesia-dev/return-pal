@@ -1,4 +1,3 @@
-import { ObjectId } from 'mongodb'
 
 export const dummyUser = {
   first_name: 'John',

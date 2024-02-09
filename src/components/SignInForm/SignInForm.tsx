@@ -12,8 +12,7 @@ import * as z from 'zod'
 import { Button } from '@components/ui/button'
 import Link from 'next/link'
 import NextArrow from '@components/SvgComponents/NextArrow'
-import SignUpModule from '@components/SignUpModal'
-import useAuth from '@/services/authentication/useAuth'
+import SignUpModule from '@/popups/SignUpModal'
 import { motion } from 'framer-motion'
 import { container, item } from '@styles/framer'
 
@@ -30,11 +29,9 @@ function SignInForm() {
       password: '',
     },
   })
-  const { writeUserInfoToFragment } = useAuth()
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
-    writeUserInfoToFragment(values.email)
+    // console.log(values)
   }
 
   return (

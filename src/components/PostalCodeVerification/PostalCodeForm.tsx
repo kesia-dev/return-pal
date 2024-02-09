@@ -14,8 +14,8 @@ import NextArrow from '@components/SvgComponents/NextArrow'
 import { motion } from 'framer-motion'
 import { container, item } from '@styles/framer'
 import { isPostalCodeValid } from '@lib/utils'
-import SigninModal from '@components/SigninModal'
-import SignUpModule from '@components/SignUpModal'
+import SigninModal from '@/popups/SigninModal'
+import SignUpModule from '@/popups/SignUpModal'
 import { useState } from 'react'
 
 //postal code regex to verify canadian postal code format

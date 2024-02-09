@@ -7,8 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { useRouter } from 'next/navigation'
-// import Profile from '@/components/DashBoard/Profile'
 import { CiCalendar } from 'react-icons/ci'
 import { FaRegCircleUser, FaRegClock } from 'react-icons/fa6'
 import RecentOrders from '@components/Orders/RecentOrders'
@@ -103,6 +101,7 @@ function DashBoardMain({
               </CardHeader>
             </Card>
           </Link>
+          <Link href="/manage-account">
           <Card
             className={`${cardClassnames}`}
             style={{
@@ -121,6 +120,7 @@ function DashBoardMain({
                     </Reveal>
                   </div>
                   <div>
+                 
                     <CardTitle className={cardTitleClassnames}>
                       Manage Account
                     </CardTitle>
@@ -134,6 +134,8 @@ function DashBoardMain({
               </Reveal>
             </CardHeader>
           </Card>
+          </Link>
+
         </div>
         <RecentOrders />
       </div>
