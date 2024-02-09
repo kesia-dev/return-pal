@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import SigninModal from '@/components/SigninModal'
+import SigninModal from '@/popups/SigninModal'
 import { HeaderContent } from '@components/common/header'
 import { Button } from '@components/ui/button'
 import PostalCodeModal from '@components/PostalCodeModal'

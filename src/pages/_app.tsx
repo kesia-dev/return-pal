@@ -4,8 +4,6 @@ import { type ReactElement, type ReactNode } from 'react'
 import { type NextPage } from 'next'
 import { type AppProps } from 'next/app'
 import { type AppType } from 'next/dist/shared/lib/utils'
-import { ApolloProvider } from '@apollo/client'
-import { apolloClient } from '@/lib/graphql'
 
 import Head from 'next/head'
 import '@/styles/globals.css'
@@ -28,7 +26,7 @@ const MyApp: AppType = ({ Component, pageProps }: AppPropsWithLayout) => {
   const getLayout = Component.getLayout ?? ((page) => page)
   const layout = getLayout(<Component {...pageProps} />)
   return (
-    <ApolloProvider client={apolloClient}>
+    <>
       <Head>
         <title>Return-Pal</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -38,7 +36,8 @@ const MyApp: AppType = ({ Component, pageProps }: AppPropsWithLayout) => {
         {layout}
         <Toaster />
       </div>
-    </ApolloProvider>
+      </>
+
   )
 }
 

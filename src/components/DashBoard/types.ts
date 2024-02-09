@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 let objectId: any
 if (typeof window === 'undefined') {
-  objectId = (await import('mongodb')).ObjectId
+  objectId = uuidv4();
 } else {
   objectId = { mockId: uuidv4() }
 }

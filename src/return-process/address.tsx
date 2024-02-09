@@ -34,7 +34,7 @@ const formSchema = z.object({
 })
 
 export default function Address() {
-  const [addresses, setAddresses] = useState<Address[]>([])
+  const [addresses, setAddresses] = useState<any[]>([])
 
   const [addressFormVisibility, setAddressFormVisiblity] = useState(false)
   const [addressFromForm, setAddressFromForm] = useState<Address | null>()
@@ -49,6 +49,7 @@ export default function Address() {
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
+    debugger
     const selectedAddress = addresses.find(
       (address) => address.address_id?.toString() === values.deliveryAddress
     )
@@ -69,7 +70,7 @@ export default function Address() {
   }
 
   useEffect(() => {
-    setAddresses(returnProcess.currentData.userInfo.addresses)
+    setAddresses(returnProcess?.currentData?.userInfo?.addresses)
   }, [])
 
   const validateFormData = (inputs: unknown) => {
@@ -77,64 +78,66 @@ export default function Address() {
     return isValidData
   }
 
-  const addressValidator = (newAddress: Address) => {
-    try {
-      const valid = validateFormData(newAddress)
-      if (!valid) {
-        return
-      }
+  //if you want to validate the postalcode do a backend request.
 
-      interface AddressResponse {
-        message: string
-        address_id: ObjectId
-      }
+  // const addressValidator = (newAddress: Address) => {
+  //   try {
+  //     const valid = validateFormData(newAddress)
+  //     if (!valid) {
+  //       return
+  //     }
 
-      // send information to backend once address is validated
-      const newAddressWithPrimary = {
-        ...newAddress,
-        primary: false,
-      }
-      fetch(`/api/users`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userId: returnProcess.currentData.userInfo._id,
-          address: newAddressWithPrimary,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data: AddressResponse) => {
-          const newAddressWithId = {
-            ...newAddress,
-            address_id: data.address_id,
-          }
+  //     interface AddressResponse {
+  //       message: string
+  //       address_id: ObjectId
+  //     }
 
-          const newUserInfo = {
-            ...returnProcess.currentData.userInfo,
-            addresses: [
-              ...(returnProcess.currentData.userInfo?.addresses ?? []),
-              newAddressWithId,
-            ],
-          }
+  //     // send information to backend once address is validated
+  //     const newAddressWithPrimary = {
+  //       ...newAddress,
+  //       primary: false,
+  //     }
+  //     fetch(`/api/users`, {
+  //       method: 'PATCH',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         userId: returnProcess.currentData.userInfo._id,
+  //         address: newAddressWithPrimary,
+  //       }),
+  //     })
+  //       .then((response) => response.json())
+  //       .then((data: AddressResponse) => {
+  //         const newAddressWithId = {
+  //           ...newAddress,
+  //           address_id: data.address_id,
+  //         }
 
-          returnProcess.setCurrentData({ userInfo: newUserInfo })
-          setAddresses([...addresses, newAddressWithId])
-          setAddressFromForm(null)
-        })
-        .catch((error) => {
-          console.error('Error:', error)
-        })
-    } catch (err: unknown) {
-      console.log(err)
-      toast({
-        variant: 'destructive',
-        description:
-          'Please ensure that all fields are filled in, province field contains only two letters, and postal code is correct',
-      })
-    }
-  }
+  //         const newUserInfo = {
+  //           ...returnProcess.currentData.userInfo,
+  //           addresses: [
+  //             ...(returnProcess.currentData.userInfo?.addresses ?? []),
+  //             newAddressWithId,
+  //           ],
+  //         }
+
+  //         returnProcess.setCurrentData({ userInfo: newUserInfo })
+  //         setAddresses([...addresses, newAddressWithId])
+  //         setAddressFromForm(null)
+  //       })
+  //       .catch((error) => {
+  //         console.error('Error:', error)
+  //       })
+  //   } catch (err: unknown) {
+  //     console.log(err)
+  //     toast({
+  //       variant: 'destructive',
+  //       description:
+  //         'Please ensure that all fields are filled in, province field contains only two letters, and postal code is correct',
+  //     })
+  //   }
+  // }
 
   const toggleAddressForm = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -147,7 +150,21 @@ export default function Address() {
   ) => {
     event.preventDefault()
     if (addressFromForm) {
-      addressValidator(addressFromForm)
+      debugger
+      setAddresses([
+        {
+          contact_full_name: 'John Doe',
+          contact_phone_number: '123-456-7890',
+          street: '123 Main St',
+          unit_number: 'Apt 4',
+          city: 'Toronto',
+          province: 'Ontario',
+          country: 'Canada',
+          postal_code: 'M5A 1A1',
+          address_id: '123456789',
+          instructions: 'Leave package at the front door',
+        },
+      ])
       setAddressFormVisiblity(!addressFormVisibility)
     }
   }
@@ -196,7 +213,7 @@ export default function Address() {
                           defaultValue={field.value}
                           className="flex flex-col space-y-3"
                         >
-                          {addresses.map((address) => {
+                          {addresses?.map((address) => {
                             const deliveryAddress = address.unit_number
                               ? `${address.unit_number}-${address.street}, ${address.city}, ${address.province}, ${address.country} ${address.postal_code}`
                               : `${address.street}, ${address.city}, ${address.province}, ${address.country} ${address.postal_code}`

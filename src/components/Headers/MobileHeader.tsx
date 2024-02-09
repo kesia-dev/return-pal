@@ -19,7 +19,7 @@ import {
 import { type PropsWithChildren } from 'react'
 import { HeaderContent } from '@components/common/header'
 import { Separator } from '@components/ui/separator'
-import SigninModal from '@components/SigninModal'
+import SigninModal from '@/popups/SigninModal'
 import MobileHeaderFooter from './MobileHeaderFooter'
 
 type MobileViewType = PropsWithChildren & {
