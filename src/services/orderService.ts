@@ -1,16 +1,17 @@
+import axios, { type AxiosResponse } from 'axios'
 import { type PaginatedResponse, type Order } from '@components/DashBoard/types'
 
 export const fetchRecentOrders = async (page: number): Promise<Order[]> => {
   try {
-    const response = await fetch(
+    const response: AxiosResponse<PaginatedResponse> = await axios.get(
       `http://localhost:4200/api/orders?page=${page}`
     )
 
-    if (!response.ok) {
+    if (response.status !== 200) {
       throw new Error(`Failed to fetch orders. Status: ${response.status}`)
     }
 
-    const responseData = (await response.json()) as PaginatedResponse
+    const responseData: PaginatedResponse = response.data
 
     return responseData.paginatedOrders
   } catch (error) {
@@ -24,24 +25,24 @@ export const cancelOrder = async (orderId: string): Promise<boolean> => {
       status: 'Cancelled',
     }
 
-    const response = await fetch(
+    console.log(
+      'Request url:',
+      `http://localhost:4200/api/orders/${String(orderId)}`
+    )
+
+    console.log('Request Payload:', payload)
+
+    const response = await axios.put(
       `http://localhost:4200/api/orders/${String(orderId)}`,
+      payload,
       {
-        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(payload),
       }
     )
 
-    if (!response.ok) {
-      const errorMessage = await response.text()
-      console.error('Error updating order status:', errorMessage)
-      return false
-    }
-
-    return true
+    return response.status === 200
   } catch (error) {
     console.error('Error updating order status:', error)
     return false

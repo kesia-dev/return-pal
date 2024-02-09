@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import axios, { type AxiosResponse } from 'axios'
 import { VscArchive, VscCreditCard } from 'react-icons/vsc'
 import { IconContext } from 'react-icons'
 import OrderStatusNodes from '@/components/Orders/OrderStatusNodes'
@@ -21,31 +22,38 @@ const OrderId = () => {
     const fetchOrderDetails = async () => {
       try {
         if (orderId) {
-          const response = await fetch(
+          const response: AxiosResponse<Order> = await axios.get(
+            // Specify AxiosResponse<Order>
             `http://localhost:4200/api/orders/${String(orderId)}`
           )
           console.log('response is :: ', response)
-          if (response.ok) {
+
+          if (response.status === 200) {
             console.log('response is ok')
-            const data = (await response.json()) as Order
+            const data = response.data
             setOrder(data)
           } else {
-            console.error('Error fetching order details', response.statusText)
+            console.error('Error fetching order details:', response.statusText)
           }
         }
       } catch (error) {
-        console.error('Error fetching order details', error)
+        console.error('Error fetching order details:', error)
       }
     }
-    ;(async () => {
-      await fetchOrderDetails()
-    })().catch((error) => {
-      console.error('Error in fetchOrderDetails:', error)
-    })
+
+    fetchOrderDetails()
+      .then(() => {
+        console.log('Order details fetched successfully')
+      })
+      .catch((error) => {
+        console.error('Error in fetchOrderDetails:', error)
+      })
   }, [orderId])
+
   const cancelCancellation = () => {
     setSelectedOrder(null)
   }
+
   const confirmCancellation = () => {
     if (selectedOrder) {
       console.log(
