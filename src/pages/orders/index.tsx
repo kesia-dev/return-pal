@@ -69,7 +69,7 @@ const Orders: React.FC<OrdersProps> = ({ initialOrders }) => {
             <p>Loading...</p>
           ) : (
             <>
-              {orders.length > 0 ? (
+              {orders?.length > 0 ? (
                 <OrderList orders={orders} />
               ) : (
                 <p className="ml-3 ">Currently no orders placed.</p>
