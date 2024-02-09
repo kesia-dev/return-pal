@@ -23,7 +23,6 @@ const OrderId = () => {
       try {
         if (orderId) {
           const response: AxiosResponse<Order> = await axios.get(
-            // Specify AxiosResponse<Order>
             `http://localhost:4200/api/orders/${String(orderId)}`
           )
           console.log('response is :: ', response)
