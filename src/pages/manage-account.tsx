@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Form,FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
 import { Input } from '@components/ui/input';
-import { dummyData } from './api/manage-account/dummy-account';
+import { dummyData } from './api/manage-account/dummy-data';
 import DashboardLayout from '@layouts/DashboardLayout';
 import Reveal from '@components/common/reveal';
 import { Section } from '@components/common/section';
