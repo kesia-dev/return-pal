@@ -1,9 +1,9 @@
 import axios, { type AxiosResponse } from 'axios'
 import { type PaginatedResponse, type Order } from '@components/DashBoard/types'
-import * as dotenv from 'dotenv';
-dotenv.config();
+import * as dotenv from 'dotenv'
+dotenv.config()
 
-const baseUrl: string = process.env.BASE_URL || 'http://localhost:4200';
+const baseUrl: string = process.env.BASE_URL ?? 'http://localhost:4200'
 export const fetchRecentOrders = async (page: number): Promise<Order[]> => {
   try {
     const response: AxiosResponse<PaginatedResponse> = await axios.get(
@@ -27,11 +27,6 @@ export const cancelOrder = async (orderId: string): Promise<boolean> => {
     const payload = {
       status: 'Cancelled',
     }
-
-    console.log(
-      'Request url:',
-      `${baseUrl}/api/orders/${String(orderId)}`
-    )
 
     console.log('Request Payload:', payload)
 
