@@ -103,6 +103,7 @@ function DashBoardMain({
               </CardHeader>
             </Card>
           </Link>
+          <Link href="/manage-account">
           <Card
             className={`${cardClassnames}`}
             style={{
@@ -134,6 +135,7 @@ function DashBoardMain({
               </Reveal>
             </CardHeader>
           </Card>
+          </Link>
         </div>
         <RecentOrders />
       </div>
