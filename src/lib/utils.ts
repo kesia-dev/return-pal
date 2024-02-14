@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
+import { canadaProvinces } from './constants'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -252,4 +253,29 @@ export function isPostalCodeValid(postalCode: string) {
     .toUpperCase()
     .slice(0, 3)
   return POSTAL_CODE_ARRAY.includes(postalCodeCleaned)
+}
+
+/**
+ * Verifies if given province is part of the accepted provinces.
+ *
+ * @param province - The province to be verified.
+ * @returns boolean.
+ */
+export function isProvinceValid(province: string) {
+  const provincesMatched = canadaProvinces.filter((p) => {
+    console.log(province, ' and ', p.name, ' = ', province === p.name)
+    return province === p.name || province === p.value
+  })
+
+  console.log(provincesMatched)
+
+  return Boolean(provincesMatched.length)
+}
+
+export function isPhoneNumberValid(phoneNumber: string) {
+  return Boolean(
+    phoneNumber.match(
+      /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/
+    )
+  )
 }
