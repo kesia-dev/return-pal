@@ -263,11 +263,8 @@ export function isPostalCodeValid(postalCode: string) {
  */
 export function isProvinceValid(province: string) {
   const provincesMatched = canadaProvinces.filter((p) => {
-    console.log(province, ' and ', p.name, ' = ', province === p.name)
     return province === p.name || province === p.value
   })
-
-  console.log(provincesMatched)
 
   return Boolean(provincesMatched.length)
 }
