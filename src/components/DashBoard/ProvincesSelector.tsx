@@ -13,13 +13,15 @@ import { canadaProvinces } from '@lib/constants'
 export function ProvincesSelector({
   onValueChange,
   defaultValue,
+  selectorStyles = '',
 }: {
   onValueChange: (value: string) => void
   defaultValue: string
+  selectorStyles?: string
 }) {
   return (
     <Select onValueChange={onValueChange} defaultValue={defaultValue}>
-      <SelectTrigger className="w-full text-stone-400">
+      <SelectTrigger className={`${selectorStyles} w-full text-stone-400`}>
         <SelectValue placeholder="Select a Province" />
       </SelectTrigger>
       <SelectContent>
