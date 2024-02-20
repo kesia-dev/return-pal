@@ -14,7 +14,7 @@ import NextArrow from '@components/SvgComponents/NextArrow'
 import { motion } from 'framer-motion'
 import { container, item } from '@styles/framer'
 import { isPostalCodeValid } from '@lib/utils'
-import SigninModal from '@components/SigninModal'
+import SigninButton from '@components/SigninButton'
 import SignUpModule from '@components/SignUpModal'
 import { useState } from 'react'
 
@@ -105,7 +105,7 @@ function PostalCodeForm({
           <motion.div variants={item}>
             <p className="my-8 flex flex-col items-center justify-center font-semibold text-grey">
               Already have an account?
-              <SigninModal headerType="mobile" />
+              <SigninButton headerType="mobile" />
             </p>
           </motion.div>
           {isModalOpen && (

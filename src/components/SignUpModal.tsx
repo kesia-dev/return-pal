@@ -18,6 +18,8 @@ import useAuth from '@/services/authentication/useAuth'
 import { motion } from 'framer-motion'
 import { container, item } from '@styles/framer'
 import { type ModalPropsType } from '@/components/DashBoard/types'
+import { useState } from 'react'
+import axios from 'axios'
 
 const formSchema = z
   .object({
@@ -38,6 +40,11 @@ const formSchema = z
         message: 'Max 60 characters',
       }),
     email: z.string().email({ message: 'Please enter a valid email' }),
+    phoneNumber: z.string().max(10, { message: 'Please enter a valid phone number' }),
+    address: z.string().min(1, { message: 'Address is required' }),
+    suiteNo: z.string().optional(),
+    city: z.string().min(1, { message: 'City is required' }),
+    postalCode: z.string().min(1, { message: 'Postal code is required' }),
     password: z.string().min(8, 'Must be at least 8 characters'),
     confirmPassword: z.string(),
   })
@@ -59,6 +66,11 @@ function SignUpModule({ setIsOpen, isOpen }: ModalPropsType) {
       firstName: '',
       lastName: '',
       email: '',
+      phoneNumber: '',
+      address: '',
+      suiteNo: '', 
+      city: '',
+      postalCode: '',
       password: '',
       confirmPassword: '',
     },
@@ -66,8 +78,11 @@ function SignUpModule({ setIsOpen, isOpen }: ModalPropsType) {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
-    writeUserInfoToFragment(values.email, values.firstName, values.lastName)
-    setIsOpen() // close modal
+    writeUserInfoToFragment(values.firstName, values.lastName, values.email)
+    const { email, password } = values;
+    axios.post("http://localhost:4100/api/register", { email, password })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   }
 
   return (
@@ -77,7 +92,7 @@ function SignUpModule({ setIsOpen, isOpen }: ModalPropsType) {
           <span>&nbsp;Sign Up</span>
         </Link>
       </DialogTrigger>
-      <DialogContent className="m-0 h-3/4 min-h-[95%] w-full p-0">
+      <DialogContent className="m-0 h-3/4 min-h-[95%] p-0 overflow-auto">
         <motion.div
           className="m-0 flex flex-col flex-nowrap items-center justify-start gap-0 bg-paleBlue p-0"
           variants={container}
@@ -96,10 +111,8 @@ function SignUpModule({ setIsOpen, isOpen }: ModalPropsType) {
             />
           </motion.div>
           <motion.div variants={item}>
-            <h1 className="mt-2 w-[200px] text-base tracking-wide text-grey sm:w-[275px] sm:text-lg">
+            <h1 className="mt-4 w-[200px] text-2xl font-bold tracking-wide text-navy sm:w-[275px] text-center">
               Sign Up{' '}
-              <span className="hidden sm:inline-block">and let&apos;s</span>
-              <span className="inline-block sm:hidden">to</span> get started...
             </h1>
           </motion.div>
 
@@ -107,7 +120,7 @@ function SignUpModule({ setIsOpen, isOpen }: ModalPropsType) {
             <form
               // eslint-disable-next-line @typescript-eslint/no-misused-promises
               onSubmit={form.handleSubmit(onSubmit)}
-              className="flex flex-col items-center justify-start"
+              className="flex flex-col items-center justify-start max-w-md w-full"
             >
               <FormField
                 control={form.control}
@@ -168,6 +181,103 @@ function SignUpModule({ setIsOpen, isOpen }: ModalPropsType) {
               />
               <FormField
                 control={form.control}
+                name="phoneNumber"
+                render={({ field }) => (
+                  <FormItem className="mt-4 h-14 sm:mt-6 sm:h-14">
+                    <FormControl>
+                      <motion.div variants={item}>
+                        <Input
+                          className="h-10 w-[200px] rounded-xl border-4 border-primary text-sm placeholder:text-grey sm:h-12 sm:w-[275px] sm:text-lg"
+                          type="phoneNumber"
+                          placeholder="Phone Number"
+                          {...field}
+                        />
+                      </motion.div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="address"
+                render={({ field }) => (
+                  <FormItem className="mt-4 h-14 sm:mt-6 sm:h-14">
+                    <FormControl>
+                      <motion.div variants={item}>
+                        <Input
+                          className="h-10 w-[200px] rounded-xl border-4 border-primary text-sm placeholder:text-grey sm:h-12 sm:w-[275px] sm:text-lg"
+                          type="address"
+                          placeholder="Primary Street Address"
+                          {...field}
+                        />
+                      </motion.div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="flex flex-row">
+              <FormField
+                control={form.control}
+                name="suiteNo"
+                render={({ field }) => (
+                  <FormItem className="mt-4 h-14 sm:mt-6 sm:h-14">
+                    <FormControl>
+                      <motion.div variants={item}>
+                        <Input
+                          className="h-10 w-1/2 rounded-xl border-4 border-primary text-sm placeholder:text-grey sm:h-12 sm:w-[275px] sm:text-lg"
+                          type="suiteNo"
+                          placeholder="Office, Apt. (optional)"
+                          {...field}
+                        />
+                      </motion.div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="city"
+                render={({ field }) => (
+                  <FormItem className="mt-4 h-14 sm:mt-6 sm:h-14">
+                    <FormControl>
+                      <motion.div variants={item}>
+                        <Input
+                          className="h-10 w-[200px] rounded-xl border-4 border-primary text-sm placeholder:text-grey sm:h-12 sm:w-[275px] sm:text-lg"
+                          type="city"
+                          placeholder="City"
+                          {...field}
+                        />
+                      </motion.div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="postalCode"
+                render={({ field }) => (
+                  <FormItem className="mt-4 h-14 sm:mt-6 sm:h-14">
+                    <FormControl>
+                      <motion.div variants={item}>
+                        <Input
+                          className="h-10 w-[200px] rounded-xl border-4 border-primary text-sm placeholder:text-grey sm:h-12 sm:w-[275px] sm:text-lg"
+                          type="postalCode"
+                          placeholder="Postal Code"
+                          {...field}
+                        />
+                      </motion.div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              </div>
+              <FormField
+                control={form.control}
                 name="password"
                 render={({ field }) => (
                   <FormItem className="mt-4 h-14 sm:mt-6 sm:h-14">
@@ -195,7 +305,7 @@ function SignUpModule({ setIsOpen, isOpen }: ModalPropsType) {
                         <Input
                           className="h-10 w-[200px] rounded-xl border-4 border-primary text-sm placeholder:text-grey sm:h-12 sm:w-[275px] sm:text-lg"
                           type="password"
-                          placeholder="Confirm password"
+                          placeholder="Confirm Password"
                           {...field}
                         />
                       </motion.div>
@@ -207,7 +317,7 @@ function SignUpModule({ setIsOpen, isOpen }: ModalPropsType) {
               <motion.div variants={item}>
                 <Button
                   type="submit"
-                  className="mt-4 h-10 w-[150px] scale-75 rounded-3xl text-lg sm:mt-6 sm:h-12 sm:w-[150px] sm:scale-100"
+                  className="mt-4 mb-4 h-10 w-[150px] scale-75 rounded-3xl text-lg sm:mt-6 sm:h-12 sm:w-[150px] sm:scale-100"
                 >
                   Sign Up&nbsp;&nbsp;
                   <NextArrow />

@@ -17,6 +17,8 @@ import { type UserInfo } from '@/components/DashBoard/types'
 import LoadingSpinner from '@/components/LoadingSpinner'
 import useAuth from '@/services/authentication/useAuth'
 import MobileSideBar from '@components/DashBoard/MobileSideBar'
+import axios from 'axios'
+import Router from 'next/router'
 
 const tabsTriggerClassName =
   'data-[state=active]:ml-6 data-[state=active]:scale-105 data-[state=active]:border-l-8 data-[state=active]:bg-paleBlue data-[state=active]:text-primary dark:data-[state=active]:bg-slate-950 dark:data-[state=active]:text-slate-50 pl-10 justify-start text-sm md:text-lg lg:text-mediumText xl:text-subtitle'
@@ -92,6 +94,21 @@ function Dashboard() {
     },
   ]
 
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    const token = localStorage.getItem("token");
+
+    console.log({ userId, token })
+
+    axios
+      .post("http://localhost:4100/api/authorize", { userId, token })
+      .then((a) => console.log(a))
+      .catch((a) => console.log(a))
+
+  if (!token) {
+    Router.push("/signin")
+  }
+  })
   // TODO: replace this with Apollo client query instead of fragment
   // useEffect(() => {
   //   setUserInfo((preV) => {

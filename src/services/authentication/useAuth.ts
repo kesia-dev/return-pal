@@ -211,11 +211,40 @@ const useAuth = () => {
     return data
   }
 
+  const resetPassword = async (
+    password: string
+  ): Promise<AuthResponseType> => {
+    try {
+      const response = await loginRequest({
+        variables: { password },
+        // TODO - use client to reset store when backend is ready
+        // onCompleted: () => {
+        //   afterLoginClient.resetStore()
+        // },
+      })
+
+      toast({
+        title: 'Password reset',
+        description: `Welcome back ${response?.data?.login?.user?.firstName}`,
+        duration: 2000,
+      })
+      router.push('/dashboard')
+      return response?.data?.login
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        return err && { errors: [err.message] }
+      }
+      // Handle other types of errors
+      return { errors: ['Unknown'] }
+    }
+  }
+
   return {
     login,
     register,
     writeUserInfoToFragment,
     readUserInfoFromFragment,
+    resetPassword
   }
 }
 
