@@ -35,7 +35,7 @@ function DashBoardMain({
           </h3>
         </Reveal>
         <div className="justify-left mb-12 flex">
-          <Link href="/schedule-pickup">
+          <Link href="/schedule-pickup-calendar">
             <Card
               className={`${cardClassnames}`}
               style={{
