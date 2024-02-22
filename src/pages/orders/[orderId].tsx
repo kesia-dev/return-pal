@@ -121,9 +121,9 @@ const OrderId = () => {
                   >
                     Order #{order.order_number}
                   </div>
-
                   <div className="text-black-900 font-avenir-next flex items-center space-x-4 text-2xl font-bold">
-                    Nike Return
+                    {order.order_details.package_details[0].description} : Nike
+                    Return
                   </div>
                   <div className="w-{80} flex items-center space-x-4 text-smallText text-gray-900">
                     Order placed on
@@ -156,7 +156,6 @@ const OrderId = () => {
                       {order.order_details.pickup_details.postal_code}
                     </p>
                   </div>
-
                   <OrderStatusNodes status={order.status} />
                 </div>
                 {/* Right side */}
@@ -177,7 +176,7 @@ const OrderId = () => {
                       Total Packages:
                     </span>
                     <span className="w-{80} text-smallText text-gray-900">
-                      {order.status}
+                      {order.order_details.total_packages}
                     </span>
                   </div>
                   {/* Visa information */}
@@ -195,7 +194,6 @@ const OrderId = () => {
                 </div>
               </div>
             </div>
-
             <div className="order-buttons mt-2 flex justify-end">
               <div className="button-container">
                 <Link href="/orders">
@@ -237,7 +235,6 @@ const OrderId = () => {
                 </Button>
               </div>
             </div>
-
             {selectedOrder && (
               <ConfirmationDialog
                 message={`Are you sure you want to cancel Order #${selectedOrder.order_number}?`}
@@ -251,6 +248,7 @@ const OrderId = () => {
           <p>Loading...</p>
         )}
       </div>
+      <br />
     </DashboardLayout>
   )
 }
