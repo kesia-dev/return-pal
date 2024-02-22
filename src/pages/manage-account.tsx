@@ -54,7 +54,7 @@ export default function editUserProfile() {
 
 
 
-              <form onSubmit={form.handleSubmit(handleSubmit)} className='mb-4 flex flex-col  bg-white rounded shadow-lg w-[1300px] h-[300px]   p-10'>
+              <form onSubmit={form.handleSubmit(handleSubmit)} className='mb-4 flex flex-col  bg-white rounded shadow-lg w-[1300px] h-[300px]   p-5'>
 
 
                 <div className="flex flex-1 w-full flex-col p-5 ">
@@ -156,7 +156,7 @@ export default function editUserProfile() {
                 <div className='flex space-x-10  w-full p-5'>
                   <FormField control={form.control} name="emailAddress" render={({ field }) => {
                     return <FormItem>
-                      <FormLabel className="text-black sm:text-lg">email address</FormLabel>
+                      <FormLabel className="text-black sm:text-lg">Email address</FormLabel>
                       <FormControl>
                         <Input
                           className="h-10 rounded-md  text-sm placeholder:text-grey sm:h-12 sm:text-lg"
@@ -172,7 +172,7 @@ export default function editUserProfile() {
 
                   <FormField control={form.control} name="password" render={({ field }) => {
                     return <FormItem>
-                      <FormLabel className="text-black sm:text-lg">password</FormLabel>
+                      <FormLabel className="text-black sm:text-lg">Password</FormLabel>
                       <FormControl>
                         <Input
                           className="h-10 rounded-md  text-sm placeholder:text-grey sm:h-12 sm:text-lg"
