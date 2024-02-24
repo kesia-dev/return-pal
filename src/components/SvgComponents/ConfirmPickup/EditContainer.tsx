@@ -14,31 +14,33 @@ export default function EditContainer({
   isShowingIcon?: boolean
 }) {
   return (
-    <div className="justify-center sm:flex md:min-w-[45px]">
-      <Reveal>
-        {isShowingIcon ? (
+    <div className="flex h-full items-center justify-center">
+      {isShowingIcon ? (
+        <Reveal>
           <Button
             onClick={onClick}
-            className="rounded-full bg-transparent hover:bg-transparent"
+            className="rounded-full bg-transparent px-0 py-0 hover:bg-transparent"
           >
-            <div className="h-[20px] w-[20px] sm:mt-4 sm:h-[28px] sm:w-[28px]">
+            <div className="h-[18px] w-[18px] sm:h-[26.5px] sm:w-[26.5px] md:h-[35px] md:w-[35px]">
               <Edit />
             </div>
           </Button>
-        ) : (
+        </Reveal>
+      ) : (
+        <Reveal>
           <Button
-            className="bg-transparent px-0 py-0 transition-opacity hover:bg-transparent hover:opacity-60"
+            className="h-[18px] w-[18px] bg-transparent px-0 py-0 transition-opacity hover:bg-transparent hover:opacity-60 sm:h-[26.5px] sm:w-[26.5px] md:h-[35px] md:w-[35px]"
             onClick={onFinish}
           >
             <FontAwesomeIcon
               color="green"
-              width={28}
-              height={28}
+              height={'auto'}
+              width={'auto'}
               icon={faCircleCheck}
             />
           </Button>
-        )}
-      </Reveal>
+        </Reveal>
+      )}
     </div>
   )
 }
