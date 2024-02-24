@@ -27,6 +27,9 @@ module.exports = {
         paleBlue: '#E1F6FF',
         gradientL: '#40C4E8',
       },
+      fontFamily: {
+        avenirNext: ['var(--font-avenir)'],
+      },
       fontSize: {
         heading: ['75px', '113px'],
         title: ['50px', '75px'],
