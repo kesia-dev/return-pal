@@ -86,7 +86,7 @@ const Calendar = () => {
   };
 
   return (
-    <div className='flex  flex-col w-full h-full h-10 shrink rounded-md border-2 border-black
+    <div className='flex  flex-col w-full h-full h-10 shrink rounded-md border-2 border-grey
      text-sm mb-4 flex flex-col bg-white rounded w-[700px] h-[500px] p-10 shadow-lg ' >
 
       {renderMonthNavigation()}
