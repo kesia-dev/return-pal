@@ -80,7 +80,9 @@ const RecentOrders = () => {
         </div>
         <div>
           <Link href="/orders">
-            <Button variant="secondary">View More</Button>
+            <Button variant="secondary" className="h-8">
+              View More
+            </Button>
           </Link>
         </div>
       </div>
