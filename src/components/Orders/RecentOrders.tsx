@@ -114,7 +114,7 @@ const RecentOrders = () => {
                     disabled={[
                       'Cancelled',
                       'Delivered',
-                      'Driver delivered to post office',
+                      'Delivered to Post Office',
                     ].includes(order.status)}
                   >
                     Cancel Order
