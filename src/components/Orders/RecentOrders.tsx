@@ -97,13 +97,13 @@ const RecentOrders = () => {
               <p className="mb-2 text-base font-bold">
                 Order #{order.order_number}
               </p>
-              <div className="ml-10 pl-7">
+              <div className="ml-4 pl-4">
                 {' '}
                 <OrderStatusNodes status={order.status} />{' '}
               </div>
 
-              <div className="ml-20  pl-20 ">
-                <div className="order-buttons ml-9 mt-2">
+              <div className="ml-12  pl-10 ">
+                <div className="order-buttons ml-5 mt-2">
                   <Button
                     className="h-8"
                     variant="secondary"
@@ -121,7 +121,7 @@ const RecentOrders = () => {
                   </Button>
 
                   <Link href={`/orders/${String(order._id)}`}>
-                    <Button className="ml-5 h-8">Manage Order</Button>
+                    <Button className=" ml-5 h-8">Manage Order</Button>
                   </Link>
                 </div>
               </div>

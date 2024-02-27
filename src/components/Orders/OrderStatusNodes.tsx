@@ -21,7 +21,7 @@ const OrderStatusNode: React.FC<OrderStatusNodeProps> = ({
           <div className="z-30 mx-auto flex h-7 w-7 items-center rounded-full border-2 border-primary text-lg text-white">
             <IoCheckmarkCircle size={40} className="rounded-full bg-primary" />
           </div>
-          <p className="mb-2 w-full select-none space-x-10 pt-3 text-center text-xl text-black md:text-base">
+          <p className="mb-2 w-full select-none space-x-10 pt-3 text-center text-lg text-black md:text-base">
             {label}
           </p>
         </div>
@@ -49,13 +49,22 @@ interface OrderStatusNodesProps {
   order: { status: string } | undefined
 }
 const OrderStatusNodes: React.FC<OrderStatusNodesProps> = ({ order }) => {
+  // const statuses = [
+  //   'Driver received',
+  //   'Driver on the way',
+  //   'Driver delivered to post office',
+  //   'Delivered',
+  //   'Cancelled',
+  // ]
+
+
   const statuses = [
-    'Driver received',
-    'Driver on the way',
-    'Driver delivered to post office',
-    'Delivered',
+    'Order Placed',
+    'Picked Up',
+    'In Transit',
+    'Returned to Seller',
     'Cancelled',
-  ]
+  ] 
   return (
     <div className="mt-4 flex items-center justify-center">
       <div className="order-status-nodes-container flex space-x-0.5">
