@@ -200,11 +200,11 @@ const OrderId = () => {
             <div className="order-buttons mt-2 flex justify-end">
               <div className="button-container">
                 <Link href="/orders">
-                  <Button className="buttons">Back</Button>
+                  <Button className="buttons h-8">Back</Button>
                 </Link>
                 &nbsp;
                 <Button
-                  className="buttons"
+                  className="buttons h-8"
                   onClick={() =>
                     handleCancelOrder(order._id, order.order_number)
                   }

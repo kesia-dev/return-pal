@@ -6,6 +6,7 @@ import ConfirmationDialog from '@components/Orders/ConfirmationDialog'
 import { useRouter } from 'next/router'
 import { type ObjectId } from 'mongodb'
 import { fetchRecentOrders } from '@/services/orderService'
+import OrderStatusNodes from '@/components/Orders/OrderStatusNodes'
 
 const RecentOrders = () => {
   const [orders, setOrders] = useState<Order[]>([])
@@ -94,25 +95,33 @@ const RecentOrders = () => {
               <p className="mb-2 text-base font-bold">
                 Order #{order.order_number}
               </p>
+              <div className="ml-10 pl-7">
+                {' '}
+                <OrderStatusNodes status={order.status} />{' '}
+              </div>
 
-              <div className="order-buttons mt-2">
-                <Button
-                  variant="secondary"
-                  onClick={() =>
-                    handleCancelOrder(order._id, order.order_number)
-                  }
-                  style={getCancelOrderButtonStyles(order.status)}
-                  disabled={[
-                    'Cancelled',
-                    'Delivered',
-                    'Driver delivered to post office',
-                  ].includes(order.status)}
-                >
-                  Cancel Order
-                </Button>
-                <Link href={`/orders/${String(order._id)}`}>
-                  <Button className="ml-2">Manage Order</Button>
-                </Link>
+              <div className="ml-20  pl-20 ">
+                <div className="order-buttons ml-9 mt-2">
+                  <Button
+                    className="h-8"
+                    variant="secondary"
+                    onClick={() =>
+                      handleCancelOrder(order._id, order.order_number)
+                    }
+                    style={getCancelOrderButtonStyles(order.status)}
+                    disabled={[
+                      'Cancelled',
+                      'Delivered',
+                      'Driver delivered to post office',
+                    ].includes(order.status)}
+                  >
+                    Cancel Order
+                  </Button>
+
+                  <Link href={`/orders/${String(order._id)}`}>
+                    <Button className="ml-5 h-8">Manage Order</Button>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
