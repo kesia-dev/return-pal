@@ -212,17 +212,17 @@ const OrderId = () => {
                     backgroundColor:
                       order.status === 'Cancelled' ||
                       order.status === 'Delivered' ||
-                      order.status === 'Driver delivered to post office'
+                      order.status === 'Delivered to Post Office'
                         ? '#A3BEE8'
                         : '',
                     border:
                       order.status === 'Cancelled' ||
                       order.status === 'Delivered' ||
-                      order.status === 'Driver delivered to post office'
+                      order.status === 'Delivered to Post Office'
                         ? '1px solid #4299E1'
                         : 'none',
                     cursor:
-                      order.status === 'Driver delivered to post office' ||
+                      order.status === 'Delivered to Post Office' ||
                       order.status === 'Cancelled' ||
                       order.status === 'Delivered'
                         ? 'not-allowed'
@@ -231,7 +231,7 @@ const OrderId = () => {
                   disabled={[
                     'Cancelled',
                     'Delivered',
-                    'Driver delivered to post office',
+                    'Delivered to Post Office',
                   ].includes(order.status)}
                 >
                   Cancel Order
