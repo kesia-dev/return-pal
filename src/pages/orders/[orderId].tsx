@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import axios, { type AxiosResponse } from 'axios'
 import { VscArchive, VscCreditCard } from 'react-icons/vsc'
+import { GoCreditCard } from 'react-icons/go'
 import { IconContext } from 'react-icons'
 import OrderStatusNodes from '@/components/Orders/OrderStatusNodes'
 import { type Order } from '@/components/DashBoard/types'
@@ -98,7 +99,7 @@ const OrderId = () => {
                 className="border-thick flex-row space-x-7 border border-blue-950 bg-white "
                 style={{
                   width: '1250px',
-                  height: '500px',
+                  height: '450px',
                   margin: '40px auto 0px auto', // Center the div vertically and horizontally
                   borderRadius: '20px',
                   border: '3px solid #blue-950',
@@ -184,7 +185,7 @@ const OrderId = () => {
                   {/* Visa information */}
                   <div className="flex items-center space-x-4">
                     <IconContext.Provider value={{ size: '1.5em' }}>
-                      <VscCreditCard style={{ color: '008BE6' }} />
+                      <GoCreditCard style={{ color: '008BE6' }} />
                     </IconContext.Provider>
                     <span className="text-black-900 font-avenir-next with flex items-center text-smallText font-bold">
                       Payment Method:
@@ -250,7 +251,6 @@ const OrderId = () => {
           <p>Loading...</p>
         )}
       </div>
-      <br />
     </DashboardLayout>
   )
 }
