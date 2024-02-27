@@ -91,7 +91,7 @@ const OrderId = () => {
 
   return (
     <DashboardLayout>
-      <div className="container mx-auto max-w-7xl">
+      <div className="container mx-auto mb-2 max-w-7xl">
         {order ? (
           <>
             <div className="flex justify-center">
