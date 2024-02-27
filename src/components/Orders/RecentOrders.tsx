@@ -103,7 +103,7 @@ const RecentOrders = () => {
               </div>
 
               <div className="ml-12  pl-10 ">
-                <div className="order-buttons ml-5 mt-2">
+                <div className="order-buttons ml-8 mt-2">
                   <Button
                     className="h-8"
                     variant="secondary"
