@@ -62,7 +62,7 @@ const OrderStatusNodes: React.FC<OrderStatusNodesProps> = ({ order }) => {
     'Order Placed',
     'Picked Up',
     'In Transit',
-    'Returned to Seller',
+    'Delivered to Post Office',
     'Cancelled',
   ] 
   return (
