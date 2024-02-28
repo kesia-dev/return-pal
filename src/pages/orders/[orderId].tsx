@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import axios, { type AxiosResponse } from 'axios'
 import { VscArchive, VscCreditCard } from 'react-icons/vsc'
+import { GoCreditCard } from 'react-icons/go'
 import { IconContext } from 'react-icons'
 import OrderStatusNodes from '@/components/Orders/OrderStatusNodes'
 import { type Order } from '@/components/DashBoard/types'
@@ -75,22 +76,21 @@ const OrderId = () => {
     setSelectedOrder({ _id: id, order_number } as Order)
   }
 
-  const orderMonth = order?.order_date
-    ? new Date(order.order_date).toLocaleString('en-US', { month: 'long' })
+  const pickupTime = order?.order_details.pickup_details.pickup_date
+    ? new Date(
+        order.order_details.pickup_details.pickup_date
+      ).toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+      })
     : ''
 
-  const pickupMonth =
-    order?.order_details.pickup_details.pickup_date &&
-    new Date(order.order_details.pickup_details.pickup_date).toLocaleString(
-      'en-US',
-      {
-        month: 'long',
-      }
-    )
+  const orderDate = order?.order_date ?? '' // Extracting order date
+  const pickupDate = order?.order_details.pickup_details.pickup_date ?? '' // Extracting pickup date
 
   return (
     <DashboardLayout>
-      <div className="container mx-auto max-w-7xl">
+      <div className="container mx-auto mb-2 max-w-7xl">
         {order ? (
           <>
             <div className="flex justify-center">
@@ -98,7 +98,7 @@ const OrderId = () => {
                 className="border-thick flex-row space-x-7 border border-blue-950 bg-white "
                 style={{
                   width: '1250px',
-                  height: '500px',
+                  height: '450px',
                   margin: '40px auto 0px auto', // Center the div vertically and horizontally
                   borderRadius: '20px',
                   border: '3px solid #blue-950',
@@ -121,20 +121,30 @@ const OrderId = () => {
                   >
                     Order #{order.order_number}
                   </div>
-
                   <div className="text-black-900 font-avenir-next flex items-center space-x-4 text-2xl font-bold">
-                    Nike Return
+                    {order?.order_details?.package_details[0]?.description
+                      ? order?.order_details?.package_details[0]?.description
+                      : 'Nike Return'}
                   </div>
+
                   <div className="w-{80} flex items-center space-x-4 text-smallText text-gray-900">
                     Order placed on
                     <span className="text-black-900 font-avenir-next with p-sm ml-1 flex items-center space-x-4 text-smallText font-bold">
-                      {orderMonth}
+                      {orderDate
+                        ? new Date(orderDate).toLocaleDateString()
+                        : ''}
                     </span>
                   </div>
-                  <div className="w-{80} flex items-center space-x-4 text-smallText text-gray-900 ">
+
+                  <div className="w-{80} flex items-center space-x-4 text-smallText text-gray-900">
                     Pick up scheduled for
                     <span className="text-black-900 font-avenir-next with p-sm ml-1 flex items-center space-x-4 text-smallText font-bold">
-                      {pickupMonth}
+                      {pickupTime} ,{' '}
+                      {pickupDate
+                        ? new Date(pickupDate).toLocaleDateString()
+                        : ''}{' '}
+                      &nbsp;
+                      <span className="font-normal"> at </span>
                     </span>
                   </div>
                   <div className="text-black-900 font-avenir-next with flex items-center space-x-2 text-smallText font-bold">
@@ -156,8 +166,8 @@ const OrderId = () => {
                       {order.order_details.pickup_details.postal_code}
                     </p>
                   </div>
-
-                  <OrderStatusNodes status={order.status} />
+                  {/* <OrderStatusNodes status={order?.status} /> */}
+                  <OrderStatusNodes order={order} />
                 </div>
                 {/* Right side */}
                 <div
@@ -177,13 +187,13 @@ const OrderId = () => {
                       Total Packages:
                     </span>
                     <span className="w-{80} text-smallText text-gray-900">
-                      {order.status}
+                      {order.order_details.total_packages}
                     </span>
                   </div>
                   {/* Visa information */}
                   <div className="flex items-center space-x-4">
                     <IconContext.Provider value={{ size: '1.5em' }}>
-                      <VscCreditCard style={{ color: '008BE6' }} />
+                      <GoCreditCard style={{ color: '008BE6' }} />
                     </IconContext.Provider>
                     <span className="text-black-900 font-avenir-next with flex items-center text-smallText font-bold">
                       Payment Method:
@@ -195,15 +205,14 @@ const OrderId = () => {
                 </div>
               </div>
             </div>
-
             <div className="order-buttons mt-2 flex justify-end">
               <div className="button-container">
                 <Link href="/orders">
-                  <Button className="buttons">Back</Button>
+                  <Button className="buttons h-8">Back</Button>
                 </Link>
                 &nbsp;
                 <Button
-                  className="buttons"
+                  className="buttons h-8"
                   onClick={() =>
                     handleCancelOrder(order._id, order.order_number)
                   }
@@ -211,17 +220,17 @@ const OrderId = () => {
                     backgroundColor:
                       order.status === 'Cancelled' ||
                       order.status === 'Delivered' ||
-                      order.status === 'Driver delivered to post office'
+                      order.status === 'Delivered to Post Office'
                         ? '#A3BEE8'
                         : '',
                     border:
                       order.status === 'Cancelled' ||
                       order.status === 'Delivered' ||
-                      order.status === 'Driver delivered to post office'
+                      order.status === 'Delivered to Post Office'
                         ? '1px solid #4299E1'
                         : 'none',
                     cursor:
-                      order.status === 'Driver delivered to post office' ||
+                      order.status === 'Delivered to Post Office' ||
                       order.status === 'Cancelled' ||
                       order.status === 'Delivered'
                         ? 'not-allowed'
@@ -230,14 +239,13 @@ const OrderId = () => {
                   disabled={[
                     'Cancelled',
                     'Delivered',
-                    'Driver delivered to post office',
+                    'Delivered to Post Office',
                   ].includes(order.status)}
                 >
                   Cancel Order
                 </Button>
               </div>
             </div>
-
             {selectedOrder && (
               <ConfirmationDialog
                 message={`Are you sure you want to cancel Order #${selectedOrder.order_number}?`}

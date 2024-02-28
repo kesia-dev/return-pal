@@ -38,8 +38,23 @@ const OrderList: React.FC<OrderListProps> = ({ orders = [] }) => {
                     ? `Order #${order.order_number}`
                     : 'Order'}
                 </div>
+                {/* <div className="text-sm text-gray-900">
+                  Pick up Scheduled for{' '}
+                  {order.order_details?.pickup_details?.pickup_date
+                    ? formatPickupDate(
+                        order.order_details.pickup_details.pickup_date
+                      )
+                    : ''}
+                </div> */}
                 <div className="text-sm text-gray-900">
                   Pick up Scheduled for{' '}
+                  {order.order_date
+                    ? new Date(order.order_date).toLocaleTimeString('en-US', {
+                        hour: 'numeric',
+                        minute: '2-digit',
+                      })
+                    : ''}{' '}
+                  ,
                   {order.order_details?.pickup_details?.pickup_date
                     ? formatPickupDate(
                         order.order_details.pickup_details.pickup_date
