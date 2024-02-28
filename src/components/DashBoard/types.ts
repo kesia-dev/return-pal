@@ -188,3 +188,11 @@ export interface PaginatedResponse {
   totalPages: number
   totalOrders: number
 }
+
+export interface PromoCode {
+  _id: string
+  promoCode: string
+  expireDate: string
+  discountPercentage: number
+  __v: number
+}

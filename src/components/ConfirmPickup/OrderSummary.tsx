@@ -16,7 +16,8 @@ import { useReturnProcess } from '@hooks/useReturnProcess'
 import Reveal from '@components/common/reveal'
 import { useEffect, useState } from 'react'
 import { loadStripe } from '@stripe/stripe-js'
-import type { Order, Item } from '@/components/DashBoard/types'
+import type { Order, Item, PromoCode } from '@/components/DashBoard/types'
+import { getAllPromoCodes } from '@/services/promocodeServices'
 
 interface Props {
   promoState: [string, React.Dispatch<React.SetStateAction<string>>]
@@ -39,6 +40,7 @@ export default function OrderSummary({
   items,
 }: Props) {
   const [isCheckingout, setIsCheckingout] = useState(false)
+  const [promoMessage, setPromoMessage] = useState('')
   const stripePromise = loadStripe(
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
   )
@@ -54,6 +56,36 @@ export default function OrderSummary({
   // mock data
   const extraBoxes = 2
   const extraBoxPrice = 999
+
+  function handleApplyButtonClickWrapper() {
+    handleApplyButtonClick().catch((error) => {
+      console.error('Error handling apply button click:', error)
+    })
+  }
+  async function handleApplyButtonClick() {
+    try {
+      const promoCodes: PromoCode[] = await getAllPromoCodes()
+
+      const promoCodeInput = form.getValues().promo.trim().toLowerCase()
+      const currentDate = new Date()
+
+      const isValidPromo = promoCodes.some((promo) => {
+        const isValidCode = promo.promoCode.toLowerCase() === promoCodeInput
+        const isNotExpired = new Date(promo.expireDate) >= currentDate
+        return isValidCode && isNotExpired
+      })
+
+      if (isValidPromo) {
+        setPromoMessage('Promo code applied successfully')
+        setPromoCode(promoCodeInput)
+      } else {
+        setPromoMessage('Invalid promo code')
+      }
+    } catch (error) {
+      console.error('Error applying promo code:', error)
+      setPromoMessage('Invalid promo code')
+    }
+  }
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     setPromoCode(values.promo)
@@ -236,7 +268,7 @@ export default function OrderSummary({
                   )}
                 />
                 <Button
-                  type="submit"
+                  onClick={handleApplyButtonClickWrapper}
                   className="h-full w-1/3 rounded-l-none rounded-r-lg text-xl"
                 >
                   Apply
@@ -245,6 +277,17 @@ export default function OrderSummary({
             </Form>
           </Reveal>
 
+          {promoMessage && (
+            <Reveal width="100%" center={true}>
+              <div>
+                <p
+                  className={`text-sm ${promoMessage.includes('successfully') ? 'text-blue-500' : 'text-red-500'}`}
+                >
+                  {promoMessage}
+                </p>
+              </div>
+            </Reveal>
+          )}
           <Reveal width="100%" center={true}>
             <div className="mb-6 flex w-[87%] justify-between rounded-xl bg-paleBlue p-4">
               <Stamp />
