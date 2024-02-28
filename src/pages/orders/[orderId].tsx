@@ -76,18 +76,17 @@ const OrderId = () => {
     setSelectedOrder({ _id: id, order_number } as Order)
   }
 
-  const orderMonth = order?.order_date
-    ? new Date(order.order_date).toLocaleString('en-US', { month: 'long' })
+  const pickupTime = order?.order_details.pickup_details.pickup_date
+    ? new Date(
+        order.order_details.pickup_details.pickup_date
+      ).toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+      })
     : ''
 
-  const pickupMonth =
-    order?.order_details.pickup_details.pickup_date &&
-    new Date(order.order_details.pickup_details.pickup_date).toLocaleString(
-      'en-US',
-      {
-        month: 'long',
-      }
-    )
+  const orderDate = order?.order_date ?? '' // Extracting order date
+  const pickupDate = order?.order_details.pickup_details.pickup_date ?? '' // Extracting pickup date
 
   return (
     <DashboardLayout>
@@ -131,13 +130,21 @@ const OrderId = () => {
                   <div className="w-{80} flex items-center space-x-4 text-smallText text-gray-900">
                     Order placed on
                     <span className="text-black-900 font-avenir-next with p-sm ml-1 flex items-center space-x-4 text-smallText font-bold">
-                      {orderMonth}
+                      {orderDate
+                        ? new Date(orderDate).toLocaleDateString()
+                        : ''}
                     </span>
                   </div>
-                  <div className="w-{80} flex items-center space-x-4 text-smallText text-gray-900 ">
+
+                  <div className="w-{80} flex items-center space-x-4 text-smallText text-gray-900">
                     Pick up scheduled for
                     <span className="text-black-900 font-avenir-next with p-sm ml-1 flex items-center space-x-4 text-smallText font-bold">
-                      {pickupMonth}
+                      {pickupTime} ,{' '}
+                      {pickupDate
+                        ? new Date(pickupDate).toLocaleDateString()
+                        : ''}{' '}
+                      &nbsp;
+                      <span className="font-normal"> at </span>
                     </span>
                   </div>
                   <div className="text-black-900 font-avenir-next with flex items-center space-x-2 text-smallText font-bold">
@@ -159,7 +166,8 @@ const OrderId = () => {
                       {order.order_details.pickup_details.postal_code}
                     </p>
                   </div>
-                  <OrderStatusNodes status={order.status} />
+                  {/* <OrderStatusNodes status={order?.status} /> */}
+                  <OrderStatusNodes order={order} />
                 </div>
                 {/* Right side */}
                 <div

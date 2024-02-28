@@ -8,6 +8,10 @@ const OrderStatusNode: React.FC<OrderStatusNodeProps> = ({
   label,
   isActive,
 }) => {
+  // Skip rendering if the status is "Cancelled" and it's not active
+  if (!isActive && label === 'Cancelled') {
+    return null
+  }
   return (
     <div className={`w-1/5 pl-0 pr-0 pt-5`}>
       {isActive && (
@@ -19,7 +23,7 @@ const OrderStatusNode: React.FC<OrderStatusNodeProps> = ({
             <div className="align-center z-10 mb-3 h-1 w-full flex-1 items-center rounded bg-primary align-middle "></div>
           </div>
           <div className="z-30 mx-auto flex h-7 w-7 items-center rounded-full border-2 border-primary text-lg text-white">
-            <IoCheckmarkCircle size={40} className="rounded-full bg-primary" />
+            <IoCheckmarkCircle size={25} className="rounded-full bg-primary" />
           </div>
           <p className="mb-2 w-full select-none space-x-10 pt-3 text-center text-lg text-black md:text-base">
             {label}
@@ -49,22 +53,13 @@ interface OrderStatusNodesProps {
   order: { status: string } | undefined
 }
 const OrderStatusNodes: React.FC<OrderStatusNodesProps> = ({ order }) => {
-  // const statuses = [
-  //   'Driver received',
-  //   'Driver on the way',
-  //   'Driver delivered to post office',
-  //   'Delivered',
-  //   'Cancelled',
-  // ]
-
-
   const statuses = [
     'Order Placed',
     'Picked Up',
     'In Transit',
     'Delivered to Post Office',
     'Cancelled',
-  ] 
+  ]
   return (
     <div className="mt-4 flex items-center justify-center">
       <div className="order-status-nodes-container flex space-x-0.5">

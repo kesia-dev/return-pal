@@ -97,9 +97,11 @@ const RecentOrders = () => {
               <p className="mb-2 text-base font-bold">
                 Order #{order.order_number}
               </p>
-              <div className="ml-4 pl-4">
+
+              <div className="w-25 justify-right ml-4 flex pl-10">
                 {' '}
-                <OrderStatusNodes status={order.status} />{' '}
+                {/* Add flex and justify-center */}
+                <OrderStatusNodes order={order} />
               </div>
 
               <div className="ml-12  pl-10 ">
