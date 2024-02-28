@@ -14,7 +14,6 @@ import Link from 'next/link'
 import NextArrow from '@components/SvgComponents/NextArrow'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import Image from 'next/image'
-import useAuth from '@/services/authentication/useAuth'
 import { motion } from 'framer-motion'
 import { container, item } from '@styles/framer'
 import { type ModalPropsType } from '@/components/DashBoard/types'
@@ -29,7 +28,6 @@ const formSchema = z
   })
 
 function ForgotPasswordModule({ setIsOpen, isOpen }: ModalPropsType) {
-  const { writeUserInfoToFragment } = useAuth()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -50,7 +48,7 @@ function ForgotPasswordModule({ setIsOpen, isOpen }: ModalPropsType) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Link href="/" className="my-8 font-semibold text-grey underline">
+        <Link href="" className="my-8 font-semibold text-grey underline">
           <span>Forgot your password?</span>
         </Link>
       </DialogTrigger>

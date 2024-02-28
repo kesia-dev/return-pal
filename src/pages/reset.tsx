@@ -4,7 +4,6 @@ import Reveal from '@components/common/reveal'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
-import useAuth from '@/services/authentication/useAuth'
 import { motion } from 'framer-motion'
 import {
   Form,
@@ -14,11 +13,12 @@ import {
   FormMessage,
 } from '@components/ui/form'
 import { Button } from '@components/ui/button'
-import { container, item } from '@styles/framer'
+import { item } from '@styles/framer'
 import { Input } from '@components/ui/input'
 import NextArrow from '@components/SvgComponents/NextArrow'
 import axios from 'axios'
 import { useSearchParams } from 'next/navigation';
+import Router from 'next/router'
 
 
 // const BACKEND_URL = process.env.BACKEND_URL || "";
@@ -41,7 +41,6 @@ const formSchema = z
   )
 
 function Reset() {
-  const { readUserInfoFromFragment } = useAuth()
   const searchParams = useSearchParams()
 
   const passwordResetToken = searchParams.get("token")
@@ -61,9 +60,8 @@ function Reset() {
     const { email, password } = values;
     axios.post(`http://localhost:4100/api/reset/${passwordResetToken}`, { email, password })
     // axios.post(`${BACKEND_URL}/reset`, { password })
-    .then((res) => console.log(res))
+    .then(() => Router.push("/signin"))
     .catch((err) => console.log(err));
-    readUserInfoFromFragment()
   }
 
   return (
