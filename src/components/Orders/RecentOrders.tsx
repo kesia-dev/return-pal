@@ -147,7 +147,7 @@ const RecentOrders: React.FC = () => {
       <style jsx>{`
         @media only screen and (min-width: 992px) {
           .order-box {
-            width: calc(50% - 2rem); // Set width to half minus margin
+            width: calc(50% - 2px); // Set width to half minus margin
           }
         }
       `}</style>
