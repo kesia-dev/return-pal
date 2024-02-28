@@ -11,7 +11,13 @@ import { useReturnProcess } from '@/hooks/useReturnProcess'
 import { type ReturnProcessFullObjectType } from '@context/ReturnProcessContext'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
-import { useState, useEffect, useRef, FocusEvent, FormEvent } from 'react'
+import {
+  useState,
+  useEffect,
+  useRef,
+  type FocusEvent,
+  type FormEvent,
+} from 'react'
 import Reveal from '@components/common/reveal'
 import type { Item, Order } from '@/components/DashBoard/types'
 import { priceData } from '@/return-process/prices'
@@ -393,9 +399,7 @@ function DatePickupInformation({ order }: { order: Order }) {
     setIsShowing(false)
   }
 
-  const dateDefault = new Date(
-    `${returnProcess.currentData.dateAndTime} T00:00:00-05:00`
-  )
+  const dateDefault = new Date()
 
   const dateString = new Intl.DateTimeFormat('en-US', {
     weekday: 'short',
