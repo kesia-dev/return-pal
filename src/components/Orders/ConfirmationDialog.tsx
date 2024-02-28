@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from '@/components/ui/button'
-import { type ObjectId } from 'mongodb'
 import { type ConfirmationDialogProps } from '@components/DashBoard/types'
+import { cancelOrder } from '@/services/orderService'
 
 const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
   message,
@@ -9,28 +9,18 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
   onConfirm,
   orderId,
 }) => {
-  const handleConfirm = async (): Promise<void> => {
-    try {
-      const response = await fetch(`/api/orders/${orderId.toString()}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ status: 'Cancelled' }),
-      })
-      if (response.ok) {
-        onConfirm()
-      } else {
-        console.error('Failed to update order status')
-      }
-    } catch (error) {
-      console.error('Error updating order status:', error)
-    }
-  }
   const handleConfirmClick = (): void => {
-    handleConfirm().catch((error) =>
-      console.error('Error in handleConfirm:', error)
-    )
+    cancelOrder(String(orderId))
+      .then((success) => {
+        if (success) {
+          onConfirm()
+        } else {
+          console.error('Failed to update order status')
+        }
+      })
+      .catch((error) => {
+        console.error('Error in handleConfirm:', error)
+      })
   }
 
   return (

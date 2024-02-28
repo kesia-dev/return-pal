@@ -1,10 +1,11 @@
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import SigninButton from '@components/SigninButton'
-import { HeaderContent } from '@components/common/header'
+import { HeaderContent } from '@components/common/header-alt'
 import { Button } from '@components/ui/button'
-import PostalCodeModal from '@components/PostalCodeModal'
+import { FaRegCircleUser } from 'react-icons/fa6'
+import { useRouter } from 'next/router'
+import Image from 'next/image'
 
 export type MenuItem = {
   title: string
@@ -13,30 +14,34 @@ export type MenuItem = {
 
 const menuItems: MenuItem[] = [
   {
-    title: 'About Us',
-    href: '/about',
-  },
-  {
-    title: 'Contact Us',
-    href: '/contact',
-  },
-  {
     title: 'Dashboard',
     href: '/dashboard',
   },
 ]
 
-export default function DesktopHeader() {
+export default function DashboardHeader() {
   const pathname = usePathname()
+  const router = useRouter()
+
+  const handleDashboardClick = (e, href) => {
+    e.preventDefault()
+    router.push(href)
+    if (router.pathname === href) {
+      router.reload() // Reload the page if the current pathname matches the href
+    }
+  }
+
   return (
     <HeaderContent className="hidden justify-between align-middle md:flex">
-      <div className="flex w-full shrink justify-center gap-x-4">
+      <div className="justify-left flex w-full shrink gap-x-4">
         {/* NOTE: This causes a hydration warning message because usePathname is a client component and therefore the class names will be different when rendered on the server. */}
         {menuItems.map((menuItem) => {
           return (
             <Link
               key={menuItem.href}
               href={menuItem.href}
+              onClick={(e) => handleDashboardClick(e, menuItem.href)}
+              style={{ color: 'white', marginLeft: '100px', fontSize: '150%' }}
               className={cn(
                 'text-secondary shrink font-bold drop-shadow-lg',
                 pathname === menuItem.href && 'text-primary'
@@ -48,11 +53,11 @@ export default function DesktopHeader() {
         })}
       </div>
       <div className="flex space-x-2 lg:space-x-5">
-        <PostalCodeModal headerType="desktop"/>
-        <SigninButton headerType="desktop" />
-        <Link href="/schedule-pickup">
-          <Button className="h-9 w-36">Schedule Pickup</Button>
-        </Link>
+        <Button variant="secondary" className="h-9 w-fit mt-2">
+          Sign Out
+        </Button>
+        
+        <FaRegCircleUser style={{ fontSize: '50px', color: '#d9d9d9' }} />
       </div>
     </HeaderContent>
   )

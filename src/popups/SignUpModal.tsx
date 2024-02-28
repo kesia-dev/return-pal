@@ -14,7 +14,6 @@ import Link from 'next/link'
 import NextArrow from '@components/SvgComponents/NextArrow'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import Image from 'next/image'
-import useAuth from '@/services/authentication/useAuth'
 import { motion } from 'framer-motion'
 import { container, item } from '@styles/framer'
 import { type ModalPropsType } from '@/components/DashBoard/types'
@@ -59,7 +58,6 @@ const formSchema = z
   )
 
 function SignUpModule({ setIsOpen, isOpen }: ModalPropsType) {
-  const { writeUserInfoToFragment } = useAuth()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -78,11 +76,11 @@ function SignUpModule({ setIsOpen, isOpen }: ModalPropsType) {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
-    writeUserInfoToFragment(values.firstName, values.lastName, values.email)
     const { email, password } = values;
     axios.post("http://localhost:4100/api/register", { email, password })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
+    setIsOpen() // close modal
   }
 
   return (

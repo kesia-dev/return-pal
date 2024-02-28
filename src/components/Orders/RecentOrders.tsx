@@ -1,46 +1,42 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { type Order, type PaginatedResponse } from '@components/DashBoard/types'
+import { type Order } from '@components/DashBoard/types'
 import { Button } from '@/components/ui/button'
 import ConfirmationDialog from '@components/Orders/ConfirmationDialog'
 import { useRouter } from 'next/router'
 import { type ObjectId } from 'mongodb'
+import { fetchRecentOrders } from '@/services/orderService'
+import OrderStatusNodes from '@/components/Orders/OrderStatusNodes'
 
 const RecentOrders = () => {
   const [orders, setOrders] = useState<Order[]>([])
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
   const [currentPage, setCurrentPage] = useState<number>(1)
-  const [totalPages, setTotalPages] = useState<number>(1)
   const router = useRouter()
 
-  const fetchRecentOrders: (page: number) => Promise<void> = async (page) => {
-    try {
-      const response = await fetch(`/api/orders?page=${page}`)
-
-      if (!response.ok) {
-        throw new Error(`Failed to fetch orders. Status: ${response.status}`)
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const recentOrders = await fetchRecentOrders(currentPage)
+        setOrders(recentOrders)
+      } catch (error) {
+        console.error('Error fetching recent orders:', error)
       }
+    }
+    fetchData().catch((error) => console.error('Error in fetchData:', error))
+  }, [currentPage])
 
-      const responseData = (await response.json()) as PaginatedResponse
+  const getCancelOrderButtonStyles = (status: string) => {
+    const isDisabled =
+      status === 'Cancelled' ||
+      status === 'Delivered' ||
+      status === 'Driver delivered to post office'
 
-      setOrders(responseData.paginatedOrders)
-      setCurrentPage(responseData.currentPage)
-      setTotalPages(responseData.totalPages)
-    } catch (error) {
-      console.error('Error fetching recent orders:', error)
-      throw error
+    return {
+      opacity: isDisabled ? '0.7' : '1',
+      cursor: isDisabled ? 'not-allowed' : 'pointer',
     }
   }
-
-  useEffect(() => {
-    const fetchData = () => {
-      fetchRecentOrders(currentPage).catch((error) => {
-        console.error('Error fetching recent orders:', error)
-      })
-    }
-
-    fetchData()
-  }, [currentPage])
 
   const handleCancelOrder = (id: ObjectId, order_number: string) => {
     setSelectedOrder({ _id: id, order_number } as Order)
@@ -77,14 +73,16 @@ const RecentOrders = () => {
   }
 
   return (
-    <div className="recent-orders-container mt-14 flex flex-col items-start p-5">
-      <div className="mb-4 flex w-full items-center justify-between">
+    <div className="recent-orders-container mt-14 flex flex-col items-start">
+      <div className="mb-5 flex w-full items-center justify-between">
         <div className="recent-order-header">
-          <h2 className="mb-2 text-xl font-bold">Recent Orders</h2>
+          <h2 className="mb-2 text-3xl font-bold">Recent Orders</h2>
         </div>
         <div>
           <Link href="/orders">
-            <Button variant="secondary">View More</Button>
+            <Button variant="secondary" className="h-8">
+              View More
+            </Button>
           </Link>
         </div>
       </div>
@@ -100,33 +98,34 @@ const RecentOrders = () => {
                 Order #{order.order_number}
               </p>
 
-              <div className="order-buttons mt-2">
-                <Button
-                  variant="secondary"
-                  onClick={() =>
-                    handleCancelOrder(order._id, order.order_number)
-                  }
-                  style={{
-                    opacity:
-                      order.status === 'Cancelled' ||
-                      order.status === 'Delivered'
-                        ? '0.7'
-                        : '1',
-                    cursor:
-                      order.status === 'Cancelled' ||
-                      order.status === 'Delivered'
-                        ? 'not-allowed'
-                        : 'pointer',
-                  }}
-                  disabled={
-                    order.status === 'Cancelled' || order.status === 'Delivered'
-                  }
-                >
-                  Cancel Order
-                </Button>
-                <Link href={`/orders/${String(order._id)}`}>
-                  <Button className="ml-2">Manage Order</Button>
-                </Link>
+              <div className="w-25 justify-right ml-4 flex pl-10">
+                {' '}
+                {/* Add flex and justify-center */}
+                <OrderStatusNodes order={order} />
+              </div>
+
+              <div className="ml-12  pl-10 ">
+                <div className="order-buttons ml-8 mt-2">
+                  <Button
+                    className="h-8"
+                    variant="secondary"
+                    onClick={() =>
+                      handleCancelOrder(order._id, order.order_number)
+                    }
+                    style={getCancelOrderButtonStyles(order.status)}
+                    disabled={[
+                      'Cancelled',
+                      'Delivered',
+                      'Delivered to Post Office',
+                    ].includes(order.status)}
+                  >
+                    Cancel Order
+                  </Button>
+
+                  <Link href={`/orders/${String(order._id)}`}>
+                    <Button className=" ml-5 h-8">Manage Order</Button>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

@@ -1,5 +1,4 @@
 import React, { useRef } from 'react'
-import emailjs from '@emailjs/browser'
 import {
   Form,
   FormControl,
@@ -51,30 +50,7 @@ function MailingForm() {
   // handling email sending ufter form is submitted
   const formRef = useRef<HTMLFormElement | null>(null)
 
-  const handleEmailSending = async () => {
-    const formElement = formRef.current
 
-    if (formElement) {
-      try {
-        const result = await emailjs.sendForm(
-          'service_kaw06lg',
-          'template_l0jgijd',
-          formElement,
-          'D0Xk7y6Z9b9kB-neE'
-        )
-        console.log(result.text)
-        console.log('Email sent successfully')
-      } catch (error: unknown) {
-        if (error instanceof Error && 'text' in error) {
-          console.log(error.text)
-        } else {
-          console.error('Error sending email:', error)
-        }
-      }
-    } else {
-      console.error('Form element is null or undefined.')
-    }
-  }
 
   const onSubmit = async ({
     fullName,
@@ -86,31 +62,6 @@ function MailingForm() {
       postal_code: invalidPostalCode,
     }
 
-    //saving data to the DB
-    try {
-      const response = await fetch('/api/leads', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...leadsData,
-        }),
-      })
-
-      if (response.ok) {
-        console.log('User data inserted successfully')
-      } else {
-        const data = (await response.json()) as ResponseData
-        console.error(data.error || 'Failed to insert user data')
-      }
-    } catch (error) {
-      console.error('Error inserting user data:', error)
-    }
-
-    await handleEmailSending()
-
-    await router.push('/')
   }
 
   return (

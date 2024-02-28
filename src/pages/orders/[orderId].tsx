@@ -1,113 +1,66 @@
-// import { useRouter } from 'next/router'
-// import { useEffect, useState } from 'react'
-// import { type Order } from '@components/DashBoard/types'
-
-// const OrderId: React.FC = () => {
-//   const router = useRouter()
-//   const { orderId } = router.query
-//   const [order, setOrder] = useState<Order | null>(null)
-
-//   useEffect(() => {
-//     const fetchOrderDetails = async () => {
-//       try {
-//         if (orderId) {
-//           console.log('orderId : ', orderId)
-//           const orderIdString = Array.isArray(orderId) ? orderId[0] : orderId
-//           const response = await fetch(`/api/orders/${orderIdString}`)
-//           console.log('response is :: ', response)
-//           if (response.ok) {
-//             console.log('response is ok')
-//             const data = (await response.json()) as Order
-//             setOrder(data)
-//           } else {
-//             console.error('Error fetching order details', response.statusText)
-//           }
-//         }
-//       } catch (error) {
-//         console.error('Error fetching order details', error)
-//       }
-//     }
-
-//     ;(async () => {
-//       await fetchOrderDetails()
-//     })().catch((error) => {
-//       console.error('Error in fetchOrderDetails:', error)
-//     })
-//   }, [orderId])
-
-//   return (
-//     <div style={{ padding: '20px' }}>
-//       <h1>Manage Order Page</h1>
-//       {order ? (
-//         <>
-//           <h2>Order Details</h2>
-//           <p>Order Number: {order.order_number}</p>
-//           <p>Item Name: {order.itemName}</p>
-//           <p>Quantity: {order.quantity}</p>
-//           <p>Orders Status: {order.status}</p>
-//           <p>
-//             Orders Placed on: {order.order_date?.$dateFromString?.dateString}
-//           </p>
-//         </>
-//       ) : (
-//         <p>Loading...</p>
-//       )}
-//     </div>
-//   )
-// }
-
-// export default OrderId
-// pages/orders/[orderId].tsx
+//pages/orders/[orderId].tsx
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import axios, { type AxiosResponse } from 'axios'
 import { VscArchive, VscCreditCard } from 'react-icons/vsc'
+import { GoCreditCard } from 'react-icons/go'
 import { IconContext } from 'react-icons'
-import DefaultLayout from '@/layouts/DefaultLayout'
 import OrderStatusNodes from '@/components/Orders/OrderStatusNodes'
-
 import { type Order } from '@/components/DashBoard/types'
 import { Button } from '@/components/ui/button'
 import ConfirmationDialog from '@components/Orders/ConfirmationDialog'
+import { type ObjectId } from 'mongodb'
+import DashboardLayout from '@/layouts/DashboardLayout'
+
 const OrderId = () => {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
   const router = useRouter()
   const { orderId } = router.query
   const [order, setOrder] = useState<Order | null>(null)
+  const baseUrl: string = process.env.BASE_URL ?? 'http://localhost:4200'
 
   useEffect(() => {
     const fetchOrderDetails = async () => {
       try {
         if (orderId) {
-          console.log('orderId : ', orderId)
-          const orderIdString = Array.isArray(orderId) ? orderId[0] : orderId
-          const response = await fetch(`/api/orders/${orderIdString}`)
+          const response: AxiosResponse<Order> = await axios.get(
+            `${baseUrl}/api/orders/${String(orderId)}`
+          )
           console.log('response is :: ', response)
-          if (response.ok) {
+
+          if (response.status === 200) {
             console.log('response is ok')
-            const data = (await response.json()) as Order
+            const data = response.data
             setOrder(data)
           } else {
-            console.error('Error fetching order details', response.statusText)
+            console.error('Error fetching order details:', response.statusText)
           }
         }
       } catch (error) {
-        console.error('Error fetching order details', error)
+        console.error('Error fetching order details:', error)
       }
     }
-    ;(async () => {
-      await fetchOrderDetails()
-    })().catch((error) => {
-      console.error('Error in fetchOrderDetails:', error)
-    })
+
+    fetchOrderDetails()
+      .then(() => {
+        console.log('Order details fetched successfully')
+      })
+      .catch((error) => {
+        console.error('Error in fetchOrderDetails:', error)
+      })
   }, [orderId])
+
   const cancelCancellation = () => {
     setSelectedOrder(null)
   }
+
   const confirmCancellation = () => {
     if (selectedOrder) {
       console.log(
-        `Cancel Order ${selectedOrder.order_number} (${selectedOrder._id})`
+        `Cancel Order ${selectedOrder.order_number} (${String(
+          selectedOrder._id
+        )})`
       )
       router
         .replace('/orders')
@@ -119,143 +72,195 @@ const OrderId = () => {
         })
     }
   }
-  const handleCancelOrder = (_id: string, order_number: string) => {
-    setSelectedOrder({ _id, order_number } as Order)
+  const handleCancelOrder = (id: ObjectId, order_number: string) => {
+    setSelectedOrder({ _id: id, order_number } as Order)
   }
+
+  const pickupTime = order?.order_details.pickup_details.pickup_date
+    ? new Date(
+        order.order_details.pickup_details.pickup_date
+      ).toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+      })
+    : ''
+
+  const orderDate = order?.order_date ?? '' // Extracting order date
+  const pickupDate = order?.order_details.pickup_details.pickup_date ?? '' // Extracting pickup date
+
   return (
-    <div>
-      <h1>In Progress</h1>
-      {order ? (
-        <>
-          <div className="flex justify-center">
-            <div
-              className="border-thick flex-row space-x-7 border border-blue-950 bg-white "
-              style={{
-                width: '1000px',
-                height: '540px',
-                margin: '50px auto 0 auto', // Center the div vertically and horizontally
-                borderRadius: '20px',
-                border: '3px solid #blue-950',
-                display: 'flex', // Use flexbox
-                justifyContent: 'center', // Evenly distribute space between items
-              }}
-            >
-              {/* Left side */}
+    <DashboardLayout>
+      <div className="container mx-auto mb-2 max-w-7xl">
+        {order ? (
+          <>
+            <div className="flex justify-center">
               <div
-                className="flex flex-col space-y-5 p-0 "
+                className="border-thick flex-row space-x-7 border border-blue-950 bg-white "
                 style={{
-                  marginRight: '50px',
-                  marginLeft: '75px',
-                  marginTop: '100px',
+                  width: '1250px',
+                  height: '450px',
+                  margin: '40px auto 0px auto', // Center the div vertically and horizontally
+                  borderRadius: '20px',
+                  border: '3px solid #blue-950',
+                  display: 'flex', // Use flexbox
+                  justifyContent: 'center', // Evenly distribute space between items
                 }}
               >
-                <div className="font-avenir-next text-2xl font-bold">
-                  Order #{order.order_number}
+                {/* Left side */}
+                <div
+                  className="flex flex-col space-y-5 p-0 "
+                  style={{
+                    marginRight: '50px',
+                    marginLeft: '75px',
+                    marginTop: '60px',
+                  }}
+                >
+                  <div
+                    className="font-avenir-next text-color: #052A42; text-2xl font-bold
+"
+                  >
+                    Order #{order.order_number}
+                  </div>
+                  <div className="text-black-900 font-avenir-next flex items-center space-x-4 text-2xl font-bold">
+                    {order?.order_details?.package_details[0]?.description
+                      ? order?.order_details?.package_details[0]?.description
+                      : 'Nike Return'}
+                  </div>
+
+                  <div className="w-{80} flex items-center space-x-4 text-smallText text-gray-900">
+                    Order placed on
+                    <span className="text-black-900 font-avenir-next with p-sm ml-1 flex items-center space-x-4 text-smallText font-bold">
+                      {orderDate
+                        ? new Date(orderDate).toLocaleDateString()
+                        : ''}
+                    </span>
+                  </div>
+
+                  <div className="w-{80} flex items-center space-x-4 text-smallText text-gray-900">
+                    Pick up scheduled for
+                    <span className="text-black-900 font-avenir-next with p-sm ml-1 flex items-center space-x-4 text-smallText font-bold">
+                      {pickupTime} ,{' '}
+                      {pickupDate
+                        ? new Date(pickupDate).toLocaleDateString()
+                        : ''}{' '}
+                      &nbsp;
+                      <span className="font-normal"> at </span>
+                    </span>
+                  </div>
+                  <div className="text-black-900 font-avenir-next with flex items-center space-x-2 text-smallText font-bold">
+                    <p className="pl-0">
+                      {order.order_details.pickup_details.street},
+                    </p>
+                    <p className="m-0 pl-0">
+                      {order.order_details.pickup_details.city},
+                    </p>
+                    <p className="m-0 p-0">
+                      {order.order_details.pickup_details.province},
+                    </p>
+                    <p className="m-0 p-0">
+                      {''}
+                      {order.order_details.pickup_details.country},
+                    </p>
+                    <p className="m-0 p-0">
+                      {''}
+                      {order.order_details.pickup_details.postal_code}
+                    </p>
+                  </div>
+                  {/* <OrderStatusNodes status={order?.status} /> */}
+                  <OrderStatusNodes order={order} />
                 </div>
-                {/* Add other order details as needed */}
-                <div className="text-black-900 font-avenir-next flex items-center space-x-4 text-2xl font-bold">
-                  Nike Return
-                </div>
-                <div className="w-{80} flex items-center space-x-4 text-smallText text-gray-900">
-                  Order placed on
-                  <span className="text-black-900 font-avenir-next with p-sm ml-1 flex items-center space-x-4 text-smallText font-bold">
-                    Jan
-                  </span>
-                </div>
-                <div className="w-{80} flex items-center space-x-4 text-smallText text-gray-900 ">
-                  Pick up scheduled for
-                  <span className="text-black-900 font-avenir-next with p-sm ml-1 flex items-center space-x-4 text-smallText font-bold">
-                    Dec
-                  </span>
-                </div>
-                <div className="text-black-900 font-avenir-next with flex items-center space-x-10 text-smallText font-bold">
-                  6500 Boulevard de Rome, Brossard, QC, J4Y 0B6
-                </div>
-                <OrderStatusNodes status={order.status} />
-              </div>
-              {/* Right side */}
-              <div
-                className="flex flex-col space-y-7 "
-                style={{
-                  marginLeft: '50px',
-                  marginRight: '75px',
-                  marginTop: '200px',
-                }}
-              >
-                {/* Total packages */}
-                <div className=" flex items-center space-x-4">
-                  <IconContext.Provider value={{ size: '1.5em' }}>
-                    <VscArchive />
-                  </IconContext.Provider>
-                  <span className="w-{80} text-black-900 font-avenir-next with p-sm flex items-center text-smallText font-bold">
-                    Total Packages:
-                  </span>
-                  <span className="w-{80} text-smallText text-gray-900">
-                    {order.order_details.total_packages}
-                  </span>
-                </div>
-                {/* Visa information */}
-                <div className="flex items-center space-x-4">
-                  <IconContext.Provider value={{ size: '1.5em' }}>
-                    <VscCreditCard />
-                  </IconContext.Provider>
-                  <span className="text-black-900 font-avenir-next with flex items-center text-smallText font-bold">
-                    Visa ending in:
-                  </span>
-                  <span className="w-{80} space-x-4 text-smallText text-gray-900">
-                    4345
-                  </span>
+                {/* Right side */}
+                <div
+                  className="flex flex-col space-y-7 "
+                  style={{
+                    marginLeft: '50px',
+                    marginRight: '75px',
+                    marginTop: '160px',
+                  }}
+                >
+                  {/* Total packages */}
+                  <div className=" flex items-center space-x-4">
+                    <IconContext.Provider value={{ size: '1.5em' }}>
+                      <VscArchive style={{ color: '008BE6' }} />
+                    </IconContext.Provider>
+                    <span className="w-{80} text-black-900 font-avenir-next with p-sm flex items-center text-smallText font-bold">
+                      Total Packages:
+                    </span>
+                    <span className="w-{80} text-smallText text-gray-900">
+                      {order.order_details.total_packages}
+                    </span>
+                  </div>
+                  {/* Visa information */}
+                  <div className="flex items-center space-x-4">
+                    <IconContext.Provider value={{ size: '1.5em' }}>
+                      <GoCreditCard style={{ color: '008BE6' }} />
+                    </IconContext.Provider>
+                    <span className="text-black-900 font-avenir-next with flex items-center text-smallText font-bold">
+                      Payment Method:
+                    </span>
+                    <span className="w-{80} space-x-4 text-smallText text-gray-900">
+                      {order.client_details.payment_type}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div
-            className="mt-4 grid grid-cols-2 gap-4"
-            style={{ gridTemplateColumns: '1fr auto', marginLeft: '800px' }}
-          >
-            <div>
-              <Link href="/orders">
-                <Button>Back</Button>
-              </Link>
-              <Button
-                className="ring-offset-background focus-visible:ring-ring inline-flex h-10 items-center justify-center whitespace-nowrap rounded-full border-2 border-primary bg-white px-4 py-2 text-sm font-bold text-primary transition-colors hover:bg-slate-100/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-95 active:shadow-none active:ring-0 active:ring-offset-0 disabled:pointer-events-none disabled:opacity-50 dark:bg-slate-800 dark:text-slate-50 dark:hover:bg-slate-800/80"
-                onClick={() => handleCancelOrder(order._id, order.order_number)}
-                style={{
-                  opacity:
-                    order.status === 'Cancelled' || order.status === 'Delivered'
-                      ? '2.0'
-                      : '1',
-                  cursor:
-                    order.status === 'Cancelled' || order.status === 'Delivered'
-                      ? 'not-allowed'
-                      : 'pointer',
-                }}
-                disabled={
-                  order.status === 'Cancelled' || order.status === 'Delivered'
-                }
-              >
-                Cancel Order
-              </Button>
+            <div className="order-buttons mt-2 flex justify-end">
+              <div className="button-container">
+                <Link href="/orders">
+                  <Button className="buttons h-8">Back</Button>
+                </Link>
+                &nbsp;
+                <Button
+                  className="buttons h-8"
+                  onClick={() =>
+                    handleCancelOrder(order._id, order.order_number)
+                  }
+                  style={{
+                    backgroundColor:
+                      order.status === 'Cancelled' ||
+                      order.status === 'Delivered' ||
+                      order.status === 'Delivered to Post Office'
+                        ? '#A3BEE8'
+                        : '',
+                    border:
+                      order.status === 'Cancelled' ||
+                      order.status === 'Delivered' ||
+                      order.status === 'Delivered to Post Office'
+                        ? '1px solid #4299E1'
+                        : 'none',
+                    cursor:
+                      order.status === 'Delivered to Post Office' ||
+                      order.status === 'Cancelled' ||
+                      order.status === 'Delivered'
+                        ? 'not-allowed'
+                        : 'pointer',
+                  }}
+                  disabled={[
+                    'Cancelled',
+                    'Delivered',
+                    'Delivered to Post Office',
+                  ].includes(order.status)}
+                >
+                  Cancel Order
+                </Button>
+              </div>
             </div>
-          </div>
-          {selectedOrder && (
-            <ConfirmationDialog
-              message={`Are you sure you want to cancel Order #${selectedOrder.order_number}?`}
-              onCancel={cancelCancellation}
-              onConfirm={confirmCancellation}
-              orderId={selectedOrder._id}
-            />
-          )}
-        </>
-      ) : (
-        <p>Loading...</p>
-      )}
-    </div>
+            {selectedOrder && (
+              <ConfirmationDialog
+                message={`Are you sure you want to cancel Order #${selectedOrder.order_number}?`}
+                onCancel={cancelCancellation}
+                onConfirm={confirmCancellation}
+                orderId={selectedOrder._id}
+              />
+            )}
+          </>
+        ) : (
+          <p>Loading...</p>
+        )}
+      </div>
+    </DashboardLayout>
   )
 }
-OrderId.getLayout = (page: React.ReactElement) => (
-  <DefaultLayout isHeaderShow={false} isFooterShow={false}>
-    {page}
-  </DefaultLayout>
-)
+
 export default OrderId

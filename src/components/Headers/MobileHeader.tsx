@@ -77,7 +77,7 @@ export default function MobileMenu() {
             Contact Us
           </MobileLink>
           <SigninButton headerType="mobile" />
-          <MobileLink href="/return" icon={faTruck}>
+          <MobileLink href="/schedule-pickup" icon={faTruck}>
             Schedule Pickup
           </MobileLink>
           <MobileHeaderFooter />
