@@ -94,7 +94,7 @@ const RecentOrders: React.FC = () => {
             style={{ width: '100%', maxWidth: '25rem' }} // Set a fixed width for each container
           >
             <div className="h-full rounded-xl bg-white p-4">
-              <p className="mb-2 text-base font-normal">
+              <p className="mb-2 text-base font-medium">
                 Order #{order.order_number}
               </p>
 
