@@ -75,7 +75,7 @@ const RecentOrders: React.FC = () => {
     <div className="recent-orders-container mt-14 flex flex-col items-start">
       <div className="mb-5 flex w-full items-center justify-between">
         <div className="recent-order-header">
-          <h2 className="mb-2 text-3xl font-bold">Recent Orders</h2>
+          <h2 className="mb-2 text-3xl font-bold font-medium">Recent Orders</h2>
         </div>
         <div>
           <Link href="/orders">
