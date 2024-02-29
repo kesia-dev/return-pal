@@ -24,7 +24,7 @@ function DashBoardMain({
   const cardTitleClassnames =
     'text-xl sm:text-base md:text-l lg:text-xl font-semibold '
   const cardDescriptionClassNames =
-    'text-sm text-brand sm:text-base md:text-l lg:text-xl'
+    'text-sm text-brand sm:text-base md:text-l lg:text-md font-normal'
 
   return (
     <section className="lg:p-30 flex flex-col justify-center space-y-8 pb-10 pl-20 pr-20 pt-10 lg:space-y-16">
@@ -37,12 +37,12 @@ function DashBoardMain({
         <div className="justify-left mb-12 flex">
           <Link href="/schedule-pickup">
             <Card
-              className={`${cardClassnames}`}
+              className={`${cardClassnames} `}
               style={{
                 borderLeft: '16px solid black',
                 minWidth: '335px',
-                minHeight: '150px',
-                maxHeight: '150px',
+                minHeight: '120px',
+                maxHeight: '120px',
               }}
             >
               <CardHeader className="flex items-center pl-5">
@@ -74,8 +74,8 @@ function DashBoardMain({
               style={{
                 borderLeft: '16px solid black',
                 minWidth: '335px',
-                minHeight: '150px',
-                maxHeight: '150px',
+                minHeight: '120px',
+                maxHeight: '120px',
               }}
             >
               <CardHeader className="flex items-center pl-5">
@@ -102,40 +102,38 @@ function DashBoardMain({
             </Card>
           </Link>
           <Link href="/manage-account">
-          <Card
-            className={`${cardClassnames}`}
-            style={{
-              borderLeft: '16px solid black',
-              minWidth: '335px',
-              minHeight: '150px',
-              maxHeight: '150px',
-            }}
-          >
-            <CardHeader className="flex items-center pl-5">
-              <Reveal>
-                <div className="flex items-center">
-                  <div className="mr-4">
-                    <Reveal>
-                      <FaRegCircleUser className="fill-secondary xs:h-19 xs:w-19 h-12 w-12 xxs:h-16 xxs:w-16" />
-                    </Reveal>
+            <Card
+              className={`${cardClassnames}`}
+              style={{
+                borderLeft: '16px solid black',
+                minWidth: '335px',
+                minHeight: '120px',
+                maxHeight: '120px',
+              }}
+            >
+              <CardHeader className="flex items-center pl-5">
+                <Reveal>
+                  <div className="flex items-center">
+                    <div className="mr-4">
+                      <Reveal>
+                        <FaRegCircleUser className="fill-secondary xs:h-19 xs:w-19 h-12 w-12 xxs:h-16 xxs:w-16" />
+                      </Reveal>
+                    </div>
+                    <div>
+                      <CardTitle className={cardTitleClassnames}>
+                        Manage Account
+                      </CardTitle>
+                      <Reveal>
+                        <CardDescription className={cardDescriptionClassNames}>
+                          Edit your profile setting and subscriptions here.
+                        </CardDescription>
+                      </Reveal>
+                    </div>
                   </div>
-                  <div>
-                 
-                    <CardTitle className={cardTitleClassnames}>
-                      Manage Account
-                    </CardTitle>
-                    <Reveal>
-                      <CardDescription className={cardDescriptionClassNames}>
-                        Edit your profile setting and subscriptions here.
-                      </CardDescription>
-                    </Reveal>
-                  </div>
-                </div>
-              </Reveal>
-            </CardHeader>
-          </Card>
+                </Reveal>
+              </CardHeader>
+            </Card>
           </Link>
-
         </div>
         <RecentOrders />
       </div>
