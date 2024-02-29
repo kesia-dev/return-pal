@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { type Order } from '@components/DashBoard/types'
 import { Button } from '@/components/ui/button'
 import ConfirmationDialog from '@components/Orders/ConfirmationDialog'
 import { useRouter } from 'next/router'
-import { type ObjectId } from 'mongodb'
 import { fetchRecentOrders } from '@/services/orderService'
 import OrderStatusNodes from '@/components/Orders/OrderStatusNodes'
+import { Order, ObjectId } from '@components/DashBoard/types'
 
-const RecentOrders = () => {
+const RecentOrders: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([])
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
   const [currentPage, setCurrentPage] = useState<number>(1)
@@ -92,18 +91,23 @@ const RecentOrders = () => {
           <div
             key={order.order_number}
             className="order-box mb-4 mr-4 flex-shrink-0 overflow-hidden rounded-lg border"
+            style={{ width: '100%', maxWidth: '25rem' }} // Set a fixed width for each container
           >
-            <div className="rounded-xl bg-white p-4">
+            <div className="h-full rounded-xl bg-white p-4">
               <p className="mb-2 text-base font-bold">
                 Order #{order.order_number}
               </p>
-              <div className="ml-4 pl-4">
-                {' '}
-                <OrderStatusNodes status={order.status} />{' '}
+
+              <div
+                className={`flex ${
+                  order.status !== 'Cancelled' ? 'pl-10' : ''
+                }`}
+              >
+                <OrderStatusNodes order={order} />
               </div>
 
-              <div className="ml-12  pl-10 ">
-                <div className="order-buttons ml-8 mt-2">
+              <div className="ml-7 pl-7">
+                <div className="order-buttons mt-2">
                   <Button
                     className="h-8"
                     variant="secondary"
@@ -121,7 +125,7 @@ const RecentOrders = () => {
                   </Button>
 
                   <Link href={`/orders/${String(order._id)}`}>
-                    <Button className=" ml-5 h-8">Manage Order</Button>
+                    <Button className="ml-4 h-8">Manage Order</Button>
                   </Link>
                 </div>
               </div>
@@ -138,6 +142,15 @@ const RecentOrders = () => {
           orderId={selectedOrder._id}
         />
       )}
+
+      {/* CSS media queries */}
+      <style jsx>{`
+        @media only screen and (min-width: 992px) {
+          .order-box {
+            width: calc(50% - 2px); // Set width to half minus margin
+          }
+        }
+      `}</style>
     </div>
   )
 }
