@@ -22,7 +22,7 @@ function DashBoardMain({
   const cardClassnames =
     'border-l-0 border-r-0 border-t-0 border-b-0 border-black flex h-23 h-23 sm:w-1/3 md:w-1/3 lg:w-1/4  select-none flex-row items-center p-1 bg-white mr-8 text-brand '
   const cardTitleClassnames =
-    'text-xl sm:text-base md:text-l lg:text-xl font-medium '
+    'text-xl sm:text-base md:text-l lg:text-xl font-medium font-semibold'
   const cardDescriptionClassNames =
     'text-sm text-brand sm:text-base md:text-l lg:text-md font-normal'
 
