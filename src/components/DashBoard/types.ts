@@ -196,3 +196,21 @@ export interface PromoCode {
   discountPercentage: number
   __v: number
 }
+
+export interface PaymentData {
+  amount: number
+  source: string
+  receipt_email: string
+  promoCode?: string
+}
+
+export interface StripeResponseData {
+  id: string
+  amount: number
+  currency: string
+  status: string
+  captured: boolean
+  paid: boolean
+  receipt_url: string
+  sessionId: string
+}

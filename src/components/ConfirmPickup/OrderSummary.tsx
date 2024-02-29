@@ -18,6 +18,11 @@ import { useEffect, useState } from 'react'
 import { loadStripe } from '@stripe/stripe-js'
 import type { Order, Item, PromoCode } from '@/components/DashBoard/types'
 import { getAllPromoCodes } from '@/services/promocodeServices'
+import { processPayment } from '@/services/paymentServices'
+import {
+  type PaymentData,
+  type StripeResponseData,
+} from '@components/DashBoard/types'
 
 interface Props {
   promoState: [string, React.Dispatch<React.SetStateAction<string>>]
@@ -65,11 +70,11 @@ export default function OrderSummary({
   async function handleApplyButtonClick() {
     try {
       const promoCodes: PromoCode[] = await getAllPromoCodes()
-
       const promoCodeInput = form.getValues().promo.trim().toLowerCase()
       const currentDate = new Date()
 
       const isValidPromo = promoCodes.some((promo) => {
+        const validPromo = promo.promoCode.toLowerCase()
         const isValidCode = promo.promoCode.toLowerCase() === promoCodeInput
         const isNotExpired = new Date(promo.expireDate) >= currentDate
         return isValidCode && isNotExpired
@@ -91,10 +96,10 @@ export default function OrderSummary({
     setPromoCode(values.promo)
   }
 
-  const onCheckout = (): void => {
+  const onCheckout = async (): Promise<void> => {
+    console.log('Inside OnCheckout Function')
     setIsCheckingout(true)
-
-    const performCheckout = async (): Promise<void> => {
+    try {
       const stripe = await stripePromise
       if (!stripe) {
         console.error('Error loading Stripe.js')
@@ -102,46 +107,83 @@ export default function OrderSummary({
         return
       }
 
-      try {
-        const response = await fetch('/api/checkout_session', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json', // Specify the content type as JSON
-          },
-          body: JSON.stringify({
-            // user: returnProcess.currentData.userInfo,
-            order: order,
-            items: items,
-            currentData: returnProcess.currentData,
-          }),
-        })
-
-        if (response.ok) {
-          const responseData = (await response.json()) as CheckoutResponse
-
-          const checkoutWindow = window.open(
-            responseData.checkoutLinkUrl,
-            '_blank'
-          )
-
-          if (!checkoutWindow) {
-            console.error('Error opening checkout window')
-            return
-          }
-        } else {
-          console.error('Error during checkout:', response.statusText)
-        }
-      } catch (error) {
-        console.error('Error during checkout:', error)
-      } finally {
-        setIsCheckingout(false)
+      const paymentData: PaymentData = {
+        amount: 5,
+        source: 'CARD',
+        receipt_email: 'ashwinihegde28@gmail.com',
+        promoCode: promoCode,
       }
+
+      const responseData = await processPayment(paymentData)
+
+      if (!responseData.id) {
+        console.error('Error: Session ID not received from payment service')
+        setIsCheckingout(false)
+        return
+      }
+
+      const { error } = await stripe.redirectToCheckout({
+        sessionId: responseData.id,
+      })
+
+      if (error) {
+        console.error('Error redirecting to checkout:', error)
+        throw new Error('Failed to redirect to Stripe checkout')
+      }
+    } catch (error) {
+      console.error('Error during checkout:', error)
+    } finally {
+      setIsCheckingout(false)
     }
 
-    // Ensure the promise is awaited
-    performCheckout().catch((error) => {
-      console.error('Error during checkout:', error)
-    })
+    // const performCheckout = async (): Promise<void> => {
+    //   const stripe = await stripePromise
+    //   if (!stripe) {
+    //     console.error('Error loading Stripe.js')
+    //     setIsCheckingout(false)
+    //     return
+    //   }
+
+    //   try {
+    //     const response = await fetch('/api/checkout_session', {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json', // Specify the content type as JSON
+    //       },
+    //       body: JSON.stringify({
+    //         // user: returnProcess.currentData.userInfo,
+    //         order: order,
+    //         items: items,
+    //         currentData: returnProcess.currentData,
+    //       }),
+    //     })
+
+    //     if (response.ok) {
+    //       const responseData = (await response.json()) as CheckoutResponse
+
+    //       const checkoutWindow = window.open(
+    //         responseData.checkoutLinkUrl,
+    //         '_blank'
+    //       )
+
+    //       if (!checkoutWindow) {
+    //         console.error('Error opening checkout window')
+    //         return
+    //       }
+    //     } else {
+    //       console.error('Error during checkout:', response.statusText)
+    //     }
+    //   } catch (error) {
+    //     console.error('Error during checkout:', error)
+    //   } finally {
+    //     setIsCheckingout(false)
+    //   }
+    // }
+
+    // // Ensure the promise is awaited
+    // performCheckout().catch((error) => {
+    //   console.error('Error during checkout:', error)
+    // })
   }
 
   interface ReceivedData {
