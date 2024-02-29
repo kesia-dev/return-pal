@@ -8,9 +8,16 @@ import PickupTrolley from '@/components/SvgComponents/ConfirmPickup/PickupTrolle
 import ScrollContainer from '@/components/SvgComponents/ConfirmPickup/ScrollContainer'
 import { ReturnProcessBackButton } from '@/components/common/return-process'
 import { useReturnProcess } from '@/hooks/useReturnProcess'
+import { type ReturnProcessFullObjectType } from '@context/ReturnProcessContext'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
-import { useState, useEffect, useRef, FocusEvent, FormEvent } from 'react'
+import {
+  useState,
+  useEffect,
+  useRef,
+  type FocusEvent,
+  type FormEvent,
+} from 'react'
 import Reveal from '@components/common/reveal'
 import type { Item, Order } from '@/components/DashBoard/types'
 import { priceData } from '@/return-process/prices'
@@ -26,6 +33,14 @@ import {
 import { useToast } from '@components/ui/use-toast'
 import { Button } from '@components/ui/button'
 import { Label } from '@components/ui/label'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 // export interface MockData {
 //   plan: 'bronze' | 'silver' | 'gold' | 'platinum'
@@ -154,7 +169,7 @@ function AddressPickupInformation({ order }: { order: Order }) {
     }
 
     // Check if the focus has moved outside the div
-    if (!inputsRef.current!.contains(target)) {
+    if (!inputsRef.current!.contains(target as Node)) {
       pickupFormRef.current?.requestSubmit()
     }
   }
@@ -176,7 +191,6 @@ function AddressPickupInformation({ order }: { order: Order }) {
       unit_number: formData.get('unitNumber') as string,
       city: formData.get('city') as string,
       province: formData.get('province') as string,
-      country: formData.get('country') as string,
       postal_code: formData.get('postalCode') as string,
       instructions: formData.get('instructions') as string,
     })
@@ -186,8 +200,12 @@ function AddressPickupInformation({ order }: { order: Order }) {
   const inputStyles =
     'md:text-lg  my-2 placeholder:text-slate-400 rounded-xl border-[3px] border-solid border-primary'
 
+  const provinceToShow = canadaProvinces.find(
+    (province) => province.name == order.order_details.pickup_details.province
+  )!.value
+
   return !isShowing ? (
-    <div className="flex w-full justify-between gap-2 md:gap-10">
+    <div className="flex w-full justify-between gap-2 md:gap-5">
       <div className="flex min-w-[35px] justify-center md:min-w-[70px]">
         <div className="h-[28px] w-[21px] pt-3 sm:h-[56px] sm:w-[42px] sm:pt-0">
           <Reveal>
@@ -204,10 +222,10 @@ function AddressPickupInformation({ order }: { order: Order }) {
           </p>
         </Reveal>
         <Reveal>
-          <p>
+          <p className="whitespace-pre-wrap">
             {order.order_details.pickup_details.unit_number
-              ? `${order.order_details.pickup_details.unit_number}-${order.order_details.pickup_details.street},${order.order_details.pickup_details.city}, ${order.order_details.pickup_details.province}, ${order.order_details.pickup_details.country} ${order.order_details.pickup_details.postal_code}`
-              : `${order.order_details.pickup_details.street},${order.order_details.pickup_details.city},${order.order_details.pickup_details.province},${order.order_details.pickup_details.country} ${order.order_details.pickup_details.postal_code}`}
+              ? `${order.order_details.pickup_details.unit_number} \u2013 ${order.order_details.pickup_details.street}, ${order.order_details.pickup_details.city}, ${provinceToShow}, ${order.order_details.pickup_details.postal_code}`
+              : `${order.order_details.pickup_details.street}, ${order.order_details.pickup_details.city}, ${provinceToShow}, ${order.order_details.pickup_details.postal_code}`}
           </p>
         </Reveal>
         {order.order_details.pickup_details.instructions && (
@@ -218,11 +236,13 @@ function AddressPickupInformation({ order }: { order: Order }) {
           </Reveal>
         )}
       </div>
-      <EditContainer
-        onFinish={handleFinishEdit}
-        onClick={handleEdit}
-        isShowingIcon={!isShowing}
-      />
+      <div>
+        <EditContainer
+          onFinish={handleFinishEdit}
+          onClick={handleEdit}
+          isShowingIcon={!isShowing}
+        />
+      </div>
     </div>
   ) : (
     <div
@@ -249,6 +269,7 @@ function AddressPickupInformation({ order }: { order: Order }) {
               name="fullName"
               type="text"
               placeholder="Full Name"
+              autoFocus={true}
               defaultValue={
                 order.order_details.pickup_details.contact_full_name
               }
@@ -294,7 +315,7 @@ function AddressPickupInformation({ order }: { order: Order }) {
         <Reveal width="100%">
           <div className={`flex flex-col gap-1 xl:flex-row`}>
             <ProvincesSelector
-              selectorStyles={`text-sm ${inputStyles}`}
+              selectorStyles={`basis-1/2 text-sm ${inputStyles}`}
               onValueChange={(value) => {
                 setProvince(canadaProvinces.find((p) => p.value == value)!.name)
               }}
@@ -307,13 +328,6 @@ function AddressPickupInformation({ order }: { order: Order }) {
                       order.order_details.pickup_details.province
                 )!.value
               }
-            />
-            <Input
-              className={`${inputStyles} basis-1/2`}
-              name="country"
-              type="text"
-              placeholder="Country"
-              defaultValue={order.order_details.pickup_details.country}
             />
             <Input
               className={`${inputStyles} basis-1/2`}
@@ -347,19 +361,248 @@ function AddressPickupInformation({ order }: { order: Order }) {
   )
 }
 
+function DatePickupInformation({ order }: { order: Order }) {
+  const returnProcess = useReturnProcess()
+  const inputsRef = useRef<HTMLDivElement>(null)
+  const dateFormRef = useRef<HTMLFormElement>(null)
+  const [isShowing, setIsShowing] = useState(false)
+
+  const handleBlur = (e: FocusEvent<HTMLDivElement, Element>) => {
+    const target = e.relatedTarget
+
+    // Check if the focus has moved outside the div
+    if (!inputsRef.current!.contains(target)) {
+      dateFormRef.current?.requestSubmit()
+    }
+  }
+
+  const handleFinish = () => {
+    dateFormRef.current?.requestSubmit()
+  }
+
+  const handleClick = () => {
+    setIsShowing(true)
+  }
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault()
+    const formData = new FormData(dateFormRef.current!)
+    const date = new Date(
+      (formData.get('pickupDate') as string) + 'T00:00:00-05:00' // EST
+    )
+
+    const formattedDate = date.toLocaleDateString('en-CA').replace(/\//g, '/')
+
+    returnProcess.setCurrentData({
+      dateAndTime: formattedDate,
+    })
+    setIsShowing(false)
+  }
+
+  const dateDefault = new Date()
+
+  const dateString = new Intl.DateTimeFormat('en-US', {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+  }).format(dateDefault)
+
+  return !isShowing ? (
+    <div className="flex w-full justify-between gap-2 md:gap-7">
+      <div className="flex min-w-[25px] items-center justify-center md:min-w-[63px]">
+        <div className="flex h-[25px] w-[25px] items-center sm:h-[79px] sm:w-[63px]">
+          <Reveal>
+            <Calendar />
+          </Reveal>
+        </div>
+      </div>
+      <p className="mb-1 ml-2 flex w-full items-center sm:mb-2 sm:ml-0">
+        <Reveal width="100%">
+          <>
+            <span className="font-bold">Pickup Date:</span>
+            <span>
+              &nbsp;
+              {dateString}
+            </span>
+          </>
+        </Reveal>
+      </p>
+      <div className="mb-2 flex items-center justify-center">
+        <Reveal>
+          <EditContainer
+            onFinish={handleFinish}
+            isShowingIcon={!isShowing}
+            onClick={handleClick}
+          />
+        </Reveal>
+      </div>
+    </div>
+  ) : (
+    <div
+      onBlur={handleBlur}
+      ref={inputsRef}
+      className="flex w-full justify-between gap-2 md:gap-10"
+    >
+      <div className="flex min-w-[35px] justify-center md:min-w-[63px]">
+        <div className="h-[39px] w-[31px] sm:h-[79px] sm:w-[63px]">
+          <Reveal>
+            <Calendar />
+          </Reveal>
+        </div>
+      </div>
+      <form
+        ref={dateFormRef}
+        onSubmit={handleSubmit}
+        className="mb-1 flex w-full items-center sm:mb-2"
+      >
+        <Reveal width="100%">
+          <Input
+            className={`basis-[65%] rounded-xl border-[3px] border-solid border-primary py-0 placeholder:text-slate-400 md:text-lg`}
+            name="pickupDate"
+            type="date"
+            autoFocus={true}
+            placeholder="Street Address"
+            defaultValue={dateDefault.toLocaleDateString('en-CA')}
+          />
+        </Reveal>
+      </form>
+      <div>
+        <EditContainer
+          onFinish={handleFinish}
+          isShowingIcon={!isShowing}
+          onClick={handleClick}
+        />
+      </div>
+    </div>
+  )
+}
+
+function PickupMethodInformation({ order }: { order: Order }) {
+  const [isShowing, setIsShowing] = useState(false)
+  const inputsRef = useRef<HTMLDivElement>(null)
+  const [deliveryOption, setDeliveryOption] = useState<
+    ReturnProcessFullObjectType['deliveryOption']
+  >(order.order_details.pickup_method)
+
+  const returnProcess = useReturnProcess()
+
+  const options = ['Direct Handoff', 'Leave on Doorstep']
+
+  const hasClickedOption = (element: HTMLDivElement) => {
+    if (element == null) {
+      return false
+    }
+
+    return Boolean(options.find((option) => element.innerText.includes(option)))
+  }
+
+  const updateDeliveryOption = () => {
+    returnProcess.setCurrentData({
+      deliveryOption,
+    })
+    setIsShowing(false)
+  }
+
+  const handleBlur = (e: FocusEvent<HTMLDivElement, Element>) => {
+    const target = e.relatedTarget
+
+    if (hasClickedOption(target as HTMLDivElement)) {
+      return
+    }
+
+    // Check if the focus has moved outside the div
+    if (!inputsRef.current!.contains(target as Node)) {
+      updateDeliveryOption()
+    }
+  }
+
+  const handleClick = () => {
+    setIsShowing(true)
+  }
+
+  const handleSelectChange = (
+    value: ReturnProcessFullObjectType['deliveryOption']
+  ) => {
+    setDeliveryOption(value)
+  }
+
+  return !isShowing ? (
+    <div className="flex w-full items-center justify-between gap-2 md:gap-10">
+      <div className="min-w-[35px] justify-center md:h-[60px] md:w-[68px]">
+        <div className="h-[34px] w-[30px] sm:h-[60px] sm:w-[68px]">
+          <Reveal>
+            <PickupTrolley />
+          </Reveal>
+        </div>
+      </div>
+      <div className="flex w-full items-center">
+        <Reveal width="100%">
+          <p className="grow">
+            <span className="font-bold">Pickup Method:</span>
+            <span>&nbsp;{order.order_details.pickup_method}</span>
+          </p>
+        </Reveal>
+      </div>
+      <EditContainer
+        isShowingIcon={!isShowing}
+        onFinish={updateDeliveryOption}
+        onClick={handleClick}
+      />
+    </div>
+  ) : (
+    <div
+      ref={inputsRef}
+      onBlur={handleBlur}
+      className="flex w-full items-center justify-between gap-2 md:gap-10"
+    >
+      <div className="min-w-[35px] justify-center md:min-h-[60px] md:w-[68px]">
+        <div className="h-[34px] w-[30px] md:min-h-[60px] md:min-w-[68px]">
+          <Reveal>
+            <PickupTrolley />
+          </Reveal>
+        </div>
+      </div>
+      <div className="flex w-full items-center">
+        <Select
+          defaultValue={deliveryOption}
+          onValueChange={handleSelectChange}
+        >
+          <Reveal width="100%">
+            <SelectTrigger
+              autoFocus={true}
+              className="w-full rounded-xl border-[3px] border-solid border-primary placeholder:text-slate-400 md:text-lg"
+            >
+              {deliveryOption}
+            </SelectTrigger>
+          </Reveal>
+          <SelectContent>
+            <SelectGroup>
+              {options.map((option, index) => (
+                <SelectItem key={index} value={option}>
+                  {option}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
+      <div>
+        <EditContainer
+          isShowingIcon={!isShowing}
+          onFinish={updateDeliveryOption}
+          onClick={handleClick}
+        />
+      </div>
+    </div>
+  )
+}
+
 export default function ConfirmPickup() {
   // If the user enters a Promo Code in the Order Summary, it will be held in state here
   const [promoCode, setPromoCode] = useState('')
 
   // Logic for the Scroll-to-Bottom button
   const [showScrollBtn, setShowScrollBtn] = useState(true)
-
-  // Logic for pick up information fields
-  const [isShowingPickup, setIsShowingPickup] = useState({
-    address: false,
-    date: false,
-    method: false,
-  })
 
   const returnProcess = useReturnProcess()
 
@@ -426,7 +669,6 @@ export default function ConfirmPickup() {
       return subscriptionPrice
     }
   }
-
   const order: Order = {
     // generate order_number here
     _id: undefined as unknown as ObjectId,
@@ -521,7 +763,7 @@ export default function ConfirmPickup() {
             </Reveal>
           </section>
 
-          <section className="sm:mb-10">
+          <section className="gap-4 sm:mb-10 sm:gap-0">
             <Reveal>
               <h2 className="text-smallText font-semibold text-primary sm:mb-6 sm:text-2xl">
                 Pickup Information
@@ -529,48 +771,17 @@ export default function ConfirmPickup() {
             </Reveal>
             <AddressPickupInformation order={order} />
             <Reveal width="100%">
-              <Separator className="mb-4 mt-4 w-full bg-brand" />
+              <Separator className="mb-4 mt-4 hidden w-full bg-brand sm:flex" />
             </Reveal>
-            <div className="flex w-full justify-between gap-2 md:gap-10">
-              <div className="flex min-w-[35px] justify-center md:min-w-[70px]">
-                <div className="h-[39px] w-[31px] sm:h-[79px] sm:w-[63px]">
-                  <Reveal>
-                    <Calendar />
-                  </Reveal>
-                </div>
-              </div>
-              <Reveal width="100%">
-                <p className="grow sm:mt-4">
-                  <span className="font-bold">Pickup Date:</span>
-                  <span>
-                    &nbsp;
-                    {order.order_details.pickup_date.$dateFromString.dateString}
-                  </span>
-                </p>
-              </Reveal>
-              <EditContainer />
-            </div>
+            <DatePickupInformation order={order} />
             <Reveal width="100%">
-              <Separator className="mb-4 mt-4 w-full bg-brand" />
+              <Separator className="mb-4 hidden w-full bg-brand sm:flex" />
             </Reveal>
-            <div className="flex w-full justify-between gap-2 md:gap-10">
-              <div className="flex min-w-[35px] justify-center md:min-w-[70px]">
-                <div className="h-[34px] w-[30px] sm:h-[68px] sm:w-[60px]">
-                  <Reveal>
-                    <PickupTrolley />
-                  </Reveal>
-                </div>
-              </div>
-              <Reveal width="100%">
-                <p className="grow sm:mt-4">
-                  <span className="font-bold">Pickup Method:</span>
-                  <span>&nbsp;{order.order_details.pickup_method}</span>
-                </p>
-              </Reveal>
-              <EditContainer />
-            </div>
+
+            <PickupMethodInformation order={order} />
+
             <Reveal width="100%">
-              <Separator className="mb-4 mt-4 w-full bg-brand" />
+              <Separator className="mb-4 mt-4 hidden w-full bg-brand sm:flex sm:flex" />
             </Reveal>
           </section>
 
@@ -609,7 +820,7 @@ export default function ConfirmPickup() {
               <EditContainer />
             </div>
             <Reveal width="100%">
-              <Separator className="mb-4 mt-4 w-full bg-brand" />
+              <Separator className="mb-4 mt-4 hidden w-full bg-brand sm:flex" />
             </Reveal>
           </section>
 

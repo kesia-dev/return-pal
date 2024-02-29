@@ -12,9 +12,14 @@ import * as z from 'zod'
 import { Button } from '@components/ui/button'
 import Link from 'next/link'
 import NextArrow from '@components/SvgComponents/NextArrow'
-import SignUpModule from '@/popups/SignUpModal'
 import { motion } from 'framer-motion'
 import { container, item } from '@styles/framer'
+import ForgotPasswordModule from '@components/ForgotPasswordModal'
+import { useState } from 'react'
+import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import Router from 'next/router'
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email' }),
@@ -30,8 +35,39 @@ function SignInForm() {
     },
   })
 
+  //potentially change this later to leave modal open with a message
+  const [isForgotPassModalOpen, setIsForgotPassModalOpen] = useState(false)
+
+  const toggleModal = () => {
+    setIsForgotPassModalOpen(!isForgotPassModalOpen)
+  }
+
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // console.log(values)
+    console.log(values)
+    const { email, password } = values;
+    
+    axios.post("http://localhost:4100/api/login", { email, password })
+      .then((res) => {
+        console.log("l", {res}) 
+        localStorage.setItem('userId', res.data.userId)
+        localStorage.setItem('token', res.data.token)
+
+        Router.push("/dashboard")
+      }
+      
+      //TODO: save login session cookies and use jwt token
+      )
+      .catch(() => {
+        toast.error('Invalid email or password.', {
+          position: 'top-right',
+          autoClose: 3000, // 3 seconds
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        })
+      } 
+      );
   }
 
   return (
@@ -86,12 +122,11 @@ function SignInForm() {
                 </FormItem>
               )}
             />
-            <Link
-              href="/sign-in"
-              className="mb-5 mt-5 font-semibold text-grey underline sm:mt-3"
-            >
-              <motion.div variants={item}>Forgot your password?</motion.div>
-            </Link>
+            <motion.div variants={item}>
+              <ForgotPasswordModule 
+              setIsOpen={toggleModal} isOpen={isForgotPassModalOpen} 
+              />
+            </motion.div>
             <motion.div variants={item}>
               <Button
                 type="submit"
@@ -103,9 +138,8 @@ function SignInForm() {
             </motion.div>
           </form>
           <motion.div variants={item}>
-            <p className="my-8 font-semibold text-grey">
-              Don&apos;t have an account yet?
-              <SignUpModule />
+            <p className="my-8 font-semibold underline text-grey">
+              <Link href="/signup">Don't have an account yet?</Link>
             </p>
           </motion.div>
         </div>

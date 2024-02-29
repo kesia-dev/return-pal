@@ -7,7 +7,7 @@ import { type AppType } from 'next/dist/shared/lib/utils'
 
 import Head from 'next/head'
 import '@/styles/globals.css'
-import { Nunito } from 'next/font/google'
+import localFont from 'next/font/local'
 
 export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -17,9 +17,24 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
 
-const nunito = Nunito({
-  weight: ['400', '500', '700', '900'],
-  subsets: ['latin'],
+const avenirNext = localFont({
+  src: [
+    {
+      path: '../../public/fonts/AvenirNextLTPro-Regular.otf',
+      weight: '500',
+    },
+    {
+      path: '../../public/fonts/AvenirNextLTPro-It.otf',
+      weight: '500',
+      style: 'italic',
+    },
+    {
+      path: '../../public/fonts/AvenirNextLTPro-Bold.otf',
+      weight: '700',
+      style: 'bold',
+    },
+  ],
+  variable: '--font-avenir',
 })
 
 const MyApp: AppType = ({ Component, pageProps }: AppPropsWithLayout) => {
@@ -32,12 +47,11 @@ const MyApp: AppType = ({ Component, pageProps }: AppPropsWithLayout) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className={`${nunito.className}`}>
+      <div className={`${avenirNext.variable} font-avenirNext`}>
         {layout}
         <Toaster />
       </div>
-      </>
-
+    </>
   )
 }
 

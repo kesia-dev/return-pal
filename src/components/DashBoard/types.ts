@@ -154,10 +154,10 @@ const OrdersCollectionSchema = z.object({
   order_number: z.string(), // System-generated
   order_date: z.date(),
   status: z.enum([
-    'Driver received',
-    'Driver on the way',
-    'Driver delivered to post office',
-    'Delivered',
+    'Order Placed',
+    'Picked Up',
+    'In Transit',
+    'Delivered to Post Office',
     'Cancelled',
   ]),
   order_details: OrderDetailsSchema,
@@ -187,4 +187,12 @@ export interface PaginatedResponse {
   currentPage: number
   totalPages: number
   totalOrders: number
+}
+
+export interface PromoCode {
+  _id: string
+  promoCode: string
+  expireDate: string
+  discountPercentage: number
+  __v: number
 }
