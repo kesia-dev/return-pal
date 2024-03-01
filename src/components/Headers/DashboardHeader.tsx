@@ -6,6 +6,7 @@ import { Button } from '@components/ui/button'
 import { FaRegCircleUser } from 'react-icons/fa6'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
+import SignoutButton from '@components/SignoutButton'
 
 export type MenuItem = {
   title: string
