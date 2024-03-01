@@ -62,7 +62,7 @@ const Orders: React.FC<OrdersProps> = ({ initialOrders }) => {
   return (
     <DashboardLayout>
       <div className="min-h-screen bg-paleBlue p-16">
-        <h1 className="mb-10 ml-3 bg-paleBlue text-3xl font-bold">
+        <h1 className="mb-10 ml-3 bg-paleBlue text-3xl font-medium">
           Recent Orders
         </h1>
         <div className="overflow-hidden rounded-xl bg-white font-bold sm:flex-row">
@@ -73,7 +73,7 @@ const Orders: React.FC<OrdersProps> = ({ initialOrders }) => {
               {orders?.length > 0 ? (
                 <OrderList orders={orders} />
               ) : (
-                <p className="ml-3 ">Currently no orders placed.</p>
+                <p className="ml-3 font-medium">Currently no orders placed.</p>
               )}
               {canShowPagination && (
                 <div className="pagination ml-10 p-2">
