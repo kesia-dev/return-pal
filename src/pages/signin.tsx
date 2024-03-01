@@ -18,8 +18,6 @@ function SignIn() {
       localStorage.setItem('userId', res.data.userId)
       localStorage.setItem('token', res.data.token)
       Router.push("/dashboard")
-
-      
     })
       .catch((err) => console.log(err));
   }
