@@ -22,27 +22,27 @@ function DashBoardMain({
   const cardClassnames =
     'border-l-0 border-r-0 border-t-0 border-b-0 border-black flex h-23 h-23 sm:w-1/3 md:w-1/3 lg:w-1/4  select-none flex-row items-center p-1 bg-white mr-8 text-brand '
   const cardTitleClassnames =
-    'text-xl sm:text-base md:text-l lg:text-xl font-semibold '
+    'text-xl sm:text-base md:text-l lg:text-xl font-medium '
   const cardDescriptionClassNames =
-    'text-sm text-brand sm:text-base md:text-l lg:text-xl'
+    'text-sm text-brand sm:text-base md:text-l lg:text-md font-normal'
 
   return (
     <section className="lg:p-30 flex flex-col justify-center space-y-8 pb-10 pl-20 pr-20 pt-10 lg:space-y-16">
       <div>
         <Reveal>
-          <h3 className="mb-6 text-subtitle font-bold lg:text-4xl">
+          <h3 className="mb-6 text-subtitle font-bold font-medium lg:text-4xl">
             Your Dashboard
           </h3>
         </Reveal>
         <div className="justify-left mb-12 flex">
           <Link href="/schedule-pickup">
             <Card
-              className={`${cardClassnames}`}
+              className={`${cardClassnames} `}
               style={{
                 borderLeft: '16px solid black',
                 minWidth: '335px',
-                minHeight: '150px',
-                maxHeight: '150px',
+                minHeight: '120px',
+                maxHeight: '120px',
               }}
             >
               <CardHeader className="flex items-center pl-5">
@@ -68,14 +68,15 @@ function DashBoardMain({
               </CardHeader>
             </Card>
           </Link>
+
           <Link href="/orders">
             <Card
               className={`${cardClassnames}`}
               style={{
                 borderLeft: '16px solid black',
                 minWidth: '335px',
-                minHeight: '150px',
-                maxHeight: '150px',
+                minHeight: '120px',
+                maxHeight: '120px',
               }}
             >
               <CardHeader className="flex items-center pl-5">
@@ -101,41 +102,40 @@ function DashBoardMain({
               </CardHeader>
             </Card>
           </Link>
-          <Link href="/manage-account">
-          <Card
-            className={`${cardClassnames}`}
-            style={{
-              borderLeft: '16px solid black',
-              minWidth: '335px',
-              minHeight: '150px',
-              maxHeight: '150px',
-            }}
-          >
-            <CardHeader className="flex items-center pl-5">
-              <Reveal>
-                <div className="flex items-center">
-                  <div className="mr-4">
-                    <Reveal>
-                      <FaRegCircleUser className="fill-secondary xs:h-19 xs:w-19 h-12 w-12 xxs:h-16 xxs:w-16" />
-                    </Reveal>
-                  </div>
-                  <div>
-                 
-                    <CardTitle className={cardTitleClassnames}>
-                      Manage Account
-                    </CardTitle>
-                    <Reveal>
-                      <CardDescription className={cardDescriptionClassNames}>
-                        Edit your profile setting and subscriptions here.
-                      </CardDescription>
-                    </Reveal>
-                  </div>
-                </div>
-              </Reveal>
-            </CardHeader>
-          </Card>
-          </Link>
 
+          <Link href="/manage-account">
+            <Card
+              className={`${cardClassnames}`}
+              style={{
+                borderLeft: '16px solid black',
+                minWidth: '335px',
+                minHeight: '120px',
+                maxHeight: '120px',
+              }}
+            >
+              <CardHeader className="flex items-center pl-5">
+                <Reveal>
+                  <div className="flex items-center">
+                    <div className="mr-4">
+                      <Reveal>
+                        <FaRegCircleUser className="fill-secondary xs:h-19 xs:w-19 h-12 w-12 xxs:h-16 xxs:w-16" />
+                      </Reveal>
+                    </div>
+                    <div>
+                      <CardTitle className={cardTitleClassnames}>
+                        Manage Account
+                      </CardTitle>
+                      <Reveal>
+                        <CardDescription className={cardDescriptionClassNames}>
+                          Edit your profile setting and subscriptions here.
+                        </CardDescription>
+                      </Reveal>
+                    </div>
+                  </div>
+                </Reveal>
+              </CardHeader>
+            </Card>
+          </Link>
         </div>
         <RecentOrders />
       </div>

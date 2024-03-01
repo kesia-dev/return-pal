@@ -75,7 +75,7 @@ const RecentOrders: React.FC = () => {
     <div className="recent-orders-container mt-14 flex flex-col items-start">
       <div className="mb-5 flex w-full items-center justify-between">
         <div className="recent-order-header">
-          <h2 className="mb-2 text-3xl font-bold">Recent Orders</h2>
+          <h2 className="mb-2 text-3xl font-bold font-medium">Recent Orders</h2>
         </div>
         <div>
           <Link href="/orders">
@@ -94,7 +94,7 @@ const RecentOrders: React.FC = () => {
             style={{ width: '100%', maxWidth: '25rem' }} // Set a fixed width for each container
           >
             <div className="h-full rounded-xl bg-white p-4">
-              <p className="mb-2 text-base font-bold">
+              <p className="mb-2 text-base font-medium">
                 Order #{order.order_number}
               </p>
 
@@ -147,7 +147,7 @@ const RecentOrders: React.FC = () => {
       <style jsx>{`
         @media only screen and (min-width: 992px) {
           .order-box {
-            width: calc(50% - 2rem); // Set width to half minus margin
+            width: calc(50% - 2px); // Set width to half minus margin
           }
         }
       `}</style>
