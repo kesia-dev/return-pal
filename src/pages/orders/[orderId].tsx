@@ -375,7 +375,7 @@ const OrderId = () => {
                   }}
                 >
                   <div
-                    className="font-avenir-next text-color: #052A42; text-2xl font-bold
+                    className="font-avenir-next text-color: #052A42; text-2xl font-normal
 "
                   >
                     Order #{order.order_number}
