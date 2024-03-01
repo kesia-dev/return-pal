@@ -15,17 +15,16 @@ import Link from 'next/link'
 import { useReturnProcess } from '@hooks/useReturnProcess'
 import Reveal from '@components/common/reveal'
 import { useEffect, useState } from 'react'
-import { loadStripe } from '@stripe/stripe-js'
 import type { Order, Item, PromoCode } from '@/components/DashBoard/types'
 import { getAllPromoCodes } from '@/services/promocodeServices'
 import { processPayment } from '@/services/paymentServices'
-import {
-  type PaymentData,
-  type StripeResponseData,
-} from '@components/DashBoard/types'
+import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
 
 interface Props {
-  promoState: [string, React.Dispatch<React.SetStateAction<string>>]
+  promoState: [
+    string | PromoCode | null,
+    React.Dispatch<React.SetStateAction<string | PromoCode | null>>,
+  ]
   order: Order
   items: Item[]
 }
@@ -46,9 +45,6 @@ export default function OrderSummary({
 }: Props) {
   const [isCheckingout, setIsCheckingout] = useState(false)
   const [promoMessage, setPromoMessage] = useState('')
-  const stripePromise = loadStripe(
-    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
-  )
 
   const returnProcess = useReturnProcess()
   const form = useForm<z.infer<typeof formSchema>>({
@@ -73,117 +69,37 @@ export default function OrderSummary({
       const promoCodeInput = form.getValues().promo.trim().toLowerCase()
       const currentDate = new Date()
 
-      const isValidPromo = promoCodes.some((promo) => {
-        const validPromo = promo.promoCode.toLowerCase()
+      const validPromo = promoCodes.find((promo) => {
         const isValidCode = promo.promoCode.toLowerCase() === promoCodeInput
         const isNotExpired = new Date(promo.expireDate) >= currentDate
         return isValidCode && isNotExpired
       })
 
-      if (isValidPromo) {
+      if (validPromo) {
         setPromoMessage('Promo code applied successfully')
-        setPromoCode(promoCodeInput)
+        setPromoCode(validPromo)
       } else {
         setPromoMessage('Invalid promo code')
+        setPromoCode('')
       }
     } catch (error) {
       console.error('Error applying promo code:', error)
       setPromoMessage('Invalid promo code')
+      setPromoCode('')
     }
   }
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    setPromoCode(values.promo)
-  }
+  function onSubmit(values: z.infer<typeof formSchema>) {}
 
-  const onCheckout = async (): Promise<void> => {
-    console.log('Inside OnCheckout Function')
+  const onCheckout = () => {
     setIsCheckingout(true)
-    try {
-      const stripe = await stripePromise
-      if (!stripe) {
-        console.error('Error loading Stripe.js')
-        setIsCheckingout(false)
-        return
-      }
-
-      const paymentData: PaymentData = {
-        amount: 5,
-        source: 'CARD',
-        receipt_email: 'ashwinihegde28@gmail.com',
-        promoCode: promoCode,
-      }
-
-      const responseData = await processPayment(paymentData)
-
-      if (!responseData.id) {
-        console.error('Error: Session ID not received from payment service')
-        setIsCheckingout(false)
-        return
-      }
-
-      const { error } = await stripe.redirectToCheckout({
-        sessionId: responseData.id,
+    processPayment()
+      .then(() => {
+        //Call to return process api with the necessary Payload
       })
-
-      if (error) {
-        console.error('Error redirecting to checkout:', error)
-        throw new Error('Failed to redirect to Stripe checkout')
-      }
-    } catch (error) {
-      console.error('Error during checkout:', error)
-    } finally {
-      setIsCheckingout(false)
-    }
-
-    // const performCheckout = async (): Promise<void> => {
-    //   const stripe = await stripePromise
-    //   if (!stripe) {
-    //     console.error('Error loading Stripe.js')
-    //     setIsCheckingout(false)
-    //     return
-    //   }
-
-    //   try {
-    //     const response = await fetch('/api/checkout_session', {
-    //       method: 'POST',
-    //       headers: {
-    //         'Content-Type': 'application/json', // Specify the content type as JSON
-    //       },
-    //       body: JSON.stringify({
-    //         // user: returnProcess.currentData.userInfo,
-    //         order: order,
-    //         items: items,
-    //         currentData: returnProcess.currentData,
-    //       }),
-    //     })
-
-    //     if (response.ok) {
-    //       const responseData = (await response.json()) as CheckoutResponse
-
-    //       const checkoutWindow = window.open(
-    //         responseData.checkoutLinkUrl,
-    //         '_blank'
-    //       )
-
-    //       if (!checkoutWindow) {
-    //         console.error('Error opening checkout window')
-    //         return
-    //       }
-    //     } else {
-    //       console.error('Error during checkout:', response.statusText)
-    //     }
-    //   } catch (error) {
-    //     console.error('Error during checkout:', error)
-    //   } finally {
-    //     setIsCheckingout(false)
-    //   }
-    // }
-
-    // // Ensure the promise is awaited
-    // performCheckout().catch((error) => {
-    //   console.error('Error during checkout:', error)
-    // })
+      .catch((error) => {
+        console.error('Error processing payment:', error)
+      })
   }
 
   interface ReceivedData {
