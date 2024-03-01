@@ -19,7 +19,7 @@ import {
 import { type PropsWithChildren } from 'react'
 import { HeaderContent } from '@components/common/header'
 import { Separator } from '@components/ui/separator'
-import SigninModal from '@/popups/SigninModal'
+import SigninButton from '@components/SigninButton'
 import MobileHeaderFooter from './MobileHeaderFooter'
 
 type MobileViewType = PropsWithChildren & {
@@ -76,7 +76,7 @@ export default function MobileMenu() {
           <MobileLink href="/contact" icon={faMailBulk}>
             Contact Us
           </MobileLink>
-          <SigninModal headerType="mobile" />
+          <SigninButton headerType="mobile" />
           <MobileLink href="/schedule-pickup" icon={faTruck}>
             Schedule Pickup
           </MobileLink>
