@@ -4,6 +4,8 @@ import DefaultLayout from '@/layouts/DefaultLayout'
 import { ToastContainer } from 'react-toastify';
 import { useSearchParams } from 'next/navigation';
 import axios from 'axios'
+import Router from 'next/router'
+
 
 function SignIn() {
   const searchParams = useSearchParams()
@@ -12,7 +14,13 @@ function SignIn() {
 
   if (verifyToken) {
     axios.post(`http://localhost:4100/api/verify/${verifyToken}`)
-      .then((res) => console.log(res))
+    .then((res) => {
+      localStorage.setItem('userId', res.data.userId)
+      localStorage.setItem('token', res.data.token)
+      Router.push("/dashboard")
+
+      
+    })
       .catch((err) => console.log(err));
   }
 

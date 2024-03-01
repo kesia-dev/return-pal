@@ -1,7 +1,6 @@
 import React from 'react'
 import SignUpForm from '@/components/SignUpForm/SignUpForm'
 import DefaultLayout from '@/layouts/DefaultLayout'
-import { ToastContainer } from 'react-toastify'
 
 function SignUp() {
   return (
