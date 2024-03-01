@@ -199,9 +199,8 @@ export interface PromoCode {
 
 export interface PaymentData {
   amount: number
-  source: string
-  receipt_email: string
-  promoCode?: string
+  //   receipt_email: string
+  //   promoCode?: string
 }
 
 export interface StripeResponseData {
