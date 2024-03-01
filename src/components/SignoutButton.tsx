@@ -14,6 +14,7 @@ function SignoutButton({
   const onClick = (): void => {
     localStorage.removeItem('userId')
     localStorage.removeItem('token')
+    window.location.reload();
   }
 
   return (

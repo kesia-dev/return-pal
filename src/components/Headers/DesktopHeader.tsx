@@ -7,7 +7,6 @@ import { HeaderContent } from '@components/common/header'
 import { Button } from '@components/ui/button'
 import PostalCodeModal from '@components/PostalCodeModal'
 import React, { useState, useEffect } from 'react'
-import { SettingsIcon } from 'lucide-react'
 
 export type MenuItem = {
   title: string
@@ -66,7 +65,6 @@ export default function DesktopHeader() {
       </div>
       <div className="flex space-x-2 lg:space-x-5">
         <PostalCodeModal headerType="desktop"/>
-        {/* <SigninButton headerType="desktop" /> */}
         {isLoggedIn ? (
           <SignoutButton headerType="desktop" onClick={handleSignout}/>
         ) : (
