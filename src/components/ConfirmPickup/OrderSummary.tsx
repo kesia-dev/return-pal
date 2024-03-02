@@ -15,12 +15,16 @@ import Link from 'next/link'
 import { useReturnProcess } from '@hooks/useReturnProcess'
 import Reveal from '@components/common/reveal'
 import { useEffect, useState } from 'react'
-import { loadStripe } from '@stripe/stripe-js'
 import type { Order, Item, PromoCode } from '@/components/DashBoard/types'
 import { getAllPromoCodes } from '@/services/promocodeServices'
+import { processPayment } from '@/services/paymentServices'
+import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
 
 interface Props {
-  promoState: [string, React.Dispatch<React.SetStateAction<string>>]
+  promoState: [
+    string | PromoCode | null,
+    React.Dispatch<React.SetStateAction<string | PromoCode | null>>,
+  ]
   order: Order
   items: Item[]
 }
@@ -41,9 +45,6 @@ export default function OrderSummary({
 }: Props) {
   const [isCheckingout, setIsCheckingout] = useState(false)
   const [promoMessage, setPromoMessage] = useState('')
-  const stripePromise = loadStripe(
-    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
-  )
 
   const returnProcess = useReturnProcess()
   const form = useForm<z.infer<typeof formSchema>>({
@@ -65,83 +66,40 @@ export default function OrderSummary({
   async function handleApplyButtonClick() {
     try {
       const promoCodes: PromoCode[] = await getAllPromoCodes()
-
       const promoCodeInput = form.getValues().promo.trim().toLowerCase()
       const currentDate = new Date()
 
-      const isValidPromo = promoCodes.some((promo) => {
+      const validPromo = promoCodes.find((promo) => {
         const isValidCode = promo.promoCode.toLowerCase() === promoCodeInput
         const isNotExpired = new Date(promo.expireDate) >= currentDate
         return isValidCode && isNotExpired
       })
 
-      if (isValidPromo) {
+      if (validPromo) {
         setPromoMessage('Promo code applied successfully')
-        setPromoCode(promoCodeInput)
+        setPromoCode(validPromo)
       } else {
         setPromoMessage('Invalid promo code')
+        setPromoCode('')
       }
     } catch (error) {
       console.error('Error applying promo code:', error)
       setPromoMessage('Invalid promo code')
+      setPromoCode('')
     }
   }
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    setPromoCode(values.promo)
-  }
+  function onSubmit(values: z.infer<typeof formSchema>) {}
 
-  const onCheckout = (): void => {
+  const onCheckout = () => {
     setIsCheckingout(true)
-
-    const performCheckout = async (): Promise<void> => {
-      const stripe = await stripePromise
-      if (!stripe) {
-        console.error('Error loading Stripe.js')
-        setIsCheckingout(false)
-        return
-      }
-
-      try {
-        const response = await fetch('/api/checkout_session', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json', // Specify the content type as JSON
-          },
-          body: JSON.stringify({
-            // user: returnProcess.currentData.userInfo,
-            order: order,
-            items: items,
-            currentData: returnProcess.currentData,
-          }),
-        })
-
-        if (response.ok) {
-          const responseData = (await response.json()) as CheckoutResponse
-
-          const checkoutWindow = window.open(
-            responseData.checkoutLinkUrl,
-            '_blank'
-          )
-
-          if (!checkoutWindow) {
-            console.error('Error opening checkout window')
-            return
-          }
-        } else {
-          console.error('Error during checkout:', response.statusText)
-        }
-      } catch (error) {
-        console.error('Error during checkout:', error)
-      } finally {
-        setIsCheckingout(false)
-      }
-    }
-
-    // Ensure the promise is awaited
-    performCheckout().catch((error) => {
-      console.error('Error during checkout:', error)
-    })
+    processPayment()
+      .then(() => {
+        //Call to return process api with the necessary Payload
+      })
+      .catch((error) => {
+        console.error('Error processing payment:', error)
+      })
   }
 
   interface ReceivedData {

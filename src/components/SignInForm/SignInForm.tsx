@@ -26,6 +26,8 @@ const formSchema = z.object({
   password: z.string().min(8, 'Must be at least 8 characters'),
 })
 
+const BASE_URL = process.env.BASE_URL ?? 'http://localhost:4200'
+
 function SignInForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -43,16 +45,17 @@ function SignInForm() {
   }
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
-    const { email, password } = values;
-    
-    axios.post("http://localhost:4100/api/login", { email, password })
-      .then((res) => {
-        localStorage.setItem('userId', res.data.userId)
-        localStorage.setItem('token', res.data.token)
-        Router.push("/dashboard")
-      }
-      
+    const { email, password } = values
+
+    axios
+      .post(`${BASE_URL}/api/login`, { email, password })
+      .then(
+        (res) => {
+          localStorage.setItem('userId', res.data.userId)
+          localStorage.setItem('token', res.data.token)
+
+          Router.push('/dashboard')
+        }
       )
       .catch((err) => {
         const message = err.response.data.error;
@@ -64,8 +67,7 @@ function SignInForm() {
           pauseOnHover: true,
           draggable: true,
         })
-      } 
-      );
+      })
   }
 
   return (
@@ -121,8 +123,9 @@ function SignInForm() {
               )}
             />
             <motion.div variants={item}>
-              <ForgotPasswordModule 
-              setIsOpen={toggleModal} isOpen={isForgotPassModalOpen} 
+              <ForgotPasswordModule
+                setIsOpen={toggleModal}
+                isOpen={isForgotPassModalOpen}
               />
             </motion.div>
             <motion.div variants={item}>
@@ -136,7 +139,7 @@ function SignInForm() {
             </motion.div>
           </form>
           <motion.div variants={item}>
-            <p className="my-8 font-semibold underline text-grey">
+            <p className="my-8 font-semibold text-grey underline">
               <Link href="/signup">Don't have an account yet?</Link>
             </p>
           </motion.div>

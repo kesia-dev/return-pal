@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseUrl: string = process.env.BASE_URL ?? 'http://localhost:4200'
+const baseUrl: string = process.env.BASE_URL ?? 'http://localhost:4100'
 
 const getAllPromoCodes = async (): Promise<string[]> => {
   try {

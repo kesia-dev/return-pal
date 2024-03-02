@@ -21,7 +21,7 @@ import { useSearchParams } from 'next/navigation';
 import Router from 'next/router'
 
 
-// const BACKEND_URL = process.env.BACKEND_URL || "";
+// const BASE_URL = process.env.BASE_URL || "";
 
 
 const formSchema = z
@@ -59,7 +59,7 @@ function Reset() {
     console.log(values)
     const { email, password } = values;
     axios.post(`http://localhost:4100/api/reset/${passwordResetToken}`, { email, password })
-    // axios.post(`${BACKEND_URL}/reset`, { password })
+    // axios.post(`${BASE_URL}/api/reset`, { password })
     .then(() => Router.push("/signin"))
     .catch((err) => console.log(err));
   }

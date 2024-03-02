@@ -19,10 +19,10 @@ interface FormData {
   upgradeOption: 'unlimited' | 'noUpgrade'
   description: string
   status:
-    | 'Driver received'
-    | 'Driver on the way'
-    | 'Driver delivered to post office'
-    | 'Delivered'
+    | 'Order Placed'
+    | 'Picked Up'
+    | 'In Transit'
+    | 'Delivered to Post Office'
     | 'Cancelled'
   bigFile: Buffer
 }
@@ -107,12 +107,12 @@ const OrderForm: React.FC = () => {
           value={formData.status}
           onChange={handleInputChange}
         >
-          <option value="Driver received">Driver received</option>
-          <option value="Driver on the way">Driver on the way</option>
-          <option value="Driver delivered to post office">
-            Driver delivered to post office
+          <option value="Order Placed">Order Placed</option>
+          <option value="Picked Up">Picked Up</option>
+          <option value="In Transit">In Transit</option>
+          <option value="Delivered to post office">
+            Delivered to post office
           </option>
-          <option value="Delivered">Delivered</option>
           <option value="Cancelled">Cancelled</option>
         </select>
       </label>
