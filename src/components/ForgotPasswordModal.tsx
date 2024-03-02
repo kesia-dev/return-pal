@@ -19,8 +19,8 @@ import { container, item } from '@styles/framer'
 import { type ModalPropsType } from '@/components/DashBoard/types'
 import axios from 'axios'
 
-//TODO: change url in axios post request to use BACKEND_URL
-const BACKEND_URL = process.env.BACKEND_URL || "";
+//TODO: change url in axios post request to use BASE_URL
+const BASE_URL = process.env.BASE_URL || "";
 
 const formSchema = z
   .object({
@@ -38,8 +38,8 @@ function ForgotPasswordModule({ setIsOpen, isOpen }: ModalPropsType) {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log({ values }, "onSubmit")
     const { email } = values;
-    axios.post("http://localhost:4100/api/forgot", { email })
-    // axios.post(`${BACKEND_URL}/forgot`, { email })
+    axios.post("http://localhost:4200/api/forgot", { email })
+    // axios.post(`${BASE_URL}/api/forgot`, { email })
     .then((res) => console.log(res))
     .catch((err) => console.log(err));
     setIsOpen() // close modal

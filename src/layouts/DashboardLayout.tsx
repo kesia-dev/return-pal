@@ -1,6 +1,7 @@
 import { type PropsWithChildren } from 'react'
 import Footer from '@/components/Footer'
 import DashboardHeader from '@components/DashboardHeader'
+import { ToastContainer, toast } from 'react-toastify'
 
 export default function DashboardLayout({
   children,

@@ -5,6 +5,7 @@ import { HeaderContent } from '@components/common/dashboard-header'
 import { Button } from '@components/ui/button'
 import { FaRegCircleUser } from 'react-icons/fa6'
 import { useRouter } from 'next/router'
+import SignoutButton from '@components/SignoutButton'
 
 export type MenuItem = {
   title: string
@@ -52,10 +53,9 @@ export default function DashboardHeaderLinks() {
         })}
       </div>
       <div className="flex space-x-2 lg:space-x-5">
-        <Button variant="secondary" className="mt-2 h-9 w-fit">
-          Sign Out
-        </Button>
-
+        <div className="mt-2 h-9 w-fit"> 
+          <SignoutButton/>
+        </div>
         <FaRegCircleUser style={{ fontSize: '50px', color: '#d9d9d9' }} />
       </div>
     </HeaderContent>

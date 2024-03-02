@@ -45,24 +45,21 @@ function SignInForm() {
   }
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
     const { email, password } = values
 
     axios
       .post(`${BASE_URL}/api/login`, { email, password })
       .then(
         (res) => {
-          console.log('l', { res })
           localStorage.setItem('userId', res.data.userId)
           localStorage.setItem('token', res.data.token)
 
           Router.push('/dashboard')
         }
-
-        //TODO: save login session cookies and use jwt token
       )
-      .catch(() => {
-        toast.error('Invalid email or password.', {
+      .catch((err) => {
+        const message = err.response.data.error;
+        toast.error(message, {
           position: 'top-right',
           autoClose: 3000, // 3 seconds
           hideProgressBar: false,
