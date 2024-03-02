@@ -16,7 +16,7 @@ function Dashboard() {
     console.log({ userId, token })
 
     axios
-      .post("http://localhost:4100/api/authorize", { userId, token })
+      .post("http://localhost:4200/api/authorize", { userId, token })
       .then((a) => console.log(a))
       .catch((a) => console.log(a))
 

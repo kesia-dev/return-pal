@@ -58,7 +58,7 @@ function Reset() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
     const { email, password } = values;
-    axios.post(`http://localhost:4100/api/reset/${passwordResetToken}`, { email, password })
+    axios.post(`http://localhost:4200/api/reset/${passwordResetToken}`, { email, password })
     // axios.post(`${BASE_URL}/api/reset`, { password })
     .then(() => Router.push("/signin"))
     .catch((err) => console.log(err));

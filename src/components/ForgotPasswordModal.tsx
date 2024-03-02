@@ -38,7 +38,7 @@ function ForgotPasswordModule({ setIsOpen, isOpen }: ModalPropsType) {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log({ values }, "onSubmit")
     const { email } = values;
-    axios.post("http://localhost:4100/api/forgot", { email })
+    axios.post("http://localhost:4200/api/forgot", { email })
     // axios.post(`${BASE_URL}/api/forgot`, { email })
     .then((res) => console.log(res))
     .catch((err) => console.log(err));
