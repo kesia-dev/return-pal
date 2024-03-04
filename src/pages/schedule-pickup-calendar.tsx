@@ -51,7 +51,7 @@ export default function SchedulePickupCalendar() {
                 </Link>
               </Reveal>
               <div className=" fixed bottom-4 right-4 ">
-             
+            
                  <Button
       
       variant={isDateSelected ? "default" : "outline"}
@@ -66,6 +66,7 @@ export default function SchedulePickupCalendar() {
         <NextArrow />
       </div>
     </Button>
+    
             </div>
             </div>
           </div>
