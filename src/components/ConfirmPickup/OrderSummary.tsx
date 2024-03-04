@@ -14,86 +14,181 @@ import Stamp from '../SvgComponents/Stamp'
 import Link from 'next/link'
 import { useReturnProcess } from '@hooks/useReturnProcess'
 import Reveal from '@components/common/reveal'
-import { useEffect, useState } from 'react'
-import type { Order, Item, PromoCode } from '@/components/DashBoard/types'
+import { FormEvent, useEffect, useState } from 'react'
+import { loadStripe } from '@stripe/stripe-js'
+import {
+  type Order,
+  Item,
+  subscriptionPlans,
+} from '@returnprocess/confirm-pickup'
+import { PromoCode } from '@components/DashBoard/types'
 import { getAllPromoCodes } from '@/services/promocodeServices'
 import { processPayment } from '@/services/paymentServices'
-import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
+import { useToast } from '@components/ui/use-toast'
 
-interface Props {
-  promoState: [
-    string | PromoCode | null,
-    React.Dispatch<React.SetStateAction<string | PromoCode | null>>,
-  ]
+interface OrderBreakdownProps {
   order: Order
-  items: Item[]
+  onOrder: React.Dispatch<Order>
 }
-
-interface CheckoutResponse {
-  checkoutLinkUrl: string
-  CHECKOUT_SESSION_ID: string
+interface OrderSummaryProps {
+  order: Order
+  onOrder: React.Dispatch<Order>
 }
 
 const formSchema = z.object({
-  promo: z.string(),
+  promoCode: z.string(),
 })
 
-export default function OrderSummary({
-  promoState: [promoCode, setPromoCode],
-  order,
-  items,
-}: Props) {
-  const [isCheckingout, setIsCheckingout] = useState(false)
-  const [promoMessage, setPromoMessage] = useState('')
+function OrderBreakdown({ order }: OrderBreakdownProps) {
+  return order.subscription.type == subscriptionPlans['Bronze'] ? (
+    <>
+      <Reveal width="100%">
+        <div className="flex w-full flex-col justify-center">
+          <p className="font-regular mt-2 flex w-5/6 justify-between self-center text-smallText sm:text-xl">
+            <span>{order.subscription.type} Plan</span>
+            <span>$ {(order.subscription.price / 100).toFixed(2)}</span>
+          </p>
+          {order.order_details.extra_packages_included ? (
+            <Reveal width="100%" center={true}>
+              <p className="font-regular mt-2 flex w-5/6 justify-between text-smallText sm:text-xl">
+                <span>
+                  {order.order_details.extra_packages_included} additional box
+                  {order.order_details.extra_packages_included > 1 && 'es'}
+                </span>
+                <span>
+                  ${' '}
+                  {(
+                    (Number(order.order_details.extra_packages_included) *
+                      Number(399)) /
+                    100
+                  ).toFixed(2)}
+                </span>
+              </p>
+            </Reveal>
+          ) : undefined}
+          {order.discount && (
+            <Reveal width="100%" center={true}>
+              <p className="font-regular mt-2 flex w-5/6 justify-between text-smallText text-red-500 sm:text-xl">
+                <span>Discount</span>
+                <span>
+                  {(
+                    (order.order_details.total_cost / 100) *
+                    (order.discount.discountPercentage / 100)
+                  ).toFixed(2)}
+                </span>
+              </p>
+            </Reveal>
+          )}
+        </div>
+      </Reveal>
+      {/* <Reveal width="100%" center={true}>
+        <p className="font-regular mt-2 flex w-5/6 justify-between text-smallText sm:text-xl">
+          <span>Tax</span>
+          <span>
+            {((order.order_details.total_cost / 100) * 0.13).toFixed(2)}
+          </span>
+        </p>
+      </Reveal> */}
+    </>
+  ) : (
+    <>
+      <Reveal width="100%">
+        <div className="flex w-full justify-center">
+          <p className="font-regular mt-2 flex w-5/6 justify-between text-smallText sm:text-xl">
+            <span>{order.subscription.type} Plan</span>
+            <span>$ {(order.subscription.price / 100).toFixed(2)}</span>
+          </p>
+        </div>
+      </Reveal>
+      {order.discount && (
+        <Reveal width="100%" center={true}>
+          <p className="font-regular mt-2 flex w-5/6 justify-between text-smallText text-red-500 sm:text-xl">
+            <span>Discount</span>
+            <span>
+              {(
+                (order.order_details.total_cost / 100) *
+                (order.discount.discountPercentage / 100)
+              ).toFixed(2)}
+            </span>
+          </p>
+        </Reveal>
+      )}
+      {/* <Reveal width="100%" center={true}>
+        <p className="font-regular mt-2 flex w-5/6 justify-between text-smallText sm:text-xl">
+          <span>Tax</span>
+          <span>
+            {((order.order_details.total_cost / 100) * 0.13).toFixed(2)}
+          </span>
+        </p>
+      </Reveal> */}
+    </>
+  )
+}
 
-  const returnProcess = useReturnProcess()
+export default function OrderSummary({ order, onOrder }: OrderSummaryProps) {
+  const [isCheckingout, setIsCheckingout] = useState(false)
+  const { toast } = useToast()
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      promo: promoCode,
-    },
   })
 
-  // mock data
-  const extraBoxes = 2
-  const extraBoxPrice = 999
-
-  function handleApplyButtonClickWrapper() {
-    handleApplyButtonClick().catch((error) => {
-      console.error('Error handling apply button click:', error)
-    })
-  }
-  async function handleApplyButtonClick() {
-    try {
+  const onPromoCodeApply = async (e: FormEvent) => {
+    e.preventDefault()
+    /**
+     * Compares all promo codes in the database and verifies if the promo code entered is valid or not
+     */
+    const handlePromoCodeApply = async () => {
       const promoCodes: PromoCode[] = await getAllPromoCodes()
-      const promoCodeInput = form.getValues().promo.trim().toLowerCase()
+      const promoCodeInput = form.getValues().promoCode.trim().toLowerCase()
       const currentDate = new Date()
 
-      const validPromo = promoCodes.find((promo) => {
+      const isValidPromoCode = promoCodes.find((promo: PromoCode) => {
         const isValidCode = promo.promoCode.toLowerCase() === promoCodeInput
         const isNotExpired = new Date(promo.expireDate) >= currentDate
         return isValidCode && isNotExpired
       })
 
-      if (validPromo) {
-        setPromoMessage('Promo code applied successfully')
-        setPromoCode(validPromo)
+      if (isValidPromoCode) {
+        onOrder({
+          ...order,
+          discount: {
+            promoCode: promoCodeInput,
+            expireDate: promoCodes.find(
+              (promo) => promo.promoCode.toLowerCase() === promoCodeInput
+            )!.expireDate,
+            discountPercentage: promoCodes.find(
+              (promo) => promo.promoCode.toLowerCase() === promoCodeInput
+            )!.discountPercentage,
+          },
+        })
+        toast({
+          variant: 'success',
+          description: 'Promo code applied successfully!',
+        })
       } else {
-        setPromoMessage('Invalid promo code')
-        setPromoCode('')
+        toast({
+          variant: 'destructive',
+          description: 'Invalid promo code',
+        })
       }
-    } catch (error) {
-      console.error('Error applying promo code:', error)
-      setPromoMessage('Invalid promo code')
-      setPromoCode('')
+    }
+
+    try {
+      await handlePromoCodeApply()
+    } catch (err) {
+      console.error('Error applying promo code:', err)
+      toast({
+        variant: 'destructive',
+        description: 'Uh oh! There was an error processing your promo code',
+      })
     }
   }
 
-  function onSubmit(values: z.infer<typeof formSchema>) {}
-
+  console.log({ order })
   const onCheckout = () => {
     setIsCheckingout(true)
-    processPayment()
+    processPayment(order)
       .then(() => {
         //Call to return process api with the necessary Payload
       })
@@ -101,59 +196,6 @@ export default function OrderSummary({
         console.error('Error processing payment:', error)
       })
   }
-
-  interface ReceivedData {
-    action: string
-    price: number
-  }
-
-  useEffect(() => {
-    function handleMessage(event: MessageEvent) {
-      if (typeof event.data == 'string') {
-        const receivedData = JSON.parse(event.data) as ReceivedData
-        if (receivedData.action === 'CheckoutSuccess') {
-          console.log('Received CheckoutSuccess message!')
-
-          order.order_details.total_cost = receivedData.price
-          order.client_details.subscription =
-            returnProcess.currentData.subscription
-
-          fetch('/api/orders', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              user: returnProcess.currentData.userInfo,
-              order: order,
-            }),
-          })
-            .then((response) => {
-              if (response.ok) {
-                returnProcess.forward()
-              }
-              if (!response.ok) {
-                throw new Error('Error saving to database')
-              }
-            })
-            .catch((error) => {
-              console.error(error)
-            })
-            .finally(() => {
-              // Remove the event listener only if it's still there
-              if (window.removeEventListener) {
-                window.removeEventListener('message', handleMessage)
-              }
-            })
-        }
-      }
-    }
-    window.addEventListener('message', handleMessage)
-
-    return () => {
-      window.removeEventListener('message', handleMessage)
-    }
-  }, [])
 
   return (
     <section className="mx-1 tracking-normal md:w-1/3">
@@ -167,13 +209,13 @@ export default function OrderSummary({
           <Reveal width="100%" center={true}>
             <Separator className="mb-4 mt-4 w-2/3 bg-brand" />
           </Reveal>
-          <Reveal width="100%" center={true}>
+          {/* <Reveal width="100%" center={true}>
             <p className="font-regular mt-2 flex w-5/6 justify-between text-smallText sm:text-xl">
               <span>One-time Return</span>
               <span>$ {(Number(1999) / 100).toFixed(2)}</span>
             </p>
-          </Reveal>
-          {extraBoxes && (
+          </Reveal> */}
+          {/* {extraBoxes && (
             <Reveal width="100%" center={true}>
               <p className="font-regular mt-2 flex w-5/6 justify-between text-smallText sm:text-xl">
                 <span>
@@ -188,34 +230,33 @@ export default function OrderSummary({
                 </span>
               </p>
             </Reveal>
-          )}
-          <Reveal width="100%" center={true}>
+          )} */}
+          {/* <Reveal width="100%" center={true}>
             <p className="font-regular mt-2 flex w-5/6 justify-between text-smallText sm:text-xl">
               <span>Tax</span>
               <span>$ 1.50</span>
             </p>
-          </Reveal>
+          </Reveal> */}
+          <OrderBreakdown order={order} onOrder={onOrder} />
           <Reveal width="100%" center={true}>
             <p className="mt-2 flex w-5/6 justify-between text-smallText font-bold sm:text-xl">
               <span>Total</span>
-              <span>$ 16.48</span>
+              <span>
+                $ {(Number(order.order_details.total_cost) / 100).toFixed(2)}
+              </span>
             </p>
           </Reveal>
           <Reveal width="100%" center={true}>
             <Form {...form}>
-              <form
-                // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="my-6 flex h-10 w-[87%] justify-between rounded-xl border-4 border-primary sm:h-14"
-              >
+              <form className="my-6 flex h-10 w-[87%] justify-between rounded-xl border-4 border-primary sm:h-14">
                 <FormField
                   control={form.control}
-                  name="promo"
+                  name="promoCode"
                   render={({ field }) => (
                     <FormItem className="flex w-2/3 justify-center">
                       <FormControl>
                         <input
-                          className="flex h-full w-11/12 rounded-none border-0 bg-transparent text-xl text-brand placeholder:text-center placeholder:text-grey focus:outline-0"
+                          className="flex h-full w-11/12 rounded-none border-0 bg-transparent px-2 text-xl text-brand placeholder:text-center placeholder:text-grey focus:border-0 focus:outline-none focus:ring-0 active:border-0 active:outline-none active:ring-0"
                           type="text"
                           placeholder="Promo Code"
                           {...field}
@@ -226,8 +267,9 @@ export default function OrderSummary({
                   )}
                 />
                 <Button
-                  onClick={handleApplyButtonClickWrapper}
+                  onClick={onPromoCodeApply}
                   className="h-full w-1/3 rounded-l-none rounded-r-lg text-xl"
+                  type="submit"
                 >
                   Apply
                 </Button>
@@ -235,17 +277,6 @@ export default function OrderSummary({
             </Form>
           </Reveal>
 
-          {promoMessage && (
-            <Reveal width="100%" center={true}>
-              <div>
-                <p
-                  className={`text-sm ${promoMessage.includes('successfully') ? 'text-blue-500' : 'text-red-500'}`}
-                >
-                  {promoMessage}
-                </p>
-              </div>
-            </Reveal>
-          )}
           <Reveal width="100%" center={true}>
             <div className="mb-6 flex w-[87%] justify-between rounded-xl bg-paleBlue p-4">
               <Stamp />
@@ -261,7 +292,6 @@ export default function OrderSummary({
           className="my-6 h-fit w-full max-w-[300px] sm:text-xl"
           onClick={onCheckout}
           disabled={isCheckingout}
-          // onClick={() => returnProcess.forward()}
         >
           {!isCheckingout ? `Confirm Pickup` : `Processing`}
         </Button>

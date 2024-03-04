@@ -190,11 +190,11 @@ export interface PaginatedResponse {
 }
 
 export interface PromoCode {
-  _id: string
+  _id?: string // generated in mongodb
   promoCode: string
   expireDate: string
   discountPercentage: number
-  __v: number
+  __v?: number // generated in mongodb
 }
 
 export interface PaymentData {
