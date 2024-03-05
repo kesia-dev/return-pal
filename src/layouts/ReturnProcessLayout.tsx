@@ -49,9 +49,9 @@ const steps: ReturnProcessStep[] = [
   },
 ]
 
-export default function ReturnProcessLayout({ children }: PropsWithChildren) {
+export default function ReturnProcessLayout({ children,step = 0 }: PropsWithChildren) {
   return (
-    <ReturnProcessContextProvider steps={steps}>
+    <ReturnProcessContextProvider steps={steps} step={step}>
       <div className={`flex min-h-[100dvh] overflow-hidden bg-paleBlue`}>
         <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
           <ReturnProcessHeader />
