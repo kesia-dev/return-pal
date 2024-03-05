@@ -271,7 +271,7 @@ import { Button } from '@/components/ui/button'
 import ConfirmationDialog from '@components/Orders/ConfirmationDialog'
 import { type ObjectId } from 'mongodb'
 import DashboardLayout from '@/layouts/DashboardLayout'
-
+import moment from 'moment';
 const OrderId = () => {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
   const router = useRouter()
@@ -381,8 +381,8 @@ const OrderId = () => {
                     Order #{order.order_number}
                   </div>
                   <div className="text-black-900 font-avenir-next flex items-center space-x-4 text-2xl font-bold">
-                    {order?.order_details?.package_details[0]?.description
-                      ? order?.order_details?.package_details[0]?.description
+                    {order?.order_details?.package_details?.description
+                      ? order?.order_details?.package_details?.description
                       : 'Nike Return'}
                   </div>
 
@@ -398,10 +398,7 @@ const OrderId = () => {
                   <div className="w-{80} flex items-center space-x-4 text-smallText text-gray-900">
                     Pick up scheduled for
                     <span className="text-black-900 font-avenir-next with p-sm ml-1 flex items-center space-x-4 text-smallText font-bold">
-                      {pickupTime} ,{' '}
-                      {pickupDate
-                        ? new Date(pickupDate).toLocaleDateString()
-                        : ''}{' '}
+                    {moment(order?.order_details?.pickup_date).format('YYYY-MM-DD')}
                       &nbsp;
                       <span className="font-normal"> at </span>
                     </span>
@@ -458,7 +455,7 @@ const OrderId = () => {
                       Payment Method:
                     </span>
                     <span className="w-{80} space-x-4 text-smallText text-gray-900">
-                      {order.client_details.payment_type}
+                      {order?.cardType}
                     </span>
                   </div>
                 </div>
