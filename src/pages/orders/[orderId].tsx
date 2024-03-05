@@ -332,6 +332,7 @@ const OrderId = () => {
     }
   }
   const handleCancelOrder = (id: ObjectId, order_number: string) => {
+    debugger
     setSelectedOrder({ _id: id, order_number } as Order)
   }
 
@@ -474,29 +475,29 @@ const OrderId = () => {
                   }
                   style={{
                     backgroundColor:
-                      order.status === 'Cancelled' ||
-                      order.status === 'Delivered' ||
-                      order.status === 'Delivered to Post Office'
+                      order.order_status === 'Cancelled' ||
+                      order.order_status === 'Delivered' ||
+                      order.order_status === 'Delivered to Post Office'
                         ? '#A3BEE8'
                         : '',
                     border:
-                      order.status === 'Cancelled' ||
-                      order.status === 'Delivered' ||
-                      order.status === 'Delivered to Post Office'
+                      order.order_status === 'Cancelled' ||
+                      order.order_status === 'Delivered' ||
+                      order.order_status === 'Delivered to Post Office'
                         ? '1px solid #4299E1'
                         : 'none',
                     cursor:
-                      order.status === 'Delivered to Post Office' ||
-                      order.status === 'Cancelled' ||
-                      order.status === 'Delivered'
+                      order.order_status === 'Delivered to Post Office' ||
+                      order.order_status === 'Cancelled' ||
+                      order.order_status === 'Delivered'
                         ? 'not-allowed'
                         : 'pointer',
                   }}
                   disabled={[
-                    'Cancelled',
+                    'cancel',
                     'Delivered',
                     'Delivered to Post Office',
-                  ].includes(order.status)}
+                  ].includes(order?.order_status)}
                 >
                   Cancel Order
                 </Button>

@@ -27,7 +27,7 @@ const RecentOrders: React.FC = () => {
 
   const getCancelOrderButtonStyles = (status: string) => {
     const isDisabled =
-      status === 'Cancelled' ||
+      status === 'cancel' ||
       status === 'Delivered' ||
       status === 'Driver delivered to post office'
 
@@ -114,12 +114,12 @@ const RecentOrders: React.FC = () => {
                     onClick={() =>
                       handleCancelOrder(order._id, order.order_number)
                     }
-                    style={getCancelOrderButtonStyles(order.status)}
+                    style={getCancelOrderButtonStyles(order?.order_status)}
                     disabled={[
                       'Cancelled',
                       'Delivered',
                       'Delivered to Post Office',
-                    ].includes(order.status)}
+                    ].includes(order?.order_status)}
                   >
                     Cancel Order
                   </Button>

@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { type Order } from '@components/DashBoard/types'
-
+import moment from 'moment';
 interface OrderListProps {
   orders?: Order[]
 }
@@ -48,27 +48,16 @@ const OrderList: React.FC<OrderListProps> = ({ orders = [] }) => {
                 </div> */}
                 <div className="text-sm text-gray-900">
                   Pick up Scheduled for{' '}
-                  {order.order_date
-                    ? new Date(order.order_date).toLocaleTimeString('en-US', {
-                        hour: 'numeric',
-                        minute: '2-digit',
-                      })
-                    : ''}{' '}
-                  ,
-                  {order.order_details?.pickup_details?.pickup_date
-                    ? formatPickupDate(
-                        order.order_details.pickup_details.pickup_date
-                      )
-                    : ''}
+                    { moment(order?.order_details?.pickup_date).format('YYYY-MM-DD')}
                 </div>
               </div>
             </div>
             <div className="flex-grow"></div>
             {[
-              'Cancelled',
+              'cancel',
               'Delivered',
               'Driver delivered to post office',
-            ].includes(order.status) && (
+            ].includes(order?.order_status) && (
               <div className="mr-4 h-6 w-24 rounded bg-gray-500 text-center">
                 Cancelled
               </div>
