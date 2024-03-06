@@ -1,5 +1,4 @@
 import React, { useRef } from 'react'
-import emailjs from '@emailjs/browser'
 import {
   Form,
   FormControl,
@@ -17,7 +16,7 @@ import { Button } from '@components/ui/button'
 import Reveal from '@components/common/reveal'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-
+import { sendMail } from '@/services/sendEmailService'
 //testing here
 
 const contactFormSchema = z.object({
@@ -61,45 +60,35 @@ function ContactForm() {
 
   const formRef = useRef<HTMLFormElement | null>(null)
 
-  const onSubmit = (values: z.infer<typeof contactFormSchema>) => {
-    console.log(values)
-    // Show success toast
-    toast.success('Message sent successfully!', {
-      position: 'top-right',
-      autoClose: 3000, // 3 seconds
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-    })
+  const onSubmit = async (values: z.infer<typeof contactFormSchema>) => {
+
+    try {
+      const response = await sendMail(values)
+      toast.success('Email sent successfully!', {
+        position: 'top-right',
+        autoClose: 3000, // 3 seconds
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      })
+    } catch (error: any) {
+      console.error('Failed to send mail:', error.message)
+      toast.error('Email sent failed!', {
+        position: 'top-right',
+        autoClose: 3000, // 3 seconds
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      })
+    }
   }
 
   const sendEmail = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    const formElement = formRef.current
-
-    if (formElement) {
-      try {
-        const result = await emailjs.sendForm(
-          'service_kaw06lg',
-          'template_l0jgijd',
-          formElement,
-          'D0Xk7y6Z9b9kB-neE'
-        )
-        console.log(result.text)
-        console.log('Email sent successfully')
-        form.reset()
-      } catch (error: unknown) {
-        if (error instanceof Error && 'text' in error) {
-          console.log(error.text)
-        } else {
-          console.error('Error sending email:', error)
-        }
-      }
-    } else {
-      console.error('Form element is null or undefined.')
-    }
+    const formElement = formRef.current    
   }
 
   return (
