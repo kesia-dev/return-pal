@@ -2,36 +2,27 @@ import dotenv from 'dotenv'
 import axios from 'axios'
 import { loadStripe } from '@stripe/stripe-js'
 import { type PaymentData } from '@components/DashBoard/types'
+import { type Order } from '@returnprocess/confirm-pickup'
 
 dotenv.config()
-const baseUrl: string = process.env.BASE_URL ?? 'http://localhost:4100'
+const baseUrl: string = process.env.BASE_URL ?? 'http://localhost:4200'
 
-const paymentData: PaymentData = {
-  amount: 5,
-}
-
-export const processPayment = async () => {
-  if (!process.env.PUBLIC_STRIPE_PUBLISHABLE_KEY) {
+export const processPayment = async (order: Order) => {
+  if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
     throw new Error('PUBLIC_STRIPE_PUBLISHABLE_KEY is not defined')
   }
   const stripe = await loadStripe(
-    process.env.PUBLIC_STRIPE_PUBLISHABLE_KEY?.toString()
+    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY?.toString()
   )
 
-  const headers = {
-    'Content-Type': 'application/json',
-  }
-
-  const body = JSON.stringify(paymentData)
+  const body = JSON.stringify(order)
 
   try {
-    const response = await axios.post<{ id: string }>(
-      `${baseUrl}/api/payment`,
-      body,
-      {
-        headers: headers,
-      }
-    )
+    const response = await axios.post(`${baseUrl}/api/payment`, body, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
 
     if (response.status !== 200) {
       throw new Error('Failed to process payment')

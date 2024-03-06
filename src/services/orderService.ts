@@ -1,5 +1,6 @@
 import axios, { type AxiosResponse } from 'axios'
-import { type PaginatedResponse, type Order } from '@components/DashBoard/types'
+import { type PaginatedResponse } from '@components/DashBoard/types'
+import { type Order } from '@returnprocess/confirm-pickup'
 import * as dotenv from 'dotenv'
 dotenv.config()
 
@@ -47,21 +48,24 @@ export const cancelOrder = async (orderId: string): Promise<boolean> => {
   }
 }
 
-export const getOrderDetails = async (orderId: string): Promise<boolean> => {
-  const apiUrl = 'http://localhost:4200/api/payment/orderDetails';
+export const getOrderDetails = async (
+  orderId: string
+): Promise<Order | undefined> => {
+  const apiUrl = 'http://localhost:4200/api/payment/orderDetails'
   try {
-    const response = await axios.post(apiUrl, 
-       {
+    const response = await axios.post(
+      apiUrl,
+      {
         orderRef: orderId,
-      },{
-      headers: {
-        'Content-Type': 'application/json',
       },
-    });
-    return response.data
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    )
+    return response.data as Order
   } catch (error) {
-    console.error('Error:', error);
-    return false
+    console.error('Error:', error)
   }
-  
 }

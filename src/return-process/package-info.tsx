@@ -48,6 +48,12 @@ import { Separator } from '@/components/ui/separator'
 import { ScrollArea } from '@components/ui/scroll-area'
 import UploadIconSvg from '@components/SvgComponents/UploadIcon'
 import Reveal from '@components/common/reveal'
+import {
+  deleteReturnLabel,
+  getAllReturnLabels,
+  updateReturnLabel,
+  uploadReturnLabel,
+} from '@/services/returnLabelService'
 
 const ACCEPTED_FILE_TYPES = ['JPG', 'PNG', 'PDF']
 
@@ -99,6 +105,7 @@ const formSchema = z.object(
 
 export default function PackageInfo() {
   const returnProcess = useReturnProcess()
+  const userId = localStorage.getItem('userId')
   const [arrayOfLabels, setArrayOfLabels] = useState<FileUploadType[]>(
     returnProcess.currentData.labelFileUploads ?? []
   )
@@ -115,6 +122,14 @@ export default function PackageInfo() {
   })
 
   useEffect(() => {
+    const getReturnLabels = async () => {
+      const rls = await getAllReturnLabels(userId!)
+      setArrayOfLabels(rls)
+    }
+    getReturnLabels()
+  }, [])
+
+  useEffect(() => {
     if (arrayOfLabels.length === 0) {
       form.setValue('labelFileUploads', [], { shouldValidate: true })
     } else {
@@ -128,10 +143,12 @@ export default function PackageInfo() {
         { shouldValidate: true }
       )
     }
+
+    returnProcess.setCurrentData({ labelFileUploads: arrayOfLabels })
   }, [arrayOfLabels])
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    returnProcess.setCurrentData({ labelFileUploads: values.labelFileUploads })
+    returnProcess.setCurrentData({ labelFileUploads: arrayOfLabels })
     returnProcess.forward()
   }
 
@@ -198,11 +215,13 @@ export default function PackageInfo() {
                     <Button
                       className="w-full px-5"
                       onClick={() => {
+                        // updateReturnLabel({ description: newDescription })
                         const newArrayOfLabels = [...arrayOfLabels]
                         const rowId = Number(row.row.id)
 
                         if (newArrayOfLabels[rowId]) {
                           newArrayOfLabels[rowId]!.description = newDescription
+                          updateReturnLabel(newArrayOfLabels[rowId]!)
                         }
                         setArrayOfLabels(newArrayOfLabels)
                       }}
@@ -250,6 +269,8 @@ export default function PackageInfo() {
                       onClick={() => {
                         const newArrayOfLabels = [...arrayOfLabels]
                         const rowId = Number(row.row.id)
+
+                        deleteReturnLabel(newArrayOfLabels[rowId]!)
                         newArrayOfLabels.splice(rowId, 1)
                         setArrayOfLabels(newArrayOfLabels)
                       }}
@@ -279,32 +300,18 @@ export default function PackageInfo() {
     file: File | undefined,
     type: 'Physical' | 'Digital' | 'Amazon'
   ) => {
-    setArrayOfLabels([
-      ...arrayOfLabels,
-      {
-        attachment: file?.name ?? 'N/A',
-        labelType: type,
-        description: labelDescription,
-      },
-    ])
+    const returnLabel = {
+      file,
+      attachment: file?.name ?? 'N/A',
+      labelType: type,
+      description: labelDescription,
+    }
+
+    uploadReturnLabel(returnLabel, userId!)
+    setArrayOfLabels([...arrayOfLabels, returnLabel])
 
     setLabelDescription(undefined)
     setFile(undefined)
-    // TODO: upload file to server after implementation
-  }
-
-  const addPhysicalLabel = () => {
-    // TODO: Change this later - this is only here to pass the validation step.
-    setArrayOfLabels([
-      ...arrayOfLabels,
-      {
-        attachment: file?.name ?? 'N/A',
-        labelType: 'Physical',
-        description: labelDescription,
-      },
-    ])
-
-    setLabelDescription(undefined)
   }
 
   const handleDescriptionChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -542,7 +549,7 @@ export default function PackageInfo() {
                       <DialogClose asChild>
                         <Button
                           className="w-full px-5"
-                          onClick={() => void addPhysicalLabel()}
+                          onClick={() => addLabelToTable(undefined, 'Physical')}
                         >
                           Add Package
                         </Button>
@@ -633,7 +640,7 @@ export default function PackageInfo() {
                       <DialogClose asChild>
                         <Button
                           className="w-full px-5"
-                          onClick={() => void addLabelToTable(file, 'Digital')}
+                          onClick={() => addLabelToTable(file, 'Digital')}
                         >
                           {' '}
                           Add Package
@@ -723,7 +730,7 @@ export default function PackageInfo() {
                       <DialogClose asChild>
                         <Button
                           className="w-full px-5"
-                          onClick={() => void addLabelToTable(file, 'Amazon')}
+                          onClick={() => addLabelToTable(file, 'Amazon')}
                         >
                           {' '}
                           Add Package

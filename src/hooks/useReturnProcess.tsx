@@ -32,6 +32,13 @@ export function useReturnProcess() {
     context.setCurrentStepIndex(nextStep)
   }
 
+  function jump(stepToJump: number) {
+    context.setCurrentStepIndex(stepToJump)
+    if (stepToJump === context.steps.length - 1) {
+      context.setIsFinished(true)
+    }
+  }
+
   function back() {
     if (!canGoBack()) {
       return
@@ -57,6 +64,7 @@ export function useReturnProcess() {
     getCurrentStep: getCurrentStep,
     forward,
     back,
+    jump,
     canGoForwards,
     canGoBack,
     setCurrentData,

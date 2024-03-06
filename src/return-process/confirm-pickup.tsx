@@ -1,6 +1,6 @@
+import * as z from 'zod'
 import OrderSummary from '@/components/ConfirmPickup/OrderSummary'
 import Calendar from '@/components/SvgComponents/ConfirmPickup/Calendar'
-import CreditCard from '@/components/SvgComponents/ConfirmPickup/CreditCard'
 import EditContainer from '@/components/SvgComponents/ConfirmPickup/EditContainer'
 import Location from '@/components/SvgComponents/ConfirmPickup/Location'
 import Package from '@/components/SvgComponents/ConfirmPickup/Package'
@@ -10,7 +10,6 @@ import { ReturnProcessBackButton } from '@/components/common/return-process'
 import { useReturnProcess } from '@/hooks/useReturnProcess'
 import { type ReturnProcessFullObjectType } from '@context/ReturnProcessContext'
 import { Separator } from '@/components/ui/separator'
-import Link from 'next/link'
 import {
   useState,
   useEffect,
@@ -19,9 +18,7 @@ import {
   type FormEvent,
 } from 'react'
 import Reveal from '@components/common/reveal'
-import type { Item, Order } from '@/components/DashBoard/types'
 import { priceData } from '@/return-process/prices'
-import type { ObjectId } from 'mongodb'
 import { Input } from '@components/ui/input'
 import { ProvincesSelector } from '@components/DashBoard/ProvincesSelector'
 import { canadaProvinces } from '@lib/constants'
@@ -32,39 +29,124 @@ import {
 } from '@lib/utils'
 import { useToast } from '@components/ui/use-toast'
 import { Button } from '@components/ui/button'
-import { Label } from '@components/ui/label'
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
   SelectTrigger,
-  SelectValue,
 } from '@/components/ui/select'
+import { PromoCode } from '@components/DashBoard/types'
 
-// export interface MockData {
-//   plan: 'bronze' | 'silver' | 'gold' | 'platinum'
-//   extraBoxes?: number
-//   bronzePrice: number
-//   extraBoxPrice: number
-//   productList: Record<string, number>
-// }
+export enum orderStatus {
+  'Driver received' = 'Driver received',
+  'Driver on the way' = 'Driver on the way',
+  'Driver delivered to post office' = 'Driver delivered to post office',
+  'Delivered' = 'Delivered',
+  'Cancelled' = 'Cancelled',
+}
 
-// export interface Order {
-//   name: string
-//   tel: string
-//   orderRef: string
-//   email: string
-//   address: string
-//   pickupDate: string
-//   pickupMethod: string
-//   totalPackages: number
-//   cardType: string
-//   cardNumber: number
-// }
+export enum subscriptionPlans {
+  'Bronze' = 'Bronze',
+  'Silver' = 'Silver',
+  'Gold' = 'Gold',
+  'Platinum' = 'Platinum',
+}
 
-type FormValues = {
-  fullName: string
+const ConfirmedOrdersCollectionSchema = z.object({
+  orderId: z.string().optional(), // System-generated
+  orderDate: z.date(),
+  orderStatus: z.nativeEnum(orderStatus),
+  invoiceNumber: z.string().optional(),
+  discount: z
+    .object({
+      promoCode: z.string(),
+      expireDate: z.string(),
+      discountPercentage: z.number(),
+    })
+    .optional(),
+  orderDetails: z.object({
+    userId: z.string().optional(), // auto-generated
+    totalCost: z.number(),
+    pickupDate: z.date(),
+    pickupMethod: z.enum(['Direct Handoff', 'Leave on Doorstep']),
+    totalPackages: z.number(),
+    extraPackages: z.number(),
+    promoCode: z.string().optional(),
+    pickupDetails: z.object({
+      name: z.string(),
+      phoneNumber: z.string(),
+      unit: z.string().optional(),
+      address: z.string(),
+      city: z.string(),
+      province: z.string().default('Ontario'),
+      country: z.string().default('Canada'),
+      postalCode: z
+        .string()
+        .refine((value) => /^\w\d\w\s?\d\w\d$/.test(value), {
+          message: 'Invalid postal code format',
+        }),
+      instructions: z.string().optional(),
+    }),
+  }),
+  subscription: z.object({
+    type: z.nativeEnum(subscriptionPlans),
+    expiryDate: z.date(),
+    price: z.number(),
+  }),
+})
+export type Order = z.infer<typeof ConfirmedOrdersCollectionSchema>
+
+export interface Item {
+  itemId: string
+  name: string
+  quantity: number
+}
+
+const addExpiryDate = (orderDate: Date, subscription: string): Date => {
+  const expiryDate = new Date(orderDate)
+
+  switch (subscription) {
+    case 'Silver':
+      expiryDate.setDate(expiryDate.getDate() + 30)
+      break
+    case 'Gold':
+      expiryDate.setDate(expiryDate.getDate() + 90)
+      break
+    case 'Platinum':
+      expiryDate.setDate(expiryDate.getDate() + 365)
+      break
+    default:
+      break
+  }
+  return expiryDate
+}
+
+const calculateCost = (
+  subscription: string,
+  packages: number,
+  promoCode?: PromoCode
+) => {
+  if (subscription === 'Bronze') {
+    const bronzePrice = priceData.find(
+      (plan) => plan.name.toLowerCase() === subscription.toLowerCase()
+    )!.price
+    const extraPrice = priceData.find(
+      (plan) => plan.name.toLowerCase() === 'Extra'.toLowerCase()
+    )!.price
+    const total = bronzePrice + (packages - 1) * extraPrice
+    return !promoCode
+      ? total
+      : total - total * (promoCode.discountPercentage / 100)
+  } else {
+    const subscriptionPrice = priceData.find(
+      (plan) => plan.name.toLowerCase() === subscription.toLowerCase()
+    )!.price
+    const total = subscriptionPrice
+    return !promoCode
+      ? total
+      : total - total * (promoCode.discountPercentage / 100)
+  }
 }
 
 function AddressPickupInformation({ order }: { order: Order }) {
@@ -72,7 +154,7 @@ function AddressPickupInformation({ order }: { order: Order }) {
   const returnProcess = useReturnProcess()
   const [isShowing, setIsShowing] = useState(false)
   const [province, setProvince] = useState(
-    order.order_details.pickup_details.province
+    order.orderDetails.pickupDetails.province
   )
   const pickupFormRef = useRef<HTMLFormElement>(null)
   const inputsRef = useRef<HTMLDivElement>(null)
@@ -169,8 +251,14 @@ function AddressPickupInformation({ order }: { order: Order }) {
     }
 
     // Check if the focus has moved outside the div
-    if (!inputsRef.current!.contains(target as Node)) {
-      pickupFormRef.current?.requestSubmit()
+    if (
+      inputsRef.current &&
+      !inputsRef.current!.contains(target as Node) &&
+      isShowing
+    ) {
+      pickupFormRef.current!.dispatchEvent(
+        new Event('submit', { bubbles: true, cancelable: true })
+      )
     }
   }
 
@@ -201,7 +289,7 @@ function AddressPickupInformation({ order }: { order: Order }) {
     'md:text-lg  my-2 placeholder:text-slate-400 rounded-xl border-[3px] border-solid border-primary'
 
   const provinceToShow = canadaProvinces.find(
-    (province) => province.name == order.order_details.pickup_details.province
+    (province) => province.name == order.orderDetails.pickupDetails.province
   )!.value
 
   return !isShowing ? (
@@ -216,22 +304,22 @@ function AddressPickupInformation({ order }: { order: Order }) {
       <div className="w-full space-y-3">
         <Reveal>
           <p className="font-bold">
-            {order.order_details.pickup_details.contact_full_name}
+            {order.orderDetails.pickupDetails.name}
             <span className="text-mediumText font-normal">&nbsp;|&nbsp;</span>
-            {order.order_details.pickup_details.contact_phone_number}
+            {order.orderDetails.pickupDetails.phoneNumber}
           </p>
         </Reveal>
         <Reveal>
           <p className="whitespace-pre-wrap">
-            {order.order_details.pickup_details.unit_number
-              ? `${order.order_details.pickup_details.unit_number} \u2013 ${order.order_details.pickup_details.street}, ${order.order_details.pickup_details.city}, ${provinceToShow}, ${order.order_details.pickup_details.postal_code}`
-              : `${order.order_details.pickup_details.street}, ${order.order_details.pickup_details.city}, ${provinceToShow}, ${order.order_details.pickup_details.postal_code}`}
+            {order.orderDetails.pickupDetails.unit
+              ? `${order.orderDetails.pickupDetails.unit} \u2013 ${order.orderDetails.pickupDetails.address}, ${order.orderDetails.pickupDetails.city}, ${provinceToShow}, ${order.orderDetails.pickupDetails.postalCode}`
+              : `${order.orderDetails.pickupDetails.address}, ${order.orderDetails.pickupDetails.city}, ${provinceToShow}, ${order.orderDetails.pickupDetails.postalCode}`}
           </p>
         </Reveal>
-        {order.order_details.pickup_details.instructions && (
+        {order.orderDetails.pickupDetails.instructions && (
           <Reveal>
             <p className="text-grey md:tracking-wide">
-              {order.order_details.pickup_details.instructions}
+              {order.orderDetails.pickupDetails.instructions}
             </p>
           </Reveal>
         )}
@@ -270,18 +358,14 @@ function AddressPickupInformation({ order }: { order: Order }) {
               type="text"
               placeholder="Full Name"
               autoFocus={true}
-              defaultValue={
-                order.order_details.pickup_details.contact_full_name
-              }
+              defaultValue={order.orderDetails.pickupDetails.name}
             />
             <Input
               className={`${inputStyles} basis-4/5`}
               name="phoneNumber"
               placeholder="Phone Number"
               type="text"
-              defaultValue={
-                order.order_details.pickup_details.contact_phone_number
-              }
+              defaultValue={order.orderDetails.pickupDetails.phoneNumber}
             />
           </div>
         </Reveal>
@@ -292,23 +376,21 @@ function AddressPickupInformation({ order }: { order: Order }) {
               name="street"
               type="text"
               placeholder="Street Address"
-              defaultValue={order.order_details.pickup_details.street}
+              defaultValue={order.orderDetails.pickupDetails.address}
             />
             <Input
               className={`${inputStyles} basis-1/3`}
               name="unitNumber"
               placeholder="Office, Apt. (optional)"
               type="text"
-              defaultValue={
-                order.order_details.pickup_details.unit_number || ''
-              }
+              defaultValue={order.orderDetails.pickupDetails.unit || ''}
             />
             <Input
               className={`${inputStyles} basis-1/3`}
               name="city"
               type="text"
               placeholder="City"
-              defaultValue={order.order_details.pickup_details.city}
+              defaultValue={order.orderDetails.pickupDetails.city}
             />
           </div>
         </Reveal>
@@ -323,9 +405,8 @@ function AddressPickupInformation({ order }: { order: Order }) {
                 canadaProvinces.find(
                   (province) =>
                     province.name ==
-                      order.order_details.pickup_details.province ||
-                    province.value ==
-                      order.order_details.pickup_details.province
+                      order.orderDetails.pickupDetails.province ||
+                    province.value == order.orderDetails.pickupDetails.province
                 )!.value
               }
             />
@@ -334,7 +415,7 @@ function AddressPickupInformation({ order }: { order: Order }) {
               name="postalCode"
               type="text"
               placeholder="Postal"
-              defaultValue={order.order_details.pickup_details.postal_code}
+              defaultValue={order.orderDetails.pickupDetails.postalCode}
             />
           </div>
         </Reveal>
@@ -345,9 +426,7 @@ function AddressPickupInformation({ order }: { order: Order }) {
               name="instructions"
               type="text"
               placeholder="i.e building access code, location of door, etc"
-              defaultValue={
-                order.order_details.pickup_details.instructions || ''
-              }
+              defaultValue={order.orderDetails.pickupDetails.instructions || ''}
             />
           </div>
         </Reveal>
@@ -371,13 +450,19 @@ function DatePickupInformation({ order }: { order: Order }) {
     const target = e.relatedTarget
 
     // Check if the focus has moved outside the div
-    if (!inputsRef.current!.contains(target)) {
-      dateFormRef.current?.requestSubmit()
+    if (
+      inputsRef.current &&
+      !inputsRef.current!.contains(target) &&
+      isShowing
+    ) {
+      dateFormRef.current!.dispatchEvent(
+        new Event('submit', { bubbles: true, cancelable: true })
+      )
     }
   }
 
   const handleFinish = () => {
-    dateFormRef.current?.requestSubmit()
+    dateFormRef.current!.requestSubmit()
   }
 
   const handleClick = () => {
@@ -388,10 +473,15 @@ function DatePickupInformation({ order }: { order: Order }) {
     e.preventDefault()
     const formData = new FormData(dateFormRef.current!)
     const date = new Date(
-      (formData.get('pickupDate') as string) + 'T00:00:00-05:00' // EST
+      formData.get('pickupDate') as string // EST
     )
 
-    const formattedDate = date.toLocaleDateString('en-CA').replace(/\//g, '/')
+    const formattedDate = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/Toronto',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }).format(new Date(date.toLocaleString('en-US', { timeZone: 'UTC' })))
 
     returnProcess.setCurrentData({
       dateAndTime: formattedDate,
@@ -399,16 +489,20 @@ function DatePickupInformation({ order }: { order: Order }) {
     setIsShowing(false)
   }
 
-  const dateDefault = new Date()
-
+  const dateDefault = new Date(returnProcess.currentData.dateAndTime)
   const dateString = new Intl.DateTimeFormat('en-US', {
     weekday: 'short',
     month: 'short',
     day: 'numeric',
+    timeZone: 'America/Toronto',
   }).format(dateDefault)
 
-  return !isShowing ? (
-    <div className="flex w-full justify-between gap-2 md:gap-7">
+  return (
+    <div
+      onBlur={handleBlur}
+      ref={inputsRef}
+      className="flex w-full justify-between gap-2 md:gap-7"
+    >
       <div className="flex min-w-[25px] items-center justify-center md:min-w-[63px]">
         <div className="flex h-[25px] w-[25px] items-center sm:h-[79px] sm:w-[63px]">
           <Reveal>
@@ -416,57 +510,39 @@ function DatePickupInformation({ order }: { order: Order }) {
           </Reveal>
         </div>
       </div>
-      <p className="mb-1 ml-2 flex w-full items-center sm:mb-2 sm:ml-0">
-        <Reveal width="100%">
-          <>
-            <span className="font-bold">Pickup Date:</span>
-            <span>
-              &nbsp;
-              {dateString}
-            </span>
-          </>
-        </Reveal>
-      </p>
-      <div className="mb-2 flex items-center justify-center">
-        <Reveal>
-          <EditContainer
-            onFinish={handleFinish}
-            isShowingIcon={!isShowing}
-            onClick={handleClick}
-          />
-        </Reveal>
-      </div>
-    </div>
-  ) : (
-    <div
-      onBlur={handleBlur}
-      ref={inputsRef}
-      className="flex w-full justify-between gap-2 md:gap-10"
-    >
-      <div className="flex min-w-[35px] justify-center md:min-w-[63px]">
-        <div className="h-[39px] w-[31px] sm:h-[79px] sm:w-[63px]">
-          <Reveal>
-            <Calendar />
+      {!isShowing ? (
+        <p className="mb-1 ml-2 flex w-full items-center sm:mb-2 sm:ml-0">
+          <Reveal width="100%">
+            <>
+              <span className="font-bold">Pickup Date:</span>
+              <span>
+                &nbsp;
+                {dateString}
+              </span>
+            </>
           </Reveal>
-        </div>
-      </div>
-      <form
-        ref={dateFormRef}
-        onSubmit={handleSubmit}
-        className="mb-1 flex w-full items-center sm:mb-2"
-      >
-        <Reveal width="100%">
-          <Input
-            className={`basis-[65%] rounded-xl border-[3px] border-solid border-primary py-0 placeholder:text-slate-400 md:text-lg`}
-            name="pickupDate"
-            type="date"
-            autoFocus={true}
-            placeholder="Street Address"
-            defaultValue={dateDefault.toLocaleDateString('en-CA')}
-          />
-        </Reveal>
-      </form>
-      <div>
+        </p>
+      ) : (
+        <form
+          ref={dateFormRef}
+          onSubmit={handleSubmit}
+          className="mb-1 flex w-full items-center sm:mb-2"
+        >
+          <Reveal width="100%">
+            <Input
+              className={`block w-full rounded-xl border-[3px] border-solid border-primary py-0 placeholder:text-slate-400 md:text-lg`}
+              name="pickupDate"
+              type="date"
+              autoFocus={true}
+              placeholder="Pickup Date"
+              defaultValue={dateDefault.toLocaleDateString('en-CA', {
+                timeZone: 'America/Toronto',
+              })}
+            />
+          </Reveal>
+        </form>
+      )}
+      <div className="mb-2 flex items-center justify-center">
         <EditContainer
           onFinish={handleFinish}
           isShowingIcon={!isShowing}
@@ -482,7 +558,7 @@ function PickupMethodInformation({ order }: { order: Order }) {
   const inputsRef = useRef<HTMLDivElement>(null)
   const [deliveryOption, setDeliveryOption] = useState<
     ReturnProcessFullObjectType['deliveryOption']
-  >(order.order_details.pickup_method)
+  >(order.orderDetails.pickupMethod)
 
   const returnProcess = useReturnProcess()
 
@@ -539,7 +615,7 @@ function PickupMethodInformation({ order }: { order: Order }) {
         <Reveal width="100%">
           <p className="grow">
             <span className="font-bold">Pickup Method:</span>
-            <span>&nbsp;{order.order_details.pickup_method}</span>
+            <span>&nbsp;{order.orderDetails.pickupMethod}</span>
           </p>
         </Reveal>
       </div>
@@ -598,136 +674,52 @@ function PickupMethodInformation({ order }: { order: Order }) {
 }
 
 export default function ConfirmPickup() {
-  // If the user enters a Promo Code in the Order Summary, it will be held in state here
-  const [promoCode, setPromoCode] = useState('')
-
   // Logic for the Scroll-to-Bottom button
   const [showScrollBtn, setShowScrollBtn] = useState(true)
-
   const returnProcess = useReturnProcess()
-
-  const items: Item[] = []
-  const foundSubscription = priceData.find(
-    (plan) =>
-      plan.name.toLowerCase() ===
-      returnProcess.currentData.subscription.toLowerCase()
-  )
-  if (foundSubscription) {
-    const subscriptionItem = {
-      itemId: foundSubscription.itemId,
-      itemName: foundSubscription.name,
-      quantity: 1,
-    }
-    items.push(subscriptionItem)
-    if (
-      returnProcess.currentData.subscription === 'Bronze' &&
-      returnProcess.currentData.labelFileUploads.length > 1
-    ) {
-      const packageItem = {
-        itemId: priceData.find((plan) => plan.name.toLowerCase() === 'extra')!
-          .itemId,
-        itemName: priceData.find((plan) => plan.name.toLowerCase() === 'extra')!
-          .name,
-        quantity: returnProcess.currentData.labelFileUploads.length - 1,
-      }
-      items.push(packageItem)
-    }
-  }
-
-  const addExpiryDate = (orderDate: Date, subscription: string): string => {
-    const expiryDate = new Date(orderDate)
-
-    switch (subscription) {
-      case 'Silver':
-        expiryDate.setDate(expiryDate.getDate() + 30)
-        break
-      case 'Gold':
-        expiryDate.setDate(expiryDate.getDate() + 90)
-        break
-      case 'Platinum':
-        expiryDate.setDate(expiryDate.getDate() + 365)
-        break
-      default:
-        break
-    }
-    return expiryDate.toString()
-  }
-
-  const calculateCost = (subscription: string, packages: number) => {
-    if (subscription === 'Bronze') {
-      const bronzePrice = priceData.find(
-        (plan) => plan.name.toLowerCase() === subscription.toLowerCase()
-      )!.price
-      const extraPrice = priceData.find(
-        (plan) => plan.name.toLowerCase() === 'Extra'.toLowerCase()
-      )!.price
-      return bronzePrice + (packages - 1) * extraPrice
-    } else {
-      const subscriptionPrice = priceData.find(
-        (plan) => plan.name.toLowerCase() === subscription.toLowerCase()
-      )!.price
-      return subscriptionPrice
-    }
-  }
-  const order: Order = {
-    // generate order_number here
-    _id: undefined as unknown as ObjectId,
-    order_number: '',
-    order_date: {
-      $dateFromString: {
-        dateString: new Date().toString(),
-      },
-    },
-    order_status: 'Driver received',
-    order_details: {
-      total_cost: calculateCost(
+  const [order, setOrder] = useState<Order>({
+    orderDate: new Date(),
+    orderStatus: orderStatus['Driver received'],
+    orderDetails: {
+      userId: localStorage.getItem('userId')!,
+      totalCost: calculateCost(
         returnProcess.currentData.subscription,
         returnProcess.currentData.labelFileUploads.length
       ),
-      pickup_date: {
-        $dateFromString: {
-          dateString: returnProcess.currentData.dateAndTime,
-        },
-      },
-      pickup_method: returnProcess.currentData.deliveryOption,
-      total_packages: returnProcess.currentData.labelFileUploads.length,
-      extra_packages_included:
+      pickupDate: new Date(returnProcess.currentData.dateAndTime),
+      pickupMethod: returnProcess.currentData.deliveryOption,
+      totalPackages: returnProcess.currentData.labelFileUploads.length,
+      extraPackages:
         returnProcess.currentData.subscription === 'Bronze'
           ? returnProcess.currentData.labelFileUploads.length - 1
           : 0,
-      promo_code: '',
-      pickup_details: {
-        address_id: undefined as unknown as ObjectId,
-        contact_full_name: returnProcess.currentData.contact_full_name,
-        contact_phone_number: returnProcess.currentData.contact_phone_number,
-        street: returnProcess.currentData.street,
-        unit_number: returnProcess.currentData.unit_number,
+      pickupDetails: {
+        name: returnProcess.currentData.contact_full_name,
+        phoneNumber: returnProcess.currentData.contact_phone_number,
+        address: returnProcess.currentData.street,
+        unit: returnProcess.currentData.unit_number,
         city: returnProcess.currentData.city,
         province: returnProcess.currentData.province,
         country: returnProcess.currentData.country,
-        postal_code: returnProcess.currentData.postal_code,
+        postalCode: returnProcess.currentData.postal_code,
         instructions: returnProcess.currentData.instructions ?? '',
       },
     },
-    client_details: returnProcess.currentData.userInfo,
-    subscription_expiry_date: {
-      $dateFromString: {
-        dateString: addExpiryDate(
-          new Date(),
-          returnProcess.currentData.subscription
-        ),
-      },
+    subscription: {
+      type: returnProcess.currentData.subscription as subscriptionPlans,
+      expiryDate: addExpiryDate(
+        new Date(),
+        returnProcess.currentData.subscription
+      ),
+      price: priceData.find(
+        (plan) =>
+          plan.name.toLowerCase() ===
+          returnProcess.currentData.subscription.toLowerCase()
+      )!.price,
     },
-    // pickupMethod: 'Direct Handoff',
-    // pickupMethod: returnProcess.currentData.pickupType,
-    // totalPackages: returnProcess.currentData.labelFileUploads.length,
-    // cardType: 'Visa',
-    // cardNumber: 4832,
-    // plan: 'bronze',
-    // extraBoxes: 1,
-    // bronzePrice: 1099,
-    // extraBoxPrice: 399,
-  }
+  })
+
+  // scroll handler
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY < 200) {
@@ -740,12 +732,58 @@ export default function ConfirmPickup() {
     return window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // update order
+  useEffect(() => {
+    setOrder({
+      ...order,
+      orderDetails: {
+        userId: localStorage.getItem('userId')!,
+        totalCost: calculateCost(
+          returnProcess.currentData.subscription,
+          returnProcess.currentData.labelFileUploads.length,
+          order.discount ? order.discount : undefined
+        ),
+        pickupDate: new Date(returnProcess.currentData.dateAndTime),
+        pickupMethod: returnProcess.currentData.deliveryOption,
+        totalPackages: returnProcess.currentData.labelFileUploads.length,
+        extraPackages:
+          returnProcess.currentData.subscription === 'Bronze'
+            ? returnProcess.currentData.labelFileUploads.length - 1
+            : 0,
+        pickupDetails: {
+          name: returnProcess.currentData.contact_full_name,
+          phoneNumber: returnProcess.currentData.contact_phone_number,
+          address: returnProcess.currentData.street,
+          unit: returnProcess.currentData.unit_number,
+          city: returnProcess.currentData.city,
+          province: returnProcess.currentData.province,
+          country: returnProcess.currentData.country,
+          postalCode: returnProcess.currentData.postal_code,
+          instructions: returnProcess.currentData.instructions ?? '',
+        },
+      },
+      subscription: {
+        type: returnProcess.currentData.subscription as subscriptionPlans,
+        expiryDate: addExpiryDate(
+          new Date(),
+          returnProcess.currentData.subscription
+        ),
+        price: priceData.find(
+          (plan) =>
+            plan.name.toLowerCase() ===
+            returnProcess.currentData.subscription.toLowerCase()
+        )!.price,
+      },
+    })
+  }, [returnProcess.currentData, order.discount])
+
   const scrollDown: () => void = () => {
     window.scrollTo({
       top: document.documentElement.scrollHeight,
       behavior: 'smooth',
     })
   }
+
   return (
     <div className="mt-6 flex w-full flex-col items-center sm:mt-10 md:flex-row md:items-start md:justify-around md:tracking-wide">
       <section className="mx-1 flex w-full flex-col items-center text-base sm:mb-10 sm:w-2/3 sm:text-smallText">
@@ -777,11 +815,10 @@ export default function ConfirmPickup() {
             <Reveal width="100%">
               <Separator className="mb-4 hidden w-full bg-brand sm:flex" />
             </Reveal>
-
             <PickupMethodInformation order={order} />
 
             <Reveal width="100%">
-              <Separator className="mb-4 mt-4 hidden w-full bg-brand sm:flex sm:flex" />
+              <Separator className="mb-4 mt-4 hidden w-full bg-brand sm:flex" />
             </Reveal>
           </section>
 
@@ -808,47 +845,26 @@ export default function ConfirmPickup() {
                     </span>
                   </p>
                 </Reveal>
-                <Link href="/" className="w-2/3 text-primary">
+                <Button
+                  onClick={() => returnProcess.back()}
+                  className="w-2/3 bg-transparent text-primary hover:bg-transparent hover:opacity-100"
+                >
                   <Reveal width="100%">
                     <div className="flex items-center justify-start">
                       <div className="text-normal sm:text-subtitle">+</div>
-                      <div className="mt-1">&nbsp;Add a package</div>
+                      <div className="ml-0.5 mt-0.5 text-xl">
+                        &nbsp;Add a package
+                      </div>
                     </div>
                   </Reveal>
-                </Link>
+                </Button>
               </div>
-              <EditContainer />
             </div>
             <Reveal width="100%">
               <Separator className="mb-4 mt-4 hidden w-full bg-brand sm:flex" />
             </Reveal>
           </section>
 
-          {/* <section>
-            <Reveal>
-              <h2 className="text-smallText font-semibold text-primary sm:mb-2 sm:text-2xl">
-                Payment Method
-              </h2>
-            </Reveal>
-            <div className="flex w-full justify-between gap-2 md:gap-10">
-              <div className="flex min-w-[35px] justify-center md:min-w-[70px]">
-                <div className="h-[35px] w-[35px] sm:h-[70px] sm:w-[70px]">
-                  <Reveal>
-                    <CreditCard />
-                  </Reveal>
-                </div>
-              </div>
-              <div className="mt-1 grow sm:mt-3">
-                <Reveal width="100%">
-                  <p>
-                    <span className="font-bold">Visa ending in:&nbsp;</span>
-                    <span>1234 </span>
-                  </p>
-                </Reveal>
-              </div>
-              <EditContainer />
-            </div>
-          </section> */}
           <div className="my-2 flex sm:my-10">
             <Reveal>
               <ReturnProcessBackButton />
@@ -856,13 +872,9 @@ export default function ConfirmPickup() {
           </div>
         </div>
       </section>
-      {/* {order.packageOrderType === 'bronze' && ( */}
-      <OrderSummary
-        promoState={[promoCode, setPromoCode]}
-        order={order}
-        items={items}
-      />
-      {/* )} */}
+
+      <OrderSummary order={order} onOrder={setOrder} />
+
       {showScrollBtn && <ScrollContainer scrollDown={scrollDown} />}
     </div>
   )
