@@ -16,6 +16,7 @@ export type ReturnProcessStep = {
 }
 
 export type FileUploadType = {
+  file?: File
   attachment: string
   labelType: 'Physical' | 'Digital' | 'Amazon'
   description: string | undefined
@@ -55,12 +56,13 @@ export const ReturnProcessContext = createContext<ReturnProcessContextType>(
 
 type ReturnProcessContextProviderType = {
   steps: ReturnProcessContextType['steps']
+  step: number
 }
 
 export default function ReturnProcessContextProvider({
   children,
   steps,
-  step
+  step,
 }: PropsWithChildren<ReturnProcessContextProviderType>) {
   const [currentStepIndex, setCurrentStepIndex] = useState(step)
   const [isFinished, setIsFinished] = useState(false)

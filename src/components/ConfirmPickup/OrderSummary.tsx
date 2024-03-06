@@ -40,6 +40,8 @@ const formSchema = z.object({
 })
 
 function OrderBreakdown({ order }: OrderBreakdownProps) {
+  const { orderDetails } = order
+
   return order.subscription.type == subscriptionPlans['Bronze'] ? (
     <>
       <Reveal width="100%">
@@ -48,18 +50,17 @@ function OrderBreakdown({ order }: OrderBreakdownProps) {
             <span>{order.subscription.type} Plan</span>
             <span>$ {(order.subscription.price / 100).toFixed(2)}</span>
           </p>
-          {order.order_details.extra_packages_included ? (
+          {orderDetails.extraPackages ? (
             <Reveal width="100%" center={true}>
               <p className="font-regular mt-2 flex w-5/6 justify-between text-smallText sm:text-xl">
                 <span>
-                  {order.order_details.extra_packages_included} additional box
-                  {order.order_details.extra_packages_included > 1 && 'es'}
+                  {orderDetails.extraPackages} additional box
+                  {orderDetails.extraPackages > 1 && 'es'}
                 </span>
                 <span>
                   ${' '}
                   {(
-                    (Number(order.order_details.extra_packages_included) *
-                      Number(399)) /
+                    (Number(orderDetails.extraPackages) * Number(399)) /
                     100
                   ).toFixed(2)}
                 </span>
@@ -72,7 +73,7 @@ function OrderBreakdown({ order }: OrderBreakdownProps) {
                 <span>Discount</span>
                 <span>
                   {(
-                    (order.order_details.total_cost / 100) *
+                    (orderDetails.totalCost / 100) *
                     (order.discount.discountPercentage / 100)
                   ).toFixed(2)}
                 </span>
@@ -106,7 +107,7 @@ function OrderBreakdown({ order }: OrderBreakdownProps) {
             <span>Discount</span>
             <span>
               {(
-                (order.order_details.total_cost / 100) *
+                (orderDetails.totalCost / 100) *
                 (order.discount.discountPercentage / 100)
               ).toFixed(2)}
             </span>
@@ -185,7 +186,6 @@ export default function OrderSummary({ order, onOrder }: OrderSummaryProps) {
     }
   }
 
-  console.log({ order })
   const onCheckout = () => {
     setIsCheckingout(true)
     processPayment(order)
@@ -242,7 +242,7 @@ export default function OrderSummary({ order, onOrder }: OrderSummaryProps) {
             <p className="mt-2 flex w-5/6 justify-between text-smallText font-bold sm:text-xl">
               <span>Total</span>
               <span>
-                $ {(Number(order.order_details.total_cost) / 100).toFixed(2)}
+                $ {(Number(order.orderDetails.totalCost) / 100).toFixed(2)}
               </span>
             </p>
           </Reveal>

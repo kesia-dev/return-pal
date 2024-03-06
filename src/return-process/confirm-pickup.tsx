@@ -54,10 +54,10 @@ export enum subscriptionPlans {
 }
 
 const ConfirmedOrdersCollectionSchema = z.object({
-  order_number: z.string().optional(), // System-generated
-  order_date: z.date(),
-  order_status: z.nativeEnum(orderStatus),
-  orderRef: z.string().optional(), // order reference number? (confirming)
+  orderId: z.string().optional(), // System-generated
+  orderDate: z.date(),
+  orderStatus: z.nativeEnum(orderStatus),
+  invoiceNumber: z.string().optional(),
   discount: z
     .object({
       promoCode: z.string(),
@@ -65,22 +65,23 @@ const ConfirmedOrdersCollectionSchema = z.object({
       discountPercentage: z.number(),
     })
     .optional(),
-  order_details: z.object({
-    total_cost: z.number(),
-    pickup_date: z.date(),
-    pickup_method: z.enum(['Direct Handoff', 'Leave on Doorstep']),
-    total_packages: z.number(),
-    extra_packages_included: z.number(),
-    pickup_details: z.object({
-      user_id: z.string(),
-      contact_full_name: z.string(),
-      contact_phone_number: z.string(),
-      unit_number: z.string().optional(),
-      street: z.string(),
+  orderDetails: z.object({
+    userId: z.string().optional(), // auto-generated
+    totalCost: z.number(),
+    pickupDate: z.date(),
+    pickupMethod: z.enum(['Direct Handoff', 'Leave on Doorstep']),
+    totalPackages: z.number(),
+    extraPackages: z.number(),
+    promoCode: z.string().optional(),
+    pickupDetails: z.object({
+      name: z.string(),
+      phoneNumber: z.string(),
+      unit: z.string().optional(),
+      address: z.string(),
       city: z.string(),
       province: z.string().default('Ontario'),
       country: z.string().default('Canada'),
-      postal_code: z
+      postalCode: z
         .string()
         .refine((value) => /^\w\d\w\s?\d\w\d$/.test(value), {
           message: 'Invalid postal code format',
@@ -153,7 +154,7 @@ function AddressPickupInformation({ order }: { order: Order }) {
   const returnProcess = useReturnProcess()
   const [isShowing, setIsShowing] = useState(false)
   const [province, setProvince] = useState(
-    order.order_details.pickup_details.province
+    order.orderDetails.pickupDetails.province
   )
   const pickupFormRef = useRef<HTMLFormElement>(null)
   const inputsRef = useRef<HTMLDivElement>(null)
@@ -288,7 +289,7 @@ function AddressPickupInformation({ order }: { order: Order }) {
     'md:text-lg  my-2 placeholder:text-slate-400 rounded-xl border-[3px] border-solid border-primary'
 
   const provinceToShow = canadaProvinces.find(
-    (province) => province.name == order.order_details.pickup_details.province
+    (province) => province.name == order.orderDetails.pickupDetails.province
   )!.value
 
   return !isShowing ? (
@@ -303,22 +304,22 @@ function AddressPickupInformation({ order }: { order: Order }) {
       <div className="w-full space-y-3">
         <Reveal>
           <p className="font-bold">
-            {order.order_details.pickup_details.contact_full_name}
+            {order.orderDetails.pickupDetails.name}
             <span className="text-mediumText font-normal">&nbsp;|&nbsp;</span>
-            {order.order_details.pickup_details.contact_phone_number}
+            {order.orderDetails.pickupDetails.phoneNumber}
           </p>
         </Reveal>
         <Reveal>
           <p className="whitespace-pre-wrap">
-            {order.order_details.pickup_details.unit_number
-              ? `${order.order_details.pickup_details.unit_number} \u2013 ${order.order_details.pickup_details.street}, ${order.order_details.pickup_details.city}, ${provinceToShow}, ${order.order_details.pickup_details.postal_code}`
-              : `${order.order_details.pickup_details.street}, ${order.order_details.pickup_details.city}, ${provinceToShow}, ${order.order_details.pickup_details.postal_code}`}
+            {order.orderDetails.pickupDetails.unit
+              ? `${order.orderDetails.pickupDetails.unit} \u2013 ${order.orderDetails.pickupDetails.address}, ${order.orderDetails.pickupDetails.city}, ${provinceToShow}, ${order.orderDetails.pickupDetails.postalCode}`
+              : `${order.orderDetails.pickupDetails.address}, ${order.orderDetails.pickupDetails.city}, ${provinceToShow}, ${order.orderDetails.pickupDetails.postalCode}`}
           </p>
         </Reveal>
-        {order.order_details.pickup_details.instructions && (
+        {order.orderDetails.pickupDetails.instructions && (
           <Reveal>
             <p className="text-grey md:tracking-wide">
-              {order.order_details.pickup_details.instructions}
+              {order.orderDetails.pickupDetails.instructions}
             </p>
           </Reveal>
         )}
@@ -357,18 +358,14 @@ function AddressPickupInformation({ order }: { order: Order }) {
               type="text"
               placeholder="Full Name"
               autoFocus={true}
-              defaultValue={
-                order.order_details.pickup_details.contact_full_name
-              }
+              defaultValue={order.orderDetails.pickupDetails.name}
             />
             <Input
               className={`${inputStyles} basis-4/5`}
               name="phoneNumber"
               placeholder="Phone Number"
               type="text"
-              defaultValue={
-                order.order_details.pickup_details.contact_phone_number
-              }
+              defaultValue={order.orderDetails.pickupDetails.phoneNumber}
             />
           </div>
         </Reveal>
@@ -379,23 +376,21 @@ function AddressPickupInformation({ order }: { order: Order }) {
               name="street"
               type="text"
               placeholder="Street Address"
-              defaultValue={order.order_details.pickup_details.street}
+              defaultValue={order.orderDetails.pickupDetails.address}
             />
             <Input
               className={`${inputStyles} basis-1/3`}
               name="unitNumber"
               placeholder="Office, Apt. (optional)"
               type="text"
-              defaultValue={
-                order.order_details.pickup_details.unit_number || ''
-              }
+              defaultValue={order.orderDetails.pickupDetails.unit || ''}
             />
             <Input
               className={`${inputStyles} basis-1/3`}
               name="city"
               type="text"
               placeholder="City"
-              defaultValue={order.order_details.pickup_details.city}
+              defaultValue={order.orderDetails.pickupDetails.city}
             />
           </div>
         </Reveal>
@@ -410,9 +405,8 @@ function AddressPickupInformation({ order }: { order: Order }) {
                 canadaProvinces.find(
                   (province) =>
                     province.name ==
-                      order.order_details.pickup_details.province ||
-                    province.value ==
-                      order.order_details.pickup_details.province
+                      order.orderDetails.pickupDetails.province ||
+                    province.value == order.orderDetails.pickupDetails.province
                 )!.value
               }
             />
@@ -421,7 +415,7 @@ function AddressPickupInformation({ order }: { order: Order }) {
               name="postalCode"
               type="text"
               placeholder="Postal"
-              defaultValue={order.order_details.pickup_details.postal_code}
+              defaultValue={order.orderDetails.pickupDetails.postalCode}
             />
           </div>
         </Reveal>
@@ -432,9 +426,7 @@ function AddressPickupInformation({ order }: { order: Order }) {
               name="instructions"
               type="text"
               placeholder="i.e building access code, location of door, etc"
-              defaultValue={
-                order.order_details.pickup_details.instructions || ''
-              }
+              defaultValue={order.orderDetails.pickupDetails.instructions || ''}
             />
           </div>
         </Reveal>
@@ -566,7 +558,7 @@ function PickupMethodInformation({ order }: { order: Order }) {
   const inputsRef = useRef<HTMLDivElement>(null)
   const [deliveryOption, setDeliveryOption] = useState<
     ReturnProcessFullObjectType['deliveryOption']
-  >(order.order_details.pickup_method)
+  >(order.orderDetails.pickupMethod)
 
   const returnProcess = useReturnProcess()
 
@@ -623,7 +615,7 @@ function PickupMethodInformation({ order }: { order: Order }) {
         <Reveal width="100%">
           <p className="grow">
             <span className="font-bold">Pickup Method:</span>
-            <span>&nbsp;{order.order_details.pickup_method}</span>
+            <span>&nbsp;{order.orderDetails.pickupMethod}</span>
           </p>
         </Reveal>
       </div>
@@ -686,30 +678,30 @@ export default function ConfirmPickup() {
   const [showScrollBtn, setShowScrollBtn] = useState(true)
   const returnProcess = useReturnProcess()
   const [order, setOrder] = useState<Order>({
-    order_date: new Date(),
-    order_status: orderStatus['Driver received'],
-    order_details: {
-      total_cost: calculateCost(
+    orderDate: new Date(),
+    orderStatus: orderStatus['Driver received'],
+    orderDetails: {
+      userId: localStorage.getItem('userId')!,
+      totalCost: calculateCost(
         returnProcess.currentData.subscription,
         returnProcess.currentData.labelFileUploads.length
       ),
-      pickup_date: new Date(returnProcess.currentData.dateAndTime),
-      pickup_method: returnProcess.currentData.deliveryOption,
-      total_packages: returnProcess.currentData.labelFileUploads.length,
-      extra_packages_included:
+      pickupDate: new Date(returnProcess.currentData.dateAndTime),
+      pickupMethod: returnProcess.currentData.deliveryOption,
+      totalPackages: returnProcess.currentData.labelFileUploads.length,
+      extraPackages:
         returnProcess.currentData.subscription === 'Bronze'
           ? returnProcess.currentData.labelFileUploads.length - 1
           : 0,
-      pickup_details: {
-        user_id: localStorage.getItem('userId')!,
-        contact_full_name: returnProcess.currentData.contact_full_name,
-        contact_phone_number: returnProcess.currentData.contact_phone_number,
-        street: returnProcess.currentData.street,
-        unit_number: returnProcess.currentData.unit_number,
+      pickupDetails: {
+        name: returnProcess.currentData.contact_full_name,
+        phoneNumber: returnProcess.currentData.contact_phone_number,
+        address: returnProcess.currentData.street,
+        unit: returnProcess.currentData.unit_number,
         city: returnProcess.currentData.city,
         province: returnProcess.currentData.province,
         country: returnProcess.currentData.country,
-        postal_code: returnProcess.currentData.postal_code,
+        postalCode: returnProcess.currentData.postal_code,
         instructions: returnProcess.currentData.instructions ?? '',
       },
     },
@@ -744,29 +736,29 @@ export default function ConfirmPickup() {
   useEffect(() => {
     setOrder({
       ...order,
-      order_details: {
-        total_cost: calculateCost(
+      orderDetails: {
+        userId: localStorage.getItem('userId')!,
+        totalCost: calculateCost(
           returnProcess.currentData.subscription,
           returnProcess.currentData.labelFileUploads.length,
           order.discount ? order.discount : undefined
         ),
-        pickup_date: new Date(returnProcess.currentData.dateAndTime),
-        pickup_method: returnProcess.currentData.deliveryOption,
-        total_packages: returnProcess.currentData.labelFileUploads.length,
-        extra_packages_included:
+        pickupDate: new Date(returnProcess.currentData.dateAndTime),
+        pickupMethod: returnProcess.currentData.deliveryOption,
+        totalPackages: returnProcess.currentData.labelFileUploads.length,
+        extraPackages:
           returnProcess.currentData.subscription === 'Bronze'
             ? returnProcess.currentData.labelFileUploads.length - 1
             : 0,
-        pickup_details: {
-          user_id: localStorage.getItem('userId')!,
-          contact_full_name: returnProcess.currentData.contact_full_name,
-          contact_phone_number: returnProcess.currentData.contact_phone_number,
-          street: returnProcess.currentData.street,
-          unit_number: returnProcess.currentData.unit_number,
+        pickupDetails: {
+          name: returnProcess.currentData.contact_full_name,
+          phoneNumber: returnProcess.currentData.contact_phone_number,
+          address: returnProcess.currentData.street,
+          unit: returnProcess.currentData.unit_number,
           city: returnProcess.currentData.city,
           province: returnProcess.currentData.province,
           country: returnProcess.currentData.country,
-          postal_code: returnProcess.currentData.postal_code,
+          postalCode: returnProcess.currentData.postal_code,
           instructions: returnProcess.currentData.instructions ?? '',
         },
       },

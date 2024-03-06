@@ -266,12 +266,12 @@ import { VscArchive, VscCreditCard } from 'react-icons/vsc'
 import { GoCreditCard } from 'react-icons/go'
 import { IconContext } from 'react-icons'
 import OrderStatusNodes from '@/components/Orders/OrderStatusNodes'
-import { type Order } from '@/components/DashBoard/types'
+import { Order } from '@returnprocess/confirm-pickup'
 import { Button } from '@/components/ui/button'
 import ConfirmationDialog from '@components/Orders/ConfirmationDialog'
 import { type ObjectId } from 'mongodb'
 import DashboardLayout from '@/layouts/DashboardLayout'
-import moment from 'moment';
+import moment from 'moment'
 const OrderId = () => {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
   const router = useRouter()
@@ -317,7 +317,7 @@ const OrderId = () => {
   const confirmCancellation = () => {
     if (selectedOrder) {
       console.log(
-        `Cancel Order ${selectedOrder.order_number} (${String(
+        `Cancel Order ${selectedOrder.invoiceNumber} (${String(
           selectedOrder._id
         )})`
       )
@@ -332,21 +332,18 @@ const OrderId = () => {
     }
   }
   const handleCancelOrder = (id: ObjectId, order_number: string) => {
-    debugger
     setSelectedOrder({ _id: id, order_number } as Order)
   }
 
-  const pickupTime = order?.order_details.pickup_details.pickup_date
-    ? new Date(
-        order.order_details.pickup_details.pickup_date
-      ).toLocaleTimeString('en-US', {
+  const pickupTime = order?.orderDetails?.pickupDate
+    ? new Date(order.orderDetails.pickupDate).toLocaleTimeString('en-US', {
         hour: 'numeric',
         minute: '2-digit',
       })
     : ''
 
-  const orderDate = order?.order_date ?? '' // Extracting order date
-  const pickupDate = order?.order_details.pickup_details.pickup_date ?? '' // Extracting pickup date
+  const orderDate = order?.orderDate ?? '' // Extracting order date
+  const pickupDate = order?.orderDetails?.pickupDate ?? '' // Extracting pickup date
 
   return (
     <DashboardLayout>
@@ -379,11 +376,11 @@ const OrderId = () => {
                     className="font-avenir-next text-color: #052A42; text-2xl font-normal
 "
                   >
-                    Order #{order.order_number}
+                    Order #{order.invoiceNumber}
                   </div>
                   <div className="text-black-900 font-avenir-next flex items-center space-x-4 text-2xl font-bold">
-                    {order?.order_details?.package_details?.description
-                      ? order?.order_details?.package_details?.description
+                    {order?.order_details?.package_details[0]?.description
+                      ? order?.order_details?.package_details[0]?.description
                       : 'Nike Return'}
                   </div>
 
@@ -399,7 +396,10 @@ const OrderId = () => {
                   <div className="w-{80} flex items-center space-x-4 text-smallText text-gray-900">
                     Pick up scheduled for
                     <span className="text-black-900 font-avenir-next with p-sm ml-1 flex items-center space-x-4 text-smallText font-bold">
-                    {moment(order?.order_details?.pickup_date).format('YYYY-MM-DD')}
+                      {pickupTime} ,{' '}
+                      {pickupDate
+                        ? new Date(pickupDate).toLocaleDateString()
+                        : ''}{' '}
                       &nbsp;
                       <span className="font-normal"> at </span>
                     </span>
@@ -456,7 +456,7 @@ const OrderId = () => {
                       Payment Method:
                     </span>
                     <span className="w-{80} space-x-4 text-smallText text-gray-900">
-                      {order?.cardType}
+                      {order.client_details.payment_type}
                     </span>
                   </div>
                 </div>
@@ -475,29 +475,29 @@ const OrderId = () => {
                   }
                   style={{
                     backgroundColor:
-                      order.order_status === 'Cancelled' ||
-                      order.order_status === 'Delivered' ||
-                      order.order_status === 'Delivered to Post Office'
+                      order.status === 'Cancelled' ||
+                      order.status === 'Delivered' ||
+                      order.status === 'Delivered to Post Office'
                         ? '#A3BEE8'
                         : '',
                     border:
-                      order.order_status === 'Cancelled' ||
-                      order.order_status === 'Delivered' ||
-                      order.order_status === 'Delivered to Post Office'
+                      order.status === 'Cancelled' ||
+                      order.status === 'Delivered' ||
+                      order.status === 'Delivered to Post Office'
                         ? '1px solid #4299E1'
                         : 'none',
                     cursor:
-                      order.order_status === 'Delivered to Post Office' ||
-                      order.order_status === 'Cancelled' ||
-                      order.order_status === 'Delivered'
+                      order.status === 'Delivered to Post Office' ||
+                      order.status === 'Cancelled' ||
+                      order.status === 'Delivered'
                         ? 'not-allowed'
                         : 'pointer',
                   }}
                   disabled={[
-                    'cancel',
+                    'Cancelled',
                     'Delivered',
                     'Delivered to Post Office',
-                  ].includes(order?.order_status)}
+                  ].includes(order.status)}
                 >
                   Cancel Order
                 </Button>
