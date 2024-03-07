@@ -61,7 +61,6 @@ function ContactForm() {
   const formRef = useRef<HTMLFormElement | null>(null)
 
   const onSubmit = async (values: z.infer<typeof contactFormSchema>) => {
-
     try {
       const response = await sendMail(values)
       toast.success('Email sent successfully!', {
@@ -88,7 +87,7 @@ function ContactForm() {
   const sendEmail = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    const formElement = formRef.current    
+    const formElement = formRef.current
   }
 
   return (
@@ -116,7 +115,7 @@ function ContactForm() {
                   <Reveal>
                     <Input
                       minLength={1}
-                      className="h-10 shrink rounded-md border-2 text-sm placeholder:text-grey sm:h-12 sm:text-lg"
+                      className="h-10 shrink rounded-md border-2  border-black text-sm placeholder:text-grey sm:h-12 sm:text-lg"
                       placeholder="First Name"
                       size={30}
                       {...field}
@@ -183,9 +182,15 @@ function ContactForm() {
               </Reveal>
               <FormControl>
                 <Reveal width="100%">
-                  <Textarea
+                  {/* <Textarea
                     placeholder="Please Enter Your Message"
                     className="h-36 w-full rounded-md border-2 border-black text-sm placeholder:text-grey sm:h-36 sm:text-lg"
+                    {...field}
+                  /> */}
+
+                  <Textarea
+                    placeholder="Please Enter Your Message"
+                    className="h-36 max-h-36 w-full overflow-y-auto rounded-md border-2 border-black text-sm placeholder:text-grey sm:h-36 sm:text-lg"
                     {...field}
                   />
                 </Reveal>
