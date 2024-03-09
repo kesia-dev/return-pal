@@ -100,7 +100,7 @@ const Calendar: React.FC<CalendarProps> = ({ onDateSelect }) => {
 
   return (
     <div className='flex  flex-col w-full h-full h-10 shrink rounded-md border-2 border-grey
-    text-sm mb-4 flex flex-col bg-white rounded w-[700px] h-[500px] p-10 shadow-lg ' > 
+    text-sm mb-4 flex flex-col bg-white rounded w-[750px] h-[500px] p-10 shadow-lg ' > 
       {renderMonthNavigation()}
       <div className="flex">
         <div className="w-1/2">
