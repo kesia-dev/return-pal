@@ -1,4 +1,3 @@
-import * as z from 'zod'
 import OrderSummary from '@/components/ConfirmPickup/OrderSummary'
 import Calendar from '@/components/SvgComponents/ConfirmPickup/Calendar'
 import EditContainer from '@/components/SvgComponents/ConfirmPickup/EditContainer'
@@ -37,71 +36,8 @@ import {
   SelectTrigger,
 } from '@/components/ui/select'
 import { PromoCode } from '@components/DashBoard/types'
-
-export enum orderStatus {
-  'Driver received' = 'Driver received',
-  'Driver on the way' = 'Driver on the way',
-  'Driver delivered to post office' = 'Driver delivered to post office',
-  'Delivered' = 'Delivered',
-  'Cancelled' = 'Cancelled',
-}
-
-export enum subscriptionPlans {
-  'Bronze' = 'Bronze',
-  'Silver' = 'Silver',
-  'Gold' = 'Gold',
-  'Platinum' = 'Platinum',
-}
-
-const ConfirmedOrdersCollectionSchema = z.object({
-  orderId: z.string().optional(), // System-generated
-  orderDate: z.date(),
-  orderStatus: z.nativeEnum(orderStatus),
-  invoiceNumber: z.string().optional(),
-  discount: z
-    .object({
-      promoCode: z.string(),
-      expireDate: z.string(),
-      discountPercentage: z.number(),
-    })
-    .optional(),
-  orderDetails: z.object({
-    userId: z.string().optional(), // auto-generated
-    totalCost: z.number(),
-    pickupDate: z.date(),
-    pickupMethod: z.enum(['Direct Handoff', 'Leave on Doorstep']),
-    totalPackages: z.number(),
-    extraPackages: z.number(),
-    promoCode: z.string().optional(),
-    pickupDetails: z.object({
-      name: z.string(),
-      phoneNumber: z.string(),
-      unit: z.string().optional(),
-      address: z.string(),
-      city: z.string(),
-      province: z.string().default('Ontario'),
-      country: z.string().default('Canada'),
-      postalCode: z
-        .string()
-        .refine((value) => /^\w\d\w\s?\d\w\d$/.test(value), {
-          message: 'Invalid postal code format',
-        }),
-      instructions: z.string().optional(),
-    }),
-  }),
-  subscription: z.object({
-    type: z.nativeEnum(subscriptionPlans),
-    expiryDate: z.date(),
-    price: z.number(),
-  }),
-})
-export type Order = z.infer<typeof ConfirmedOrdersCollectionSchema>
-
-export interface Item {
-  itemId: string
-  name: string
-  quantity: number
-}
+import { Address, Order, orderStatus, subscriptionPlans } from './types'
+import { updateAddress } from '@/services/addressService'
 
 const addExpiryDate = (orderDate: Date, subscription: string): Date => {
   const expiryDate = new Date(orderDate)
@@ -262,7 +198,7 @@ function AddressPickupInformation({ order }: { order: Order }) {
     }
   }
 
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault()
     const formData = new FormData(pickupFormRef.current!)
     formData.append('province', province)
@@ -271,6 +207,22 @@ function AddressPickupInformation({ order }: { order: Order }) {
     if (!isFormValid(formData)) {
       return
     }
+
+    // Update the related address
+    const editedAddress: Address = {
+      _id: returnProcess.currentData.address_id,
+      name: formData.get('fullName') as string,
+      phoneNumber: formData.get('phoneNumber') as string,
+      address: formData.get('street') as string,
+      unit: formData.get('unitNumber') as string,
+      city: formData.get('city') as string,
+      province: formData.get('province') as string,
+      country: returnProcess.currentData.country,
+      postalCode: formData.get('postalCode') as string,
+      instructions: formData.get('instructions') as string,
+    }
+
+    await updateAddress(editedAddress)
 
     returnProcess.setCurrentData({
       contact_full_name: formData.get('fullName') as string,
@@ -681,7 +633,7 @@ export default function ConfirmPickup() {
     orderDate: new Date(),
     orderStatus: orderStatus['Driver received'],
     orderDetails: {
-      userId: localStorage.getItem('userId')!,
+      user: localStorage.getItem('userId')!,
       totalCost: calculateCost(
         returnProcess.currentData.subscription,
         returnProcess.currentData.labelFileUploads.length
@@ -703,6 +655,7 @@ export default function ConfirmPickup() {
         country: returnProcess.currentData.country,
         postalCode: returnProcess.currentData.postal_code,
         instructions: returnProcess.currentData.instructions ?? '',
+        isPrimary: false,
       },
     },
     subscription: {
@@ -737,7 +690,7 @@ export default function ConfirmPickup() {
     setOrder({
       ...order,
       orderDetails: {
-        userId: localStorage.getItem('userId')!,
+        user: localStorage.getItem('userId')!,
         totalCost: calculateCost(
           returnProcess.currentData.subscription,
           returnProcess.currentData.labelFileUploads.length,
@@ -760,6 +713,7 @@ export default function ConfirmPickup() {
           country: returnProcess.currentData.country,
           postalCode: returnProcess.currentData.postal_code,
           instructions: returnProcess.currentData.instructions ?? '',
+          isPrimary: false,
         },
       },
       subscription: {

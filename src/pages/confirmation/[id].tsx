@@ -17,13 +17,12 @@ import axios from 'axios'
 import moment from 'moment'
 import ReturnProcessLayout from '@layouts/ReturnProcessLayout'
 import { getOrderDetails } from '@/services/orderService'
-import { Order } from '@returnprocess/confirm-pickup'
-import { getUser } from '@/services/userService'
+import { User, OrderResponse } from '@returnprocess/types'
 export default function Confirmation() {
   const router = useRouter()
   const { id } = router.query
-  const [order, setOrder] = useState<Order>()
-  const [user, setUser] = useState()
+  const [order, setOrder] = useState<OrderResponse>()
+  const [user, setUser] = useState<User>()
   const [location, setLocation] = useState<string>()
 
   useEffect(() => {
@@ -35,11 +34,10 @@ export default function Confirmation() {
   const getOrder = async (id: string) => {
     try {
       const recentOrder = await getOrderDetails(id)
-      const relatedUser = await getUser(recentOrder?.orderDetails.userId!)
       const pickupDetails = recentOrder?.orderDetails.pickupDetails
       const { address, city, province, postalCode } = pickupDetails!
       setOrder(recentOrder)
-      setUser(relatedUser)
+      setUser(recentOrder?.orderDetails.user)
       setLocation(
         `${
           pickupDetails?.unit || ''
@@ -49,8 +47,6 @@ export default function Confirmation() {
       console.error('Error fetching recent orders:', error)
     }
   }
-
-  console.log(user)
 
   return (
     <>

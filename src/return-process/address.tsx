@@ -27,15 +27,15 @@ import {
 } from '@/components/ui/form'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import Head from 'next/head'
-import { type Address, addressSchema } from '@/components/DashBoard/types'
+import { type Address } from './types'
 import { SectionDescription, SectionHeader } from '@/components/common/section'
 import Reveal from '@components/common/reveal'
-import type { ObjectId } from 'mongodb'
 import {
   isPhoneNumberValid,
   isPostalCodeValid,
   isProvinceValid,
 } from '@lib/utils'
+import { createAddress, getAddresses } from '@/services/addressService'
 
 const formSchema = z.object({
   deliveryAddress: z.string().min(1),
@@ -51,22 +51,20 @@ function NewAddressForm({
   setAddressFormVisiblity: React.Dispatch<Boolean>
 }) {
   const [addressFromForm, setAddressFromForm] = useState<Address>({
-    // REMOVE DUMMY DATA LATER, JUST USED FOR ACCELERATING TESTING
-    contact_full_name: 'John Doe',
-    address_id: {},
-    contact_phone_number: '1234567890',
-    street: '123 Main St',
-    city: 'Toronto',
+    name: '',
+    phoneNumber: '',
+    address: '',
+    city: '',
     province: 'Ontario',
     country: 'Canada',
-    postal_code: 'M5A 1A1',
-    primary: false,
+    postalCode: '',
+    isPrimary: false,
   })
   const { toast } = useToast()
   const returnProcess = useReturnProcess()
 
   const isFormValid = () => {
-    if (addressFromForm.contact_full_name.length === 0) {
+    if (addressFromForm.name.length === 0) {
       toast({
         variant: 'destructive',
         description: 'Please enter your full name',
@@ -74,7 +72,7 @@ function NewAddressForm({
       return false
     }
 
-    if (addressFromForm.contact_phone_number.length === 0) {
+    if (addressFromForm.phoneNumber.length === 0) {
       toast({
         variant: 'destructive',
         description: 'Please enter your phone number',
@@ -82,7 +80,7 @@ function NewAddressForm({
       return false
     }
 
-    if (addressFromForm.street.length === 0) {
+    if (addressFromForm.address.length === 0) {
       toast({
         variant: 'destructive',
         description: 'Please enter your street address',
@@ -98,7 +96,7 @@ function NewAddressForm({
       return false
     }
 
-    if (!isPostalCodeValid(addressFromForm?.postal_code ?? '')) {
+    if (!isPostalCodeValid(addressFromForm?.postalCode ?? '')) {
       toast({
         variant: 'destructive',
         description: 'Please ensure your postal code is correct',
@@ -114,7 +112,7 @@ function NewAddressForm({
       return false
     }
 
-    if (!isPhoneNumberValid(addressFromForm.contact_phone_number ?? '')) {
+    if (!isPhoneNumberValid(addressFromForm.phoneNumber ?? '')) {
       toast({
         variant: 'destructive',
         description: 'Please ensure your phone number is correct',
@@ -124,21 +122,24 @@ function NewAddressForm({
     return true
   }
 
-  const handleFormSubmit = (
+  const handleFormSubmit = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault()
     if (isFormValid()) {
+      // Add a new address and update our current state
+      const address = await createAddress(addressFromForm)
+
       const newUserInfo = {
         ...returnProcess.currentData.userInfo,
         addresses: [
           ...(returnProcess.currentData.userInfo?.addresses ?? []),
-          addressFromForm,
+          address,
         ],
       }
 
       returnProcess.setCurrentData({ userInfo: newUserInfo })
-      setAddresses([...addresses, addressFromForm])
+      setAddresses([...addresses, address!])
       setAddressFormVisiblity(false)
     }
   }
@@ -146,28 +147,28 @@ function NewAddressForm({
   const handleFullName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAddressFromForm({
       ...addressFromForm,
-      contact_full_name: e.target.value,
+      name: e.target.value,
     })
   }
 
   const handlePhoneNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAddressFromForm({
       ...addressFromForm,
-      contact_phone_number: e.target.value,
+      phoneNumber: e.target.value,
     })
   }
 
   const handleStreetAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAddressFromForm({
       ...addressFromForm,
-      street: e.target.value,
+      address: e.target.value,
     })
   }
 
   const handleUnitNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAddressFromForm({
       ...addressFromForm,
-      unit_number: e.target.value,
+      unit: e.target.value,
     })
   }
 
@@ -181,7 +182,7 @@ function NewAddressForm({
   const handlePostalCode = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAddressFromForm({
       ...addressFromForm,
-      postal_code: e.target.value,
+      postalCode: e.target.value.toUpperCase(),
     })
   }
 
@@ -207,7 +208,7 @@ function NewAddressForm({
                   <Reveal width="100%">
                     <Input
                       type="text"
-                      name="address"
+                      name="name"
                       placeholder="Full Name"
                       className={`${inputGroupStyles} w-full`}
                       onChange={handleFullName}
@@ -216,7 +217,7 @@ function NewAddressForm({
                   <Reveal width="100%">
                     <Input
                       type="text"
-                      name="address"
+                      name="phoneNumber"
                       className={`${inputGroupStyles} w-full`}
                       placeholder="Phone Number"
                       onChange={handlePhoneNumber}
@@ -244,7 +245,7 @@ function NewAddressForm({
                     <Reveal width="100%">
                       <Input
                         type="text"
-                        name="address"
+                        name="unit"
                         className={`${inputGroupStyles} placeholder: w-full `}
                         placeholder="Office, Apt. (optional)"
                         onChange={handleUnitNumber}
@@ -255,7 +256,7 @@ function NewAddressForm({
                     <Reveal width="100%">
                       <Input
                         type="text"
-                        name="address"
+                        name="city"
                         className={`${inputGroupStyles} w-full`}
                         placeholder="City"
                         onChange={handleCity}
@@ -301,8 +302,8 @@ function NewAddressForm({
                     <Reveal width="100%">
                       <Input
                         type="text"
-                        name="address"
-                        className={`${inputGroupStyles} w-full`}
+                        name="postalCode"
+                        className={`${inputGroupStyles} w-full uppercase placeholder:normal-case`}
                         placeholder="Postal"
                         onChange={handlePostalCode}
                       />
@@ -321,7 +322,7 @@ function NewAddressForm({
                 <Label className="text-lg text-slate-500">(optional)</Label>
               </Label>
               <Textarea
-                name="address"
+                name="instructions"
                 className={`my-2 min-h-[110px] resize-none rounded-xl border-[3px] border-solid border-primary text-lg placeholder:text-lg`}
                 placeholder="i.e building access code, location of door, etc"
                 onChange={handleInstructions}
@@ -389,48 +390,46 @@ function AddressesList({
           control={form?.control}
           name="deliveryAddress"
           render={({ field }) => (
-            <FormItem className="space-y-3">
-              <FormControl>
+            <FormItem>
+              <FormControl className="space-y-0">
                 <RadioGroup
                   onValueChange={field.onChange}
                   defaultValue={field.value}
-                  className="flex flex-col space-y-3"
+                  className="mt-2 flex flex-col space-y-3"
                 >
                   {addresses?.map((address) => {
-                    const deliveryAddress = address.unit_number
-                      ? `${address.unit_number}-${address.street}, ${address.city}, ${address.province}, ${address.country} ${address.postal_code}`
-                      : `${address.street}, ${address.city}, ${address.province}, ${address.country} ${address.postal_code}`
+                    const addressId = address._id?.toString()
+                    const deliveryAddress = address.unit
+                      ? `${address.unit}-${address.address}, ${address.city}, ${address.province}, ${address.country} ${address.postalCode}`
+                      : `${address.address}, ${address.city}, ${address.province}, ${address.country} ${address.postalCode}`
 
                     return (
-                      <Reveal key={address.address_id?.toString()} width="100%">
-                        <FormItem className="h-15 flex w-full items-center sm:h-10">
-                          <RadioGroupItem
-                            id={address.address_id?.toString()}
-                            value={address.address_id?.toString()}
-                          />
+                      <Reveal key={addressId} width="100%">
+                        <FormItem className="h-15 flex w-full items-center space-y-0.5 sm:h-10">
+                          <RadioGroupItem id={addressId} value={addressId!} />
                           <Label
-                            htmlFor={address.address_id?.toString()}
+                            htmlFor={addressId}
                             className="sm:keep-all mx-6 ml-2 w-[20%] max-sm:text-xs sm:w-[18%] sm:font-bold md:pl-2 lg:mx-2 lg:w-[15%]"
                           >
-                            {address.contact_full_name}
+                            {address.name}
                           </Label>
                           <Label
-                            htmlFor={address.address_id?.toString()}
+                            htmlFor={addressId}
                             className="break-word mx-2 my-4 w-[40%] max-w-max max-sm:text-xs sm:w-[50%] md:mx-0"
                           >
                             {deliveryAddress}
                           </Label>
                           <Label
-                            htmlFor={address.address_id?.toString()}
+                            htmlFor={addressId}
                             className="sm:keep-all mx-6 ml-2 w-[20%] max-sm:text-xs sm:w-[18%] sm:font-bold md:pl-2 lg:mx-2 lg:w-[15%]"
                           >
                             {address.instructions && address.instructions}
                           </Label>
                           <Label
-                            htmlFor={address.address_id?.toString()}
+                            htmlFor={addressId}
                             className="mx-2 font-bold text-primary max-sm:text-xs"
                           >
-                            {address.primary && 'Default address'}
+                            {address.isPrimary && 'Default address'}
                           </Label>
                         </FormItem>
                       </Reveal>
@@ -465,7 +464,6 @@ function AddressesList({
 
 export default function Address() {
   const [addresses, setAddresses] = useState<Address[]>([])
-
   const [addressFormVisibility, setAddressFormVisiblity] =
     useState<Boolean>(false)
   const returnProcess = useReturnProcess()
@@ -479,26 +477,31 @@ export default function Address() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const selectedAddress = addresses.find(
-      (address) => address.address_id?.toString() === values.deliveryAddress
+      (address) => address._id?.toString() === values.deliveryAddress
     )
 
     returnProcess.setCurrentData({
-      contact_full_name: selectedAddress?.contact_full_name,
-      contact_phone_number: selectedAddress?.contact_phone_number,
-      street: selectedAddress?.street,
-      unit_number: selectedAddress?.unit_number,
+      contact_full_name: selectedAddress?.name,
+      contact_phone_number: selectedAddress?.phoneNumber,
+      street: selectedAddress?.address,
+      unit_number: selectedAddress?.unit,
       city: selectedAddress?.city,
       province: selectedAddress?.province,
       country: selectedAddress?.country,
-      postal_code: selectedAddress?.postal_code,
-      address_id: selectedAddress?.address_id,
+      postal_code: selectedAddress?.postalCode,
+      address_id: selectedAddress?._id,
       instructions: selectedAddress?.instructions,
     })
     returnProcess.forward()
   }
 
   useEffect(() => {
-    setAddresses(returnProcess?.currentData?.userInfo?.addresses ?? [])
+    // Get the users current addresses
+    const getUserAddresses = async () => {
+      const addresses = await getAddresses()
+      setAddresses(addresses ?? [])
+    }
+    getUserAddresses()
   }, [])
 
   return (

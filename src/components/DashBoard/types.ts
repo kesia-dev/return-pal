@@ -2,6 +2,7 @@ import { type UseFormReturn } from 'react-hook-form'
 import * as z from 'zod'
 import { type ColumnDef } from '@tanstack/react-table'
 import { v4 as uuidv4 } from 'uuid'
+import { type Address, addressSchema } from '@returnprocess/types'
 
 let objectId: any
 if (typeof window === 'undefined') {
@@ -9,25 +10,6 @@ if (typeof window === 'undefined') {
 } else {
   objectId = { mockId: uuidv4() }
 }
-
-const addressSchema = z.object({
-  address_id: z.instanceof(objectId),
-  contact_full_name: z.string(),
-  contact_phone_number: z.string(),
-  street: z.string(),
-  unit_number: z.string().optional(),
-  city: z.string(),
-  province: z.string().default('Ontario'),
-  country: z.string().default('Canada'),
-  postal_code: z.string().refine((value) => /^\w\d\w\s?\d\w\d$/.test(value), {
-    message: 'Invalid postal code format',
-  }),
-  instructions: z.string().optional(),
-  primary: z.boolean().default(false),
-})
-export type Address = z.infer<typeof addressSchema>
-
-export const AddressesArraySchema = z.array(addressSchema)
 
 export const profileFormSchema = z.object({
   _id: z.instanceof(objectId),
@@ -146,7 +128,7 @@ const ClientDetailsSchema = z.object({
   email: z.string(),
   phone_number: z.string(),
   payment_type: z.string(),
-  addresses: AddressesArraySchema,
+  addresses: z.array(addressSchema),
 })
 
 const OrdersCollectionSchema = z.object({

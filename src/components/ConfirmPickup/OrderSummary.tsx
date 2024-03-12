@@ -16,11 +16,7 @@ import { useReturnProcess } from '@hooks/useReturnProcess'
 import Reveal from '@components/common/reveal'
 import { FormEvent, useEffect, useState } from 'react'
 import { loadStripe } from '@stripe/stripe-js'
-import {
-  type Order,
-  Item,
-  subscriptionPlans,
-} from '@returnprocess/confirm-pickup'
+import { Order, Item, subscriptionPlans } from '@returnprocess/types'
 import { PromoCode } from '@components/DashBoard/types'
 import { getAllPromoCodes } from '@/services/promocodeServices'
 import { processPayment } from '@/services/paymentServices'
@@ -127,6 +123,7 @@ function OrderBreakdown({ order }: OrderBreakdownProps) {
 }
 
 export default function OrderSummary({ order, onOrder }: OrderSummaryProps) {
+  const returnProcess = useReturnProcess()
   const [isCheckingout, setIsCheckingout] = useState(false)
   const { toast } = useToast()
 
@@ -185,10 +182,9 @@ export default function OrderSummary({ order, onOrder }: OrderSummaryProps) {
       })
     }
   }
-
   const onCheckout = () => {
     setIsCheckingout(true)
-    processPayment(order)
+    processPayment(order, returnProcess.currentData.address_id)
       .then(() => {
         //Call to return process api with the necessary Payload
       })

@@ -2,12 +2,12 @@ import dotenv from 'dotenv'
 import axios from 'axios'
 import { loadStripe } from '@stripe/stripe-js'
 import { type PaymentData } from '@components/DashBoard/types'
-import { type Order } from '@returnprocess/confirm-pickup'
+import { Order } from '@returnprocess/types'
 
 dotenv.config()
 const baseUrl: string = process.env.BASE_URL ?? 'http://localhost:4200'
 
-export const processPayment = async (order: Order) => {
+export const processPayment = async (order: Order, addressId: string) => {
   if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
     throw new Error('PUBLIC_STRIPE_PUBLISHABLE_KEY is not defined')
   }
@@ -15,7 +15,12 @@ export const processPayment = async (order: Order) => {
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY?.toString()
   )
 
-  const body = JSON.stringify(order)
+  const payload = {
+    ...order,
+    addressId,
+  }
+
+  const body = JSON.stringify(payload)
 
   try {
     const response = await axios.post(`${baseUrl}/api/payment`, body, {

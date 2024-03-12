@@ -1,11 +1,14 @@
 import axios, { type AxiosResponse } from 'axios'
 import { type PaginatedResponse } from '@components/DashBoard/types'
-import { type Order } from '@returnprocess/confirm-pickup'
+import { OrderResponse } from '@returnprocess/types'
 import * as dotenv from 'dotenv'
 dotenv.config()
 
+// TODO: Fix with the new order data shape
 const baseUrl: string = process.env.BASE_URL ?? 'http://localhost:4200'
-export const fetchRecentOrders = async (page: number): Promise<Order[]> => {
+export const fetchRecentOrders = async (
+  page: number
+): Promise<OrderResponse[]> => {
   try {
     const response: AxiosResponse<PaginatedResponse> = await axios.get(
       `${baseUrl}/api/orders?page=${page}`
@@ -50,7 +53,7 @@ export const cancelOrder = async (orderId: string): Promise<boolean> => {
 
 export const getOrderDetails = async (
   orderId: string
-): Promise<Order | undefined> => {
+): Promise<OrderResponse | undefined> => {
   const apiUrl = 'http://localhost:4200/api/payment/orderDetails'
   try {
     const response = await axios.post(
@@ -64,7 +67,7 @@ export const getOrderDetails = async (
         },
       }
     )
-    return response.data as Order
+    return response.data as OrderResponse
   } catch (error) {
     console.error('Error:', error)
   }
