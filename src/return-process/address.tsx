@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label'
 import { useToast } from '@/components/ui/use-toast'
 import { Textarea } from '@components/ui/textarea'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { faArrowRight, faPlus } from '@fortawesome/free-solid-svg-icons'
 import {
   ReturnProcessBackButton,
   ReturnProcessNextButton,
@@ -415,22 +415,34 @@ function AddressesList({
                           </Label>
                           <Label
                             htmlFor={addressId}
-                            className="break-word mx-2 my-4 w-[40%] max-w-max max-sm:text-xs sm:w-[50%] md:mx-0"
+                            className="break-word mx-2 my-4 flex w-[40%] max-w-max flex-col max-sm:text-xs sm:w-[50%] md:mx-0"
                           >
                             {deliveryAddress}
+                            {address.isPrimary && (
+                              <Label
+                                htmlFor={addressId}
+                                className="block max-w-[60%] text-nowrap rounded-lg bg-[#052A4280] px-2 py-1 text-center text-white max-sm:text-xs sm:hidden"
+                              >
+                                {'Default'}
+                              </Label>
+                            )}
                           </Label>
-                          <Label
-                            htmlFor={addressId}
-                            className="sm:keep-all mx-6 ml-2 w-[20%] max-sm:text-xs sm:w-[18%] sm:font-bold md:pl-2 lg:mx-2 lg:w-[15%]"
-                          >
-                            {address.instructions && address.instructions}
-                          </Label>
-                          <Label
-                            htmlFor={addressId}
-                            className="mx-2 font-bold text-primary max-sm:text-xs"
-                          >
-                            {address.isPrimary && 'Default address'}
-                          </Label>
+                          {address.instructions && (
+                            <Label
+                              htmlFor={addressId}
+                              className="sm:keep-all mx-6 ml-2 w-[20%] max-sm:text-xs sm:w-[18%] sm:font-bold md:pl-2 lg:mx-2 lg:w-[15%]"
+                            >
+                              {address.instructions}
+                            </Label>
+                          )}
+                          {address.isPrimary && (
+                            <Label
+                              htmlFor={addressId}
+                              className="ml-5 hidden text-nowrap rounded-lg bg-[#5D7889] p-2 text-white max-sm:text-xs sm:block"
+                            >
+                              {'Default Address'}
+                            </Label>
+                          )}
                         </FormItem>
                       </Reveal>
                     )
@@ -443,19 +455,26 @@ function AddressesList({
         />
         <Reveal>
           <Button
-            className="mt-4 bg-transparent font-bold text-primary hover:bg-transparent"
+            className="mt-4 flex justify-between bg-transparent pl-1 text-black hover:bg-transparent sm:text-base"
             onClick={handleAddNewAddress}
           >
-            + Add a new address{' '}
+            <FontAwesomeIcon icon={faPlus} width={16} className="mb-1 mr-4" />
+            {/* <span className="mr-4">+</span> */}
+            Add a new address{' '}
           </Button>
         </Reveal>
-        <span className="mt-5 flex justify-between">
+        {/** Big screen */}
+        <span className="mt-5 hidden justify-between sm:flex">
           <Reveal>
             <ReturnProcessBackButton />
           </Reveal>
           <Reveal>
             <ReturnProcessNextButton />
           </Reveal>
+        </span>
+        {/** Small screen, next button is whole width, back button moves to main Address component */}
+        <span className="flex w-full sm:hidden">
+          <ReturnProcessNextButton className="w-full" />
         </span>
       </div>
     </div>
@@ -514,8 +533,11 @@ export default function Address() {
           // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onSubmit={form.handleSubmit(onSubmit)}
         >
-          <ReturnProcessRoot>
-            <ReturnProcessSection>
+          <ReturnProcessRoot className="space-y-6 pt-8 sm:space-y-14 sm:pt-16">
+            <ReturnProcessSection className="gap-2 sm:gap-0">
+              <Reveal>
+                <ReturnProcessBackButton className="p-0 sm:hidden" />
+              </Reveal>
               <Reveal>
                 <SectionHeader className="max-xxs:text-3xl">
                   Pickup Details

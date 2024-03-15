@@ -743,6 +743,7 @@ export default function ConfirmPickup() {
       <section className="mx-1 flex w-full flex-col items-center text-base sm:mb-10 sm:w-2/3 sm:text-smallText">
         <div className="flex w-11/12 flex-col md:w-3/4">
           <section className="mb-4 sm:mb-10">
+            <ReturnProcessBackButton className="flex xxs:pl-0 sm:hidden" />
             <Reveal>
               <h1 className="md-1 w-full text-mediumText sm:mb-2 sm:text-subtitle">
                 Confirm Pickup
@@ -819,7 +820,7 @@ export default function ConfirmPickup() {
             </Reveal>
           </section>
 
-          <div className="my-2 flex sm:my-10">
+          <div className="my-2 hidden sm:flex">
             <Reveal>
               <ReturnProcessBackButton />
             </Reveal>
