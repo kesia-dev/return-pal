@@ -15,20 +15,32 @@ import NextArrow from '@components/SvgComponents/NextArrow'
 import { motion } from 'framer-motion'
 import { container, item } from '@styles/framer'
 import ForgotPasswordModule from '@components/ForgotPasswordModal'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
+import Image from 'next/image'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Router from 'next/router'
-
 const formSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email' }),
   password: z.string().min(8, 'Must be at least 8 characters'),
 })
 
-const BASE_URL = process.env.BASE_URL ?? 'http://localhost:4200'
+const NEXT_PUBLIC_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 function SignInForm() {
+
+  useEffect(()=>{
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
+  
+    if (token && userId) {
+      Router.push("/dashboard")
+    }
+  },[])
+
+  
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -46,9 +58,8 @@ function SignInForm() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const { email, password } = values
-
     axios
-      .post(`${BASE_URL}/api/login`, { email, password })
+      .post(`${NEXT_PUBLIC_BASE_URL}/api/login`, { email, password })
       .then(
         (res) => {
           localStorage.setItem('userId', res.data.userId)
@@ -122,6 +133,34 @@ function SignInForm() {
                 </FormItem>
               )}
             />
+            <div>
+              {/* onClick={() => signIn('google')}  */}
+              <Link href="http://localhost:4200/api/auth/google">
+                <div className='flex gap-2.5 w-72 bg-white border-white shadow-lg rounded-md p-2.5 items-center cursor-pointer'>
+                  <Image
+                    src={'/images/Google.png'}
+                    alt="logo"
+                    width="0"
+                    height="0"
+                    sizes="200px"
+                    className="w-5 h-5 "
+                  />
+                  <label className='text-sm cursor-pointer'>Continue with Google</label>
+                </div>
+              </Link>
+              <div onClick={() => toast("Comming soon")} className='mt-4 flex gap-2.5 w-72 bg-white border-white shadow-lg rounded-md p-2.5 items-center cursor-pointer'>
+                <Image
+                  src={'/images/Facebook.png'}
+                  alt="logo"
+                  width="0"
+                  height="0"
+                  sizes="200px"
+                  className="w-5 h-5 "
+                />
+                <label className='text-sm cursor-pointer'>Continue with Facebook</label>
+              </div>
+            </div>
+
             <motion.div variants={item}>
               <ForgotPasswordModule
                 setIsOpen={toggleModal}

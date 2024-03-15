@@ -7,7 +7,7 @@ import axios from 'axios'
 import Router from 'next/router'
 
 
-const BASE_URL = process.env.BASE_URL ?? 'http://localhost:4200'
+const NEXT_PUBLIC_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 function SignIn() {
   const searchParams = useSearchParams()
@@ -16,7 +16,7 @@ function SignIn() {
 
   if (verifyToken) {
     axios
-      .post(`${BASE_URL}/api/verify/${verifyToken}`)
+      .post(`${NEXT_PUBLIC_BASE_URL}/api/verify/${verifyToken}`)
       .then((res) => {
         localStorage.setItem('userId', res.data.userId)
         localStorage.setItem('token', res.data.token)

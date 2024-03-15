@@ -1,7 +1,7 @@
 import { PromoCode } from '@components/DashBoard/types'
 import axios from 'axios'
 
-const baseUrl: string = process.env.BASE_URL ?? 'http://localhost:4200'
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 const getAllPromoCodes = async (): Promise<PromoCode[]> => {
   try {

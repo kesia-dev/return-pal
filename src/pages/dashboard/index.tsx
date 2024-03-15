@@ -7,30 +7,41 @@ import Router from 'next/router'
 import { dummyUser } from './dummy-user'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-
+import { useRouter } from 'next/router';
 function Dashboard() {
+
+  const router = useRouter();
+
   useEffect(() => {
-    const userId = localStorage.getItem("userId");
-    const token = localStorage.getItem("token");
 
-    console.log({ userId, token })
+    let { _id, access_token } = router.query;
 
-    axios
-      .post("http://localhost:4200/api/authorize", { userId, token })
-      .then((a) => console.log(a))
-      .catch((a) => console.log(a))
+    if (_id && router.query.token && access_token) {
+      localStorage.setItem("userId", _id.toString());
+      localStorage.setItem("token", router.query.token.toString());
+    }
+
+    let userId = localStorage.getItem("userId");
+    let token = localStorage.getItem("token");
 
     if (!token) {
       Router.push("/signin")
     }
+
+    axios
+      .post(process.env.NEXT_PUBLIC_BASE_URL + "/api/authorize", { userId, token })
+      .then((a) => console.log(a))
+      .catch((a) => console.log(a))
+
+
   });
 
   const [userInfo, setUserInfo] = useState<UserInfo>(dummyUser);
 
   return (
-  <div>
-    <ToastContainer/> <DashBoardMain userInfo={userInfo} setUserInfo={setUserInfo} />  
-  </div>
+    <div>
+      <ToastContainer /> <DashBoardMain userInfo={userInfo} setUserInfo={setUserInfo} />
+    </div>
   )
 }
 

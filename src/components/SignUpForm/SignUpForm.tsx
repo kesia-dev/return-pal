@@ -59,7 +59,7 @@ const formSchema = z
     }
   )
 
-const BASE_URL = process.env.BASE_URL ?? 'http://localhost:4200'
+const NEXT_PUBLIC_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 function SignUpForm() {
   const form = useForm({
@@ -82,7 +82,7 @@ function SignUpForm() {
     console.log(values)
 
     axios
-      .post(`${BASE_URL}/api/register`, values)
+      .post(`${NEXT_PUBLIC_BASE_URL}/api/register`, values)
       .then(() => {
         toast.success('Verification email sent!', {
           position: 'top-right',

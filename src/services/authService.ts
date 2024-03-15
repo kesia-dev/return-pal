@@ -11,7 +11,7 @@ export const authorizeUser = async () => {
 
   try {
     axios
-      .post('http://localhost:4200/api/authorize', { userId, token })
+      .post(process.env.NEXT_PUBLIC_BASE_URL + '/api/authorize', { userId, token })
       .then((a) => console.log(a))
       .catch((a) => console.log(a))
   } catch (err) {

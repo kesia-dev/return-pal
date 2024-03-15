@@ -56,13 +56,13 @@ export default function Pickup() {
   }
 
   const cardClassnames =
-    'data-[state=on]:border-6 sm:data-[state=on]:scale-120 flex sm:h-96 md:w-2/6  select-none flex-col items-center space-y-2 border-brand bg-white text-brand data-[state=on]:scale-110 data-[state=on]:border-primary data-[state=off]:bg-slate-300 data-[state=off]:opacity-50 data-[state=on]:shadow-2xl xs:data-[state=on]:border-8'
+    'data-[state=on]:border-6 sm:data-[state=on]:scale-120 flex h-96 md:w-2/6  select-none flex-col items-center space-y-2 border-brand bg-white text-brand data-[state=on]:scale-110 data-[state=on]:border-primary data-[state=off]:bg-slate-300 data-[state=off]:opacity-50 data-[state=on]:shadow-2xl xs:data-[state=on]:border-8'
 
   const cardTitleClassnames =
-    'flex-col text-base xxs:text-sm md:text-2xl text-start sm:text-center font-semibold md:font-bold sm:h-36'
+    'flex flex-col text-base xxs:text-xl md:text-2xl  text-center font-semibold md:font-bold sm:h-36'
 
   const cardDescriptionClassNames =
-    'flex w-4/5 items-start sm:text-center text-xs xxs:text-sm text-brand xs:w-full xs:text-base'
+    'flex w-4/5 items-center text-xs xxs:text-sm text-brand xs:w-full xs:text-base sm:font-semibold'
 
   return (
     <>
@@ -76,9 +76,6 @@ export default function Pickup() {
         >
           <ReturnProcessRoot>
             <ReturnProcessSection>
-              <Reveal>
-                <ReturnProcessBackButton className="p-0 sm:hidden" />
-              </Reveal>
               <Reveal>
                 <SectionHeader>Pickup Details</SectionHeader>
               </Reveal>
@@ -100,42 +97,26 @@ export default function Pickup() {
                       selectionType="keep-selected"
                       onValueChange={field.onChange}
                       defaultValue={field.value}
-                      className="flex max-w-screen-lg flex-col justify-center gap-x-5 gap-y-4 sm:flex-row sm:gap-x-10 sm:gap-y-0 md:gap-x-20"
+                      className="flex max-w-screen-lg justify-center gap-x-5 sm:gap-x-10 md:gap-x-20"
                     >
                       <ExtendedToggleGroupItem value="Direct Handoff" asChild>
                         <Card className={cardClassnames}>
-                          <CardHeader className="flex flex-row items-center space-y-0 pl-5 pr-0 sm:flex-col sm:space-y-2 sm:pr-5">
-                            {/* Big Screen Card Title */}
+                          <CardHeader className="flex items-center pl-5">
                             <Reveal>
-                              <CardTitle
-                                className={`${cardTitleClassnames} hidden sm:flex`}
-                              >
+                              <CardTitle className={cardTitleClassnames}>
                                 <div className="flex items-end justify-center align-bottom">
                                   <HandingPackage className="h-12 w-12 fill-primary xxs:h-16 xxs:w-16 xs:h-24 xs:w-24" />
                                 </div>
                                 Direct Handoff
                               </CardTitle>
                             </Reveal>
-                            {/* Small Screen Card Title */}
-                            <div className="mr-4 flex items-center justify-center align-bottom sm:hidden">
-                              <Reveal>
-                                <HandingPackage className="fill-primary xxs:h-12 xxs:w-12 xs:h-24 xs:w-24" />
-                              </Reveal>
-                            </div>
                             <Reveal>
-                              <div className="flex flex-col gap-2 sm:block">
-                                <CardTitle
-                                  className={`${cardTitleClassnames} flex sm:hidden`}
-                                >
-                                  Direct Handoff
-                                </CardTitle>
-                                <CardDescription
-                                  className={cardDescriptionClassNames}
-                                >
-                                  Hand the package directly to our specialist at
-                                  your door
-                                </CardDescription>
-                              </div>
+                              <CardDescription
+                                className={cardDescriptionClassNames}
+                              >
+                                Hand the package directly to our specialist at
+                                your door
+                              </CardDescription>
                             </Reveal>
                           </CardHeader>
                         </Card>
@@ -146,38 +127,23 @@ export default function Pickup() {
                         asChild
                       >
                         <Card className={cardClassnames}>
-                          <CardHeader className="flex flex-row items-center space-y-0 pl-2 pr-0 sm:flex-col sm:space-y-2 sm:pr-5">
-                            {/* Big Screen Card Title */}
+                          <CardHeader className="flex items-center pl-5">
                             <Reveal>
-                              <CardTitle
-                                className={`${cardTitleClassnames} hidden sm:flex`}
-                              >
+                              <CardTitle className={cardTitleClassnames}>
                                 <div className="flex items-end justify-center align-bottom">
-                                  <Door className="xxs:h-16 xxs:w-16 xs:h-24 xs:w-24" />
-                                  <Box className="mb-3 xxs:h-12 xxs:w-12 xs:h-10 xs:w-10" />
+                                  <Door className="h-12 w-12 xxs:h-16 xxs:w-16 xs:h-24 xs:w-24" />
+                                  <Box className="h-5 w-5 xxs:h-7 xxs:w-7 xs:h-10 xs:w-10" />
                                 </div>
                                 Leave on Doorstep
                               </CardTitle>
                             </Reveal>
-                            {/* Small Screen Card Title */}
-                            <div className="mr-4 flex items-end justify-center align-bottom sm:hidden">
-                              <Door className="h-12 w-12 xxs:h-12 xxs:w-12 xs:h-24 xs:w-24" />
-                              <Box className="mb-1.5 h-5 w-5 xxs:h-4 xxs:w-5 xs:h-10 xs:w-10" />
-                            </div>
                             <Reveal>
-                              <div className="flex flex-col gap-2 sm:block">
-                                <CardTitle
-                                  className={`${cardTitleClassnames} flex sm:hidden`}
-                                >
-                                  Leave on Doorstep
-                                </CardTitle>
-                                <CardDescription
-                                  className={cardDescriptionClassNames}
-                                >
-                                  Place items outside your door ahead of your
-                                  pick up window
-                                </CardDescription>
-                              </div>
+                              <CardDescription
+                                className={cardDescriptionClassNames}
+                              >
+                                Place items outside your door ahead of your pick
+                                up window
+                              </CardDescription>
                             </Reveal>
                           </CardHeader>
                         </Card>
@@ -189,18 +155,12 @@ export default function Pickup() {
               )}
             />
 
-            {/* Big Screen Buttons, Back moved to top */}
-            <span className="mt-5 hidden justify-between sm:flex">
+            <span className="mt-5 flex justify-between">
               <Reveal>
                 <ReturnProcessBackButton />
               </Reveal>
               <Reveal>
                 <ReturnProcessNextButton />
-              </Reveal>
-            </span>
-            <span className="flex w-full sm:hidden">
-              <Reveal width="100%">
-                <ReturnProcessNextButton className="w-full" />
               </Reveal>
             </span>
           </ReturnProcessRoot>

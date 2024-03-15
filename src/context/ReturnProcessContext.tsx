@@ -16,13 +16,10 @@ export type ReturnProcessStep = {
 }
 
 export type FileUploadType = {
-  _id?: string // auto-generated
-  image?: File
-  userId?: string
-  orderId?: string | null
+  file?: File
   attachment: string
   labelType: 'Physical' | 'Digital' | 'Amazon'
-  description?: string
+  description: string | undefined
 }
 
 export type ReturnProcessFullObjectType = {

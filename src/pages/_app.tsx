@@ -4,7 +4,7 @@ import { type ReactElement, type ReactNode } from 'react'
 import { type NextPage } from 'next'
 import { type AppProps } from 'next/app'
 import { type AppType } from 'next/dist/shared/lib/utils'
-
+import 'dotenv/config';
 import Head from 'next/head'
 import '@/styles/globals.css'
 import localFont from 'next/font/local'

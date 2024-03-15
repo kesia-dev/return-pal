@@ -5,7 +5,7 @@ import * as dotenv from 'dotenv'
 dotenv.config()
 
 // TODO: Fix with the new order data shape
-const baseUrl: string = process.env.BASE_URL ?? 'http://localhost:4200'
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 export const fetchRecentOrders = async (
   page: number
 ): Promise<OrderResponse[]> => {
@@ -54,7 +54,7 @@ export const cancelOrder = async (orderId: string): Promise<boolean> => {
 export const getOrderDetails = async (
   orderId: string
 ): Promise<OrderResponse | undefined> => {
-  const apiUrl = 'http://localhost:4200/api/payment/orderDetails'
+  const apiUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/orderDetails`
   try {
     const response = await axios.post(
       apiUrl,

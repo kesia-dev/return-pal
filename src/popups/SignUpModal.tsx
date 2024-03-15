@@ -77,7 +77,7 @@ function SignUpModule({ setIsOpen, isOpen }: ModalPropsType) {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
     const { email, password } = values;
-    axios.post("http://localhost:4200/api/register", { email, password })
+    axios.post(process.env.NEXT_PUBLIC_BASE_URL+"/api/register", { email, password })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
     setIsOpen() // close modal

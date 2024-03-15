@@ -18,7 +18,7 @@
 //   const router = useRouter()
 //   const { orderId } = router.query
 //   const [order, setOrder] = useState<Order | null>(null)
-//   const baseUrl: string = process.env.BASE_URL ?? 'http://localhost:4200'
+//   const baseUrl: string = process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:4200'
 
 //   useEffect(() => {
 //     const fetchOrderDetails = async () => {
@@ -278,7 +278,7 @@ const OrderId = () => {
   const router = useRouter()
   const { orderId } = router.query
   const [order, setOrder] = useState<Order | null>(null)
-  const baseUrl: string = process.env.BASE_URL ?? 'http://localhost:4200'
+  const baseUrl: string = process.env.NEXT_PUBLIC_BASE_URL;
 
   useEffect(() => {
     const fetchOrderDetails = async () => {

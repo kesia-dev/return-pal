@@ -22,7 +22,7 @@ export const uploadReturnLabel = async (
 
   try {
     const res = await axios.post(
-      `http://localhost:4200/api/return-labels`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/return-labels`,
       formData,
       {
         headers: {
@@ -39,7 +39,7 @@ export const uploadReturnLabel = async (
 export const getAllReturnLabels = async (userId: string) => {
   try {
     const res = await axios.get(
-      `http://localhost:4200/api/return-labels/user/${userId}`
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/return-labels/user/${userId}`
     )
     return res.data
   } catch (err) {
@@ -50,7 +50,7 @@ export const getAllReturnLabels = async (userId: string) => {
 export const updateReturnLabel = async (returnLabel: any) => {
   try {
     await axios.put(
-      `http://localhost:4200/api/return-labels/${returnLabel._id}`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/return-labels/${returnLabel._id}`,
       returnLabel
     )
   } catch (err) {
@@ -61,7 +61,7 @@ export const updateReturnLabel = async (returnLabel: any) => {
 export const deleteReturnLabel = async (returnLabel: any) => {
   try {
     await axios.delete(
-      `http://localhost:4200/api/return-labels/${returnLabel._id}`
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/return-labels/${returnLabel._id}`
     )
   } catch (err) {
     console.error(err)
@@ -77,7 +77,7 @@ export const deleteAllReturnLabels = async () => {
   }
 
   try {
-    await axios.delete(`http://localhost:4200/api/return-labels/user/${userId}`)
+    await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/api/return-labels/user/${userId}`)
   } catch (err) {
     console.error(err)
   }

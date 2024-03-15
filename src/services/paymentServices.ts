@@ -5,7 +5,7 @@ import { type PaymentData } from '@components/DashBoard/types'
 import { Order } from '@returnprocess/types'
 
 dotenv.config()
-const baseUrl: string = process.env.BASE_URL ?? 'http://localhost:4200'
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const processPayment = async (order: Order, addressId: string) => {
   if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {

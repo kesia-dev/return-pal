@@ -11,7 +11,7 @@ export const getAddresses = async (): Promise<Address[]> => {
 
   try {
     const res = await axios.get(
-      `http://localhost:4200/api/address/user/${userId}`
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/address/user/${userId}`
     )
     if (res.status !== 200) {
       throw new Error(`unable to grab addresses for user id: ${userId}`)
@@ -41,7 +41,7 @@ export const createAddress = async (
 
   try {
     const res = await axios.post(
-      `http://localhost:4200/api/address`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/address`,
       addressToSend
     )
     if (res.status !== 201) {
@@ -70,7 +70,7 @@ export const updateAddress = async (
 
   try {
     const res = await axios.put(
-      `http://localhost:4200/api/address/${address._id!}`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/address/${address._id!}`,
       addressToUpdate
     )
     if (res.status !== 200) {

@@ -79,9 +79,9 @@ function MobileSideBar() {
           Security
         </MobileTab>
         <Separator className="bg-gray-900" />
-        <MobileTab value="signOut" icon={<VscSignOut />}>
+        {/* <MobileTab value="signOut" icon={<VscSignOut />}>
           Sign Out
-        </MobileTab>
+        </MobileTab> */}
         <MobileHeaderFooter />
       </SheetContent>
     </Sheet>

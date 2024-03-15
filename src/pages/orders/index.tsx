@@ -4,24 +4,33 @@ import axios from 'axios'
 import { type Order, type PaginatedResponse } from '@components/DashBoard/types'
 import { Button } from '@/components/ui/button'
 import DashboardLayout from '@/layouts/DashboardLayout'
-import moment from 'moment'
+import Router from 'next/router'
+import OneMonthCalendar from '@components/OneMonthCalender'
 
 interface OrdersProps {
   initialOrders: Order[]
 }
 
-const pageSize = 20
+const pageSize = 4
 const Orders: React.FC<OrdersProps> = ({ initialOrders }) => {
   const [orders, setOrders] = useState<Order[]>(initialOrders)
   const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
-  const baseUrl: string = process.env.BASE_URL ?? 'http://localhost:4200'
+  const [selectedDate, setDateSelected] = useState('');
+  const [isDateSelected, setIsDateSelected] = useState(false);
+
+  const handleDateSelected = (date: Date) => {
+    setDateSelected(date.toISOString());
+    setIsDateSelected(true)
+  }
+
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   const fetchOrders = async (page: number) => {
     try {
       const response = await axios.get<PaginatedResponse>(
-        `${baseUrl}/api/orders?page=${page}`
+        `${baseUrl}/api/orders?page=${page}&perPage=${pageSize}&date=${selectedDate}`
       )
 
       if (Array.isArray(response.data.paginatedOrders)) {
@@ -56,9 +65,17 @@ const Orders: React.FC<OrdersProps> = ({ initialOrders }) => {
     fetchData().catch((error) => {
       console.error('Error in fetchData:', error)
     })
-  }, [currentPage])
+  }, [currentPage, selectedDate])
 
   const canShowPagination = totalPages > 1
+
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    const token = localStorage.getItem("token");
+    if (!token) {
+      Router.push("/signin")
+    }
+  })
 
   return (
     <DashboardLayout>
@@ -66,43 +83,48 @@ const Orders: React.FC<OrdersProps> = ({ initialOrders }) => {
         <h1 className="mb-10 ml-3 bg-paleBlue text-3xl font-medium">
           Recent Orders
         </h1>
-        <div className="overflow-hidden rounded-xl bg-white font-bold sm:flex-row">
-          {loading ? (
-            <p>Loading...</p>
-          ) : (
-            <>
-              {orders?.length > 0 ? (
-                <OrderList orders={orders} />
-              ) : (
-                <p className="ml-3 font-medium">Currently no orders placed.</p>
-              )}
-              {canShowPagination && (
-                <div className="pagination ml-10 p-2">
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    className="mr-2"
-                  >
-                    Previous
-                  </Button>
-                  <span className="mr-2">
-                    Page {currentPage} of {totalPages}
-                  </span>
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    disabled={currentPage === totalPages}
-                    className="mr-2"
-                  >
-                    Next
-                  </Button>
-                </div>
-              )}
-            </>
-          )}
+        <div className='grid grid-cols-10 gap-8'>
+          <div className="lg:col-span-7 md:col-span-7 col-span-10 overflow-hidden rounded-xl bg-white font-bold sm:flex-row">
+            {loading ? (
+              <p>Loading...</p>
+            ) : (
+              <>
+                {orders?.length > 0 ? (
+                  <OrderList orders={orders} />
+                ) : (
+                  <p className="ml-3 font-medium">Currently no orders placed.</p>
+                )}
+                {canShowPagination && (
+                  <div className="pagination p-2 flex justify-center text-center items-center">
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      onClick={() => handlePageChange(currentPage - 1)}
+                      disabled={currentPage === 1}
+                      className="mr-2"
+                    >
+                      Previous
+                    </Button>
+                    <span className="mr-2">
+                      Page {currentPage} of {totalPages}
+                    </span>
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      onClick={() => handlePageChange(currentPage + 1)}
+                      disabled={currentPage === totalPages}
+                      className="mr-2"
+                    >
+                      Next
+                    </Button>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+          <div className='lg:col-span-3 md:col-span-3 col-span-10'>
+            <OneMonthCalendar onDateSelect={handleDateSelected} />
+          </div>
         </div>
       </div>
     </DashboardLayout>

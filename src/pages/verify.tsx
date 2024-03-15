@@ -14,7 +14,7 @@ function Verify() {
   if (verifyToken) {
     console.log("before post")
     axios
-      .post(`http://localhost:4200/api/verify/${verifyToken}`)
+      .post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/verify/${verifyToken}`)
       .then((res) => {
         if (res.data.token) {
           localStorage.setItem('userId', res.data.userId)

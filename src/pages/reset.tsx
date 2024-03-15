@@ -21,7 +21,7 @@ import { useSearchParams } from 'next/navigation';
 import Router from 'next/router'
 
 
-// const BASE_URL = process.env.BASE_URL || "";
+// const NEXT_PUBLIC_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "";
 
 
 const formSchema = z
@@ -58,8 +58,8 @@ function Reset() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
     const { email, password } = values;
-    axios.post(`http://localhost:4200/api/reset/${passwordResetToken}`, { email, password })
-    // axios.post(`${BASE_URL}/api/reset`, { password })
+    axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/reset/${passwordResetToken}`, { email, password })
+    // axios.post(`${NEXT_PUBLIC_BASE_URL}/api/reset`, { password })
     .then(() => Router.push("/signin"))
     .catch((err) => console.log(err));
   }
