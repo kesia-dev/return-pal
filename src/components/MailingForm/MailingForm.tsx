@@ -14,6 +14,8 @@ import * as z from 'zod'
 import { Button } from '@components/ui/button'
 import Reveal from '@components/common/reveal'
 import { useRouter } from 'next/router'
+import axios from 'axios'
+import { useToast } from '@components/ui/use-toast'
 
 interface ResponseData {
   message: string
@@ -37,7 +39,8 @@ const mailingFormSchema = z.object({
 
 function MailingForm() {
   const router = useRouter()
-  const { invalidPostalCode } = router.query
+  const { invalidPostalCode } = router.query;
+  const { toast } = useToast();
 
   const form = useForm({
     resolver: zodResolver(mailingFormSchema),
@@ -61,6 +64,21 @@ function MailingForm() {
       email: email,
       postal_code: invalidPostalCode,
     }
+
+    axios.post(process.env.NEXT_PUBLIC_BASE_URL + "/api/sendmail", { email, firstName: fullName, message: "Area under the postal code " + invalidPostalCode + " is in waiting list." })
+      .then((res) => {
+        if (res.data) {
+          toast({
+            variant: 'destructive',
+            description: "Postal code " + invalidPostalCode + " is in waiting list",
+          })
+          setTimeout(() => {
+          router.push('/');
+            
+          }, 3000);
+        }
+      })
+      .catch((err) => console.log(err));
 
   }
 

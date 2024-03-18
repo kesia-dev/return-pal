@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { type UserInfo } from '@/components/DashBoard/types'
 import Reveal from '@components/common/reveal'
 import {

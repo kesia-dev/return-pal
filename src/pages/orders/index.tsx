@@ -29,8 +29,9 @@ const Orders: React.FC<OrdersProps> = ({ initialOrders }) => {
 
   const fetchOrders = async (page: number) => {
     try {
+      const userId = localStorage.getItem('userId')
       const response = await axios.get<PaginatedResponse>(
-        `${baseUrl}/api/orders?page=${page}&perPage=${pageSize}&date=${selectedDate}`
+        `${baseUrl}/api/orders?page=${page}&userId=${userId}&perPage=${pageSize}&date=${selectedDate}`
       )
 
       if (Array.isArray(response.data.paginatedOrders)) {

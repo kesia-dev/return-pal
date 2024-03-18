@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { getLayout } from '@/layouts/DefaultLayout'
 import { Button } from '@/components/ui/button'
@@ -16,12 +16,46 @@ import {
 import Faq from '@components/Faq'
 import Reveal from '@components/common/reveal'
 import PostalCodeModal from '@components/PostalCodeModal'
+import Router from 'next/router';
+import axios from 'axios'
+
 
 function Home() {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [ordersCount, setOrdersCount] = useState(0);
+
+  const fetchOrders = async (userId: string) => {
+    try {
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+      const response = await axios.get(
+        `${baseUrl}/api/orders/count?userId=${userId}`
+      )
+      console.log(response.data);
+      setOrdersCount(response.data.orders);
+    } catch (error) {
+      console.error('Error fetching orders:', error)
+    } finally {
+    }
+  }
+
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    if (userId) {
+      fetchOrders(userId);
+    }
+  }, [])
 
   const toggleModal = () => {
-    setIsModalOpen(!isModalOpen)
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return Router.push('signin');
+    } else {
+      if (ordersCount > 0) {
+        return Router.push('schedule-pickup');
+      }else{
+        setIsModalOpen(!isModalOpen)
+      }
+    }
   }
 
   return (

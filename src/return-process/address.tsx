@@ -95,7 +95,6 @@ function NewAddressForm({
       })
       return false
     }
-
     if (!isPostalCodeValid(addressFromForm?.postalCode ?? '')) {
       toast({
         variant: 'destructive',

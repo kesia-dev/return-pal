@@ -14,6 +14,10 @@ function PostalCodeModal({ setIsOpen, isOpen }: ModalPropsType) {
     router.push(path)
     setIsOpen() // Close the modal after redirecting
   }
+  const handleLoggedInRedirect = () => {
+    router.push('/schedule-pickup')
+    setIsOpen() // Close the modal after redirecting
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={() => setIsOpen()}>
@@ -37,6 +41,7 @@ function PostalCodeModal({ setIsOpen, isOpen }: ModalPropsType) {
           </p>
           <PostalCodeForm
             // onSuccessRedirect={}
+            handleLoggedInRedirect = {handleLoggedInRedirect}
             onFailRedirect={(invalidPostalCode: any) =>
               handleRedirect(`/mailing?invalidPostalCode=${invalidPostalCode}`)
             }

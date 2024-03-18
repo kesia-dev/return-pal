@@ -16,7 +16,8 @@ import { container, item } from '@styles/framer'
 import { isPostalCodeValid } from '@lib/utils'
 import SignUpModule from '@/popups/SignUpModal'
 import { useState } from 'react'
-import SigninButton from '@components/SigninButton'
+import SigninButton from '@components/SigninButton';
+import Router from 'next/router';
 
 //postal code regex to verify canadian postal code format
 const postalCodeRegex = /^[A-Za-z]\d[A-Za-z]\d[A-Za-z]\d$/
@@ -32,8 +33,10 @@ const formSchema = z.object({
 
 function PostalCodeForm({
   onFailRedirect,
+  handleLoggedInRedirect
 }: {
   onFailRedirect: (invalidPostalCode: string) => void
+  handleLoggedInRedirect: () => void
 }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -49,10 +52,17 @@ function PostalCodeForm({
   }
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    const postalIsValid = isPostalCodeValid(values.postalCode)
+    const postalIsValid = isPostalCodeValid(values.postalCode);
     if (postalIsValid) {
       // open SignUpModule
-      setIsModalOpen(true)
+      const token = localStorage.getItem('token');
+
+      if (token) {
+        return handleLoggedInRedirect();
+      }else{
+        Router.push('/signup')
+      }
+      
     } else {
       // Redirect to /mailing
       onFailRedirect(values.postalCode.toUpperCase())
