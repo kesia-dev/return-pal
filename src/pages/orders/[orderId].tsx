@@ -210,26 +210,26 @@
 //                   }
 //                   style={{
 //                     backgroundColor:
-//                       order.status === 'Cancelled' ||
+//                       order.status === 'cancel' ||
 //                       order.status === 'Delivered' ||
 //                       order.status === 'Delivered to Post Office'
 //                         ? '#A3BEE8'
 //                         : '',
 //                     border:
-//                       order.status === 'Cancelled' ||
+//                       order.status === 'cancel' ||
 //                       order.status === 'Delivered' ||
 //                       order.status === 'Delivered to Post Office'
 //                         ? '1px solid #4299E1'
 //                         : 'none',
 //                     cursor:
 //                       order.status === 'Delivered to Post Office' ||
-//                       order.status === 'Cancelled' ||
+//                       order.status === 'cancel' ||
 //                       order.status === 'Delivered'
 //                         ? 'not-allowed'
 //                         : 'pointer',
 //                   }}
 //                   disabled={[
-//                     'Cancelled',
+//                     'cancel',
 //                     'Delivered',
 //                     'Delivered to Post Office',
 //                   ].includes(order.status)}
@@ -279,6 +279,7 @@ const OrderId = () => {
   const { orderId } = router.query
   const [order, setOrder] = useState<Order | null>(null)
   const baseUrl: string = process.env.NEXT_PUBLIC_BASE_URL;
+  const [address,setAddress] = useState();
 
   useEffect(() => {
     const fetchOrderDetails = async () => {
@@ -287,12 +288,13 @@ const OrderId = () => {
           const response: AxiosResponse<Order> = await axios.get(
             `${baseUrl}/api/orders/${String(orderId)}`
           )
-          console.log('response is :: ', response)
+          console.log('response is :: ', response.data)
 
           if (response.status === 200) {
             console.log('response is ok')
             const data = response.data
-            setOrder(data)
+            setOrder(data?.order)
+            setAddress(data?.pickupDetails)
           } else {
             console.error('Error fetching order details:', response.statusText)
           }
@@ -407,21 +409,7 @@ const OrderId = () => {
                   </div>
                   <div className="text-black-900 font-avenir-next with flex items-center space-x-2 text-smallText font-bold">
                     <p className="pl-0">
-                      {order.order_details.pickup_details.street},
-                    </p>
-                    <p className="m-0 pl-0">
-                      {order.order_details.pickup_details.city},
-                    </p>
-                    <p className="m-0 p-0">
-                      {order.order_details.pickup_details.province},
-                    </p>
-                    <p className="m-0 p-0">
-                      {''}
-                      {order.order_details.pickup_details.country},
-                    </p>
-                    <p className="m-0 p-0">
-                      {''}
-                      {order.order_details.pickup_details.postal_code}
+                      {address?.address}
                     </p>
                   </div>
                   {/* <OrderStatusNodes status={order?.status} /> */}
@@ -445,7 +433,7 @@ const OrderId = () => {
                       Total Packages:
                     </span>
                     <span className="w-{80} text-smallText text-gray-900">
-                      {order.order_details.total_packages}
+                      {order.order_details?.total_packages?order.order_details?.total_packages:1}
                     </span>
                   </div>
                   {/* Visa information */}
@@ -457,7 +445,7 @@ const OrderId = () => {
                       Payment Method:
                     </span>
                     <span className="w-{80} space-x-4 text-smallText text-gray-900">
-                      {order.client_details.payment_type}
+                      {order.client_details?.payment_type? order.client_details?.payment_type : 'Visa'}
                     </span>
                   </div>
                 </div>
