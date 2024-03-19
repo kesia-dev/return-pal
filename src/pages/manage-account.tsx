@@ -10,6 +10,8 @@ import Image from 'next/image'
 import { Button } from '@components/ui/button'
 import { Section } from '@components/common/section';
 import { getUser, updateUser } from '@/services/userService';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const formSchema = z.object({
   firstName: z.string(),
   lastName: z.string(),
@@ -22,6 +24,7 @@ const formSchema = z.object({
 export default function editUserProfile() {
 
   type FormType = z.infer<typeof formSchema>;
+  const notifySuccess = () => toast.success("User Updated successfully");
 
   const form = useForm<FormType>({
     resolver: zodResolver(formSchema),
@@ -43,7 +46,8 @@ export default function editUserProfile() {
     password: '',
     _id: '',
     address: '',
-    phoneNumber: ''
+    phoneNumber: '',
+    addressId:''
   });
 
   const [isEditGeneralInformation, setIsEditGeneralInfo] = useState(false);
@@ -53,6 +57,7 @@ export default function editUserProfile() {
     const id = localStorage.getItem('userId');
     const updated = await updateUser(id, user);
     console.log(updated, '  user updated successfuly');
+    notifySuccess()
 
   }
 
@@ -64,7 +69,15 @@ export default function editUserProfile() {
     const data = await getUser(id);
     console.log(data, 'data');
     if (data) {
-      setUser(data);
+      setUser({firstName: data.user.firstName,
+      lastName: data.user.lastName,
+      email: data.user.email,
+      password:data.user.password,
+      _id: data.user._id,
+      address: data.address.address,
+      phoneNumber: data.address.phoneNumber,
+      addressId: data.address._id
+    });
     }
   }
   useEffect(() => {
@@ -304,6 +317,8 @@ export default function editUserProfile() {
         </div>
 
       </Section>
+      <ToastContainer />
+
     </DashboardLayout>
 
 
