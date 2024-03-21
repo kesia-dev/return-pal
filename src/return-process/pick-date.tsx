@@ -26,7 +26,7 @@ import {
   NextWeekButton,
   PickDateCard,
 } from '@components/common/pick-date'
-import Calendar from "@components/calander";
+import Calendar from '@components/calander'
 import {
   SectionDescription,
   SectionHeader,
@@ -41,17 +41,18 @@ import { Button } from '@components/ui/button'
 import NextArrow from '@components/SvgComponents/NextArrow'
 
 export default function PickDate() {
-  // this is a fake userId, the logic of retrieving user info might be updated in the future
-  const userId = '657a3c20334ac659a3b33708'
+
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
   const returnProcess = useReturnProcess()
   const dateSelection = useDateSelection(new Date())
 
-  const [user, setUser] = useState<UserInfo>();
-  const [selectedDate, setDateSelected] = useState(new Date());
-  const [isDateSelected, setIsDateSelected] = useState(false);
+  const [user, setUser] = useState<UserInfo>()
+  const [selectedDate, setDateSelected] = useState(new Date())
+  const [isDateSelected, setIsDateSelected] = useState(false)
 
   const handleDateSelected = (date: Date) => {
-    setDateSelected(date);
+    setDateSelected(date)
     setIsDateSelected(true)
   }
 
@@ -79,12 +80,14 @@ export default function PickDate() {
 
 
   useEffect(() => {
-    void retrieveUserInfo()
+
+    const userId = localStorage.getItem('userId')
+    void retrieveUserInfo(userId)
   }, [])
 
-  const retrieveUserInfo = async (): Promise<void> => {
+  const retrieveUserInfo = async (userId): Promise<void> => {
     try {
-      const response = await fetch(`/api/users/?userId=${userId}`, {
+      const response = await fetch(`${baseUrl}/api/users/?userId=${userId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -129,7 +132,6 @@ export default function PickDate() {
                   </Link>
                 </Reveal>
               </div>
-
             </SectionHeader>
 
             <div className='grid grid-cols-8 !mt-0'>
@@ -148,7 +150,7 @@ export default function PickDate() {
                   disabled={!isDateSelected}
                   variant={'default'}
                   type={'submit'}
-                  onClick={()=>onSubmit({dateAndTime:selectedDate.toString()})}
+                  onClick={() => onSubmit({ dateAndTime: selectedDate.toString() })}
                   className={cn('text-md w-28 select-none space-x-2')}
                 >
                   <div className="flex items-center justify-center space-x-2">

@@ -5,7 +5,7 @@ import ConfirmationDialog from '@components/Orders/ConfirmationDialog'
 import { useRouter } from 'next/router'
 import { fetchRecentOrders } from '@/services/orderService'
 import OrderStatusNodes from '@/components/Orders/OrderStatusNodes'
-import { Order, ObjectId } from '@components/DashBoard/types'
+import { Order } from '@components/DashBoard/types'
 
 const RecentOrders: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([])
@@ -16,7 +16,7 @@ const RecentOrders: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const recentOrders = await fetchRecentOrders(currentPage)
+        const recentOrders:any = await fetchRecentOrders(currentPage)
         setOrders(recentOrders)
       } catch (error) {
         console.error('Error fetching recent orders:', error)
@@ -37,7 +37,7 @@ const RecentOrders: React.FC = () => {
     }
   }
 
-  const handleCancelOrder = (id: ObjectId, order_number: string) => {
+  const handleCancelOrder = (id: any, order_number: string) => {
     setSelectedOrder({ _id: id, order_number } as Order)
   }
 
@@ -87,7 +87,7 @@ const RecentOrders: React.FC = () => {
       </div>
 
       <div className="recent-orders-list flex flex-wrap">
-        {recentOrders.map((order) => (
+        {recentOrders.map((order:any) => (
           <div
             key={order.order_number}
             className="order-box mb-4 mr-4 flex-shrink-0 overflow-hidden rounded-lg border"
@@ -114,12 +114,12 @@ const RecentOrders: React.FC = () => {
                     onClick={() =>
                       handleCancelOrder(order._id, order.order_number)
                     }
-                    style={getCancelOrderButtonStyles(order?.order_status)}
+                    style={getCancelOrderButtonStyles(order?.status)}
                     disabled={[
                       'Cancelled',
                       'Delivered',
                       'Delivered to Post Office',
-                    ].includes(order?.order_status)}
+                    ].includes(order?.status)}
                   >
                     Cancel Order
                   </Button>

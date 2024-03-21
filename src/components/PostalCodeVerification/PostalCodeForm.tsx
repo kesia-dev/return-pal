@@ -51,7 +51,7 @@ function PostalCodeForm({
     setIsModalOpen(!isModalOpen)
   }
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     const postalIsValid = isPostalCodeValid(values.postalCode);
     if (postalIsValid) {
       // open SignUpModule
@@ -60,7 +60,7 @@ function PostalCodeForm({
       if (token) {
         return handleLoggedInRedirect();
       }else{
-        Router.push('/signup')
+        await Router.push('/signup')
       }
       
     } else {

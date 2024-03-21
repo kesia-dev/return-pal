@@ -11,7 +11,7 @@ export function useDateSelection(initialDate: Date) {
     const dateArray = []
     const currentDate = new Date(cursorStartDate)
     for (let i = 0; i < DAYS_TO_FETCH; i++) {
-      dateArray.push(new Date(currentDate))
+      dateArray.push(new Date(currentDate) as never)
       currentDate.setDate(currentDate.getDate() + 1)
     }
     return dateArray

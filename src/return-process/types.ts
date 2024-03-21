@@ -53,6 +53,8 @@ export const addressSchema = z.object({
   user: z.string().optional(), // Auto-generated in the server
   name: z.string(),
   phoneNumber: z.string(),
+  unitNumber: z.string().optional(),
+  street: z.string().optional(),
   address: z.string(),
   unit: z.string().optional(),
   city: z.string(),
@@ -132,8 +134,8 @@ const ConfirmedOrdersCollectionSchema = z.object({
   discount: z
     .object({
       promoCode: z.string(),
-      expireDate: z.string(),
-      discountPercentage: z.number(),
+      expireDate: z.string().optional(),
+      discountPercentage: z.number().optional(),
     })
     .optional(),
   orderDetails: z.object({

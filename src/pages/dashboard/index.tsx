@@ -4,7 +4,7 @@ import DashBoardMain from '@/components/DashBoard/DashBoardMain'
 import { type UserInfo } from '@/components/DashBoard/types'
 import axios from 'axios'
 import Router from 'next/router'
-import { dummyUser } from './dummy-user'
+import dummyUser from './dummy-user.json'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useRouter } from 'next/router';
@@ -25,7 +25,10 @@ function Dashboard() {
     let token = localStorage.getItem("token");
 
     if (!token) {
-      Router.push("/signin")
+      const funCall = async () =>{
+        await Router.push("/signin")
+      }
+      funCall()
     }
 
     axios
@@ -36,7 +39,7 @@ function Dashboard() {
 
   });
 
-  const [userInfo, setUserInfo] = useState<UserInfo>(dummyUser);
+  const [userInfo, setUserInfo] = useState<any>(dummyUser);
 
   return (
     <div>

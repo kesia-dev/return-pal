@@ -4,12 +4,7 @@ import { faRightToBracket } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
 
 // Default headerType is desktop
-function SignoutButton({
-
-  headerType = 'desktop',
-}: {
-  headerType?: 'desktop' | 'mobile'
-}) {
+function SignoutButton({headerType}:any) {
 
   const onClick = (): void => {
     localStorage.removeItem('userId')

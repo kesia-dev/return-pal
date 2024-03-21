@@ -24,7 +24,7 @@ export default function DashboardHeader() {
   const pathname = usePathname()
   const router = useRouter()
 
-  const handleDashboardClick = (e, href) => {
+  const handleDashboardClick = (e:any, href:any) => {
     e.preventDefault()
     router.push(href)
     if (router.pathname === href) {

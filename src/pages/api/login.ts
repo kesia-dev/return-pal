@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import client, { connectDB, disconnectDB } from '@/lib/db'
+// import client, { connectDB, disconnectDB } from '@/lib/db'
 
 // export default async function handler(
 //   req: NextApiRequest,

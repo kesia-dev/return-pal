@@ -92,7 +92,7 @@ const Calendar: React.FC<CalendarProps> = ({ onDateSelect }) => {
           onClick={() => handleDateClick(dayCopy)}
         >
           {format(dayCopy, 'd')}
-        </div>
+        </div> as never
       );
       day = addDays(day, 1);
     }

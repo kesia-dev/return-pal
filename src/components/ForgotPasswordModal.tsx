@@ -27,7 +27,7 @@ const formSchema = z
     email: z.string().email({ message: 'Please enter a valid email' })
   })
 
-function ForgotPasswordModule({ setIsOpen, isOpen }: ModalPropsType) {
+function ForgotPasswordModule({ setIsOpen, isOpen }: any) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {

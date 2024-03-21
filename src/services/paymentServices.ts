@@ -3,11 +3,12 @@ import axios from 'axios'
 import { loadStripe } from '@stripe/stripe-js'
 import { type PaymentData } from '@components/DashBoard/types'
 import { Order } from '@returnprocess/types'
+import { ObjectId } from 'mongodb'
 
 dotenv.config()
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-export const processPayment = async (order: Order, addressId: string) => {
+export const processPayment = async (order: Order, addressId: ObjectId) => {
   if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
     throw new Error('PUBLIC_STRIPE_PUBLISHABLE_KEY is not defined')
   }
@@ -23,6 +24,8 @@ export const processPayment = async (order: Order, addressId: string) => {
   const body = JSON.stringify(payload)
 
   try {
+
+    console.log(body);
     const response = await axios.post(`${baseUrl}/api/payment`, body, {
       headers: {
         'Content-Type': 'application/json',

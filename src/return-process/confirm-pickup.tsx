@@ -629,7 +629,7 @@ export default function ConfirmPickup() {
   // Logic for the Scroll-to-Bottom button
   const [showScrollBtn, setShowScrollBtn] = useState(true)
   const returnProcess = useReturnProcess()
-  const [order, setOrder] = useState<Order>({
+  const [order, setOrder] = useState<any>({
     orderDate: new Date(),
     orderStatus: orderStatus['Driver received'],
     orderDetails: {

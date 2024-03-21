@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import { type ModalPropsType } from '@/components/DashBoard/types'
 
 // Default headerType is desktop
-function PostalCodeModal({ setIsOpen, isOpen }: ModalPropsType) {
+function PostalCodeModal({ setIsOpen, isOpen }: any) {
   const router = useRouter()
 
   const handleRedirect = (path: string) => {

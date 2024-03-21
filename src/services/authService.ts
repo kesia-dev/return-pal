@@ -6,7 +6,7 @@ export const authorizeUser = async () => {
   const token = localStorage.getItem('token')
 
   if (!token) {
-    Router.push('/signin')
+    await Router.push('/signin')
   }
 
   try {

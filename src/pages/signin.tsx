@@ -17,10 +17,10 @@ function SignIn() {
   if (verifyToken) {
     axios
       .post(`${NEXT_PUBLIC_BASE_URL}/api/verify/${verifyToken}`)
-      .then((res) => {
+      .then(async(res) => {
         localStorage.setItem('userId', res.data.userId)
         localStorage.setItem('token', res.data.token)
-        Router.push("/dashboard")
+        await Router.push("/dashboard")
       })
       .catch((err) => console.log(err));
   }

@@ -24,6 +24,7 @@ interface FormData {
     | 'In Transit'
     | 'Delivered to Post Office'
     | 'Cancelled'
+    | 'Driver received'
   bigFile: Buffer
 }
 

@@ -1,6 +1,6 @@
-import type { SubscriptionPlan } from '@components/DashBoard/types'
+// import type { SubscriptionPlan } from '@components/DashBoard/types'
 
-export const subscriptionData: SubscriptionPlan[] = [
+export const subscriptionData: any[] = [
   {
     name: 'Bronze',
     price: 1099,

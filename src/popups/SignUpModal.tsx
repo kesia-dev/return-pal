@@ -57,7 +57,7 @@ const formSchema = z
     }
   )
 
-function SignUpModule({ setIsOpen, isOpen }: ModalPropsType) {
+function SignUpModule({ setIsOpen, isOpen }: any) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {

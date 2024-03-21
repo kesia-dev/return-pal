@@ -137,7 +137,7 @@ function NewAddressForm({
         ],
       }
 
-      returnProcess.setCurrentData({ userInfo: newUserInfo })
+      returnProcess.setCurrentData({ userInfo: {...returnProcess.currentData.userInfo} })
       setAddresses([...addresses, address!])
       setAddressFormVisiblity(false)
     }

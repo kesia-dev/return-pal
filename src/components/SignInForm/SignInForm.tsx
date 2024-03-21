@@ -30,16 +30,19 @@ const NEXT_PUBLIC_BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 function SignInForm() {
 
-  useEffect(()=>{
+  useEffect(() => {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
-  
-    if (token && userId) {
-      Router.push("/dashboard")
-    }
-  },[])
 
-  
+    if (token && userId) {
+      const funCall = async () => {
+        await Router.push("/dashboard")
+      }
+      funCall();
+    }
+  }, [])
+
+
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -61,11 +64,11 @@ function SignInForm() {
     axios
       .post(`${NEXT_PUBLIC_BASE_URL}/api/login`, { email, password })
       .then(
-        (res) => {
+        async (res: any) => {
           localStorage.setItem('userId', res.data.userId)
           localStorage.setItem('token', res.data.token)
 
-          Router.push('/dashboard')
+          await Router.push('/dashboard')
         }
       )
       .catch((err) => {

@@ -70,7 +70,7 @@ function OrderBreakdown({ order }: OrderBreakdownProps) {
                 <span>
                   {(
                     (orderDetails.totalCost / 100) *
-                    (order.discount.discountPercentage / 100)
+                    (order.discount?.discountPercentage ?? 0 / 100)
                   ).toFixed(2)}
                 </span>
               </p>
@@ -104,7 +104,7 @@ function OrderBreakdown({ order }: OrderBreakdownProps) {
             <span>
               {(
                 (orderDetails.totalCost / 100) *
-                (order.discount.discountPercentage / 100)
+                (order.discount?.discountPercentage ?? 0 / 100)
               ).toFixed(2)}
             </span>
           </p>
@@ -142,8 +142,11 @@ export default function OrderSummary({ order, onOrder }: OrderSummaryProps) {
       const currentDate = new Date()
 
       const isValidPromoCode = promoCodes.find((promo: PromoCode) => {
-        const isValidCode = promo.promoCode.toLowerCase() === promoCodeInput
-        const isNotExpired = new Date(promo.expireDate) >= currentDate
+        const isValidCode = promo.promoCode?.toLowerCase() === promoCodeInput
+        let isNotExpired;
+        if (promo.expireDate) {
+          isNotExpired = new Date(promo.expireDate) >= currentDate
+        }
         return isValidCode && isNotExpired
       })
 
@@ -153,10 +156,10 @@ export default function OrderSummary({ order, onOrder }: OrderSummaryProps) {
           discount: {
             promoCode: promoCodeInput,
             expireDate: promoCodes.find(
-              (promo) => promo.promoCode.toLowerCase() === promoCodeInput
+              (promo) => promo.promoCode?.toLowerCase() === promoCodeInput
             )!.expireDate,
             discountPercentage: promoCodes.find(
-              (promo) => promo.promoCode.toLowerCase() === promoCodeInput
+              (promo) => promo.promoCode?.toLowerCase() === promoCodeInput
             )!.discountPercentage,
           },
         })

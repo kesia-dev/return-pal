@@ -150,6 +150,7 @@ export type Order = z.infer<typeof OrdersCollectionSchema>
 export type ModalPropsType = {
   isOpen: boolean
   setIsOpen: () => void
+  headerType:string
 }
 export type LeadData = {
   fullName: string
@@ -173,9 +174,9 @@ export interface PaginatedResponse {
 
 export interface PromoCode {
   _id?: string // generated in mongodb
-  promoCode: string
-  expireDate: string
-  discountPercentage: number
+  promoCode?: string
+  expireDate?: string
+  discountPercentage: number | 0
   __v?: number // generated in mongodb
 }
 
@@ -195,3 +196,5 @@ export interface StripeResponseData {
   receipt_url: string
   sessionId: string
 }
+export { Address }
+

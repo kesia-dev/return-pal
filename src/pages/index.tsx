@@ -45,13 +45,13 @@ function Home() {
     }
   }, [])
 
-  const toggleModal = () => {
+  const toggleModal = async () => {
     const token = localStorage.getItem('token');
     if (!token) {
-      return Router.push('signin');
+      return await Router.push('signin');
     } else {
       if (ordersCount > 0) {
-        return Router.push('schedule-pickup');
+        return await Router.push('schedule-pickup');
       }else{
         setIsModalOpen(!isModalOpen)
       }

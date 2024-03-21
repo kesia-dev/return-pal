@@ -7,7 +7,6 @@ import {
   type SetStateAction,
 } from 'react'
 import type { UserInfo } from '@components/DashBoard/types'
-import type { ObjectId } from 'mongodb'
 
 export type ReturnProcessStep = {
   id: string
@@ -27,7 +26,7 @@ export type ReturnProcessFullObjectType = {
   dateAndTime: string
   contact_full_name: string
   contact_phone_number: string
-  address_id: ObjectId
+  address_id: any
   street: string
   unit_number: string
   city: string

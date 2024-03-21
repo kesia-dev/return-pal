@@ -8,7 +8,7 @@ dotenv.config()
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 export const fetchRecentOrders = async (
   page: number
-): Promise<OrderResponse[]> => {
+): Promise<any[]> => {
   try {
     const response: AxiosResponse<PaginatedResponse> = await axios.get(
       `${baseUrl}/api/orders?page=${page}`

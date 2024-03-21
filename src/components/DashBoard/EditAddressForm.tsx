@@ -29,6 +29,7 @@ import {
   type UserInfo,
 } from '@/components/DashBoard/types'
 import { ProvincesSelector } from './ProvincesSelector'
+import { addressSchema } from '@returnprocess/types'
 
 function EditAddressForm({
   address,

@@ -34,7 +34,7 @@ export default function Confirmation() {
   const getOrder = async (id: string) => {
     try {
       const recentOrder = await getOrderDetails(id)
-      const pickupDetails = recentOrder?.orderDetails.pickupDetails
+      const pickupDetails = recentOrder?.orderDetails?.pickupDetails
       const { address, city, province, postalCode } = pickupDetails!
       setOrder(recentOrder)
       setUser(recentOrder?.orderDetails.user)

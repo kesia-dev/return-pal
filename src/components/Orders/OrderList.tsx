@@ -48,7 +48,7 @@ const OrderList: React.FC<OrderListProps> = ({ orders = [] }) => {
                 </div> */}
                 <div className="text-sm text-gray-900">
                   Pick up Scheduled for{' '}
-                    { moment(order?.order_details?.pickup_date).format('YYYY-MM-DD')}
+                    { moment(order?.order_details?.pickup_details?.pickup_date).format('YYYY-MM-DD')}
                 </div>
               </div>
             </div>
@@ -57,7 +57,7 @@ const OrderList: React.FC<OrderListProps> = ({ orders = [] }) => {
               'cancel',
               'Delivered',
               'Driver delivered to post office',
-            ].includes(order?.order_status) && (
+            ].includes(order?.status) && (
               <div className="mr-4 h-6 w-24 rounded bg-gray-500 text-center">
                 Cancelled
               </div>

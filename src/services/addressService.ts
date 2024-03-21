@@ -6,7 +6,7 @@ export const getAddresses = async (): Promise<Address[]> => {
   const userId = localStorage.getItem('userId')
   const token = localStorage.getItem('token')
   if (!token) {
-    Router.push('/signin')
+    await Router.push('/signin')
   }
 
   try {
@@ -36,7 +36,7 @@ export const createAddress = async (
   }
 
   if (!token) {
-    Router.push('/signin')
+    await Router.push('/signin')
   }
 
   try {
@@ -65,7 +65,7 @@ export const updateAddress = async (
   }
 
   if (!token) {
-    Router.push('/signin')
+    await Router.push('/signin')
   }
 
   try {

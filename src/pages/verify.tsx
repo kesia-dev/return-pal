@@ -15,7 +15,7 @@ function Verify() {
     console.log("before post")
     axios
       .post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/verify/${verifyToken}`)
-      .then((res) => {
+      .then(async(res) => {
         if (res.data.token) {
           localStorage.setItem('userId', res.data.userId)
           localStorage.setItem('token', res.data.token)
@@ -28,7 +28,7 @@ function Verify() {
             pauseOnHover: true,
             draggable: true,
           });
-          Router.push("/dashboard")
+          await Router.push("/dashboard")
         }      
       })
       .catch((err) => console.log(err));

@@ -74,7 +74,10 @@ const Orders: React.FC<OrdersProps> = ({ initialOrders }) => {
     const userId = localStorage.getItem("userId");
     const token = localStorage.getItem("token");
     if (!token) {
-      Router.push("/signin")
+      const funCall = async () =>{
+        await Router.push("/signin")
+      }
+      funCall();
     }
   })
 

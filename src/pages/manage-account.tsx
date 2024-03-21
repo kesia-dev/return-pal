@@ -64,21 +64,26 @@ export default function editUserProfile() {
   const userInfo = async () => {
     const id = localStorage.getItem('userId');
     if (!id) {
-      Router.push('/signin')
+      await Router.push('/signin')
     }
     const data = await getUser(id);
     console.log(data, 'data');
     if (data) {
-      setUser({firstName: data.user.firstName,
-      lastName: data.user.lastName,
-      email: data.user.email,
-      password:data.user.password,
-      _id: data.user._id,
-      address: data.address.address,
-      phoneNumber: data.address.phoneNumber,
-      addressId: data.address._id
+      setUser({firstName: data?.firstName,
+      lastName: data?.lastName,
+      email: data?.email,
+      password:data?.password,
+      _id: data?._id,
+      address: data.address?.address,
+      phoneNumber: data.address?.phoneNumber,
+      addressId: data.address?._id
     });
     }
+    setTimeout(() => {
+      console.log(user,'  here is user set');
+      
+      
+    }, 5000);
   }
   useEffect(() => {
     userInfo();
@@ -88,7 +93,10 @@ export default function editUserProfile() {
     const userId = localStorage.getItem("userId");
     const token = localStorage.getItem("token");
     if (!token) {
-      Router.push("/signin")
+      const funCall = async () => {
+        await Router.push("/signin")
+      }
+      funCall();
     }
   });
 

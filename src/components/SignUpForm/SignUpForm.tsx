@@ -83,7 +83,7 @@ function SignUpForm() {
 
     axios
       .post(`${NEXT_PUBLIC_BASE_URL}/api/register`, values)
-      .then(() => {
+      .then(async () => {
         toast.success('Verification email sent!', {
           position: 'top-right',
           hideProgressBar: true,
@@ -93,7 +93,7 @@ function SignUpForm() {
           draggable: true,
         })
 
-        Router.push('/signin')
+        await Router.push('/signin')
       })
       .catch((err) => console.log(err))
     // Show success toast

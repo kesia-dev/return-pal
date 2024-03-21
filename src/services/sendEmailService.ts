@@ -17,8 +17,8 @@ export const sendMail = async (formData:any) => {
   
       const data = await response.json();
       return data;
-    } catch (error) {
-      console.error('Error sending mail:', error.message);
+    } catch (error:any) {
+      console.error('Error sending mail:', error?.message);
       throw error;
     }
   };

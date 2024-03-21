@@ -60,7 +60,7 @@ function Reset() {
     const { email, password } = values;
     axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/reset/${passwordResetToken}`, { email, password })
     // axios.post(`${NEXT_PUBLIC_BASE_URL}/api/reset`, { password })
-    .then(() => Router.push("/signin"))
+    .then(async() => await Router.push("/signin"))
     .catch((err) => console.log(err));
   }
 
