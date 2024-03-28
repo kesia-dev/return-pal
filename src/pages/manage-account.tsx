@@ -69,11 +69,11 @@ export default function editUserProfile() {
     const data = await getUser(id);
     console.log(data, 'data');
     if (data) {
-      setUser({firstName: data?.firstName,
-      lastName: data?.lastName,
-      email: data?.email,
-      password:data?.password,
-      _id: data?._id,
+      setUser({firstName: data?.user?.firstName,
+      lastName: data?.user?.lastName,
+      email: data?.user?.email,
+      password:data?.user?.password,
+      _id: data?.user?._id,
       address: data.address?.address,
       phoneNumber: data.address?.phoneNumber,
       addressId: data.address?._id

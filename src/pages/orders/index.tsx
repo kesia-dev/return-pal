@@ -98,7 +98,7 @@ const Orders: React.FC<OrdersProps> = ({ initialOrders }) => {
                 ) : (
                   <p className="ml-3 font-medium">Currently no orders placed.</p>
                 )}
-                {canShowPagination && (
+                {/* {canShowPagination && ( */}
                   <div className="pagination p-2 flex justify-center text-center items-center">
                     <Button
                       variant="secondary"
@@ -122,7 +122,7 @@ const Orders: React.FC<OrdersProps> = ({ initialOrders }) => {
                       Next
                     </Button>
                   </div>
-                )}
+                {/* )} */}
               </>
             )}
           </div>
